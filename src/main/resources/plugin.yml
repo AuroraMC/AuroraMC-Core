@@ -1,0 +1,4 @@
+name: AuroraMC-Core
+main: network.auroramc.core.AuroraMC
+version: 1.0-SNAPSHOT
+author: "The AuroraMC Development Team"
