@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -34,31 +33,17 @@ public class DisguiseUtil {
 
     public static boolean changeSkin(Player player, UUID uuid, boolean update) {
         //TODO: implement caching for skins. requires redis database to be coded in.
-        try {
-            HttpsURLConnection connection = (HttpsURLConnection) new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", UUIDTypeAdapter.fromUUID(uuid))).openConnection();
-            if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String reply = reader.readLine().trim().replace(" ","");
-                while (!reply.contains("value")) {
-                    reply = reader.readLine().trim().replace(" ","");
-                }
-                String skin = reply.split("\"value\":\"")[1].split("\"")[0];
-                while (!reply.contains("signature")) {
-                    reply = reader.readLine().trim().replace(" ","");
-                }
-                String signature = reply.split("\"signature\":\"")[1].split("\"")[0];
-                if (update) {
-                    updatePlayer(player);
-                }
-                return true;
-            } else {
-                Bukkit.getLogger().warning("Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Skin skin = getSkin(uuid);
+        if (skin == null) {
             return false;
         }
+
+        ((CraftPlayer) player).getProfile().getProperties().put("texures", new Property("textures", skin.getValue(), skin.getSignature()));
+        if (update) {
+            updatePlayer(player);
+        }
+        return true;
+
     }
 
     public static boolean changeSkin(Player player, String username, boolean update) {
@@ -156,6 +141,32 @@ public class DisguiseUtil {
             }
 
         }, 1);
+    }
+
+    public static Skin getSkin(UUID uuid) {
+        try {
+            HttpsURLConnection connection = (HttpsURLConnection) new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", UUIDTypeAdapter.fromUUID(uuid))).openConnection();
+            if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String reply = reader.readLine().trim().replace(" ","");
+                while (!reply.contains("value")) {
+                    reply = reader.readLine().trim().replace(" ","");
+                }
+                String skin = reply.split("\"value\":\"")[1].split("\"")[0];
+                while (!reply.contains("signature")) {
+                    reply = reader.readLine().trim().replace(" ","");
+                }
+                String signature = reply.split("\"signature\":\"")[1].split("\"")[0];
+
+                return new Skin(skin, signature);
+            } else {
+                Bukkit.getLogger().warning("Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

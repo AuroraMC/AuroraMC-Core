@@ -15,7 +15,7 @@ public final class UltimateSubscription {
             "&fperk where you recieve exclusive\n" +
             "&fin-game benefits and offers.";
     private static final String clickURL = "http://store.block2block.me/";
-    private char color;
+    private Character color;
     private Date endDate;
     private int monthsSubscribed;
     private int subscriptionStreak;
@@ -24,6 +24,7 @@ public final class UltimateSubscription {
     public UltimateSubscription(AuroraMCPlayer player) {
         this.player = player;
 
+        //TODO: load stuff from DB.
     }
 
     public AuroraMCPlayer getPlayer() {
@@ -31,7 +32,7 @@ public final class UltimateSubscription {
     }
 
     public char getColor() {
-        return color;
+        return ((color == null)?'6':color);
     }
 
     public char getUltimateIcon() {

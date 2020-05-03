@@ -2,8 +2,16 @@ package network.auroramc.core.api;
 
 import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.backend.Cache;
+import network.auroramc.core.api.backend.database.DatabaseManager;
+import network.auroramc.core.api.command.Command;
+import network.auroramc.core.api.permissions.Permission;
+import network.auroramc.core.api.permissions.Rank;
+import network.auroramc.core.api.permissions.SubRank;
+import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.TextFormatter;
+import network.auroramc.core.api.utils.gui.GUI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
@@ -13,16 +21,35 @@ import java.util.HashMap;
 public class AuroraMCAPI {
 
     private static AuroraMCAPI i;
-    private AuroraMC core;
-    private HashMap<Plugin, Cache> caches;
-    private TextFormatter formatter;
+    private final DatabaseManager dbManager;
+    private final AuroraMC core;
+    private final HashMap<Plugin, Cache> caches;
+    private final TextFormatter formatter;
+
+    //Registering stuff needed by the whole network.
+    private final HashMap<Integer, Rank> ranks;
+    private final HashMap<Integer, SubRank> subranks;
+    private final HashMap<String, Permission> permissions;
+    private final HashMap<Player, AuroraMCPlayer> players;
+    private final HashMap<String, Command> commands;
+    private final HashMap<AuroraMCPlayer, GUI> openGUIs;
 
     public AuroraMCAPI(AuroraMC core) {
-        if (i != null) {
+        if (i == null) {
             i = this;
             this.core = core;
             caches = new HashMap<>();
             formatter = new TextFormatter();
+            dbManager = new DatabaseManager();
+
+            ranks = new HashMap<>();
+            subranks = new HashMap<>();
+            permissions = new HashMap<>();
+            players = new HashMap<>();
+            commands = new HashMap<>();
+            openGUIs = new HashMap<>();
+        } else {
+            throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
     }
 
@@ -51,4 +78,68 @@ public class AuroraMCAPI {
     public static AuroraMC getCore() {
         return i.core;
     }
+
+    public static DatabaseManager getDbManager() {
+        return i.dbManager;
+    }
+
+    public static HashMap<Integer, Rank> getRanks() {
+        return new HashMap<>(i.ranks);
+    }
+
+    public static HashMap<Integer, SubRank> getSubRanks() {
+        return new HashMap<>(i.subranks);
+    }
+
+    public static HashMap<String, Permission> getPermissions() {
+        return new HashMap<>(i.permissions);
+    }
+
+    public static void newPlayer(AuroraMCPlayer player) {
+        i.players.put(player.getPlayer(), player);
+    }
+
+    public static void playerLeave(AuroraMCPlayer player) {
+        i.players.remove(player.getPlayer());
+    }
+
+    public static AuroraMCPlayer getPlayer(Player player) {
+        return i.players.get(player);
+    }
+
+    public static void registerRank(Rank rank) {
+        i.ranks.put(rank.getId(), rank);
+    }
+
+    public static void registerSubRank(SubRank rank) {
+        i.subranks.put(rank.getId(), rank);
+    }
+
+    public static void registerPermission(Permission permission) {
+        i.permissions.put(permission.getNode(), permission);
+    }
+
+    public static void registerCommand(Command command) {
+        i.commands.put(command.getMainCommand().toLowerCase(), command);
+        for (String alias : command.getAliases()) {
+            i.commands.put(alias.toLowerCase(), command);
+        }
+    }
+
+    public static Command getCommand(String label) {
+        return i.commands.get(label);
+    }
+
+    public static void openGUI(AuroraMCPlayer player, GUI gui) {
+        i.openGUIs.put(player, gui);
+    }
+
+    public static GUI getGUI(AuroraMCPlayer player) {
+        return i.openGUIs.get(player);
+    }
+
+    public static void closeGUI(AuroraMCPlayer player) {
+        i.openGUIs.remove(player);
+    }
 }
+
