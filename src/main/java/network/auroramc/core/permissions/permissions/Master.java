@@ -5,7 +5,7 @@ import network.auroramc.core.api.permissions.Permission;
 public final class Master extends Permission {
 
     public Master() {
-        super(2, "Master");
+        super(2, "master");
     }
 
 }

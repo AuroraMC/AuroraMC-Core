@@ -1,5 +1,6 @@
 package network.auroramc.core.api.permissions;
 
+import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,8 +24,9 @@ public abstract class Rank {
     private final ArrayList<Permission> permissions;
     private final ArrayList<Rank> inheritance;
     private final RankCategory category;
+    private final Color color;
 
-    public Rank(@NotNull int id, @NotNull String name, @Nullable String prefixAppearance, @Nullable String prefixHoverText, @Nullable String prefixHoverURL, @Nullable Character prefixColor, @NotNull char nameColor, @NotNull char connectorColor, @NotNull char defaultChatColor, @NotNull boolean canUseColorCodes, @Nullable ArrayList<Rank> inherit, @NotNull ArrayList<Permission> permissions, @NotNull RankCategory category) {
+    public Rank(@NotNull int id, @NotNull String name, @Nullable String prefixAppearance, @Nullable String prefixHoverText, @Nullable String prefixHoverURL, @Nullable Character prefixColor, @NotNull char nameColor, @NotNull char connectorColor, @NotNull char defaultChatColor, @NotNull boolean canUseColorCodes, @Nullable ArrayList<Rank> inherit, @NotNull ArrayList<Permission> permissions, @NotNull RankCategory category, @NotNull Color guiColor) {
         this.id = id;
         this.name = name;
         this.prefixAppearance = prefixAppearance;
@@ -38,6 +40,7 @@ public abstract class Rank {
         this.permissions = permissions;
         this.inheritance = inherit;
         this.category = category;
+        this.color = guiColor;
     }
 
     public final String getName() {
@@ -120,6 +123,10 @@ public abstract class Rank {
             }
         }
         return false;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override

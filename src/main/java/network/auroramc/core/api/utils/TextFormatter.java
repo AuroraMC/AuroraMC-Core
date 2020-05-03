@@ -3,10 +3,10 @@ package network.auroramc.core.api.utils;
 import net.md_5.bungee.api.chat.*;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.UltimateSubscription;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import org.apache.log4j.Logger;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -14,8 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TextFormatter {
-
-    private static final Logger logger = Logger.getLogger(TextFormatter.class);
 
     private final String prefixFormat = "&3&l«%s» &r%s";
     private final String nonPrefixFormat = "&r%s";
@@ -52,7 +50,7 @@ public class TextFormatter {
         if (player.getActiveDisguise() != null) {
             rank = player.getActiveDisguise().getRank();
         }
-        TextComponent chatMessage = new TextComponent();
+        TextComponent chatMessage = new TextComponent("");
 
         //Adding ultimate if they have an active subscription.
         if (player.getActiveSubscription() != null || rank.hasPermission("all")) {

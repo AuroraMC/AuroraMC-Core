@@ -13,11 +13,11 @@ public abstract class Command {
     private final String mainCommand;
     private final ArrayList<String> aliases;
     private final Map<String, Command> subcommands;
-    private final Permission permission;
+    private final List<Permission> permission;
     private final boolean showPermissionMessage;
     private final String customPermissionMessage;
 
-    public Command(String mainCommand, ArrayList<String> alises, Permission permission, boolean showPermissionMessage, String customPermissionMessage) {
+    public Command(String mainCommand, ArrayList<String> alises, List<Permission> permission, boolean showPermissionMessage, String customPermissionMessage) {
         this.mainCommand = mainCommand.toLowerCase();
         this.aliases = alises;
         this.subcommands = new HashMap<>();
@@ -46,7 +46,7 @@ public abstract class Command {
         return new ArrayList<>(aliases);
     }
 
-    public Permission getPermission() {
+    public List<Permission> getPermission() {
         return permission;
     }
 
