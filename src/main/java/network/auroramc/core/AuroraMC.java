@@ -2,6 +2,7 @@ package network.auroramc.core;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.commands.CommandLink;
+import network.auroramc.core.commands.CommandPunish;
 import network.auroramc.core.commands.CommandSetRank;
 import network.auroramc.core.listeners.TempChatListener;
 import network.auroramc.core.listeners.TempJoinListener;
@@ -18,6 +19,7 @@ import network.auroramc.core.permissions.subranks.JrQA;
 import network.auroramc.core.permissions.subranks.SrDev;
 import network.auroramc.core.permissions.subranks.SrQA;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuroraMC extends JavaPlugin {
@@ -34,8 +36,7 @@ public class AuroraMC extends JavaPlugin {
         cache = new CoreCache(this);
         AuroraMCAPI.registerCache(this, cache);
 
-        getLogger().info("AuroraMC-Core successfully loaded.");
-
+        AuroraMCAPI.loadRules();
 
         //Register Permissions with the API.
         AuroraMCAPI.registerPermission(new network.auroramc.core.permissions.permissions.Admin());
@@ -79,6 +80,7 @@ public class AuroraMC extends JavaPlugin {
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
         AuroraMCAPI.registerCommand(new CommandLink());
+        AuroraMCAPI.registerCommand(new CommandPunish());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);

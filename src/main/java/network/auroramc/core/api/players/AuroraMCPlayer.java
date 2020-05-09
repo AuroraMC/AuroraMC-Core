@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AuroraMCPlayer {
 
-    private long id;
+    private int id;
     private final Player player;
     private final String name;
     private Rank rank;
@@ -23,6 +23,7 @@ public class AuroraMCPlayer {
     private UltimateSubscription activeSubscription;
     private Team team;
     private String linkedDiscord;
+    private boolean discordCodeGenerated;
 
     public AuroraMCPlayer(Player player) {
         AuroraMCPlayer pl = this;
@@ -162,7 +163,7 @@ public class AuroraMCPlayer {
         return false;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -188,5 +189,19 @@ public class AuroraMCPlayer {
 
     public String getLinkedDiscord() {
         return linkedDiscord;
+    }
+
+    public boolean isDiscordCodeGenerated() {
+        return discordCodeGenerated;
+    }
+
+    public void codeGenerated() {
+        discordCodeGenerated = true;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                discordCodeGenerated = false;
+            }
+        }.runTaskLater(AuroraMCAPI.getCore(), 1200);
     }
 }

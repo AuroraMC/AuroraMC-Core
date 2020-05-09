@@ -32,7 +32,7 @@ public class DisguiseUtil {
     }
 
     public static boolean changeSkin(Player player, UUID uuid, boolean update) {
-        //TODO: implement caching for skins. requires redis database to be coded in.
+        //TODO: implement caching for skins.
         Skin skin = getSkin(uuid);
         if (skin == null) {
             return false;

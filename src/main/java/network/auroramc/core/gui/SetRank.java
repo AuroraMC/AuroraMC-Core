@@ -21,6 +21,7 @@ public class SetRank extends GUI {
     private final String name;
     private final int id;
     private final UUID uuid;
+    private final Rank currentRank;
 
     public SetRank(AuroraMCPlayer player, String name, UUID uuid, int id, Rank currentRank, SetRankVariation variation) {
         super(String.format("&3&lSet %s's Rank", name) ,5, true);
@@ -29,6 +30,7 @@ public class SetRank extends GUI {
         this.name = name;
         this.id = id;
         this.uuid = uuid;
+        this.currentRank = currentRank;
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lSet %s's Rank", name), 1, String.format("&rCurrent Rank: &b%s", currentRank.getName()), (short)3, false, name));
 
@@ -217,7 +219,7 @@ public class SetRank extends GUI {
         new BukkitRunnable() {
             @Override
             public void run() {
-                AuroraMCAPI.getDbManager().setRank(id, rank);
+                AuroraMCAPI.getDbManager().setRank(id, rank, currentRank);
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
     }
