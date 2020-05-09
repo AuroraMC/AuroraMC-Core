@@ -8,15 +8,21 @@ import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
+import network.auroramc.core.api.punishments.Punishment;
+import network.auroramc.core.api.punishments.Rule;
+import network.auroramc.core.api.punishments.RuleBook;
 import network.auroramc.core.api.utils.TextFormatter;
 import network.auroramc.core.api.utils.gui.GUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AuroraMCAPI {
 
@@ -33,6 +39,7 @@ public class AuroraMCAPI {
     private final HashMap<Player, AuroraMCPlayer> players;
     private final HashMap<String, Command> commands;
     private final HashMap<AuroraMCPlayer, GUI> openGUIs;
+    private final RuleBook rules;
 
     public AuroraMCAPI(AuroraMC core) {
         if (i == null) {
@@ -48,6 +55,7 @@ public class AuroraMCAPI {
             players = new HashMap<>();
             commands = new HashMap<>();
             openGUIs = new HashMap<>();
+            rules = new RuleBook();
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
@@ -107,6 +115,10 @@ public class AuroraMCAPI {
         return i.players.get(player);
     }
 
+    public static ArrayList<AuroraMCPlayer> getPlayers() {
+        return new ArrayList<>(i.players.values());
+    }
+
     public static void registerRank(Rank rank) {
         i.ranks.put(rank.getId(), rank);
     }
@@ -140,6 +152,22 @@ public class AuroraMCAPI {
 
     public static void closeGUI(AuroraMCPlayer player) {
         i.openGUIs.remove(player);
+    }
+
+    public static RuleBook getRules() {
+        return i.rules;
+    }
+
+    public static void loadRules() {
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                i.rules.clear();
+                for (Rule rule : i.dbManager.getRules()) {
+                    i.rules.registerRule(rule);
+                }
+            }
+        }.runTaskAsynchronously(i.core);
     }
 }
 

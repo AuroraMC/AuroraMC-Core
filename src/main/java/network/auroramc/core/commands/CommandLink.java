@@ -23,23 +23,28 @@ public class CommandLink extends Command {
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         if (player.getLinkedDiscord() == null) {
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    if (AuroraMCAPI.getDbManager().getDiscord(player.getId()) == null) {
-                        String code = RandomStringUtils.randomAlphanumeric(8);
-                        while (AuroraMCAPI.getDbManager().codeExists(code)) {
-                            code = RandomStringUtils.randomAlphanumeric(8);
+            if (!player.isDiscordCodeGenerated()) {
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        if (AuroraMCAPI.getDbManager().getDiscord(player.getId()) == null) {
+                            String code = RandomStringUtils.randomAlphanumeric(8);
+                            while (AuroraMCAPI.getDbManager().codeExists(code)) {
+                                code = RandomStringUtils.randomAlphanumeric(8);
+                            }
+                            AuroraMCAPI.getDbManager().newCode(code, player);
+                            player.codeGenerated();
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", String.format("Code generated: **%s**! In order to link your in-game account to your Discord, all you have to do is do **!link %s**. This code only lasts 60 seconds!", code, code)));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! In order to prevent abuse, you cannot unlink your Discord and in-game accounts yourself. Please contact our customer support who can help you further."));
                         }
-                        AuroraMCAPI.getDbManager().newCode(code, player);
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", String.format("Code generated: **%s**! In order to link your in-game account to your Discord, all you have to do is do **!link %s**. This code only lasts 60 seconds!", code, code)));
-                    } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! To unlink, just do **/unlink**!"));
                     }
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+            } else {
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You already have a code active. Please use that code of wait till it expires and run this command again."));
+            }
         } else {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! To unlink, just do **/unlink**!"));
+            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! In order to prevent abuse, you cannot unlink your Discord and in-game accounts yourself. Please contact our customer support who can help you further."));
         }
     }
 }

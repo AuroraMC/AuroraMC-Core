@@ -6,15 +6,20 @@ import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.Disguise;
+import network.auroramc.core.api.punishments.Punishment;
+import network.auroramc.core.api.punishments.Rule;
+import org.bukkit.Bukkit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class DatabaseManager {
@@ -241,15 +246,84 @@ public class DatabaseManager {
         }
     }
 
-    public boolean setRank(int id, Rank rank) {
+    public boolean setRank(int id, Rank rank, Rank oldRank) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE ranks SET rank = ? WHERE amc_id = ?");
             statement.setInt(1, rank.getId());
             statement.setLong(2, id);
+            boolean success = statement.execute();
 
-            return statement.execute();
+            statement = connection.prepareStatement("SELECT discord_id FROM dc_links WHERE amc_id = ?");
+            statement.setLong(1, id);
 
-        } catch (SQLException ignored) {
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                //The user has an active discord link, update ranks for discord.
+                String discordId = results.getString(1);
+                statement = connection.prepareStatement("SELECT * FROM rank_changes WHERE discord_id = ?");
+                statement.setString(1, discordId);
+                results = statement.executeQuery();
+
+                if (results.next()) {
+                    Bukkit.getLogger().info("test");
+                    //There are already registered rank/subrank changes in the database. Check to see if a rank update has already occured.
+                    if (results.getString(2) != null) {
+                        if (results.getString(2).equals(rank.getId() + "")) {
+                            statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND old_rank = ?");
+                            statement.setString(1, discordId);
+                            statement.setString(2, results.getString(2));
+                            statement.execute();
+                            return success;
+                        }
+                        Bukkit.getLogger().info("test");
+                        //The first result was a rank change, just update the new_rank column then return.
+                        statement = connection.prepareStatement("UPDATE rank_changes SET new_rank = ? WHERE discord_id = ? AND old_rank = ?");
+                        statement.setString(1, rank.getId() + "");
+                        statement.setString(2, discordId);
+                        statement.setString(3, results.getString(2));
+                        statement.execute();
+                        return success;
+                    }
+                    while (results.next()) {
+                        if (results.getString(2) != null) {
+                            if (results.getString(2).equals(rank.getId() + "")) {
+                                statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND old_rank = ?");
+                                statement.setString(1, discordId);
+                                statement.setString(2, results.getString(2));
+                                statement.execute();
+                                return success;
+                            }
+                            Bukkit.getLogger().info("test");
+                            //The first result was a rank change, just update the new_rank column then return.
+                            statement = connection.prepareStatement("UPDATE rank_changes SET new_rank = ? WHERE discord_id = ? AND old_rank = ?");
+                            statement.setString(1, rank.getId() + "");
+                            statement.setString(2, discordId);
+                            statement.setString(3, results.getString(2));
+                            statement.execute();
+                            return success;
+                        }
+                    }
+
+                    //If not returned by now, its not already in the database, so just insert it.
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, old_rank, new_rank) VALUES (?,?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, oldRank.getId() + "");
+                    statement.setString(3, rank.getId() + "");
+                    statement.execute();
+                } else {
+                    //Just insert, it is the only rank update so far.
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, old_rank, new_rank) VALUES (?,?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, oldRank.getId() + "");
+                    statement.setString(3, rank.getId() + "");
+                    statement.execute();
+                }
+            }
+
+            return success;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -276,11 +350,108 @@ public class DatabaseManager {
                 statement.setInt(1, id);
                 statement.setInt(2, 0);
                 statement.setString(3, subRank.getId() + "");
-                return statement.execute();
+                boolean success = statement.execute();
+
+                statement = connection.prepareStatement("SELECT discord_id FROM dc_links WHERE amc_id = ?");
+                statement.setLong(1, id);
+
+                ResultSet results = statement.executeQuery();
+                if (results.next()) {
+                    //The user has an active discord link, update ranks for discord.
+                    String discordId = results.getString(1);
+                    statement = connection.prepareStatement("SELECT * FROM rank_changes WHERE discord_id = ?");
+                    statement.setString(1, discordId);
+                    results = statement.executeQuery();
+                    if (results.next()) {
+                        if (results.getString(4) != null) {
+                            if (results.getString(4).equals("-" + subRank.getId())) {
+                                statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                                statement.setString(1, discordId);
+                                statement.setString(2, "-" + subRank.getId());
+
+                                statement.execute();
+                                return success;
+
+                            }
+                        }
+
+                        while (results.next()) {
+                            if (results.getString(4).equals("-" + subRank.getId())) {
+                                statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                                statement.setString(1, discordId);
+                                statement.setString(2, "-" + subRank.getId());
+
+                                statement.execute();
+                                return success;
+                            }
+                        }
+
+                        statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                        statement.setString(1, discordId);
+                        statement.setString(2, "+" + subRank.getId());
+                        statement.execute();
+                    } else {
+                        //Just insert, it is the only rank update so far.
+                        statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                        statement.setString(1, discordId);
+                        statement.setString(2, "+" + subRank.getId());
+                        statement.execute();
+                    }
+                }
+
+                return success;
             }
 
             statement.setInt(2, id);
-            return statement.execute();
+            boolean success =  statement.execute();
+
+            statement = connection.prepareStatement("SELECT discord_id FROM dc_links WHERE amc_id = ?");
+            statement.setLong(1, id);
+
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                //The user has an active discord link, update ranks for discord.
+                String discordId = results.getString(1);
+                statement = connection.prepareStatement("SELECT * FROM rank_changes WHERE discord_id = ?");
+                statement.setString(1, discordId);
+                results = statement.executeQuery();
+                if (results.next()) {
+                    if (results.getString(4) != null) {
+                        if (results.getString(4).equals("-" + subRank.getId())) {
+                            statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                            statement.setString(1, discordId);
+                            statement.setString(2, "-" + subRank.getId());
+
+                            statement.execute();
+                            return success;
+
+                        }
+                    }
+
+                    while (results.next()) {
+                        if (results.getString(4).equals("-" + subRank.getId())) {
+                            statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                            statement.setString(1, discordId);
+                            statement.setString(2, "-" + subRank.getId());
+
+                            statement.execute();
+                            return success;
+                        }
+                    }
+
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, "+" + subRank.getId());
+                    statement.execute();
+                } else {
+                    //Just insert, it is the only rank update so far.
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, "+" + subRank.getId());
+                    statement.execute();
+                }
+            }
+            return success;
         } catch (SQLException ignored) {
             return false;
         }
@@ -311,11 +482,109 @@ public class DatabaseManager {
                 statement = connection.prepareStatement("INSERT INTO ranks(amc_id, rank) VALUES (?, ?)");
                 statement.setInt(1, id);
                 statement.setInt(2, 0);
-                return statement.execute();
+                boolean success = statement.execute();
+
+                statement = connection.prepareStatement("SELECT discord_id FROM dc_links WHERE amc_id = ?");
+                statement.setLong(1, id);
+
+                ResultSet results = statement.executeQuery();
+                if (results.next()) {
+                    //The user has an active discord link, update ranks for discord.
+                    String discordId = results.getString(1);
+                    statement = connection.prepareStatement("SELECT * FROM rank_changes WHERE discord_id = ?");
+                    statement.setString(1, discordId);
+                    results = statement.executeQuery();
+                    if (results.next()) {
+                        if (results.getString(4) != null) {
+                            if (results.getString(4).equals("+" + subRank.getId())) {
+                                statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                                statement.setString(1, discordId);
+                                statement.setString(2, "+" + subRank.getId());
+
+                                statement.execute();
+                                return success;
+
+                            }
+                        }
+
+                        while (results.next()) {
+                            if (results.getString(4).equals("-" + subRank.getId())) {
+                                statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                                statement.setString(1, discordId);
+                                statement.setString(2, "+" + subRank.getId());
+
+                                statement.execute();
+                                return success;
+                            }
+                        }
+
+                        statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                        statement.setString(1, discordId);
+                        statement.setString(2, "-" + subRank.getId());
+                        statement.execute();
+                    } else {
+                        //Just insert, it is the only rank update so far.
+                        statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                        statement.setString(1, discordId);
+                        statement.setString(2, "-" + subRank.getId());
+                        statement.execute();
+                    }
+                }
+
+                return success;
             }
 
             statement.setInt(2, id);
-            return statement.execute();
+            boolean success = statement.execute();
+
+            statement = connection.prepareStatement("SELECT discord_id FROM dc_links WHERE amc_id = ?");
+            statement.setLong(1, id);
+
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                //The user has an active discord link, update ranks for discord.
+                String discordId = results.getString(1);
+                statement = connection.prepareStatement("SELECT * FROM rank_changes WHERE discord_id = ?");
+                statement.setString(1, discordId);
+                results = statement.executeQuery();
+                if (results.next()) {
+                    if (results.getString(4) != null) {
+                        if (results.getString(4).equals("+" + subRank.getId())) {
+                            statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                            statement.setString(1, discordId);
+                            statement.setString(2, "+" + subRank.getId());
+
+                            statement.execute();
+                            return success;
+
+                        }
+                    }
+
+                    while (results.next()) {
+                        if (results.getString(4).equals("-" + subRank.getId())) {
+                            statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND subrank_change = ?");
+                            statement.setString(1, discordId);
+                            statement.setString(2, "+" + subRank.getId());
+
+                            statement.execute();
+                            return success;
+                        }
+                    }
+
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, "-" + subRank.getId());
+                    statement.execute();
+                } else {
+                    //Just insert, it is the only rank update so far.
+                    statement = connection.prepareStatement("INSERT INTO rank_changes(discord_id, subrank_change) VALUES (?,?)");
+                    statement.setString(1, discordId);
+                    statement.setString(2, "-" + subRank.getId());
+                    statement.execute();
+                }
+            }
+
+            return success;
         } catch (SQLException ignored) {
             return false;
         }
@@ -348,6 +617,41 @@ public class DatabaseManager {
         try (Jedis connection = jedis.getResource()) {
             connection.set(String.format("discord.link.%s", code), player.getPlayer().getUniqueId().toString());
             connection.expire(String.format("discord.link.%s", code), 60);
+        }
+    }
+
+    public List<Rule> getRules() {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM rules ORDER BY type ASC, weight ASC, rule_id ASC");
+
+            ResultSet results = statement.executeQuery();
+            List<Rule> rules = new ArrayList<>();
+            while (results.next()) {
+                Rule rule = new Rule(results.getInt(1),results.getString(2),results.getString(3), Integer.parseInt(results.getString(4)),Integer.parseInt(results.getString(5)), results.getBoolean(6));
+                rules.add(rule);
+            }
+
+            return rules;
+        } catch (SQLException ignored) {
+            return null;
+        }
+    }
+
+    public List<Punishment> getPunishmentHistory(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT punishment_id,rule_id,notes,punisher,issued,expire,status,evidence,suffix,removal_reason,remover FROM punishments WHERE (amc_id = ?) ORDER BY issued ASC");
+            statement.setInt(1, id);
+            ResultSet set = statement.executeQuery();
+
+            ArrayList<Punishment> punishments = new ArrayList<>();
+            while (set.next()) {
+                punishments.add(new Punishment(set.getString(1), id, set.getInt(2), set.getString(3), set.getInt(4), Long.parseLong(set.getString(5)),Long.parseLong(set.getString(6)), set.getInt(7), set.getString(8), set.getInt(9), set.getString(10), set.getInt(11)));
+            }
+            return punishments;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
