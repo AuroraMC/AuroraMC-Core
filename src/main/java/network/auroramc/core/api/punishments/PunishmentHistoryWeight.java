@@ -38,4 +38,16 @@ public class PunishmentHistoryWeight {
     public Punishment getPunishment(String code) {
         return punishments.get(code);
     }
+
+    public boolean issueWarning(Rule rule) {
+        for (Punishment punishment : punishments.values()) {
+            if (punishment.getRuleID() == rule.getRuleID()) {
+                if (System.currentTimeMillis() - punishment.getIssued() < 2592000000L) {
+                    //There has been a punishment issued in the last 30 days for this rule, does not require warning.
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -1,5 +1,8 @@
 package network.auroramc.core.api.punishments;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 public class Rule {
 
     private final int ruleID;
@@ -8,14 +11,16 @@ public class Rule {
     private final int weight;
     private final int type;
     private final boolean active;
+    private final boolean requiresWarning;
 
-    public Rule(int ruleID, String ruleName, String ruleDescription, int weight, int type, boolean active) {
+    public Rule(int ruleID, String ruleName, String ruleDescription, int weight, int type, boolean active, boolean requiresWarning) {
         this.ruleID = ruleID;
         this.ruleName = ruleName;
-        this.ruleDescription = ruleDescription;
+        this.ruleDescription = ruleDescription.replace("&#39;","'");
         this.weight = weight;
         this.type = type;
         this.active = active;
+        this.requiresWarning = requiresWarning;
     }
 
     public int getRuleID() {
@@ -40,5 +45,9 @@ public class Rule {
 
     public boolean isActive() {
         return active;
+    }
+
+    public boolean requiresWarning() {
+        return requiresWarning;
     }
 }

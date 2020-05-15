@@ -8,9 +8,5 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 public class TempJoinListener implements Listener {
 
-    @EventHandler
-    public void onJoin(PlayerLoginEvent e) {
-        AuroraMCAPI.newPlayer(new AuroraMCPlayer(e.getPlayer()));
-    }
 
 }

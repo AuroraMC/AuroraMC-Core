@@ -2,6 +2,7 @@ package network.auroramc.core.api;
 
 import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.backend.Cache;
+import network.auroramc.core.api.backend.ServerInfo;
 import network.auroramc.core.api.backend.database.DatabaseManager;
 import network.auroramc.core.api.command.Command;
 import network.auroramc.core.api.permissions.Permission;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class AuroraMCAPI {
     private final HashMap<AuroraMCPlayer, GUI> openGUIs;
     private final RuleBook rules;
 
+    private final ServerInfo serverInfo;
+
     public AuroraMCAPI(AuroraMC core) {
         if (i == null) {
             i = this;
@@ -56,6 +60,11 @@ public class AuroraMCAPI {
             commands = new HashMap<>();
             openGUIs = new HashMap<>();
             rules = new RuleBook();
+
+            //Identify what server it is on the bungeecord. Grab the details from mysql.
+
+            serverInfo = dbManager.getServerDetails(Bukkit.getIp(), Bukkit.getPort());
+            Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
@@ -107,8 +116,8 @@ public class AuroraMCAPI {
         i.players.put(player.getPlayer(), player);
     }
 
-    public static void playerLeave(AuroraMCPlayer player) {
-        i.players.remove(player.getPlayer());
+    public static void playerLeave(Player player) {
+        i.players.remove(player);
     }
 
     public static AuroraMCPlayer getPlayer(Player player) {
@@ -142,6 +151,10 @@ public class AuroraMCAPI {
         return i.commands.get(label);
     }
 
+    public static List<String> getCommands() {
+        return new ArrayList<>(i.commands.keySet());
+    }
+
     public static void openGUI(AuroraMCPlayer player, GUI gui) {
         i.openGUIs.put(player, gui);
     }
@@ -168,6 +181,10 @@ public class AuroraMCAPI {
                 }
             }
         }.runTaskAsynchronously(i.core);
+    }
+
+    public static ServerInfo getServerInfo() {
+        return i.serverInfo;
     }
 }
 

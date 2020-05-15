@@ -45,7 +45,7 @@ public class GUIItem {
         ItemMeta im = item.getItemMeta();
         im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
         if (lore != null) {
-            im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(lore).split(";")));
+            im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().highlight(lore)).split(";")));
         }
         if (glowing) {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
@@ -66,7 +66,7 @@ public class GUIItem {
         ItemMeta im = item.getItemMeta();
         im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
         if (lore != null) {
-            im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(lore).split(";")));
+            im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().highlight(lore)).split(";")));
         }
         if (glowing) {
             im.addEnchant(Enchantment.DURABILITY, 1, true);

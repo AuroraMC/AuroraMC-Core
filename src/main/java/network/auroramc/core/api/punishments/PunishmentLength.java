@@ -26,7 +26,8 @@ public class PunishmentLength {
         if (value == -1) {
             return "Permanent";
         }
-        return value + " " + SUFFIXES[suffix - 1];
+        double finalValue = (Math.round(value * 10))/10.0;
+        return finalValue + " " + SUFFIXES[suffix - 1];
     }
 
     public double getMsValue() {
