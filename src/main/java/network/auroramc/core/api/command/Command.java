@@ -2,6 +2,7 @@ package network.auroramc.core.api.command;
 
 import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,9 @@ public abstract class Command {
         this.customPermissionMessage = customPermissionMessage;
     }
     public abstract void execute(AuroraMCPlayer player, String aliasUsed, List<String> args);
+
+    @NotNull
+    public abstract List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments);
 
     protected void registerSubcommand(String subcommand, List<String> aliases, Command command) {
         subcommands.put(subcommand.toLowerCase(), command);

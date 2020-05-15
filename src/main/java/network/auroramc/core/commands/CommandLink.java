@@ -7,6 +7,7 @@ import network.auroramc.core.api.players.AuroraMCPlayer;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,5 +47,10 @@ public class CommandLink extends Command {
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! In order to prevent abuse, you cannot unlink your Discord and in-game accounts yourself. Please contact our customer support who can help you further."));
         }
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int amountArguments) {
+        return new ArrayList<>();
     }
 }

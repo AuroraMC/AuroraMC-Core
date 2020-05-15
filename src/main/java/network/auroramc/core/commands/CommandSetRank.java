@@ -6,7 +6,10 @@ import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.gui.SetRank;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,5 +127,16 @@ public class CommandSetRank extends Command {
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", "Invalid syntax. Correct syntax: **/setrank [username]**"));
         }
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments) {
+        ArrayList<String> completions = new ArrayList<>();
+        if (numberArguments == 1) {
+            for (Player player1 : Bukkit.getOnlinePlayers()) {
+                completions.add(player1.getName());
+            }
+        }
+        return completions;
     }
 }

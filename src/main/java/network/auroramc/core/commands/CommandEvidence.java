@@ -6,6 +6,7 @@ import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.punishments.Punishment;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,5 +43,10 @@ public class CommandEvidence extends Command {
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Evidence", "Invalid syntax. Correct syntax: **/evidence [Punishment ID] [Evidence]**"));
         }
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int amountArguments) {
+        return new ArrayList<>();
     }
 }
