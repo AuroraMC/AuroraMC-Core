@@ -61,7 +61,7 @@ public class CommandPunish extends Command {
 
                         int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);
                         if (id < 1) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot receive be punished.", name)));
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot be punished.", name)));
                             return;
                         }
 

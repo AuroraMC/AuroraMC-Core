@@ -5,6 +5,7 @@ import network.auroramc.core.api.exception.InvalidColumnException;
 import network.auroramc.core.api.exception.InvalidRowException;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,6 +18,7 @@ public abstract class GUI {
     private final String name;
     private final Map<Integer, GUIRow> inventory;
     private final boolean cancelEvent;
+    private Inventory inv;
 
     public GUI(String name, int rows, boolean cancelEvent) {
         this.name = name;
@@ -44,6 +46,24 @@ public abstract class GUI {
         inventory.get(row).setItem(column, item);
     }
 
+    public void updateItem(int row, int column, GUIItem item) {
+        if (row > 5 || row < 0) {
+            throw new InvalidRowException();
+        }
+
+        if (column > 8 || column < 0) {
+            throw new InvalidColumnException();
+        }
+
+        inventory.get(row).setItem(column, item);
+        if (item == null) {
+            inv.clear((row * 9) + column);
+        } else {
+            inv.setItem((row * 9) + column, item.getItem());
+        }
+
+    }
+
     public void open(AuroraMCPlayer player) {
         Inventory inventory = Bukkit.createInventory(null, (rows + 1) * 9, AuroraMCAPI.getFormatter().convert(name));
         for (int row = 0;row <= rows;row++) {
@@ -54,15 +74,17 @@ public abstract class GUI {
             }
         }
         player.getPlayer().openInventory(inventory);
+        inv = inventory;
     }
 
     public int getSize() {
         return rows * 9;
     }
 
-    public abstract void onClick(int row, int column, ItemStack item);
+    public abstract void onClick(int row, int column, ItemStack item, ClickType clickType);
 
     public boolean cancelEvent() {
         return cancelEvent;
     }
+
 }

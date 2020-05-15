@@ -7,6 +7,7 @@ import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,7 +36,7 @@ public class Punish extends GUI {
     }
 
     @Override
-    public void onClick(int row, int column, ItemStack item) {
+    public void onClick(int row, int column, ItemStack item, ClickType clickType) {
         int type;
         switch (item.getType()) {
             case BOOK_AND_QUILL:

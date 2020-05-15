@@ -8,6 +8,7 @@ import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -22,6 +23,7 @@ public class SetRank extends GUI {
     private final int id;
     private final UUID uuid;
     private final Rank currentRank;
+    private final SetRankVariation variation;
 
     public SetRank(AuroraMCPlayer player, String name, UUID uuid, int id, Rank currentRank, SetRankVariation variation) {
         super(String.format("&3&lSet %s's Rank", name) ,5, true);
@@ -31,6 +33,7 @@ public class SetRank extends GUI {
         this.id = id;
         this.uuid = uuid;
         this.currentRank = currentRank;
+        this.variation = variation;
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lSet %s's Rank", name), 1, String.format("&rCurrent Rank: &b%s", currentRank.getName()), (short)3, false, name));
 
@@ -170,7 +173,7 @@ public class SetRank extends GUI {
     }
 
     @Override
-    public void onClick(int row, int column, ItemStack item) {
+    public void onClick(int row, int column, ItemStack item, ClickType clickType) {
         if (item.getType() != Material.LEATHER_CHESTPLATE) {
             if (item.getType() == Material.ARROW) {
                 new BukkitRunnable(){
@@ -207,6 +210,8 @@ public class SetRank extends GUI {
         Rank rank = AuroraMCAPI.getRanks().get(rankId);
         player.getPlayer().closeInventory();
         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You set **%s's** rank to **%s**.", name, rank.getName())));
+        AuroraMCPlayer setter = this.player;
+
 
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) {
@@ -220,6 +225,14 @@ public class SetRank extends GUI {
             @Override
             public void run() {
                 AuroraMCAPI.getDbManager().setRank(id, rank, currentRank);
+                if (variation == SetRankVariation.STM) {
+                    if (rank.hasPermission("moderation")) {
+                        AuroraMCAPI.getDbManager().addMentee(setter.getId(), id);
+                    }
+                }
+                if (currentRank.getId() == 9) {
+                    AuroraMCAPI.getDbManager().removeMentee(id);
+                }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
     }

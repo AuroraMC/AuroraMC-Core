@@ -9,11 +9,14 @@ import network.auroramc.core.CoreCache;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandManager implements Listener {
 
@@ -43,11 +46,44 @@ public class CommandManager implements Listener {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "You do not have permission to use that command!"));
                 }
             } else {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "That command is unrecognised. WOAH DUDE."));
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "That command is unrecognised."));
             }
         } else {
-
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "That command is unrecognised."));
+        }
+    }
+
+    @EventHandler
+    public void onTabComplete(PlayerChatTabCompleteEvent e) {
+        AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+        Bukkit.getLogger().info("1");
+        e.getTabCompletions().clear();
+        if (e.getChatMessage().startsWith("/")) {
+            //This is a command, tab complete it.
+            if (e.getChatMessage().split(" ").length > 1) {
+                String commandLabel = e.getChatMessage().split(" ")[0].replace("/","");
+                Command command = AuroraMCAPI.getCommand(commandLabel);
+                if (command == null) {
+                    return;
+                } else {
+                    //This is a command that is recognised and they are tab completing a subcommand.
+                }
+            } else {
+                List<String> completions = AuroraMCAPI.getCommands().stream().filter((command) -> command.startsWith(e.getLastToken().toLowerCase())).collect(Collectors.toList());
+                List<String> finalCompletions = new ArrayList<>();
+                completionLoop:
+                for (String commandLabel : completions) {
+                    Command command = AuroraMCAPI.getCommand(commandLabel);
+                    for (Permission permission : command.getPermission()) {
+                        if (player.hasPermission(permission.getId())) {
+                            finalCompletions.add(commandLabel);
+                            continue completionLoop;
+                        }
+                    }
+                }
+                Collections.sort(finalCompletions);
+                e.getTabCompletions().addAll(finalCompletions);
+            }
         }
     }
 
