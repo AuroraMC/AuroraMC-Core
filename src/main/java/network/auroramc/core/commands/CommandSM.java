@@ -7,6 +7,7 @@ import network.auroramc.core.api.players.Mentor;
 import network.auroramc.core.gui.punish.staffmanagement.MenteeList;
 import network.auroramc.core.gui.punish.staffmanagement.MentorList;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,5 +52,10 @@ public class CommandSM extends Command {
                 }.runTask(AuroraMCAPI.getCore());
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments) {
+        return new ArrayList<>();
     }
 }

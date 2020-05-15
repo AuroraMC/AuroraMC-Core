@@ -6,7 +6,10 @@ import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.gui.punish.PunishmentHistoryGUI;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -69,5 +72,18 @@ public class CommandPunishHistory extends Command {
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments) {
+        List<String> completions = new ArrayList<>();
+        if (numberArguments == 1) {
+            if (player.hasPermission("moderation")) {
+                for (Player player1 : Bukkit.getOnlinePlayers()) {
+                    completions.add(player1.getName());
+                }
+            }
+        }
+        return completions;
     }
 }
