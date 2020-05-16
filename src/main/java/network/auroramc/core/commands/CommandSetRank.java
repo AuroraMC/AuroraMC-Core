@@ -134,7 +134,9 @@ public class CommandSetRank extends Command {
         ArrayList<String> completions = new ArrayList<>();
         if (numberArguments == 1) {
             for (Player player1 : Bukkit.getOnlinePlayers()) {
-                completions.add(player1.getName());
+                if (player1.getName().toLowerCase().startsWith(lastToken.toLowerCase())) {
+                    completions.add(player1.getName());
+                }
             }
         }
         return completions;

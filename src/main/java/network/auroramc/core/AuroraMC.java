@@ -2,9 +2,7 @@ package network.auroramc.core;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.commands.*;
-import network.auroramc.core.listeners.JoinListener;
-import network.auroramc.core.listeners.TempChatListener;
-import network.auroramc.core.listeners.TempJoinListener;
+import network.auroramc.core.listeners.*;
 import network.auroramc.core.managers.CommandManager;
 import network.auroramc.core.managers.GUIManager;
 import network.auroramc.core.permissions.permissions.*;
@@ -90,9 +88,11 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CommandManager(), this);
         Bukkit.getPluginManager().registerEvents(new GUIManager(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "Server", new PluginMessageRecievedListener());
     }
 
     public static AuroraMC get() {

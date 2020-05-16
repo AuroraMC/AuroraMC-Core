@@ -8,9 +8,11 @@ import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.permissions.UltimateSubscription;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +33,10 @@ public class AuroraMCPlayer {
     private PunishmentHistory history;
     private List<Punishment> activeMutes;
     private List<BukkitTask> expiryTasks;
+    private PlayerScoreboard scoreboard;
 
     public AuroraMCPlayer(Player player) {
+        scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
         name = player.getName();
@@ -99,6 +103,56 @@ public class AuroraMCPlayer {
 
                 rank = AuroraMCAPI.getDbManager().getRank(pl);
                 subranks = AuroraMCAPI.getDbManager().getSubRanks(pl);
+                //Now taht ranks are loaded, update everyones tab.
+                new BukkitRunnable() {
+                    @Override
+                    @SuppressWarnings("deprecation")
+                    public void run() {
+                        //This has to be run on the main thread.
+                        for (Player bukkitPlayer : Bukkit.getOnlinePlayers()) {
+                            if (player == bukkitPlayer) {
+                                org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                team.addPlayer(player);
+                                String s = AuroraMCAPI.getFormatter().rankFormat(rank);
+                                if (!s.equals("")) {
+                                    s += " ";
+                                }
+                                s += "§" + ((pl.getTeam() == null)?"r":pl.getTeam().getTeamColor());
+                                team.setPrefix(s);
+                                team.setPrefix(s);
+                                continue;
+                            }
+                            AuroraMCPlayer player = AuroraMCAPI.getPlayer(bukkitPlayer);
+                            //If player is equal to null at any point, it means they have literally just joined and the player object has yet to be created, and will update this users scoreboard once it is created.
+                            if (player != null) {
+                                if (player.getRank() != null) {
+                                    //If it is ever null, it again has yet to fetch it from the DB, and so has yet to update every other players teams.
+                                    if (player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()) != null) {
+                                        player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()).unregister();
+                                    }
+                                    org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                    team.addPlayer(pl.getPlayer());
+                                    String s = AuroraMCAPI.getFormatter().rankFormat(rank);
+                                    if (!s.equals("")) {
+                                        s += " ";
+                                    }
+                                    s += "§" + ((pl.getTeam() == null)?"r":pl.getTeam().getTeamColor());
+                                    team.setPrefix(s);
+
+                                    team = scoreboard.getScoreboard().registerNewTeam(player.getPlayer().getName());
+                                    team.addPlayer(player.getPlayer());
+                                    s = AuroraMCAPI.getFormatter().rankFormat(player.getRank());
+                                    if (!s.equals("")) {
+                                        s += " ";
+                                    }
+                                    s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
+                                    team.setPrefix(s);
+                                    team.setPrefix(s);
+                                }
+                            }
+                        }
+                    }
+                }.runTask(AuroraMCAPI.getCore());
                 if (rank.hasPermission("all")) {
                     activeSubscription = new UltimateSubscription(pl);
                 }
@@ -293,4 +347,35 @@ public class AuroraMCPlayer {
             }
         }
     }
+
+    public PlayerScoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public void setScoreboard() {
+        player.setScoreboard(scoreboard.getScoreboard());
+    }
+
+    public void clearScoreboard() {
+        for (Player bukkitPlayer : Bukkit.getOnlinePlayers()) {
+            AuroraMCPlayer player = AuroraMCAPI.getPlayer(bukkitPlayer);
+            if (player != null) {
+                org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().getTeam(name);
+                if (team != null) {
+                    team.unregister();
+                }
+            }
+        }
+    }
+
+    public void updateNametag(AuroraMCPlayer player) {
+        String s = AuroraMCAPI.getFormatter().rankFormat(player.getRank());
+        if (!s.equals("")) {
+            s += " ";
+        }
+        s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
+        this.getScoreboard().getScoreboard().getTeam(player.getName()).setPrefix(s);
+    }
+
+
 }

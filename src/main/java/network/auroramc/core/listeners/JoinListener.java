@@ -97,6 +97,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         TabCompleteInjector.onJoin(AuroraMCAPI.getPlayer(e.getPlayer()));
+        AuroraMCAPI.getPlayer(e.getPlayer()).setScoreboard();
     }
 
 }

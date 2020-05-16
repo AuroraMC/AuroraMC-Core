@@ -45,6 +45,14 @@ public class TextFormatter {
         return convert((prefix == null || prefix.equals(""))?highlight(String.format(nonPrefixFormat, message)):highlight(String.format(prefixFormat, prefix.toUpperCase(), message)));
     }
 
+    public String rankFormat(Rank rank) {
+        if (rank.getPrefixAppearance() != null) {
+            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase()));
+        } else {
+            return "";
+        }
+    }
+
     public BaseComponent chatMessage(@NotNull AuroraMCPlayer player, @NotNull String message) {
         Rank rank = player.getRank();
         if (player.getActiveDisguise() != null) {

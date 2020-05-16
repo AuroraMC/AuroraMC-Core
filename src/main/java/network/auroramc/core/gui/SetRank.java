@@ -217,6 +217,12 @@ public class SetRank extends GUI {
         if (player != null) {
             if (player.isOnline()) {
                 player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("Your rank was set to **%s**.", rank.getName())));
+                for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+                    AuroraMCPlayer otherAMCPlayer = AuroraMCAPI.getPlayer(otherPlayer);
+                    if (otherAMCPlayer != null) {
+                        otherAMCPlayer.updateNametag(AuroraMCAPI.getPlayer(player));
+                    }
+                }
                 AuroraMCAPI.getPlayer(player).setRank(rank);
             }
         }

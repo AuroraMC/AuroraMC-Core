@@ -80,7 +80,9 @@ public class CommandPunishHistory extends Command {
         if (numberArguments == 1) {
             if (player.hasPermission("moderation")) {
                 for (Player player1 : Bukkit.getOnlinePlayers()) {
-                    completions.add(player1.getName());
+                    if (player1.getName().toLowerCase().startsWith(lastToken.toLowerCase())) {
+                        completions.add(player1.getName());
+                    }
                 }
             }
         }
