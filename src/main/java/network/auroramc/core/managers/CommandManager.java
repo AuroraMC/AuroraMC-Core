@@ -3,6 +3,7 @@ package network.auroramc.core.managers;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.backend.Cache;
 import network.auroramc.core.api.command.Command;
+import network.auroramc.core.api.events.CommandEngineOverwriteEvent;
 import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.CoreCache;
@@ -22,6 +23,11 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public static void onCommand(PlayerCommandPreprocessEvent e) {
+        CommandEngineOverwriteEvent event = new CommandEngineOverwriteEvent(e.getMessage());
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            return;
+        }
         e.setCancelled(true);
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
         ArrayList<String> args = new ArrayList<>(Arrays.asList(e.getMessage().split(" ")));
