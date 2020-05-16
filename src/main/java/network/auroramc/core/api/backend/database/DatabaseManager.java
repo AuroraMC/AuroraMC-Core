@@ -64,7 +64,7 @@ public class DatabaseManager {
             if (connection.exists(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()))) {
                 //They have an active disguise.
                 String skin,signature,name;
-                Rank rank = null;
+                Rank rank;
 
                 skin = connection.get(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()));
                 name = connection.get(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()));
@@ -1059,6 +1059,37 @@ public class DatabaseManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendRawCommand(String sql, Object... args) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int i = 1;
+            for (Object object : args) {
+                statement.setObject(i, object);
+                i++;
+            }
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet sendRawQuery(String sql, Object... args) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int i = 1;
+            for (Object object : args) {
+                statement.setObject(i, object);
+                i++;
+            }
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
