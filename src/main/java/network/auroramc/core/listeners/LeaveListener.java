@@ -9,6 +9,7 @@ public class LeaveListener implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
+        AuroraMCAPI.getPlayer(e.getPlayer()).clearScoreboard();
         AuroraMCAPI.playerLeave(e.getPlayer());
         TabCompleteInjector.removePlayer(e.getPlayer());
     }
