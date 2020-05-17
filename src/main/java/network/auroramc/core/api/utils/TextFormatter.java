@@ -3,6 +3,7 @@ package network.auroramc.core.api.utils;
 import net.md_5.bungee.api.chat.*;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.UltimateSubscription;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +18,7 @@ public class TextFormatter {
 
     private final String prefixFormat = "&3&l«%s» &r%s";
     private final String nonPrefixFormat = "&r%s";
-    private final String chatPrefixFormat = "&%s&l«%s»";
+    private final String chatPrefixFormat = "&%s«%s»";
     private final String chatUltimateFormat = "&%s&l%s";
 
     private final char normalColor = 'r';
@@ -85,18 +86,20 @@ public class TextFormatter {
             chatMessage.addExtra(" ");
         }
 
-        //Adding in name color.
-        if (player.getTeam() != null) {
-            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor())));
-        } else {
-            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor())));
-        }
 
+        String name;
         //Adding in name.
         if (player.getActiveDisguise() != null) {
-            chatMessage.addExtra(player.getActiveDisguise().getName());
+            name = player.getActiveDisguise().getName();
         } else {
-            chatMessage.addExtra(player.getPlayer().getDisplayName());
+            name = player.getPlayer().getDisplayName();
+        }
+
+        //Adding in name color.
+        if (player.getTeam() != null) {
+            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor() + name)));
+        } else {
+            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor() + name)));
         }
 
 

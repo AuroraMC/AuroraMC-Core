@@ -11,7 +11,7 @@ public final class Elite extends Rank {
 
 
     public Elite() {
-        super(1, "Elite", "Elite", "&b&l«ELITE»\n \n" +
+        super(1, "Elite", "Elite", "&b«ELITE»\n \n" +
                 "&fThis rank is very rare, and only\n" +
                 "&fthe most daring of players will\n" +
                 "&fventure into its unknown value!\n \n" +

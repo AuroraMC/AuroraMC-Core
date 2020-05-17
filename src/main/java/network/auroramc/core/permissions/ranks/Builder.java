@@ -13,7 +13,7 @@ public final class Builder extends Rank {
 
 
     public Builder() {
-        super(7, "Builder", "Builder", "&a&l«BUILDER»\n \n" +
+        super(7, "Builder", "Builder", "&a«BUILDER»\n \n" +
                         "&fBuilders create and fix all of the\n" +
                         "&fmaps you can find on the network!", null, 'a', 'f', 'a', 'f', false, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getRanks().get(2))), new ArrayList<>(), CONTENT_CREATOR, Color.fromRGB(85, 255, 85));
     }

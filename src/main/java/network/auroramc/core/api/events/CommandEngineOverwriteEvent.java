@@ -15,8 +15,11 @@ public class CommandEngineOverwriteEvent extends Event implements Cancellable {
         this.message = message;
     }
 
-    @Override
     public HandlerList getHandlers() {
+        return handlerList;
+    }
+
+    public static HandlerList getHandlerList() {
         return handlerList;
     }
 

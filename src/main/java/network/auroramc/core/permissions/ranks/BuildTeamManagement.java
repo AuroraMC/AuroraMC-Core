@@ -11,7 +11,7 @@ public final class BuildTeamManagement extends Rank {
 
 
     public BuildTeamManagement() {
-        super(8, "Build Team Management", "BTM", "&a&l«BTM»\n \n" +
+        super(8, "Build Team Management", "BTM", "&a«BTM»\n \n" +
                         "&fBTM members manage and maintain the\n" +
                         "&fbuilders, build server and maps!", null, 'a', 'f', 'a', 'f', false, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getRanks().get(7))), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("btm"))), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85));
     }
