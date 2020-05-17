@@ -12,7 +12,7 @@ public final class Developer extends Rank {
 
 
     public Developer() {
-        super(12, "Developer", "Dev", "&a&l«DEV»\n \n" +
+        super(12, "Developer", "Dev", "&a«DEV»\n \n" +
                         "&fDevelopers create the content that\n" +
                         "&fyou see on all our servers! They work\n" +
                         "&fbehind the scenes coding the games you\n" +

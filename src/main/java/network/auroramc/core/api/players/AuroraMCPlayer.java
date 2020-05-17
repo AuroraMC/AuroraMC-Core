@@ -147,7 +147,6 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
                                     team.setPrefix(s);
-                                    team.setPrefix(s);
                                 }
                             }
                         }
@@ -177,6 +176,7 @@ public class AuroraMCPlayer {
         history = oldPlayer.history;
         activeMutes = oldPlayer.getActiveMutes();
         expiryTasks = oldPlayer.expiryTasks;
+        scoreboard = oldPlayer.scoreboard;
     }
 
     public Rank getRank() {

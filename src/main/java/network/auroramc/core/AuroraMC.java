@@ -16,7 +16,6 @@ import network.auroramc.core.permissions.subranks.JrQA;
 import network.auroramc.core.permissions.subranks.SrDev;
 import network.auroramc.core.permissions.subranks.SrQA;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuroraMC extends JavaPlugin {
@@ -60,7 +59,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerRank(new Twitch());
         AuroraMCAPI.registerRank(new Developer());
         AuroraMCAPI.registerRank(new Builder());
-        AuroraMCAPI.registerRank(new TrialModerator());
+        AuroraMCAPI.registerRank(new JuniorModerator());
         AuroraMCAPI.registerRank(new BuildTeamManagement());
         AuroraMCAPI.registerRank(new Moderator());
         AuroraMCAPI.registerRank(new Admin());

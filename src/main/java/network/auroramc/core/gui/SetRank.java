@@ -41,8 +41,8 @@ public class SetRank extends GUI {
         this.setItem(1, 0, new GUIItem(Material.WOOL, "&f&lPlayer Ranks", 1, "&r&7Player/Premium Ranks.", (short)0));
         this.setItem(1, 2, new GUIItem(Material.WOOL, "&5&lSocial Media Ranks", 1, "&r&7Ranks for Social Media partners.", (short)10));
         this.setItem(1, 4, new GUIItem(Material.WOOL, "&a&lContent Creator Ranks", 1, "&r&7Server Content Creators.", (short)5));
-        this.setItem(1, 6, new GUIItem(Material.WOOL, "&c&lModeration Staff Ranks", 1, "&r&7Moderation Staff Ranks.", (short)14));
-        this.setItem(1, 8, new GUIItem(Material.WOOL, "&4&lLeadership Ranks", 1, "&r&7Leadership Ranks.", (short)14));
+        this.setItem(1, 6, new GUIItem(Material.WOOL, "&9&lModeration Staff Ranks", 1, "&r&7Moderation Staff Ranks.", (short)11));
+        this.setItem(1, 8, new GUIItem(Material.WOOL, "&c&lLeadership Ranks", 1, "&r&7Leadership Ranks.", (short)14));
 
         if (player.getRank().hasPermission("admin")) {
             this.setItem(5, 8, new GUIItem(Material.ARROW, String.format("&3&lSet %s's Subranks", name)));
@@ -217,13 +217,13 @@ public class SetRank extends GUI {
         if (player != null) {
             if (player.isOnline()) {
                 player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("Your rank was set to **%s**.", rank.getName())));
+                AuroraMCAPI.getPlayer(player).setRank(rank);
                 for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
                     AuroraMCPlayer otherAMCPlayer = AuroraMCAPI.getPlayer(otherPlayer);
                     if (otherAMCPlayer != null) {
                         otherAMCPlayer.updateNametag(AuroraMCAPI.getPlayer(player));
                     }
                 }
-                AuroraMCAPI.getPlayer(player).setRank(rank);
             }
         }
 
