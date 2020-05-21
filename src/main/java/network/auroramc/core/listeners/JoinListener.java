@@ -32,7 +32,7 @@ public class JoinListener implements Listener {
                             "\n" +
                             "&rPunishment Code: **%s**\n" +
                             "\n" +
-                            "&rYour punishment has been applied by a Trial Moderator, and is severe enough to need approval\n" +
+                            "&rYour punishment has been applied by a Junior Moderator, and is severe enough to need approval\n" +
                             "&rfrom a Staff Management member to ensure that the punishment applied was correct. When it is\n" +
                             "&rapproved, the full punishment length will automatically apply to you. If this punishment is\n" +
                             "&rdenied for being false, **it will automatically be removed**, and the punishment will automatically\n" +

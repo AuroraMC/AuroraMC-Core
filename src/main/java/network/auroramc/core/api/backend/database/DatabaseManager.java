@@ -1077,20 +1077,8 @@ public class DatabaseManager {
         }
     }
 
-    public ResultSet sendRawQuery(String sql, Object... args) {
-        try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            int i = 1;
-            for (Object object : args) {
-                statement.setObject(i, object);
-                i++;
-            }
-
-            return statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public Connection getMySQLConnection() throws SQLException {
+        return mysql.getConnection();
     }
 
 

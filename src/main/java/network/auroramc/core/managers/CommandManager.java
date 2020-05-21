@@ -23,7 +23,7 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public static void onCommand(PlayerCommandPreprocessEvent e) {
-        CommandEngineOverwriteEvent event = new CommandEngineOverwriteEvent(e.getMessage());
+        CommandEngineOverwriteEvent event = new CommandEngineOverwriteEvent(e.getMessage(), AuroraMCAPI.getPlayer(e.getPlayer()));
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return;
