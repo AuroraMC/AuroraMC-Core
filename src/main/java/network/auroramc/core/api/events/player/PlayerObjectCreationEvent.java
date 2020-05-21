@@ -24,6 +24,10 @@ public class PlayerObjectCreationEvent extends PlayerEvent {
         return handlers;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     @Override
     public AuroraMCPlayer getPlayer() {
         return player;

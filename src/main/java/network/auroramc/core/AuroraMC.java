@@ -50,6 +50,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerPermission(new StaffManagement());
         AuroraMCAPI.registerPermission(new Support());
         AuroraMCAPI.registerPermission(new Ultimate());
+        AuroraMCAPI.registerPermission(new Build());
 
         //Register Ranks with the API.
         AuroraMCAPI.registerRank(new Player());

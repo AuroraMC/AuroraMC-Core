@@ -3,6 +3,7 @@ package network.auroramc.core.api.players;
 import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.backend.database.DatabaseManager;
+import network.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.permissions.UltimateSubscription;
@@ -157,6 +158,13 @@ public class AuroraMCPlayer {
                 }
 
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
+
+                //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
+                PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
+                Bukkit.getPluginManager().callEvent(creationEvent);
+                if (pl != creationEvent.getPlayer()) {
+                    AuroraMCAPI.newPlayer(creationEvent.getPlayer());
+                }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
 
