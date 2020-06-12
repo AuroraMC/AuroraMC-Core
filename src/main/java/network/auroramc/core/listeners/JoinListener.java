@@ -70,6 +70,7 @@ public class JoinListener implements Listener {
         }
 
 
+        //TODO: improve reliability of this. Can be removed if servers aren't portforwarded/used on a VPS, as connecting to them wont be physically possible.
         String server = AuroraMCAPI.getDbManager().getServer(e.getUniqueId());
 
         if (server == null) {

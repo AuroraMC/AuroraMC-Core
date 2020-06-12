@@ -4,11 +4,15 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.server.v1_8_R3.*;
+import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
+import network.auroramc.core.api.players.AuroraMCPlayer;
+import network.auroramc.core.api.players.Disguise;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -25,35 +29,64 @@ public class DisguiseUtil {
         GameProfile playerProfile = ((CraftPlayer) player).getHandle().getProfile();
         playerProfile.getProperties().removeAll("textures");
         playerProfile.getProperties().put("textures", new Property("textures", skin, signature));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                AuroraMCPlayer pl = AuroraMCAPI.getPlayer(player);
+                AuroraMCAPI.getDbManager().setDisguise(pl, pl.getActiveDisguise());
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
         if (update) {
             updatePlayer(player);
         }
         return true;
     }
 
-    public static boolean changeSkin(Player player, UUID uuid, boolean update) {
-        //TODO: implement caching for skins.
-        Skin skin = getSkin(uuid);
+    public static boolean changeSkin(Player player, UUID uuid, boolean update, Disguise disguise) {
+        Skin skin = AuroraMCAPI.getDbManager().getCachedSkin(uuid.toString());
+
+        if (skin != null) {
+            CachedSkin cachedSkin = (CachedSkin) skin;
+            if (System.currentTimeMillis() - cachedSkin.getLastUpdated() > 60000) {
+                skin = getSkin(uuid);
+            }
+        } else {
+            skin = getSkin(uuid);
+        }
+
         if (skin == null) {
             return false;
         }
 
-        ((CraftPlayer) player).getProfile().getProperties().put("texures", new Property("textures", skin.getValue(), skin.getSignature()));
-        if (update) {
-            updatePlayer(player);
+        if (!(skin instanceof CachedSkin)) {
+            AuroraMCAPI.getDbManager().cacheSkin(uuid.toString(), skin.getValue(), skin.getSignature(), System.currentTimeMillis());
         }
+
+        disguise.updateSkin(skin);
+
+        Skin finalSkin = skin;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                changeSkin(player, finalSkin.getValue(), finalSkin.getSignature(), update);
+            }
+        }.runTask(AuroraMCAPI.getCore());
         return true;
 
     }
 
-    public static boolean changeSkin(Player player, String username, boolean update) {
-        UUID uuid = UUIDUtil.getUUID(username);
-        if (uuid != null) {
-            if (!uuid.toString().equals("")) {
-                return changeSkin(player, uuid, update);
+    public static void changeSkin(Player player, String username, boolean update, Disguise disguise) {
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                UUID uuid = UUIDUtil.getUUID(username);
+                if (uuid != null) {
+                    if (!uuid.toString().equals("")) {
+                        changeSkin(player, uuid, update, disguise);
+                    }
+                }
             }
-        }
-        return false;
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
     }
 
     public static boolean changeName(Player player, String username, boolean update) {
@@ -75,19 +108,19 @@ public class DisguiseUtil {
         return true;
     }
 
-    public static boolean disguise(Player player, String username, String skin) {
-        boolean success = changeSkin(player, skin, false);
-        return success && changeName(player, username, true);
+    public static boolean disguise(Player player, String username, String skin, Disguise disguise) {
+        changeSkin(player, skin, true, disguise);
+        return changeName(player, username, false);
     }
 
     public static boolean disguise(Player player, String username, String skin, String signature) {
-        boolean success = changeSkin(player, skin, signature, false);
-        return success && changeName(player, username, true);
+        boolean success = changeSkin(player, skin, signature, true);
+        return success && changeName(player, username, false);
     }
 
-    public static boolean disguise(Player player, String username, UUID skin) {
-        boolean success = changeSkin(player, skin, false);
-        return success && changeName(player, username, true);
+    public static boolean disguise(Player player, String username, UUID skin, Disguise disguise) {
+        boolean success = changeSkin(player, skin, true, disguise);
+        return success && changeName(player, username, false);
     }
 
     @SuppressWarnings("deprecated")
@@ -135,6 +168,7 @@ public class DisguiseUtil {
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     player2.hidePlayer(player);
                     player2.showPlayer(player);
+                    AuroraMCAPI.getPlayer(player2).updateNametag(AuroraMCAPI.getPlayer(player));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

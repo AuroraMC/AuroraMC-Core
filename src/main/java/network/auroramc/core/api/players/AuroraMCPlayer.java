@@ -1,23 +1,19 @@
 package network.auroramc.core.api.players;
 
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
-import network.auroramc.core.api.backend.database.DatabaseManager;
 import network.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
-import network.auroramc.core.api.permissions.UltimateSubscription;
+import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class AuroraMCPlayer {
 
@@ -27,7 +23,7 @@ public class AuroraMCPlayer {
     private Rank rank;
     private ArrayList<SubRank> subranks;
     private Disguise activeDisguise;
-    private UltimateSubscription activeSubscription;
+    private PlusSubscription activeSubscription;
     private Team team;
     private String linkedDiscord;
     private boolean discordCodeGenerated;
@@ -103,6 +99,9 @@ public class AuroraMCPlayer {
                 }
 
                 rank = AuroraMCAPI.getDbManager().getRank(pl);
+                if (rank.hasPermission("all")) {
+                    activeSubscription = new PlusSubscription(pl);
+                }
                 subranks = AuroraMCAPI.getDbManager().getSubRanks(pl);
                 //Now taht ranks are loaded, update everyones tab.
                 new BukkitRunnable() {
@@ -114,7 +113,7 @@ public class AuroraMCPlayer {
                             if (player == bukkitPlayer) {
                                 org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                 team.addPlayer(player);
-                                String s = AuroraMCAPI.getFormatter().rankFormat(rank);
+                                String s = AuroraMCAPI.getFormatter().rankFormat(rank, activeSubscription);
                                 if (!s.equals("")) {
                                     s += " ";
                                 }
@@ -133,16 +132,19 @@ public class AuroraMCPlayer {
                                     }
                                     org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                     team.addPlayer(pl.getPlayer());
-                                    String s = AuroraMCAPI.getFormatter().rankFormat(rank);
+                                    String s = AuroraMCAPI.getFormatter().rankFormat(rank, activeSubscription);
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
                                     s += "§" + ((pl.getTeam() == null)?"r":pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
 
+                                    if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
+                                        scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).unregister();
+                                    }
                                     team = scoreboard.getScoreboard().registerNewTeam(player.getPlayer().getName());
                                     team.addPlayer(player.getPlayer());
-                                    s = AuroraMCAPI.getFormatter().rankFormat(player.getRank());
+                                    s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
@@ -153,9 +155,6 @@ public class AuroraMCPlayer {
                         }
                     }
                 }.runTask(AuroraMCAPI.getCore());
-                if (rank.hasPermission("all")) {
-                    activeSubscription = new UltimateSubscription(pl);
-                }
 
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
@@ -205,7 +204,7 @@ public class AuroraMCPlayer {
         return player;
     }
 
-    public UltimateSubscription getActiveSubscription() {
+    public PlusSubscription getActiveSubscription() {
         return activeSubscription;
     }
 
@@ -222,13 +221,7 @@ public class AuroraMCPlayer {
             activeDisguise.undisguise();
         }
 
-        activeDisguise = new Disguise(this, skin, name, rank);
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().setDisguise(activeDisguise.getPlayer(), activeDisguise);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        activeDisguise = new Disguise(this, name, skin, rank);
         return activeDisguise.apply();
     }
 
@@ -377,12 +370,24 @@ public class AuroraMCPlayer {
     }
 
     public void updateNametag(AuroraMCPlayer player) {
-        String s = AuroraMCAPI.getFormatter().rankFormat(player.getRank());
+        String s;
+        if (player.getActiveDisguise() != null) {
+            //They are disguised, update their nametag.
+            s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
+        } else {
+            s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
+        }
         if (!s.equals("")) {
             s += " ";
         }
         s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
         this.getScoreboard().getScoreboard().getTeam(player.getName()).setPrefix(s);
+        if (!this.getScoreboard().getScoreboard().getTeam(player.getName()).hasEntry(player.getPlayer().getName())) {
+            for (String old : this.scoreboard.getScoreboard().getTeam(player.getName()).getEntries()) {
+                this.scoreboard.getScoreboard().getTeam(player.getName()).removeEntry(old);
+            }
+            this.scoreboard.getScoreboard().getTeam(player.getName()).addEntry(player.getPlayer().getName());
+        }
     }
 
 

@@ -12,6 +12,8 @@ import network.auroramc.core.api.players.Mentor;
 import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
+import network.auroramc.core.api.utils.CachedSkin;
+import network.auroramc.core.api.utils.Skin;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -67,11 +69,12 @@ public class DatabaseManager {
                 Rank rank;
 
                 skin = connection.get(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()));
+                signature = connection.get(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()));
                 name = connection.get(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()));
 
-                    rank = AuroraMCAPI.getRanks().get(Integer.parseInt(connection.get(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()))));
+                rank = AuroraMCAPI.getRanks().get(Integer.parseInt(connection.get(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()))));
 
-                return new Disguise(player, name, skin, rank);
+                return new Disguise(player, name, skin, signature, rank);
             }
         }
 
@@ -1081,5 +1084,22 @@ public class DatabaseManager {
         return mysql.getConnection();
     }
 
+    public CachedSkin getCachedSkin(String uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.exists(String.format("skincache.%s.skin", uuid))) {
+                // This skin is cached.
+                return new CachedSkin(connection.get(String.format("skincache.%s.skin", uuid)), connection.get(String.format("skincache.%s.signature", uuid)), Long.parseLong(connection.get(String.format("skincache.%s.fetched", uuid))));
+            } else {
+                return null;
+            }
+        }
+    }
 
+    public void cacheSkin(String uuid, String skin, String signature, long fetched) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set(String.format("skincache.%s.skin", uuid), skin);
+            connection.set(String.format("skincache.%s.signature", uuid), signature);
+            connection.set(String.format("skincache.%s.fetched", uuid), fetched + "");
+        }
+    }
 }

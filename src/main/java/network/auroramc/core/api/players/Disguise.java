@@ -1,5 +1,7 @@
 package network.auroramc.core.api.players;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import network.auroramc.core.AuroraMC;
@@ -7,38 +9,36 @@ import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.utils.DisguiseUtil;
 import network.auroramc.core.api.utils.Skin;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
 public class Disguise {
 
-    private AuroraMCPlayer player;
+    private final AuroraMCPlayer player;
     private String name;
     private UUID uuid;
+    private String skinName;
     private String skin;
     private String signature;
     private Property originalTexture;
     private Rank rank;
 
-    public Disguise(AuroraMCPlayer player, String name, String uuid, Rank rank) {
+    public Disguise(AuroraMCPlayer player, String name, String skin, Rank rank) {
         this.name = name;
         this.player = player;
         this.rank = rank;
-        this.uuid = UUID.fromString(uuid);
+        this.skin = skin;
+        this.skinName = skin;
 
         for (Property property : ((CraftPlayer) player.getPlayer()).getProfile().getProperties().removeAll("textures")) {
             this.originalTexture = property;
+            Bukkit.getLogger().info("Original value: " + this.originalTexture.getValue());
             break;
         }
-
-        Skin skin1 = DisguiseUtil.getSkin(UUID.fromString(uuid));
-        if (skin1 == null) {
-            return;
-        }
-        skin = skin1.getValue();
-        signature = skin1.getSignature();
 
     }
 
@@ -79,6 +79,11 @@ public class Disguise {
         this.skin = skin;
     }
 
+    public void updateSkin(Skin skin) {
+        this.skin = skin.getValue();
+        this.signature = skin.getSignature();
+    }
+
     public String getSkin() {
         return skin;
     }
@@ -105,7 +110,7 @@ public class Disguise {
                 if (signature != null) {
                     return DisguiseUtil.disguise(player.getPlayer(), name, skin, signature);
                 }
-                return DisguiseUtil.disguise(player.getPlayer(), name, skin);
+                return DisguiseUtil.disguise(player.getPlayer(), name, skin, this);
             } else {
                 if (skin.equals(player.getName())) {
                     return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature());
@@ -113,7 +118,8 @@ public class Disguise {
                 if (signature != null) {
                     return DisguiseUtil.changeSkin(player.getPlayer(), skin, signature, true);
                 }
-                return DisguiseUtil.changeSkin(player.getPlayer(), skin, true);
+                DisguiseUtil.changeSkin(player.getPlayer(), skin, true, this);
+                return true;
             }
         }
     }
