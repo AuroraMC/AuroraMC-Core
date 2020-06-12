@@ -2,9 +2,9 @@ package network.auroramc.core.api.utils;
 
 import net.md_5.bungee.api.chat.*;
 import network.auroramc.core.api.permissions.Rank;
-import network.auroramc.core.api.permissions.UltimateSubscription;
-import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
+import network.auroramc.core.api.permissions.PlusSubscription;
+import network.auroramc.core.permissions.ranks.Elite;
+import network.auroramc.core.permissions.ranks.Master;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import network.auroramc.core.api.players.AuroraMCPlayer;
@@ -18,7 +18,7 @@ public class TextFormatter {
 
     private final String prefixFormat = "&3&l«%s» &r%s";
     private final String nonPrefixFormat = "&r%s";
-    private final String chatPrefixFormat = "&%s«%s»";
+    private final String chatPrefixFormat = "&%s«%s%s»";
     private final String chatUltimateFormat = "&%s&l%s";
 
     private final char normalColor = 'r';
@@ -46,9 +46,9 @@ public class TextFormatter {
         return convert((prefix == null || prefix.equals(""))?highlight(String.format(nonPrefixFormat, message)):highlight(String.format(prefixFormat, prefix.toUpperCase(), message)));
     }
 
-    public String rankFormat(Rank rank) {
+    public String rankFormat(Rank rank, PlusSubscription subscription) {
         if (rank.getPrefixAppearance() != null) {
-            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase()));
+            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null)?"+":"")));
         } else {
             return "";
         }
@@ -62,25 +62,49 @@ public class TextFormatter {
         TextComponent chatMessage = new TextComponent("");
 
         //Adding ultimate if they have an active subscription.
-        if (player.getActiveSubscription() != null || rank.hasPermission("all")) {
+        /*if (player.getActiveSubscription() != null || rank.hasPermission("all")) {
             UltimateSubscription subscription = player.getActiveSubscription();
             TextComponent ultimateFormatting = new TextComponent(convert(String.format(chatUltimateFormat, player.getActiveSubscription().getColor(), player.getActiveSubscription().getUltimateIcon())));
             ultimateFormatting.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(convert(String.format(subscription.getHoverText(), player.getActiveSubscription().getColor()))).create()));
             ultimateFormatting.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, subscription.getClickURL()));
             ultimateFormatting.addExtra(" ");
             chatMessage.addExtra(ultimateFormatting);
-        }
+        }*/
+
+        //
 
         //Adding rank prefix if it exists.
         if (rank.getPrefixAppearance() != null) {
-            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase())));
+            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null)?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
+                if (player.getActiveSubscription() != null) {
+                    if (rank instanceof Elite || rank instanceof Master) {
+                        hoverText.append(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+                    } else if (rank.getPrefixHoverURL() == null) {
+                        hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+                        prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.block2block.me/"));
+                    } else {
+                        hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText().replace("\n\n&aClick to visit the store!", ""), player.getActiveSubscription().getColor())));
+                    }
+                } else if (rank instanceof Elite || rank instanceof Master) {
+                    hoverText.append("&aClick to visit the store!");
+                }
                 prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
             }
             if (rank.getPrefixHoverURL() != null) {
                 prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, rank.getPrefixHoverURL()));
             }
+
+            chatMessage.addExtra(prefix);
+            chatMessage.addExtra(" ");
+        } else if (player.getActiveSubscription() != null) {
+            TextComponent prefix = new TextComponent(convert(String.format("&%s+&r", player.getActiveSubscription().getColor())));
+
+            ComponentBuilder hoverText = new ComponentBuilder(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
+
+            prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, player.getActiveSubscription().getClickURL()));
 
             chatMessage.addExtra(prefix);
             chatMessage.addExtra(" ");
@@ -123,7 +147,7 @@ public class TextFormatter {
 
         //Adding ultimate if they have an active subscription.
         if (player.getActiveSubscription() != null || rank.hasPermission("all")) {
-            UltimateSubscription subscription = player.getActiveSubscription();
+            PlusSubscription subscription = player.getActiveSubscription();
             TextComponent component = new TextComponent(convert(String.format(chatUltimateFormat, player.getActiveSubscription().getColor(), player.getActiveSubscription().getUltimateIcon())));
             component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(convert(String.format(subscription.getHoverText(), player.getActiveSubscription().getColor()))).create()));
             component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, subscription.getClickURL()));

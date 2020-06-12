@@ -16,7 +16,7 @@ public class Rule {
     public Rule(int ruleID, String ruleName, String ruleDescription, int weight, int type, boolean active, boolean requiresWarning) {
         this.ruleID = ruleID;
         this.ruleName = ruleName;
-        this.ruleDescription = ruleDescription.replace("&#39;","'");
+        this.ruleDescription = ruleDescription.replace("&#39;","'").replace("&#38;","&");
         this.weight = weight;
         this.type = type;
         this.active = active;

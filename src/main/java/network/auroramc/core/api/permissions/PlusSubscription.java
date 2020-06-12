@@ -2,26 +2,29 @@ package network.auroramc.core.api.permissions;
 
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.permissions.permissions.Ultimate;
+import network.auroramc.core.permissions.ranks.Player;
 
 import java.util.Date;
 
-public final class UltimateSubscription {
+public final class PlusSubscription {
 
     private final AuroraMCPlayer player;
     private static final char ultimateIcon = '✦';
-    private static final String hoverText = "&%s&l✦ Ultimate\n" +
+    private static final String hoverText = "&%s&l+ Plus\n" +
             "\n" +
-            "&fUltimate is a subscription based\n" +
+            "&fPlus is a subscription based\n" +
             "&fperk where you recieve exclusive\n" +
-            "&fin-game benefits and offers.";
-    private static final String clickURL = "http://store.block2block.me/";
+            "&fin-game benefits and offers.\n" +
+            "\n" +
+            "&aClick to visit the store!";
+    private static final String clickURL = "http://store.auroramc.block2block.me/";
     private Character color;
     private Date endDate;
     private int monthsSubscribed;
     private int subscriptionStreak;
     private final Permission permission = new Ultimate();
 
-    public UltimateSubscription(AuroraMCPlayer player) {
+    public PlusSubscription(AuroraMCPlayer player) {
         this.player = player;
 
         //TODO: load stuff from DB.
@@ -32,7 +35,22 @@ public final class UltimateSubscription {
     }
 
     public char getColor() {
-        return ((color == null)?'6':color);
+        if (color == null) {
+            if (player.getActiveDisguise() != null) {
+                if (player.getActiveDisguise().getRank() instanceof Player) {
+                    return '3';
+                } else {
+                    return player.getActiveDisguise().getRank().getPrefixColor();
+                }
+            } else {
+                if (player.getRank() instanceof Player) {
+                    return '3';
+                } else {
+                    return player.getRank().getPrefixColor();
+                }
+            }
+        }
+        return color;
     }
 
     public char getUltimateIcon() {

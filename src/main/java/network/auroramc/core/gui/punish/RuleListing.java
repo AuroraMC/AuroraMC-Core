@@ -9,6 +9,7 @@ import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -55,7 +56,7 @@ public class RuleListing extends GUI {
             this.setItem(1, (i-1)*2, new GUIItem(Material.WOOL, Weight.WEIGHTS[i-1], 1, "&rPunishment Length: &b" + history.getType(type).generateLength(i).getFormatted(), Weight.WEIGHT_ICON_DATA[i-1]));
             for (Rule rule : AuroraMCAPI.getRules().getType(type).getWeight(i).getRules()) {
                 if (rule.isActive()) {
-                    this.setItem(row, column, new GUIItem(Material.BOOK, String.format("&3&l%s", rule.getRuleName()), 1, String.format("&r%s;;&rID: &b%s", rule.getRuleDescription(), rule.getRuleID())));
+                    this.setItem(row, column, new GUIItem(Material.BOOK, String.format("&3&l%s", rule.getRuleName()), 1, String.format("&r%s;;&rID: &b%s", WordUtils.wrap(rule.getRuleDescription(), 40, ";&r", false), rule.getRuleID())));
                     row++;
                     if (row > 5) {
                         column++;
