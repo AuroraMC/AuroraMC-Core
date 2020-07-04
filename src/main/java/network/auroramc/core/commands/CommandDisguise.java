@@ -68,7 +68,7 @@ public class CommandDisguise extends Command {
                         Rank chosenRank = null;
                         for (Rank rank : AuroraMCAPI.getRanks().values()) {
                             if (rank.getName().equalsIgnoreCase(args.get(2))) {
-                                if (rank.hasPermission("moderation") || rank.hasPermission("disguise") || rank.hasPermission("debug.info")) {
+                                if (rank.hasPermission("moderation") || rank.hasPermission("disguise") || rank.hasPermission("debug.info") || rank.hasPermission("build")) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You cannot disguise as that rank, you may only choose between premium ranks."));
                                     return;
                                 }

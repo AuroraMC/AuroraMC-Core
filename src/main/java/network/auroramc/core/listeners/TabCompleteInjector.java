@@ -53,6 +53,10 @@ public class TabCompleteInjector {
                                             break;
                                         }
                                     }
+                                } else {
+                                    String[] complete = new String[0];
+                                    PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(complete);
+                                    ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.sendPacket(packetPlayOutTabComplete);
                                 }
                             } else {
                                 List<String> completions = AuroraMCAPI.getCommands().stream().filter((command) -> command.startsWith(message.split(" ")[0].replace("/","").toLowerCase())).collect(Collectors.toList());
@@ -73,7 +77,6 @@ public class TabCompleteInjector {
                                 PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(complete);
                                 ((CraftPlayer)player.getPlayer()).getHandle().playerConnection.sendPacket(packetPlayOutTabComplete);
                             }
-
                         }
                     }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     return;

@@ -38,21 +38,11 @@ public class AuroraMCPlayer {
         this.player = player;
         name = player.getName();
 
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(pl);
-                if (disguise != null) {
-                    activeDisguise = disguise;
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            activeDisguise.apply();
-                        }
-                    }.runTask(AuroraMCAPI.getCore());
-                }
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(pl);
+        if (disguise != null) {
+            activeDisguise = disguise;
+            activeDisguise.apply(false);
+        }
 
         //TODO: Load player statistics.
         new BukkitRunnable() {
@@ -113,7 +103,12 @@ public class AuroraMCPlayer {
                             if (player == bukkitPlayer) {
                                 org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                 team.addPlayer(player);
-                                String s = AuroraMCAPI.getFormatter().rankFormat(rank, activeSubscription);
+                                String s;
+                                if (pl.getActiveDisguise() != null) {
+                                    s = AuroraMCAPI.getFormatter().rankFormat(pl.getActiveDisguise().getRank(), pl.getActiveSubscription());
+                                } else {
+                                    s = AuroraMCAPI.getFormatter().rankFormat(pl.getRank(), pl.getActiveSubscription());
+                                }
                                 if (!s.equals("")) {
                                     s += " ";
                                 }
@@ -132,7 +127,12 @@ public class AuroraMCPlayer {
                                     }
                                     org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                     team.addPlayer(pl.getPlayer());
-                                    String s = AuroraMCAPI.getFormatter().rankFormat(rank, activeSubscription);
+                                    String s;
+                                    if (pl.getActiveDisguise() != null) {
+                                        s = AuroraMCAPI.getFormatter().rankFormat(pl.getActiveDisguise().getRank(), pl.getActiveSubscription());
+                                    } else {
+                                        s = AuroraMCAPI.getFormatter().rankFormat(pl.getRank(), pl.getActiveSubscription());
+                                    }
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
@@ -144,7 +144,11 @@ public class AuroraMCPlayer {
                                     }
                                     team = scoreboard.getScoreboard().registerNewTeam(player.getPlayer().getName());
                                     team.addPlayer(player.getPlayer());
-                                    s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
+                                    if (player.getActiveDisguise() != null) {
+                                        s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
+                                    } else {
+                                        s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
+                                    }
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
@@ -222,12 +226,12 @@ public class AuroraMCPlayer {
         }
 
         activeDisguise = new Disguise(this, name, skin, rank);
-        return activeDisguise.apply();
+        return activeDisguise.apply(true);
     }
 
     public boolean applyDisguise() {
         if (activeDisguise != null) {
-            return activeDisguise.apply();
+            return activeDisguise.apply(true);
         }
         return true;
     }
@@ -235,7 +239,19 @@ public class AuroraMCPlayer {
     public boolean undisguise() {
         if (activeDisguise != null) {
             Disguise activeDisguise = this.activeDisguise;
+            if (!activeDisguise.getName().equals(name)) {
+                for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
+                    player.getScoreboard().getScoreboard().getTeam(activeDisguise.getName()).unregister();
+                }
+            }
             this.activeDisguise = null;
+            AuroraMCPlayer pl = this;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().undisguise(pl);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
             return activeDisguise.undisguise();
         }
         return true;
@@ -374,19 +390,27 @@ public class AuroraMCPlayer {
         if (player.getActiveDisguise() != null) {
             //They are disguised, update their nametag.
             s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
+            if (this.scoreboard.getScoreboard().getTeam(player.getName()) != null) {
+                this.scoreboard.getScoreboard().getTeam(player.getName()).unregister();
+                this.getScoreboard().getScoreboard().registerNewTeam(player.getPlayer().getName());
+            }
         } else {
             s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
+            if (this.getScoreboard().getScoreboard().getTeam(player.getName()) == null) {
+                this.getScoreboard().getScoreboard().registerNewTeam(player.getName());
+            }
         }
         if (!s.equals("")) {
             s += " ";
         }
         s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
-        this.getScoreboard().getScoreboard().getTeam(player.getName()).setPrefix(s);
-        if (!this.getScoreboard().getScoreboard().getTeam(player.getName()).hasEntry(player.getPlayer().getName())) {
-            for (String old : this.scoreboard.getScoreboard().getTeam(player.getName()).getEntries()) {
-                this.scoreboard.getScoreboard().getTeam(player.getName()).removeEntry(old);
+
+        this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setPrefix(s);
+        if (!this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).hasEntry(player.getPlayer().getName())) {
+            for (String old : this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).getEntries()) {
+                this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).removeEntry(old);
             }
-            this.scoreboard.getScoreboard().getTeam(player.getName()).addEntry(player.getPlayer().getName());
+            this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).addEntry(player.getPlayer().getName());
         }
     }
 

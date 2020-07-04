@@ -13,7 +13,7 @@ public abstract class Command {
 
     private final String mainCommand;
     private final ArrayList<String> aliases;
-    private final Map<String, Command> subcommands;
+    protected final Map<String, Command> subcommands;
     private final List<Permission> permission;
     private final boolean showPermissionMessage;
     private final String customPermissionMessage;
@@ -61,4 +61,5 @@ public abstract class Command {
     public String getCustomPermissionMessage() {
         return customPermissionMessage;
     }
+
 }
