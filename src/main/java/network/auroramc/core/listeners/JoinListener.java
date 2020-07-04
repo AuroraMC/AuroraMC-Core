@@ -69,21 +69,6 @@ public class JoinListener implements Listener {
             return;
         }
 
-
-        //TODO: improve reliability of this. Can be removed if servers aren't portforwarded/used on a VPS, as connecting to them wont be physically possible.
-        String server = AuroraMCAPI.getDbManager().getServer(e.getUniqueId());
-
-        if (server == null) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "You must connect to AuroraMC servers through the official AuroraMC proxy!"));
-            return;
-        }
-
-
-        if (!server.equalsIgnoreCase(serverInfo.getName())) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "You cannot connect to 2 servers at the same time!"));
-            return;
-        }
-
         e.allow();
     }
 

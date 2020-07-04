@@ -10,6 +10,7 @@ import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.Disguise;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DisguiseUtil {
@@ -84,6 +87,17 @@ public class DisguiseUtil {
                     if (!uuid.toString().equals("")) {
                         changeSkin(player, uuid, update, disguise);
                     }
+                } else {
+                    if (update) {
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                updatePlayer(player);
+                                disguise.updateSkin(new Skin("ewogICJ0aW1lc3RhbXAiIDogMTU5Mzg3NzM0MDc1NywKICAicHJvZmlsZUlkIiA6ICJiMGMzYzA1OThjMjQ0NjY0OWFkYzAzNjE0ZTdhN2UwNSIsCiAgInByb2ZpbGVOYW1lIiA6ICI3dWtlIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2M2YmUzNzc5YzlmOWRlYjg5MzJjM2I3YmQyNTc4ODhkMTU4OTY5YWM5MWFhMjYzNTE1NzJmMWFkODdjNTE5NDgiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==", "UGHYsvsAZeykNWqutvZD6q4K1KvzolcpLT4yJEPBeCo1vso3gZy0YoExx1RmFyaQu8rzP107sbHg7HaC04d4bg0/m6EjgKLbMV8B3gXbObWEoJ7PzyU/31ezJ11W4wqlSuF3D23DBSA8d2WB3cADiRXkhvMVEHEtXBX3oQZ5U1ZQlGpiVpi3a/hsfbMn2KjYsI25P/koNoBpdKuCy8oYFTd46kOdUW7/OXiBRKjKhUV/TAFxQ7rATMwrp7m4qZpQkfogK5e6lsYj9BueOrKy/Fn5JgejBP7Cx7Dl+u51kGKE/ngbudmzt92eu7H/VzTOY+0zS9d753aFzPyX9WWpfyXCb+o+wzUaccIzome1IX8UKxoVvz+Oh0FFg+E7FihNmdt5liJxPXvS6Bgs+GnaENJBhSb3+lpsSEVAXlqzJ9TZZGCN/1AdchUVhPxrWNUqfqyg9AZAhf0KtfUqVNCcd/QjvTsp5FvkGCkPiFf6Ev4wRTb5n2/vLgPXGDHh/pGFnilfroODI0sjuUUkJLP+ZRcKuiiX5+ain4mMMtNzbgpnLD3HRV7IRfb7Thbxtof2riUODLd5tFikz4isUngxjTERV1pA0xcKbyL6b1iYQ5ZDmzKv/wjCGgQd1jrkVeK0Hkf2WEaF2PkqxCf+lWlLY+kIBnvtRyP1cJDJ+RDR/I0="));
+                                changeSkin(player, disguise.getSkin(), disguise.getSignature(), true);
+                            }
+                        }.runTask(AuroraMCAPI.getCore());
+                    }
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
@@ -108,18 +122,18 @@ public class DisguiseUtil {
         return true;
     }
 
-    public static boolean disguise(Player player, String username, String skin, Disguise disguise) {
-        changeSkin(player, skin, true, disguise);
+    public static boolean disguise(Player player, String username, String skin, Disguise disguise, boolean update) {
+        changeSkin(player, skin, update, disguise);
         return changeName(player, username, false);
     }
 
-    public static boolean disguise(Player player, String username, String skin, String signature) {
-        boolean success = changeSkin(player, skin, signature, true);
+    public static boolean disguise(Player player, String username, String skin, String signature, boolean update) {
+        boolean success = changeSkin(player, skin, signature, update);
         return success && changeName(player, username, false);
     }
 
-    public static boolean disguise(Player player, String username, UUID skin, Disguise disguise) {
-        boolean success = changeSkin(player, skin, true, disguise);
+    public static boolean disguise(Player player, String username, UUID skin, Disguise disguise, boolean update) {
+        boolean success = changeSkin(player, skin, update, disguise);
         return success && changeName(player, username, false);
     }
 
@@ -165,6 +179,23 @@ public class DisguiseUtil {
                 player.setMaxHealth(maxHealth);
                 player.setHealth(health);
 
+                int i = Bukkit.getServer().getViewDistance();
+                for (int x = -i;x<=i;x++) {
+                    for (int z = -i;z<=i;z++) {
+                        int finalX = x;
+                        int finalZ = z;
+                        //Schedule all of the chunks to be reloaded.
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                Chunk chunk = ((CraftChunk) player.getLocation().getWorld().getChunkAt((player.getLocation().getBlockX() + (finalX *16)), (player.getLocation().getBlockZ() + (finalZ *16)))).getHandle();
+                                craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutMapChunk(chunk, true, 20));
+                                craftPlayer.getHandle().chunkCoordIntPairQueue.add(new ChunkCoordIntPair(chunk.bukkitChunk.getX(), chunk.bukkitChunk.getZ()));
+                                chunk.bukkitChunk.getWorld().refreshChunk(chunk.bukkitChunk.getX(), chunk.bukkitChunk.getZ());
+                            }
+                        }.runTask(AuroraMCAPI.getCore());
+                    }
+                }
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     player2.hidePlayer(player);
                     player2.showPlayer(player);

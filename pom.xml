@@ -72,7 +72,21 @@
                             </excludes>
                         </filter>
                         <filter>
+                            <artifact>org.apache.commons:commons-lang3</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.txt</exclude>
+                                <exclude>META-INF/*.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
                             <artifact>org.apache.commons:commons-pool2</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.txt</exclude>
+                                <exclude>META-INF/*.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>org.apache.commons:commons-text</artifact>
                             <excludes>
                                 <exclude>META-INF/*.txt</exclude>
                                 <exclude>META-INF/*.MF</exclude>
@@ -165,6 +179,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>2.7.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.8</version>
         </dependency>
 
         <dependency>

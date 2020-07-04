@@ -36,7 +36,6 @@ public class Disguise {
 
         for (Property property : ((CraftPlayer) player.getPlayer()).getProfile().getProperties().removeAll("textures")) {
             this.originalTexture = property;
-            Bukkit.getLogger().info("Original value: " + this.originalTexture.getValue());
             break;
         }
 
@@ -96,35 +95,35 @@ public class Disguise {
         return originalTexture;
     }
 
-    public boolean apply() {
+    public boolean apply(boolean update) {
         if (skin == null) {
             if (name != null) {
-                return DisguiseUtil.changeName(player.getPlayer(), name, true);
+                return DisguiseUtil.changeName(player.getPlayer(), name, update);
             }
             return true;
         } else {
             if (name != null) {
                 if (skin.equals(player.getName())) {
-                    return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature());
+                    return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature(), update);
                 }
                 if (signature != null) {
-                    return DisguiseUtil.disguise(player.getPlayer(), name, skin, signature);
+                    return DisguiseUtil.disguise(player.getPlayer(), name, skin, signature, update);
                 }
-                return DisguiseUtil.disguise(player.getPlayer(), name, skin, this);
+                return DisguiseUtil.disguise(player.getPlayer(), name, skin, this, update);
             } else {
                 if (skin.equals(player.getName())) {
-                    return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature());
+                    return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature(), update);
                 }
                 if (signature != null) {
-                    return DisguiseUtil.changeSkin(player.getPlayer(), skin, signature, true);
+                    return DisguiseUtil.changeSkin(player.getPlayer(), skin, signature, update);
                 }
-                DisguiseUtil.changeSkin(player.getPlayer(), skin, true, this);
+                DisguiseUtil.changeSkin(player.getPlayer(), skin, update, this);
                 return true;
             }
         }
     }
 
     public boolean undisguise() {
-        return DisguiseUtil.disguise(player.getPlayer(), player.getName(), this.originalTexture.getValue(), this.originalTexture.getSignature());
+        return DisguiseUtil.disguise(player.getPlayer(), player.getName(), this.originalTexture.getValue(), this.originalTexture.getSignature(), true);
     }
 }

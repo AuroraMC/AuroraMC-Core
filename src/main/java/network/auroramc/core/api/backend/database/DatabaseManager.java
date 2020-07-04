@@ -84,10 +84,24 @@ public class DatabaseManager {
     public void setDisguise(AuroraMCPlayer player, Disguise disguise) {
         try (Jedis connection = jedis.getResource()) {
             Pipeline pipeline = connection.pipelined();
+            if (disguise == null) {
+                return;
+            }
             pipeline.set(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()), disguise.getSkin());
             pipeline.set(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()), disguise.getSignature());
             pipeline.set(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()), disguise.getName());
             pipeline.set(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()), disguise.getRank().getId() + "");
+            pipeline.sync();
+        }
+    }
+
+    public void undisguise(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            Pipeline pipeline = connection.pipelined();
+            pipeline.del(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()));
+            pipeline.del(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()));
+            pipeline.del(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()));
+            pipeline.del(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()));
             pipeline.sync();
         }
     }
