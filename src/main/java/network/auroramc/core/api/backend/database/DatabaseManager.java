@@ -106,6 +106,17 @@ public class DatabaseManager {
         }
     }
 
+    public void undisguise(String uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            Pipeline pipeline = connection.pipelined();
+            pipeline.del(String.format("disguise.%s.skin", uuid));
+            pipeline.del(String.format("disguise.%s.signature", uuid));
+            pipeline.del(String.format("disguise.%s.name", uuid));
+            pipeline.del(String.format("disguise.%s.rank", uuid));
+            pipeline.sync();
+        }
+    }
+
     public int newUser(AuroraMCPlayer player) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO auroramc_players(uuid, `name`) VALUES (?, ?);");
@@ -1056,6 +1067,30 @@ public class DatabaseManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean isVanished(AuroraMCPlayer player) {
+        try (Jedis con = jedis.getResource()) {
+            return con.sismember("vanish", player.getPlayer().getUniqueId().toString());
+        }
+    }
+
+    public void vanish(AuroraMCPlayer player) {
+        try (Jedis con = jedis.getResource()) {
+            con.sadd("vanish", player.getPlayer().getUniqueId().toString());
+        }
+    }
+
+    public void unvanish(AuroraMCPlayer player) {
+        try (Jedis con = jedis.getResource()) {
+            con.srem("vanish", player.getPlayer().getUniqueId().toString());
+        }
+    }
+
+    public void unvanish(String uuid) {
+        try (Jedis con = jedis.getResource()) {
+            con.srem("vanish", uuid);
         }
     }
 

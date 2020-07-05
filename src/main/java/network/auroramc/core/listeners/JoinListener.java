@@ -7,12 +7,14 @@ import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.PunishmentLength;
 import network.auroramc.core.api.punishments.Rule;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class JoinListener implements Listener {
 
@@ -77,13 +79,35 @@ public class JoinListener implements Listener {
         AuroraMCPlayer player = new AuroraMCPlayer(e.getPlayer());
         AuroraMCAPI.newPlayer(player);
 
+        for (AuroraMCPlayer player2 : AuroraMCAPI.getPlayers()) {
+            if (player2!=player) {
+                if (player2.isVanished()) {
+                    e.getPlayer().getPlayer().hidePlayer(player2.getPlayer());
+                }
+            }
+        }
 
+        if (player.isVanished()) {
+            for (AuroraMCPlayer player2 : AuroraMCAPI.getPlayers()) {
+                if (player2!=player) {
+                    player2.getPlayer().hidePlayer(e.getPlayer());
+                }
+            }
+        }
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        e.setJoinMessage(null);
         TabCompleteInjector.onJoin(AuroraMCAPI.getPlayer(e.getPlayer()));
         AuroraMCAPI.getPlayer(e.getPlayer()).setScoreboard();
+        if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
+            for (Player player2 : Bukkit.getOnlinePlayers()) {
+                    player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getName()));
+            }
+        } else {
+            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Vanish", "You are currently vanished. To unvanish, just use **/vanish**."));
+        }
     }
 
 }
