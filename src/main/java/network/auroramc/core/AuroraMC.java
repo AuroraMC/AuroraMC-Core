@@ -82,6 +82,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandEvidence());
         AuroraMCAPI.registerCommand(new CommandSM());
         AuroraMCAPI.registerCommand(new CommandDisguise());
+        AuroraMCAPI.registerCommand(new CommandVanish());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);

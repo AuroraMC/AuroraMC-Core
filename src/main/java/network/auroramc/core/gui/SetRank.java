@@ -1,9 +1,11 @@
 package network.auroramc.core.gui;
 
+import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
+import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.*;
@@ -238,6 +240,10 @@ public class SetRank extends GUI {
                 }
                 if (currentRank.getId() == 9) {
                     AuroraMCAPI.getDbManager().removeMentee(id);
+                }
+                if (rank.getCategory() == Rank.RankCategory.PLAYER) {
+                    AuroraMCAPI.getDbManager().undisguise(uuid.toString());
+                    AuroraMCAPI.getDbManager().unvanish(uuid.toString());
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
