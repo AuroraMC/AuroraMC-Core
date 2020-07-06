@@ -9,6 +9,7 @@ import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.Disguise;
 import network.auroramc.core.api.players.Mentee;
 import network.auroramc.core.api.players.Mentor;
+import network.auroramc.core.api.punishments.AdminNote;
 import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
@@ -1149,6 +1150,76 @@ public class DatabaseManager {
             connection.set(String.format("skincache.%s.skin", uuid), skin);
             connection.set(String.format("skincache.%s.signature", uuid), signature);
             connection.set(String.format("skincache.%s.fetched", uuid), fetched + "");
+        }
+    }
+
+    public List<AdminNote> getAdminNotes(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT admin_notes.note_id,admin_notes.user_id,auroramc_players.name,admin_notes.timestamp,admin_notes.note FROM admin_notes INNER JOIN auroramc_players ON auroramc_players.id=admin_notes.added_by WHERE user_id = ? ORDER BY timestamp DESC");
+            statement.setInt(1, id);
+            ResultSet set = statement.executeQuery();
+            List<AdminNote> notes = new ArrayList<>();
+            while (set.next()) {
+                   notes.add(new AdminNote(set.getInt(1), set.getInt(2), set.getString(3), Long.parseLong(set.getString(4)), set.getString(5)));
+            }
+            return notes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void addNewNote(int id, int issuer, long timestamp, String note) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO admin_notes(user_id, added_by, timestamp, note) VALUES (?,?,?,?)");
+            statement.setInt(1, id);
+            statement.setInt(2, issuer);
+            statement.setString(3, timestamp + "");
+            statement.setString(4, note);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<String> globalAccountSuspend(String code, int id, int issuer, long timestamp, String note) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT known_ip_profiles FROM auroramc_players WHERE id = ?");
+            statement.setInt(1, id);
+            ResultSet set = statement.executeQuery();
+            set.next();
+
+            //Add these IP profiles to the list of banned ones.
+            statement = connection.prepareStatement("INSERT INTO global_account_suspensions(punishment_id, root_account, issuer, banned_profiles, timestamp, reason) VALUES (?,?,?,?,?,?)");
+            statement.setString(1, code);
+            statement.setInt(2, id);
+            statement.setInt(3, issuer);
+            statement.setString(4, set.getString(1));
+            statement.setString(5, timestamp + "");
+            statement.setString(6, note);
+            statement.execute();
+
+            List<String> usernames = new ArrayList<>();
+            for (String profileId : set.getString(1).split(",")) {
+                statement = connection.prepareStatement("SELECT ids FROM ip_profile WHERE profile_id = ?");
+                statement.setInt(1, Integer.parseInt(profileId));
+                set = statement.executeQuery();
+                set.next();
+                List<String> ids = new ArrayList<>(Arrays.asList(set.getString(1).split(",")));
+                for (String amcId : ids) {
+                    statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                    statement.setInt(1, Integer.parseInt(amcId));
+                    set = statement.executeQuery();
+                    set.next();
+                    if (!usernames.contains(set.getString(1))) {
+                        usernames.add(set.getString(1));
+                    }
+                }
+            }
+            return usernames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

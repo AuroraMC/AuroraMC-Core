@@ -33,6 +33,11 @@ public class Punish extends GUI {
         this.setItem(1, 2, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Rules", 1, String.format("&rPunish %s for a chat rule", name)));
         this.setItem(1, 4, new GUIItem(Material.IRON_SWORD, "&3&lGame Rules", 1, String.format("&rPunish %s for a game rule", name)));
         this.setItem(1, 6, new GUIItem(Material.SIGN, "&3&lMisc Rules", 1, String.format("&rPunish %s for a miscellaneous rule", name)));
+
+        if (player.getRank().hasPermission("admin")) {
+            this.setItem(2, 3, new GUIItem(Material.REDSTONE_BLOCK, "&4&lGlobal Account Suspension", 1, String.format("&rGlobally suspend %s's access to AuroraMC Services", name)));
+            this.setItem(2, 5, new GUIItem(Material.PAPER, "&7&lAdmin Notes", 1, String.format("&rView %s's notes", name)));
+        }
     }
 
     @Override
@@ -48,6 +53,28 @@ public class Punish extends GUI {
             case SIGN:
                 type = 3;
                 break;
+            case PAPER:
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        AdminNotes adminNotes = new AdminNotes(player, name, id, extraDetails);
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                AuroraMCAPI.closeGUI(player);
+                                adminNotes.open(player);
+                                AuroraMCAPI.openGUI(player, adminNotes);
+                            }
+                        }.runTask(AuroraMCAPI.getCore());
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                return;
+            case REDSTONE_BLOCK:
+                GlobalAccountSuspension suspension = new GlobalAccountSuspension(player, name, id, extraDetails);
+                AuroraMCAPI.closeGUI(player);
+                suspension.open(player);
+                AuroraMCAPI.openGUI(player, suspension);
+                return;
             default:
                 type = -1;
         }
