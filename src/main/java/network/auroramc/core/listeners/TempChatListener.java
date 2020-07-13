@@ -16,6 +16,7 @@ public class TempChatListener implements Listener {
             e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Vanish", "You cannot talk while vanished!"));
             return;
         }
+        e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(AuroraMCAPI.getPlayer(e.getPlayer()), e.getMessage()));
         }

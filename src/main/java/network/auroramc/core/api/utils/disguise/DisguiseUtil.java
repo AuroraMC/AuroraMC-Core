@@ -1,13 +1,13 @@
-package network.auroramc.core.api.utils;
+package network.auroramc.core.api.utils.disguise;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.server.v1_8_R3.*;
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.Disguise;
+import network.auroramc.core.api.utils.UUIDUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class DisguiseUtil {

@@ -12,6 +12,7 @@ import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.punishments.RuleBook;
+import network.auroramc.core.api.utils.ChatFilter;
 import network.auroramc.core.api.utils.TextFormatter;
 import network.auroramc.core.api.utils.gui.GUI;
 import org.bukkit.Bukkit;
@@ -42,6 +43,7 @@ public class AuroraMCAPI {
     private final HashMap<String, Command> commands;
     private final HashMap<AuroraMCPlayer, GUI> openGUIs;
     private final RuleBook rules;
+    private ChatFilter filter;
 
     private final ServerInfo serverInfo;
 
@@ -181,6 +183,19 @@ public class AuroraMCAPI {
                 }
             }
         }.runTaskAsynchronously(i.core);
+    }
+
+    public static void loadFilter() {
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                i.filter = i.dbManager.loadFilter();
+            }
+        }.runTaskAsynchronously(i.core);
+    }
+
+    public static ChatFilter getFilter() {
+        return i.filter;
     }
 
     public static ServerInfo getServerInfo() {

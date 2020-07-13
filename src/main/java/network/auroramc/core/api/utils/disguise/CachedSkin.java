@@ -1,4 +1,4 @@
-package network.auroramc.core.api.utils;
+package network.auroramc.core.api.utils.disguise;
 
 public class CachedSkin extends Skin {
 
