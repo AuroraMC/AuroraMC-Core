@@ -1,18 +1,10 @@
 package network.auroramc.core.api.players;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import network.auroramc.core.AuroraMC;
-import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
-import network.auroramc.core.api.utils.DisguiseUtil;
-import network.auroramc.core.api.utils.Skin;
-import org.bukkit.Bukkit;
+import network.auroramc.core.api.utils.disguise.DisguiseUtil;
+import network.auroramc.core.api.utils.disguise.Skin;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 

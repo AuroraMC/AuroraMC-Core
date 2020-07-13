@@ -33,6 +33,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCache(this, cache);
 
         AuroraMCAPI.loadRules();
+        AuroraMCAPI.loadFilter();
 
         //Register Permissions with the API.
         AuroraMCAPI.registerPermission(new network.auroramc.core.permissions.permissions.Admin());
@@ -83,6 +84,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandSM());
         AuroraMCAPI.registerCommand(new CommandDisguise());
         AuroraMCAPI.registerCommand(new CommandVanish());
+        AuroraMCAPI.registerCommand(new CommandLookup());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);

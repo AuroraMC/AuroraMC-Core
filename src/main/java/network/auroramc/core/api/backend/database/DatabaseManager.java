@@ -5,16 +5,15 @@ import network.auroramc.core.api.backend.ServerInfo;
 import network.auroramc.core.api.backend.database.util.MySQLConnectionPool;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
-import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.api.players.Disguise;
-import network.auroramc.core.api.players.Mentee;
-import network.auroramc.core.api.players.Mentor;
+import network.auroramc.core.api.players.*;
+import network.auroramc.core.api.players.lookup.IPLookup;
+import network.auroramc.core.api.players.lookup.LookupUser;
 import network.auroramc.core.api.punishments.AdminNote;
 import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
-import network.auroramc.core.api.utils.CachedSkin;
-import network.auroramc.core.api.utils.Skin;
+import network.auroramc.core.api.utils.ChatFilter;
+import network.auroramc.core.api.utils.disguise.CachedSkin;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -22,7 +21,6 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -1220,6 +1218,76 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public IPLookup ipLookup(UUID uuid) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement =  connection.prepareStatement("SELECT last_used_profile FROM auroramc_players WHERE uuid = ?");
+            statement.setString(1, uuid.toString());
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                if (set.getInt(1) > 0) {
+                    int profile = set.getInt(1);
+                    statement = connection.prepareStatement("SELECT * FROM ip_profile WHERE profile_id = ?");
+                    statement.setInt(1, profile);
+                    set = statement.executeQuery();
+                    set.next();
+
+                    List<LookupUser> users = new ArrayList<>();
+                    String ip = set.getString(2);
+                    int amountBanned = 0;
+                    int amountMuted = 0;
+                    List<String> userids = new ArrayList<>(Arrays.asList(set.getString(3).split(",")));
+                    for (String userID : userids) {
+                        statement =  connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                        statement.setInt(1, Integer.parseInt(userID));
+                        set = statement.executeQuery();
+                        set.next();
+                        String name = set.getString(1);
+
+                        statement = connection.prepareStatement("SELECT * FROM punishments WHERE amc_id = ? AND (status = 1 OR status = 2 OR status = 3)");
+                        statement.setInt(1, Integer.parseInt(userID));
+                        set = statement.executeQuery();
+                        boolean banned = false;
+                        boolean muted = false;
+                        while (set.next() && (!muted || !banned)) {
+                            if (AuroraMCAPI.getRules().getRule(set.getInt(3)).getType() == 1) {
+                                muted = true;
+                            } else {
+                                banned = true;
+                            }
+                        }
+                        if (muted) {
+                            amountMuted++;
+                        }
+                        if (banned) {
+                            amountBanned++;
+                        }
+                        users.add(new LookupUser(Integer.parseInt(userID), name, muted, banned));
+                    }
+
+                    return new IPLookup(ip, profile, users, amountBanned, amountMuted);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ChatFilter loadFilter() {
+        try (Jedis connection = jedis.getResource()) {
+            List<String> coreWords = new ArrayList<>(connection.smembers("filter.core"));
+            List<String> whitelist = new ArrayList<>(connection.smembers("filter.whitelist"));
+            List<String> blacklist = new ArrayList<>(connection.smembers("filter.blacklist"));
+            List<String> phrases = new ArrayList<>(connection.smembers("filter.phrases"));
+            List<String> replacements = new ArrayList<>(connection.smembers("filter.replacements"));
+            return new ChatFilter(coreWords, blacklist, whitelist, replacements, phrases);
         }
     }
 }
