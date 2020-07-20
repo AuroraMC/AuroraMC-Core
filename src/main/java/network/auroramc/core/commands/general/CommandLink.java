@@ -1,4 +1,4 @@
-package network.auroramc.core.commands;
+package network.auroramc.core.commands.general;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;

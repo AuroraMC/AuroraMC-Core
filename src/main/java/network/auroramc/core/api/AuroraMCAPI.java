@@ -9,6 +9,7 @@ import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
+import network.auroramc.core.api.players.Disguise;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.punishments.RuleBook;
@@ -45,6 +46,8 @@ public class AuroraMCAPI {
     private final RuleBook rules;
     private ChatFilter filter;
 
+    private final HashMap<Player, String> pendingDisguiseChecks;
+
     private final ServerInfo serverInfo;
 
     public AuroraMCAPI(AuroraMC core) {
@@ -62,6 +65,7 @@ public class AuroraMCAPI {
             commands = new HashMap<>();
             openGUIs = new HashMap<>();
             rules = new RuleBook();
+            pendingDisguiseChecks = new HashMap<>();
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
 
@@ -200,6 +204,10 @@ public class AuroraMCAPI {
 
     public static ServerInfo getServerInfo() {
         return i.serverInfo;
+    }
+
+    public static HashMap<Player, String> getPendingDisguiseChecks() {
+        return i.pendingDisguiseChecks;
     }
 }
 

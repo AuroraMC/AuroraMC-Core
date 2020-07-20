@@ -285,7 +285,7 @@ public class AuroraMCPlayer {
 
     public boolean disguise(String skin, String name, Rank rank) {
         if (this.activeDisguise != null) {
-            activeDisguise.undisguise();
+            activeDisguise.switchDisguise();
         }
 
         activeDisguise = new Disguise(this, name, skin, rank);
@@ -455,6 +455,9 @@ public class AuroraMCPlayer {
             s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
             if (this.scoreboard.getScoreboard().getTeam(player.getName()) != null) {
                 this.scoreboard.getScoreboard().getTeam(player.getName()).unregister();
+
+            }
+            if (this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) == null) {
                 this.getScoreboard().getScoreboard().registerNewTeam(player.getPlayer().getName());
             }
         } else {
