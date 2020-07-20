@@ -1,7 +1,12 @@
 package network.auroramc.core;
 
 import network.auroramc.core.api.AuroraMCAPI;
-import network.auroramc.core.commands.*;
+import network.auroramc.core.commands.admin.CommandDisguise;
+import network.auroramc.core.commands.admin.CommandLookup;
+import network.auroramc.core.commands.admin.CommandUndisguise;
+import network.auroramc.core.commands.general.CommandLink;
+import network.auroramc.core.commands.moderation.*;
+import network.auroramc.core.commands.admin.CommandSetRank;
 import network.auroramc.core.listeners.*;
 import network.auroramc.core.managers.CommandManager;
 import network.auroramc.core.managers.GUIManager;
@@ -85,6 +90,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandDisguise());
         AuroraMCAPI.registerCommand(new CommandVanish());
         AuroraMCAPI.registerCommand(new CommandLookup());
+        AuroraMCAPI.registerCommand(new CommandUndisguise());
+        AuroraMCAPI.registerCommand(new CommandStaffChat());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);

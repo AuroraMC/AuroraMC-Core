@@ -5,6 +5,7 @@ import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.permissions.ranks.Elite;
 import network.auroramc.core.permissions.ranks.Master;
+import network.auroramc.core.permissions.ranks.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import network.auroramc.core.api.players.AuroraMCPlayer;
@@ -20,6 +21,7 @@ public class TextFormatter {
     private final String nonPrefixFormat = "&r%s";
     private final String chatPrefixFormat = "&%s«%s%s»";
     private final String chatUltimateFormat = "&%s&l%s";
+    private final String chatStaffMessageFormat = " &r&%s%s %s &l»&r ";
 
     private final char normalColor = 'r';
     private final char highlightColor = 'b';
@@ -88,7 +90,7 @@ public class TextFormatter {
                         hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText().replace("\n\n&aClick to visit the store!", ""), player.getActiveSubscription().getColor())));
                     }
                 } else if (rank instanceof Elite || rank instanceof Master) {
-                    hoverText.append("&aClick to visit the store!");
+                    hoverText.append(convert("&aClick to visit the store!"));
                 }
                 prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
             }
@@ -193,6 +195,24 @@ public class TextFormatter {
 
         //Returns the final result.
         return chatMessage;
+    }
+
+    public BaseComponent formatStaffMessage(AuroraMCPlayer sender, String message) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent(convert("&4&l«SC»"));
+        ComponentBuilder prefixHover = new ComponentBuilder(convert("&4&l«STAFF CHAT»\n" +
+                "\n" +
+                "You can use this chat to get help\n" +
+                "from our Moderation staff! You can\n" +
+                "ask questions, or request help with\n" +
+                "rule breakers!"));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, prefixHover.create()));
+
+        textComponent.addExtra(prefix);
+
+        Rank rank = ((sender.isDisguised())?sender.getActiveDisguise().getRank():sender.getRank());
+        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank instanceof Player)?'7':rank.getPrefixColor()), ((rank instanceof Player)?"Player":rank.getPrefixAppearance()), sender.getPlayer().getName())) + message);
+        return textComponent;
     }
 
 }

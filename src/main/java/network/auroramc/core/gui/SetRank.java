@@ -215,6 +215,7 @@ public class SetRank extends GUI {
         AuroraMCPlayer setter = this.player;
 
 
+
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) {
             if (player.isOnline()) {

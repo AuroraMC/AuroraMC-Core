@@ -162,8 +162,8 @@ public class RuleListing extends GUI {
                         out.writeUTF(name);
                         out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been muted for **%s**.\n" +
                                 "Reason: **%s - %s [Awaiting Approval]**\n" +
-                                "Punishment Code: **%s**\n" +
-                                "Your punishment has been applied by a Trial Moderator, and is severe enough to need approval from a Staff Management member to ensure that the punishment applied was correct. When it is approved, the full punishment length will automatically apply to you. If this punishment is denied for being false, **it will automatically be removed**, and the punishment will automatically be removed from your Punishment History.", length.getFormatted(), rule.getRuleName(), extraDetails, code)));
+                                "Punishment Code: **%s**\n\n" +
+                                "Your punishment has been applied by a Junior Moderator, and is severe enough to need approval from a Staff Management member to ensure that the punishment applied was correct. When it is approved, the full punishment length will automatically apply to you. If this punishment is denied for being false, **it will automatically be removed**, and the punishment will automatically be removed from your Punishment History.", length.getFormatted(), rule.getRuleName(), extraDetails, code)));
 
                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
@@ -200,7 +200,7 @@ public class RuleListing extends GUI {
                                 "\n" +
                                 "&rPunishment Code: **%s**\n" +
                                 "\n" +
-                                "&rYour punishment has been applied by a Trial Moderator, and is severe enough to need approval\n" +
+                                "&rYour punishment has been applied by a Junior Moderator, and is severe enough to need approval\n" +
                                 "&rfrom a Staff Management member to ensure that the punishment applied was correct. When it is\n" +
                                 "&rapproved, the full punishment length will automatically apply to you. If this punishment is\n" +
                                 "&rdenied for being false, **it will automatically be removed**, and the punishment will automatically\n" +

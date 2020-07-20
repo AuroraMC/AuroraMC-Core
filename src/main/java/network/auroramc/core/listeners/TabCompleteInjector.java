@@ -2,6 +2,8 @@ package network.auroramc.core.listeners;
 
 import io.netty.channel.*;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
+import net.minecraft.server.v1_8_R3.PacketPlayOutMapChunk;
+import net.minecraft.server.v1_8_R3.PacketPlayOutMapChunkBulk;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
@@ -87,7 +89,7 @@ public class TabCompleteInjector {
 
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
-                //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE: " + ChatColor.GREEN + packet.toString());
+                Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE: " + ChatColor.GREEN + packet.toString());
                 super.write(channelHandlerContext, packet, channelPromise);
             }
 
