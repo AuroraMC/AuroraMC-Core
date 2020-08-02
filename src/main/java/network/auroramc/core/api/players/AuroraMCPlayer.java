@@ -7,6 +7,7 @@ import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
+import network.auroramc.core.api.stats.PlayerStatistics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -32,6 +33,7 @@ public class AuroraMCPlayer {
     private List<BukkitTask> expiryTasks;
     private PlayerScoreboard scoreboard;
     private boolean vanished;
+    private PlayerStatistics statistics;
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -225,6 +227,9 @@ public class AuroraMCPlayer {
 
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
+                statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+
+
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
                 Bukkit.getPluginManager().callEvent(creationEvent);
@@ -251,6 +256,8 @@ public class AuroraMCPlayer {
         activeMutes = oldPlayer.getActiveMutes();
         expiryTasks = oldPlayer.expiryTasks;
         scoreboard = oldPlayer.scoreboard;
+        vanished = oldPlayer.vanished;
+        statistics = oldPlayer.statistics;
     }
 
     public Rank getRank() {
@@ -522,5 +529,9 @@ public class AuroraMCPlayer {
             player.getPlayer().showPlayer(this.player);
             player.updateNametag(this);
         }
+    }
+
+    public PlayerStatistics getStatistics() {
+        return statistics;
     }
 }

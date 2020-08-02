@@ -13,6 +13,7 @@ import network.auroramc.core.api.players.Disguise;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.punishments.RuleBook;
+import network.auroramc.core.api.stats.Achievement;
 import network.auroramc.core.api.utils.ChatFilter;
 import network.auroramc.core.api.utils.TextFormatter;
 import network.auroramc.core.api.utils.gui.GUI;
@@ -45,6 +46,7 @@ public class AuroraMCAPI {
     private final HashMap<AuroraMCPlayer, GUI> openGUIs;
     private final RuleBook rules;
     private ChatFilter filter;
+    private final HashMap<Integer, Achievement> achievements;
 
     private final HashMap<Player, String> pendingDisguiseChecks;
 
@@ -66,6 +68,7 @@ public class AuroraMCAPI {
             openGUIs = new HashMap<>();
             rules = new RuleBook();
             pendingDisguiseChecks = new HashMap<>();
+            achievements = new HashMap<>();
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
 
@@ -146,6 +149,10 @@ public class AuroraMCAPI {
         i.permissions.put(permission.getNode(), permission);
     }
 
+    public static void registerAchievement(Achievement achievement) {
+        i.achievements.put(achievement.getAchievementId(), achievement);
+    }
+
     public static void registerCommand(Command command) {
         i.commands.put(command.getMainCommand().toLowerCase(), command);
         for (String alias : command.getAliases()) {
@@ -156,6 +163,8 @@ public class AuroraMCAPI {
     public static Command getCommand(String label) {
         return i.commands.get(label);
     }
+
+    public static Achievement getAchievement(int id) {return i.achievements.get(id);}
 
     public static List<String> getCommands() {
         return new ArrayList<>(i.commands.keySet());
@@ -208,6 +217,14 @@ public class AuroraMCAPI {
 
     public static HashMap<Player, String> getPendingDisguiseChecks() {
         return i.pendingDisguiseChecks;
+    }
+
+    public static int getOpenGUIs() {
+        return i.openGUIs.size();
+    }
+
+    public static HashMap<Integer, Achievement> getAchievements() {
+        return i.achievements;
     }
 }
 

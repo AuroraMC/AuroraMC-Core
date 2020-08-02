@@ -12,6 +12,10 @@ import network.auroramc.core.api.punishments.AdminNote;
 import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
+import network.auroramc.core.api.stats.Achievement;
+import network.auroramc.core.api.stats.GameStatistics;
+import network.auroramc.core.api.stats.PlayerStatistics;
+import network.auroramc.core.api.stats.StatsGame;
 import network.auroramc.core.api.utils.ChatFilter;
 import network.auroramc.core.api.utils.disguise.CachedSkin;
 import org.bukkit.Bukkit;
@@ -23,10 +27,7 @@ import redis.clients.jedis.Pipeline;
 
 import java.sql.*;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DatabaseManager {
@@ -1288,6 +1289,54 @@ public class DatabaseManager {
             List<String> phrases = new ArrayList<>(connection.smembers("filter.phrases"));
             List<String> replacements = new ArrayList<>(connection.smembers("filter.replacements"));
             return new ChatFilter(coreWords, blacklist, whitelist, replacements, phrases);
+        }
+    }
+
+    public PlayerStatistics getStatistics(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            Map<Integer, GameStatistics> gameStats = new HashMap<>();
+
+            Map<String, String> stats = connection.hgetAll(String.format("stats.%s.game", player.getPlayer().getUniqueId().toString()));
+            //Load game statistics.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                String[] s = stat.getKey().split("[.]");
+                int gameId = Integer.parseInt(s[0]);
+                if (!gameStats.containsKey(gameId)) {
+                    Map<String, Long> ss = new HashMap<>();
+                    ss.put(s[1], Long.parseLong(stat.getValue()));
+                    gameStats.put(gameId, new GameStatistics(gameId, ss));
+                } else {
+                    gameStats.get(gameId).addStat(s[1], Long.parseLong(stat.getValue()));
+                }
+            }
+
+            stats = connection.hgetAll(String.format("stats.%s.achievements", player.getPlayer().getUniqueId().toString()));
+            Map<Achievement, Integer> achievements = new HashMap<>();
+            //Load Achievements.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                Achievement achievement = AuroraMCAPI.getAchievement(Integer.parseInt(stat.getKey()));
+                int level = Integer.parseInt(stat.getValue());
+                achievements.put(achievement, level);
+            }
+
+            stats = connection.hgetAll(String.format("stats.%s.achievements.progress", player.getPlayer().getUniqueId().toString()));
+            Map<Achievement, Long> progress = new HashMap<>();
+            //Load Achievements.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                Achievement achievement = AuroraMCAPI.getAchievement(Integer.parseInt(stat.getKey()));
+                long amount = Long.parseLong(stat.getValue());
+                progress.put(achievement, amount);
+            }
+
+            //Load core stuff.
+            long totalXpEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "xpEarned"));
+            long firstJoinTimestamp = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "firstJoinTimestamp"));
+            long xpIntoLevel = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "xpIntoLevel"));
+            int level = Integer.parseInt(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "level"));
+            long lobbyTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "lobbyTimeMs"));
+            long gameTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "gameTimeMs"));
+
+            return new PlayerStatistics(player, firstJoinTimestamp, totalXpEarned, xpIntoLevel, level, achievements, progress, gameStats, lobbyTimeMs, gameTimeMs);
         }
     }
 }

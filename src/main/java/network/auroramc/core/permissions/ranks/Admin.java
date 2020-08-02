@@ -13,7 +13,6 @@ import java.util.Collections;
 
 public final class Admin extends Rank {
 
-
     public Admin() {
         super(11, "Administrator", "Admin", "&c«ADMIN»\n \n" +
                         "&fAdmins monitor their specific teams,\n" +

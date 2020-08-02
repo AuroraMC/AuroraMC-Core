@@ -6,6 +6,7 @@ import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.punishments.Ban;
 import network.auroramc.core.api.punishments.PunishmentLength;
 import network.auroramc.core.api.punishments.Rule;
+import network.auroramc.core.api.utils.TabCompleteInjector;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class JoinListener implements Listener {
 

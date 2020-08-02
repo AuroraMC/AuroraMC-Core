@@ -37,4 +37,8 @@ public class RuleBook {
     public Rule getRule(int id) {
         return rules.get(id);
     }
+
+    public int noOfRules() {
+        return rules.size();
+    }
 }
