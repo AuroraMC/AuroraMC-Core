@@ -133,7 +133,7 @@ public class AdminNotes extends GUI {
                         "**%s**;" +
                         "&rIssued at: **%s**;" +
                         "&rIssued by: **%s**", reason, (new Date(note.getTimestamp())).toString(), note.getAddedBy());
-                this.setItem(row, column, new GUIItem(Material.BOOK, "&7&lAdmin Note", 1, lore));
+                this.updateItem(row, column, new GUIItem(Material.BOOK, "&7&lAdmin Note", 1, lore));
                 column++;
                 if (column == 8) {
                     row++;
