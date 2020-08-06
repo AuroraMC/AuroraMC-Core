@@ -1,6 +1,5 @@
 package network.auroramc.core.gui.punish;
 
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.gui.GUI;

@@ -10,7 +10,6 @@ import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;

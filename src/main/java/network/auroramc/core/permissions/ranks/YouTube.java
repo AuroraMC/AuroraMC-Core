@@ -2,8 +2,6 @@ package network.auroramc.core.permissions.ranks;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
-import network.auroramc.core.permissions.permissions.Disguise;
-import network.auroramc.core.permissions.permissions.SocialMedia;
 import org.bukkit.Color;
 
 import java.util.ArrayList;

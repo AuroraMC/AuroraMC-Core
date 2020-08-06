@@ -2,15 +2,11 @@ package network.auroramc.core.api.utils;
 
 import io.netty.channel.*;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
-import net.minecraft.server.v1_8_R3.PacketPlayOutMapChunk;
-import net.minecraft.server.v1_8_R3.PacketPlayOutMapChunkBulk;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
 import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -2,7 +2,6 @@ package network.auroramc.core.commands.moderation;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
-import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.gui.punish.PunishmentHistoryGUI;

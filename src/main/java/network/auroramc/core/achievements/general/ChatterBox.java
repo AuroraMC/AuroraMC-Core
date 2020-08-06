@@ -1,12 +1,7 @@
 package network.auroramc.core.achievements.general;
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntity;
-import network.auroramc.core.api.stats.Achievement;
 import network.auroramc.core.api.stats.AchievementTier;
 import network.auroramc.core.api.stats.TieredAcheivement;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChatterBox extends TieredAcheivement {
 

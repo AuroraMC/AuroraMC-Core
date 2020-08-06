@@ -1,14 +1,15 @@
 package network.auroramc.core.gui;
 
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.api.utils.UUIDUtil;
 import network.auroramc.core.api.utils.gui.GUI;
 import network.auroramc.core.api.utils.gui.GUIItem;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;

@@ -1,7 +1,5 @@
 package network.auroramc.core.api.punishments;
 
-import org.bukkit.Bukkit;
-
 import java.util.HashMap;
 
 public class RuleBook {

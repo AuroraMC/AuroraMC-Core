@@ -5,8 +5,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import java.lang.reflect.AnnotatedElement;
-
 public class DisguiseEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();

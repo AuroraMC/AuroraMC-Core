@@ -1,9 +1,7 @@
 package network.auroramc.core.api.punishments;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class Weight {
 

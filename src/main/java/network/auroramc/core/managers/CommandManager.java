@@ -1,23 +1,18 @@
 package network.auroramc.core.managers;
 
 import network.auroramc.core.api.AuroraMCAPI;
-import network.auroramc.core.api.backend.Cache;
 import network.auroramc.core.api.command.Command;
 import network.auroramc.core.api.events.CommandEngineOverwriteEvent;
 import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.CoreCache;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CommandManager implements Listener {
 

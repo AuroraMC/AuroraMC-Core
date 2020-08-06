@@ -2,9 +2,9 @@ package network.auroramc.core.api.players;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.events.player.PlayerObjectCreationEvent;
+import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
-import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
 import network.auroramc.core.api.stats.PlayerStatistics;

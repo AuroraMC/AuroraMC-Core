@@ -2,11 +2,8 @@ package network.auroramc.core.commands.moderation;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
-import network.auroramc.core.api.permissions.Permission;
-import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.UUIDUtil;
-import network.auroramc.core.gui.SetRank;
 import network.auroramc.core.gui.punish.Punish;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

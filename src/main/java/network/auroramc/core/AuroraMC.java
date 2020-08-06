@@ -1,26 +1,26 @@
 package network.auroramc.core;
 
-import network.auroramc.core.achievements.general.*;
 import network.auroramc.core.achievements.experience.*;
 import network.auroramc.core.achievements.friends.*;
-import network.auroramc.core.achievements.game.*;
-import network.auroramc.core.achievements.party.*;
+import network.auroramc.core.achievements.general.*;
 import network.auroramc.core.achievements.loyalty.*;
+import network.auroramc.core.achievements.party.*;
 import network.auroramc.core.achievements.time.*;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.commands.admin.*;
+import network.auroramc.core.commands.general.CommandAchievements;
 import network.auroramc.core.commands.general.CommandLink;
 import network.auroramc.core.commands.moderation.*;
 import network.auroramc.core.listeners.*;
 import network.auroramc.core.managers.CommandManager;
 import network.auroramc.core.managers.GUIManager;
 import network.auroramc.core.permissions.permissions.*;
-import network.auroramc.core.permissions.ranks.*;
 import network.auroramc.core.permissions.ranks.Admin;
 import network.auroramc.core.permissions.ranks.BuildTeamManagement;
 import network.auroramc.core.permissions.ranks.Elite;
 import network.auroramc.core.permissions.ranks.Master;
 import network.auroramc.core.permissions.ranks.Player;
+import network.auroramc.core.permissions.ranks.*;
 import network.auroramc.core.permissions.subranks.JrQA;
 import network.auroramc.core.permissions.subranks.SrDev;
 import network.auroramc.core.permissions.subranks.SrQA;
@@ -97,6 +97,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandUndisguise());
         AuroraMCAPI.registerCommand(new CommandStaffChat());
         AuroraMCAPI.registerCommand(new CommandLag());
+        AuroraMCAPI.registerCommand(new CommandAchievements());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());

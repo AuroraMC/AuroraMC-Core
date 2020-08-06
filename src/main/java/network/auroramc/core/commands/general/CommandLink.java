@@ -2,10 +2,8 @@ package network.auroramc.core.commands.general;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
-import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 

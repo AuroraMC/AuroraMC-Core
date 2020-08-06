@@ -2,7 +2,6 @@ package network.auroramc.core.permissions.subranks;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.SubRank;
-import network.auroramc.core.permissions.permissions.DebugInfo;
 import org.bukkit.Color;
 
 import java.util.ArrayList;
