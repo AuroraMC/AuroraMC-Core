@@ -16,6 +16,10 @@ public class GUIItem {
 
     private final ItemStack item;
 
+    public GUIItem(ItemStack item) {
+        this.item = item;
+    }
+
     public GUIItem(Material material) {
         this(material, null);
     }

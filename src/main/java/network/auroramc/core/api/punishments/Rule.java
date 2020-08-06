@@ -1,8 +1,5 @@
 package network.auroramc.core.api.punishments;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 public class Rule {
 
     private final int ruleID;

@@ -2,19 +2,17 @@ package network.auroramc.core.api.stats;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.LevelUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PlayerStatistics {
 
     private final AuroraMCPlayer player;
-    private long firstJoinTimestamp;
+    private final long firstJoinTimestamp;
     private long totalXpEarned;
     private long xpIntoLevel;
     private int level;
@@ -80,15 +78,10 @@ public class PlayerStatistics {
                 level++;
                 xpIntoLevel = (xpIntoLevel - LevelUtils.xpForLevel(level));
             } while (xpIntoLevel > LevelUtils.xpForLevel(level + 1));
-
-            out.writeUTF("XPAddLevelChange");
-            out.writeInt(level);
             levelUp = true;
-        } else {
-            out.writeUTF("XPAdd");
         }
-        out.writeLong(xpIntoLevel);
-        out.writeLong(totalXpEarned);
+        out.writeUTF("XPAdd");
+        out.writeUTF(player.getName());
         out.writeLong(amount);
         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
         return levelUp;
@@ -102,6 +95,15 @@ public class PlayerStatistics {
             map.put(key, amount);
             stats.put(gameId, new GameStatistics(gameId, map));
         }
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("StatisticIncrement");
+        out.writeUTF(player.getName());
+        out.writeInt(gameId);
+        out.writeUTF(key);
+        out.writeLong(amount);
+
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
     }
 
     public long getStatistic(int gameId, String key) {
@@ -118,6 +120,13 @@ public class PlayerStatistics {
 
     public void achievementGained(Achievement achievement, int tier) {
         achievementsGained.put(achievement, tier);
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("AchievementGained");
+        out.writeUTF(player.getName());
+        out.writeInt(achievement.getAchievementId());
+        out.writeInt(tier);
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
     }
 
     public Map<Achievement, Long> getAchievementProgress() {
@@ -134,10 +143,24 @@ public class PlayerStatistics {
                         tierAchieved++;
                     }
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
+
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("AchievementProgressTierGained");
+                    out.writeUTF(player.getName());
+                    out.writeInt(achievement.getAchievementId());
+                    out.writeLong(amount);
+                    out.writeInt(tierAchieved);
+                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                     return tierAchieved;
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("AchievementProgress");
+                    out.writeUTF(player.getName());
+                    out.writeInt(achievement.getAchievementId());
+                    out.writeLong(amount);
+                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                     return -1;
                 }
             } else {
@@ -147,10 +170,25 @@ public class PlayerStatistics {
                         tierAchieved++;
                     }
                     achievementProgress.put(achievement, amount);
+
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("AchievementProgressTierGained");
+                    out.writeUTF(player.getName());
+                    out.writeInt(achievement.getAchievementId());
+                    out.writeLong(amount);
+                    out.writeInt(tierAchieved);
+                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
                     return tierAchieved;
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, amount);
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("AchievementProgress");
+                    out.writeUTF(player.getName());
+                    out.writeInt(achievement.getAchievementId());
+                    out.writeLong(amount);
+                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                     return -1;
                 }
             }

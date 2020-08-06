@@ -1,6 +1,9 @@
 package network.auroramc.core.api.stats;
 
-public abstract class Achievement {
+import network.auroramc.core.api.utils.gui.GUIItem;
+import org.bukkit.Material;
+
+public abstract class Achievement implements Comparable<Achievement> {
 
     public enum AchievementCategory {GENERAL, FRIENDS, PARTY, TIME, LOYALTY, EXPERIENCE, GAME, NA}
 
@@ -26,7 +29,7 @@ public abstract class Achievement {
         return name;
     }
 
-    public int getAchievementId() {
+    public Integer getAchievementId() {
         return achievementId;
     }
 
@@ -48,5 +51,10 @@ public abstract class Achievement {
 
     public AchievementCategory getCategory() {
         return category;
+    }
+
+    @Override
+    public int compareTo(Achievement o) {
+        return this.getAchievementId().compareTo(o.getAchievementId());
     }
 }

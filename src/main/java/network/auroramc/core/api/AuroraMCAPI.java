@@ -9,8 +9,6 @@ import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.api.players.Disguise;
-import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.punishments.RuleBook;
 import network.auroramc.core.api.stats.Achievement;
@@ -22,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -164,7 +161,18 @@ public class AuroraMCAPI {
         return i.commands.get(label);
     }
 
-    public static Achievement getAchievement(int id) {return i.achievements.get(id);}
+    public static Achievement getAchievement(int id) {
+        return i.achievements.get(id);
+    }
+
+    public static Achievement getAchievement(String name) {
+        for (Achievement achievement : i.achievements.values()) {
+            if (achievement.getName().equalsIgnoreCase(name)) {
+                return achievement;
+            }
+        }
+        return null;
+    }
 
     public static List<String> getCommands() {
         return new ArrayList<>(i.commands.keySet());

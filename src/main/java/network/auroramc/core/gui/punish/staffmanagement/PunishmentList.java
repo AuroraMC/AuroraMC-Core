@@ -18,8 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class PunishmentList extends GUI {
 

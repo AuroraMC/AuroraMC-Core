@@ -4,16 +4,12 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
-import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.api.utils.UUIDUtil;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class CommandUndisguise extends Command {
 

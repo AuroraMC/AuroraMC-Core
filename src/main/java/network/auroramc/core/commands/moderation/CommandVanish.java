@@ -3,7 +3,6 @@ package network.auroramc.core.commands.moderation;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
 import network.auroramc.core.api.events.VanishEvent;
-import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;

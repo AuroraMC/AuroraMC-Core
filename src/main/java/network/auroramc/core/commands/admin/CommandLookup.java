@@ -1,9 +1,7 @@
 package network.auroramc.core.commands.admin;
 
-import network.auroramc.core.AuroraMC;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.command.Command;
-import network.auroramc.core.api.permissions.Permission;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.lookup.IPLookup;
 import network.auroramc.core.api.players.lookup.LookupUser;

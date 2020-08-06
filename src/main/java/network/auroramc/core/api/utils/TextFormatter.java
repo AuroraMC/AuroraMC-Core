@@ -1,15 +1,15 @@
 package network.auroramc.core.api.utils;
 
 import net.md_5.bungee.api.chat.*;
-import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.PlusSubscription;
+import network.auroramc.core.api.permissions.Rank;
+import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.permissions.ranks.Elite;
 import network.auroramc.core.permissions.ranks.Master;
 import network.auroramc.core.permissions.ranks.Player;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import network.auroramc.core.api.players.AuroraMCPlayer;
-import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
