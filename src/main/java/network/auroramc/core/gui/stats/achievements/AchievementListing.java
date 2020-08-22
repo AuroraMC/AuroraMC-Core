@@ -1,4 +1,4 @@
-package network.auroramc.core.gui.stats;
+package network.auroramc.core.gui.stats.achievements;
 
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.players.AuroraMCPlayer;
@@ -30,7 +30,7 @@ public class AchievementListing extends GUI {
         this.category = category;
         this.currentPage = 1;
 
-        long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).filter((Achievement::isVisible)).count() + player.getStatistics().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == category).filter((achievement -> !achievement.isVisible())).count();
+        long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == category).filter((achievement -> !achievement.isVisible())).count();
 
         for (int i = 0; i <= 8; i++) {
             if (i < 6) {
@@ -43,7 +43,7 @@ public class AchievementListing extends GUI {
         this.setItem(0, 4, new GUIItem(item));
 
         //Get a list of this categories achievements and sort them by whether they have been gained or not.
-        Map<Boolean, List<Achievement>> achievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).collect(Collectors.partitioningBy(achievement -> player.getStatistics().getAchievementsGained().containsKey(achievement)));
+        Map<Boolean, List<Achievement>> achievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).collect(Collectors.partitioningBy(achievement -> player.getStats().getAchievementsGained().containsKey(achievement)));
 
         //Now sort through them and setup the display order.
         displayOrder = new ArrayList<>();
@@ -89,7 +89,7 @@ public class AchievementListing extends GUI {
             if (achievedNormal.contains(achievement)) {
                 this.setItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**", WordUtils.wrap(achievement.getDescription(), 40, ";&r&b", false),  achievement.getRewards()), (short)10));
             } else if (achievedTiered.contains(achievement)) {
-                this.setItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**;;&r&aThis achievement is tiered! Click to view more.", WordUtils.wrap(String.format(achievement.getDescription(), ((TieredAcheivement)achievement).getTiers().get(player.getStatistics().getAchievementsGained().get(achievement)).getRequirement()), 40, ";&r&b", false),  achievement.getRewards()), (short)10));
+                this.setItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**;;&r&aThis achievement is tiered! Click to view more.", WordUtils.wrap(String.format(achievement.getDescription(), ((TieredAcheivement)achievement).getTiers().get(player.getStats().getAchievementsGained().get(achievement) - ((player.getStats().getAchievementsGained().get(achievement) == ((TieredAcheivement)achievement).getTiers().size())?1:0)).getRequirement()), 40, ";&r&b", false),  achievement.getRewards()), ((player.getStats().getAchievementsGained().get(achievement) == ((TieredAcheivement)achievement).getTiers().size())? (short)10: (short)14)));
             } else if (unachievedNormal.contains(achievement)) {
                 this.setItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**;;&r&cYou have not achieved this yet." + ((achievement instanceof TieredAcheivement)?";&r&aThis achievement is tiered! Click to view more.":""), WordUtils.wrap(((achievement instanceof TieredAcheivement)?String.format(achievement.getDescription(), (((TieredAcheivement)achievement).getTiers().get(1).getRequirement())):achievement.getDescription()), 40, ";&r&b", false),  achievement.getRewards()), (short)8));
             } else if (unachievedLocked.contains(achievement)) {
@@ -148,11 +148,11 @@ public class AchievementListing extends GUI {
                 }
 
                 Achievement achievement = displayOrder.get(pi);
-                if (player.getStatistics().getAchievementsGained().containsKey(achievement)) {
+                if (player.getStats().getAchievementsGained().containsKey(achievement)) {
                     if (!(achievement instanceof TieredAcheivement)) {
                         this.updateItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**", WordUtils.wrap(achievement.getDescription(), 40, ";&r&b", false),  achievement.getRewards()), (short)10));
                     } else {
-                    this.updateItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**;;&r&aThis achievement is tiered! Click to view more.", WordUtils.wrap(String.format(achievement.getDescription(), ((TieredAcheivement)achievement).getTiers().get(player.getStatistics().getAchievementsGained().get(achievement)).getRequirement()), 40, ";&r&b", false),  achievement.getRewards()), (short)10));
+                        this.updateItem(row, column, new GUIItem(Material.INK_SACK, "&3&l" + achievement.getName(), 1,  String.format("&rDescription:;&r**%s**;&rRewards: **%s**;;&r&aThis achievement is tiered! Click to view more.", WordUtils.wrap(String.format(achievement.getDescription(), ((TieredAcheivement)achievement).getTiers().get(player.getStats().getAchievementsGained().get(achievement) - ((player.getStats().getAchievementsGained().get(achievement) == ((TieredAcheivement)achievement).getTiers().size())?1:0)).getRequirement()), 40, ";&r&b", false),  achievement.getRewards()), ((player.getStats().getAchievementsGained().get(achievement) == ((TieredAcheivement)achievement).getTiers().size())?(short)10:(short)14)));
                     }
                 } else {
                     if (!achievement.isLocked()) {
