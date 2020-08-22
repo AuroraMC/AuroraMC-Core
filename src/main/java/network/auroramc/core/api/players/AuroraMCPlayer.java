@@ -7,6 +7,7 @@ import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
+import network.auroramc.core.api.stats.PlayerBank;
 import network.auroramc.core.api.stats.PlayerStatistics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,6 +35,7 @@ public class AuroraMCPlayer {
     private PlayerScoreboard scoreboard;
     private boolean vanished;
     private PlayerStatistics statistics;
+    private PlayerBank bank;
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -228,6 +230,8 @@ public class AuroraMCPlayer {
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
                 statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+
+                bank = AuroraMCAPI.getDbManager().getBank(pl);
 
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
@@ -531,7 +535,11 @@ public class AuroraMCPlayer {
         }
     }
 
-    public PlayerStatistics getStatistics() {
+    public PlayerStatistics getStats() {
         return statistics;
+    }
+
+    public PlayerBank getBank() {
+        return bank;
     }
 }

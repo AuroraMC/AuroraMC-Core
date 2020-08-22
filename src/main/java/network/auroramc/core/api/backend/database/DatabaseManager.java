@@ -17,6 +17,7 @@ import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.Rule;
 import network.auroramc.core.api.stats.Achievement;
 import network.auroramc.core.api.stats.GameStatistics;
+import network.auroramc.core.api.stats.PlayerBank;
 import network.auroramc.core.api.stats.PlayerStatistics;
 import network.auroramc.core.api.utils.ChatFilter;
 import network.auroramc.core.api.utils.disguise.CachedSkin;
@@ -1341,7 +1342,99 @@ public class DatabaseManager {
             long lobbyTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "lobbyTimeMs"));
             long gameTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "gameTimeMs"));
 
-            return new PlayerStatistics(player, firstJoinTimestamp, totalXpEarned, xpIntoLevel, level, achievements, progress, gameStats, lobbyTimeMs, gameTimeMs);
+            long ticketsEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "ticketsEarned"));
+            long crownsEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "crownsEarned"));
+            long gamesWon = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "gamesWon"));
+            long gamesLost = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "gamesLost"));
+            long gamesPlayed = Long.parseLong(connection.hget(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "gamesPlayed"));
+
+            return new PlayerStatistics(player, firstJoinTimestamp, totalXpEarned, xpIntoLevel, level, achievements, progress, gameStats, lobbyTimeMs, gameTimeMs, gamesPlayed, gamesWon, gamesLost, ticketsEarned, crownsEarned);
+        }
+    }
+
+    public PlayerStatistics getStatistics(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            Map<Integer, GameStatistics> gameStats = new HashMap<>();
+
+            Map<String, String> stats = connection.hgetAll(String.format("stats.%s.game", uuid.toString()));
+            //Load game statistics.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                String[] s = stat.getKey().split("[.]");
+                int gameId = Integer.parseInt(s[0]);
+                if (!gameStats.containsKey(gameId)) {
+                    Map<String, Long> ss = new HashMap<>();
+                    ss.put(s[1], Long.parseLong(stat.getValue()));
+                    gameStats.put(gameId, new GameStatistics(gameId, ss));
+                } else {
+                    gameStats.get(gameId).addStat(s[1], Long.parseLong(stat.getValue()));
+                }
+            }
+
+            stats = connection.hgetAll(String.format("stats.%s.achievements", uuid.toString()));
+            Map<Achievement, Integer> achievements = new HashMap<>();
+            //Load Achievements.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                Achievement achievement = AuroraMCAPI.getAchievement(Integer.parseInt(stat.getKey()));
+                int level = Integer.parseInt(stat.getValue());
+                achievements.put(achievement, level);
+            }
+
+            stats = connection.hgetAll(String.format("stats.%s.achievements.progress", uuid.toString()));
+            Map<Achievement, Long> progress = new HashMap<>();
+            //Load Achievements.
+            for (Map.Entry<String, String> stat : stats.entrySet()) {
+                Achievement achievement = AuroraMCAPI.getAchievement(Integer.parseInt(stat.getKey()));
+                long amount = Long.parseLong(stat.getValue());
+                progress.put(achievement, amount);
+            }
+
+            //Load core stuff.
+            long totalXpEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "xpEarned"));
+            long firstJoinTimestamp = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "firstJoinTimestamp"));
+            long xpIntoLevel = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "xpIntoLevel"));
+            int level = Integer.parseInt(connection.hget(String.format("stats.%s.core", uuid.toString()), "level"));
+            long lobbyTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "lobbyTimeMs"));
+            long gameTimeMs = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "gameTimeMs"));
+
+            long ticketsEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "ticketsEarned"));
+            long crownsEarned = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "crownsEarned"));
+            long gamesWon = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "gamesWon"));
+            long gamesLost = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "gamesLost"));
+            long gamesPlayed = Long.parseLong(connection.hget(String.format("stats.%s.core", uuid.toString()), "gamesPlayed"));
+
+            return new PlayerStatistics(null, firstJoinTimestamp, totalXpEarned, xpIntoLevel, level, achievements, progress, gameStats, lobbyTimeMs, gameTimeMs, gamesPlayed, gamesWon, gamesLost, ticketsEarned, crownsEarned);
+        }
+    }
+
+    public void ticketsEarned(AuroraMCPlayer player, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "ticketsEarned", amount);
+        }
+    }
+
+    public void crownsEarned(AuroraMCPlayer player, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("stats.%s.core", player.getPlayer().getUniqueId().toString()), "crownsEarned", amount);
+        }
+    }
+
+    public PlayerBank getBank(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            long crowns = Long.parseLong(connection.hget(String.format("bank.%s", player.getPlayer().getUniqueId().toString()), "crowns"));
+            long tickets = Long.parseLong(connection.hget(String.format("bank.%s", player.getPlayer().getUniqueId().toString()), "tickets"));
+            return new PlayerBank(player, tickets, crowns);
+        }
+    }
+
+    public void ticketsAdded(AuroraMCPlayer player, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("bank.%s", player.getPlayer().getUniqueId().toString()), "tickets", amount);
+        }
+    }
+
+    public void crownsAdded(AuroraMCPlayer player, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("bank.%s", player.getPlayer().getUniqueId().toString()), "tickets", amount);
         }
     }
 }

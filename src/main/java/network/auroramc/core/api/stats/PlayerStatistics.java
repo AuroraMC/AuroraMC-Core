@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.utils.LevelUtils;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,14 @@ public class PlayerStatistics {
     private final Map<Integer, GameStatistics> stats;
     private long lobbyTimeMs;
     private long gameTimeMs;
+    private long gamesPlayed;
+    private long gamesWon;
+    private long gamesLost;
+    private long ticketsEarned;
+    private long crownsEarned;
 
-    public PlayerStatistics(AuroraMCPlayer player, long firstJoinTimestamp, long totalXpEarned, long xpIntoLevel, int level, Map<Achievement, Integer> achievementsGained, Map<Achievement, Long> achievementProgress, Map<Integer, GameStatistics> stats, long lobbyTimeMs, long gameTimeMs) {
+
+    public PlayerStatistics(AuroraMCPlayer player, long firstJoinTimestamp, long totalXpEarned, long xpIntoLevel, int level, Map<Achievement, Integer> achievementsGained, Map<Achievement, Long> achievementProgress, Map<Integer, GameStatistics> stats, long lobbyTimeMs, long gameTimeMs, long gamesPlayed, long gamesWon, long gamesLost, long ticketsEarned, long crownsEarned) {
         this.firstJoinTimestamp = firstJoinTimestamp;
         this.player = player;
         this.totalXpEarned = totalXpEarned;
@@ -33,6 +40,11 @@ public class PlayerStatistics {
         this.stats = stats;
         this.lobbyTimeMs = lobbyTimeMs;
         this.gameTimeMs = gameTimeMs;
+        this.gamesWon = gamesWon;
+        this.gamesPlayed = gamesPlayed;
+        this.gamesLost = gamesLost;
+        this.ticketsEarned = ticketsEarned;
+        this.crownsEarned = crownsEarned;
     }
 
     public long getGameTimeMs() {
@@ -67,27 +79,54 @@ public class PlayerStatistics {
         return player;
     }
 
-    public boolean addXp(int amount) {
+    public void addLevels(int amount) {
+        level += amount;
+        xpIntoLevel = 0;
+    }
+
+    public void removeLevels(int amount) {
+        level -= amount;
+        xpIntoLevel = 0;
+    }
+
+    public boolean addXp(long amount, boolean sendToBungee) {
         xpIntoLevel += amount;
         totalXpEarned += amount;
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
         boolean levelUp = false;
 
-        if (xpIntoLevel > LevelUtils.xpForLevel(level + 1)) {
-            do {
-                level++;
-                xpIntoLevel = (xpIntoLevel - LevelUtils.xpForLevel(level));
-            } while (xpIntoLevel > LevelUtils.xpForLevel(level + 1));
-            levelUp = true;
+        if (LevelUtils.xpForLevel(level + 1) != -1) {
+            if (xpIntoLevel >= LevelUtils.xpForLevel(level + 1)) {
+                do {
+                    level++;
+                    xpIntoLevel = (xpIntoLevel - LevelUtils.xpForLevel(level));
+                } while (xpIntoLevel >= LevelUtils.xpForLevel(level + 1) && LevelUtils.xpForLevel(level + 1) != -1);
+                levelUp = true;
+            }
         }
-        out.writeUTF("XPAdd");
-        out.writeUTF(player.getName());
-        out.writeLong(amount);
-        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
+        if (sendToBungee) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("XPAdd");
+            out.writeUTF(player.getName());
+            out.writeLong(amount);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
         return levelUp;
     }
 
-    public void incrementStatistic(int gameId, String key, long amount) {
+    public void removeXp(long amount) {
+        totalXpEarned -= amount;
+        if (amount > xpIntoLevel) {
+            do {
+                level--;
+                amount -= xpIntoLevel;
+                xpIntoLevel = LevelUtils.xpForLevel(level + 1);
+            } while (amount > xpIntoLevel && LevelUtils.xpForLevel(level) != -1);
+        }
+        xpIntoLevel -= amount;
+    }
+
+    public void incrementStatistic(int gameId, String key, long amount, boolean sendToBungee) {
         if (stats.containsKey(gameId)) {
             stats.get(gameId).addStat(key, amount);
         } else {
@@ -95,15 +134,17 @@ public class PlayerStatistics {
             map.put(key, amount);
             stats.put(gameId, new GameStatistics(gameId, map));
         }
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("StatisticIncrement");
-        out.writeUTF(player.getName());
-        out.writeInt(gameId);
-        out.writeUTF(key);
-        out.writeLong(amount);
 
-        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        if (sendToBungee) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("StatisticIncrement");
+            out.writeUTF(player.getName());
+            out.writeInt(gameId);
+            out.writeUTF(key);
+            out.writeLong(amount);
 
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
     }
 
     public long getStatistic(int gameId, String key) {
@@ -118,22 +159,36 @@ public class PlayerStatistics {
         return stats.get(gameId);
     }
 
-    public void achievementGained(Achievement achievement, int tier) {
+    public void achievementGained(Achievement achievement, int tier, boolean sendToBungee) {
         achievementsGained.put(achievement, tier);
 
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("AchievementGained");
-        out.writeUTF(player.getName());
-        out.writeInt(achievement.getAchievementId());
-        out.writeInt(tier);
-        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        if (sendToBungee) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("AchievementGained");
+            out.writeUTF(player.getName());
+            out.writeInt(achievement.getAchievementId());
+            out.writeInt(tier);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
+    }
+
+    public void achievementRemoved(Achievement achievement) {
+        achievementsGained.remove(achievement);
     }
 
     public Map<Achievement, Long> getAchievementProgress() {
         return new HashMap<>(achievementProgress);
     }
 
-    public int addProgress(Achievement achievement, long amount, int currentTier) {
+    public void setAchievementProgress(Achievement achievement, long amount) {
+        if (amount == 0) {
+            achievementProgress.remove(achievement);
+        } else {
+            achievementProgress.put(achievement, amount);
+        }
+    }
+
+    public int addProgress(Achievement achievement, long amount, int currentTier, boolean sendToBungee) {
         if (achievement instanceof TieredAcheivement) {
             TieredAcheivement tieredAcheivement = (TieredAcheivement) achievement;
             if (achievementProgress.containsKey(achievement)) {
@@ -144,23 +199,27 @@ public class PlayerStatistics {
                     }
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
 
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("AchievementProgressTierGained");
-                    out.writeUTF(player.getName());
-                    out.writeInt(achievement.getAchievementId());
-                    out.writeLong(amount);
-                    out.writeInt(tierAchieved);
-                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    if (sendToBungee) {
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("AchievementProgressTierGained");
+                        out.writeUTF(player.getName());
+                        out.writeInt(achievement.getAchievementId());
+                        out.writeLong(amount);
+                        out.writeInt(tierAchieved);
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    }
                     return tierAchieved;
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("AchievementProgress");
-                    out.writeUTF(player.getName());
-                    out.writeInt(achievement.getAchievementId());
-                    out.writeLong(amount);
-                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    if (sendToBungee) {
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("AchievementProgress");
+                        out.writeUTF(player.getName());
+                        out.writeInt(achievement.getAchievementId());
+                        out.writeLong(amount);
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    }
                     return -1;
                 }
             } else {
@@ -171,31 +230,138 @@ public class PlayerStatistics {
                     }
                     achievementProgress.put(achievement, amount);
 
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("AchievementProgressTierGained");
-                    out.writeUTF(player.getName());
-                    out.writeInt(achievement.getAchievementId());
-                    out.writeLong(amount);
-                    out.writeInt(tierAchieved);
-                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    if (sendToBungee) {
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("AchievementProgressTierGained");
+                        out.writeUTF(player.getName());
+                        out.writeInt(achievement.getAchievementId());
+                        out.writeLong(amount);
+                        out.writeInt(tierAchieved);
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    }
 
                     return tierAchieved;
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, amount);
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("AchievementProgress");
-                    out.writeUTF(player.getName());
-                    out.writeInt(achievement.getAchievementId());
-                    out.writeLong(amount);
-                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    if (sendToBungee) {
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("AchievementProgress");
+                        out.writeUTF(player.getName());
+                        out.writeInt(achievement.getAchievementId());
+                        out.writeLong(amount);
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    }
                     return -1;
                 }
             }
         } else {
             achievementProgress.put(achievement, amount + ((achievementProgress.containsKey(achievement))?achievementProgress.get(achievement):0));
+            if (sendToBungee) {
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("AchievementProgress");
+                out.writeUTF(player.getName());
+                out.writeInt(achievement.getAchievementId());
+                out.writeLong(amount);
+                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            }
             return -1;
         }
+    }
+
+    public long getFirstJoinTimestamp() {
+        return firstJoinTimestamp;
+    }
+
+    public long getCrownsEarned() {
+        return crownsEarned;
+    }
+
+    public void addCrownsEarned(long amount, boolean sendToServer) {
+        this.crownsEarned += amount;
+        if (sendToServer) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("CrownsEarned");
+            out.writeUTF(player.getName());
+            out.writeLong(amount);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
+    }
+
+    public void removeCrownsEarned(long amount, boolean sendToServer) {
+        this.crownsEarned -= amount;
+        if (sendToServer) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("CrownsRemoved");
+            out.writeUTF(player.getName());
+            out.writeLong(amount);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
+        }
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().crownsEarned(player, -amount);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
+    public long getGamesLost() {
+        return gamesLost;
+    }
+
+    public void addGamePlayed(boolean win) {
+        gamesPlayed++;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        if ((win)) {
+            out.writeUTF("GameWon");
+            gamesWon++;
+        } else {
+            out.writeUTF("GameLost");
+            gamesLost++;
+        }
+        out.writeUTF(player.getName());
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+    }
+
+    public long getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public long getGamesWon() {
+        return gamesWon;
+    }
+
+    public long getTicketsEarned() {
+        return ticketsEarned;
+    }
+
+    public void addTicketsEarned(long amount, boolean sendToServer) {
+        this.ticketsEarned += amount;
+        if (sendToServer) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("TicketsEarned");
+            out.writeUTF(player.getName());
+            out.writeLong(amount);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
+    }
+
+    public void removeTicketsEarned(long amount, boolean sendToServer) {
+        this.ticketsEarned -= amount;
+        if (sendToServer) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("TicketsRemoved");
+            out.writeUTF(player.getName());
+            out.writeLong(amount);
+            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
+        }
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().ticketsEarned(player, -amount);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+
     }
 }
 

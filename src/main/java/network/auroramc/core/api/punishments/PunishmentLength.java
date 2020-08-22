@@ -44,4 +44,8 @@ public class PunishmentLength {
         return ms;
     }
 
+    @Override
+    public String toString() {
+        return getFormatted();
+    }
 }

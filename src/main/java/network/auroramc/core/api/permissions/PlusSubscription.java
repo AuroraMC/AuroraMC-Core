@@ -19,6 +19,7 @@ public final class PlusSubscription {
             "&aClick to visit the store!";
     private static final String clickURL = "http://store.auroramc.block2block.me/";
     private Character color;
+    private Character leveLColor;
     private Date endDate;
     private int monthsSubscribed;
     private int subscriptionStreak;
@@ -51,6 +52,10 @@ public final class PlusSubscription {
             }
         }
         return color;
+    }
+
+    public Character getLeveLColor() {
+        return leveLColor;
     }
 
     public char getUltimateIcon() {

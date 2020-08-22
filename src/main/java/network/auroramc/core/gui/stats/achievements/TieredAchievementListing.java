@@ -1,4 +1,4 @@
-package network.auroramc.core.gui.stats;
+package network.auroramc.core.gui.stats.achievements;
 
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.stats.Achievement;
@@ -41,15 +41,15 @@ public class TieredAchievementListing extends GUI {
 
         int column = 1;
         for (AchievementTier tier : ((TieredAcheivement)achievement).getTiers()) {
-            if (player.getStatistics().getAchievementsGained().containsKey(achievement)) {
-                int achievedTier = player.getStatistics().getAchievementsGained().get(achievement);
+            if (player.getStats().getAchievementsGained().containsKey(achievement)) {
+                int achievedTier = player.getStats().getAchievementsGained().get(achievement);
                 if (tier.getTier() <= achievedTier) {
                     this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()) + ";;&r&aAchieved!", 40, ";&r", false), (short)10));
                 } else {
-                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((player.getStatistics().getAchievementProgress().containsKey(achievement))?player.getStatistics().getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
+                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((player.getStats().getAchievementProgress().containsKey(achievement))?player.getStats().getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
                 }
             } else {
-                this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((player.getStatistics().getAchievementProgress().containsKey(achievement))?player.getStatistics().getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
+                this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((player.getStats().getAchievementProgress().containsKey(achievement))?player.getStats().getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
             }
             column++;
         }
