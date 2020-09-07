@@ -65,17 +65,21 @@ public class TextFormatter {
         }
         TextComponent chatMessage = new TextComponent("");
 
-        String progress = "||||||||||||||||||||||||||||||";
-        double percentage = (((double) player.getStats().getXpIntoLevel() / LevelUtils.xpForLevel(player.getStats().getLevel() + 1))*100);
+        TextComponent level = new TextComponent(convert(String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')), player.getStats().getLevel())));
+        ComponentBuilder levelHover;
         if (player.getStats().getLevel() != 250) {
-            int amountToColour = (int) Math.floor(((percentage) / 100)*30);
-            progress = ((progress.substring(0, amountToColour) + "&r&l" + progress.substring(amountToColour + 1)));
+            String progress = "||||||||||||||||||||||||||||||";
+            double percentage = (((double) player.getStats().getXpIntoLevel() / LevelUtils.xpForLevel(player.getStats().getLevel() + 1))*100);
+            if (player.getStats().getLevel() != 250) {
+                int amountToColour = (int) Math.floor(((percentage) / 100)*30);
+                progress = ((progress.substring(0, amountToColour) + "&r&l" + progress.substring(amountToColour + 1)));
+            } else {
+                percentage = 100.0;
+            }
+            levelHover = new ComponentBuilder(convert(highlight(String.format("%s\n\nCurrent Level: **Level %s**\nTotal EXP Earned: **%s**\n\n &3&l«%s» &r&b&l%s&r &3&l«%s»\nProgress to Next Level: **%s%%**", String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')) + "&l", "LEVEL " + player.getStats().getLevel()), player.getStats().getLevel(), String.format("%,d", player.getStats().getTotalXpEarned()), player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0), progress, player.getStats().getLevel() + ((player.getStats().getLevel() != 250)?1:0), new DecimalFormat("##.#").format(percentage)))));
         } else {
-            percentage = 100.0;
+            levelHover = new ComponentBuilder(convert(highlight(String.format("%s\n\nCurrent Level: **Level %s**\nTotal EXP Earned: **%s**\n\n&3&lMAX LEVEL", String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')) + "&l", "LEVEL " + player.getStats().getLevel()), player.getStats().getLevel(), String.format("%,d", player.getStats().getTotalXpEarned())))));
         }
-
-        TextComponent level = new TextComponent(convert(String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLeveLColor() != null)?player.getActiveSubscription().getLeveLColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')), player.getStats().getLevel())));
-        ComponentBuilder levelHover = new ComponentBuilder(convert(highlight(String.format("%s\n\nCurrent Level: **Level %s**\nTotal EXP Earned: **%s**\n\n &3&l«%s» &r&b&l%s&r &3&l«%s»\nProgress to Next Level: **%s%%**", String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLeveLColor() != null)?player.getActiveSubscription().getLeveLColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')) + "&l", "LEVEL " + player.getStats().getLevel()), player.getStats().getLevel(), String.format("%,d", player.getStats().getTotalXpEarned()), player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0), progress, player.getStats().getLevel() + ((player.getStats().getLevel() != 250)?1:0), new DecimalFormat("##.#").format(percentage)))));
         level.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, levelHover.create()));
         chatMessage.addExtra(level);
 
@@ -151,23 +155,45 @@ public class TextFormatter {
 
     public BaseComponent undisguisedChatMessage(@NotNull AuroraMCPlayer player, @NotNull String message) {
         Rank rank = player.getRank();
-        TextComponent chatMessage = new TextComponent();
+        TextComponent chatMessage = new TextComponent("");
 
-        //Adding ultimate if they have an active subscription.
-        if (player.getActiveSubscription() != null || rank.hasPermission("all")) {
-            PlusSubscription subscription = player.getActiveSubscription();
-            TextComponent component = new TextComponent(convert(String.format(chatUltimateFormat, player.getActiveSubscription().getColor(), player.getActiveSubscription().getUltimateIcon())));
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(convert(String.format(subscription.getHoverText(), player.getActiveSubscription().getColor()))).create()));
-            component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, subscription.getClickURL()));
-            component.addExtra(" ");
-            chatMessage.addExtra(component);
+        TextComponent level = new TextComponent(convert(String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')), player.getStats().getLevel())));
+        ComponentBuilder levelHover;
+        if (player.getStats().getLevel() != 250) {
+            String progress = "||||||||||||||||||||||||||||||";
+            double percentage = (((double) player.getStats().getXpIntoLevel() / LevelUtils.xpForLevel(player.getStats().getLevel() + 1))*100);
+            if (player.getStats().getLevel() != 250) {
+                int amountToColour = (int) Math.floor(((percentage) / 100)*30);
+                progress = ((progress.substring(0, amountToColour) + "&r&l" + progress.substring(amountToColour + 1)));
+            } else {
+                percentage = 100.0;
+            }
+            levelHover = new ComponentBuilder(convert(highlight(String.format("%s\n\nCurrent Level: **Level %s**\nTotal EXP Earned: **%s**\n\n &3&l«%s» &r&b&l%s&r &3&l«%s»\nProgress to Next Level: **%s%%**", String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')) + "&l", "LEVEL " + player.getStats().getLevel()), player.getStats().getLevel(), String.format("%,d", player.getStats().getTotalXpEarned()), player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0), progress, player.getStats().getLevel() + ((player.getStats().getLevel() != 250)?1:0), new DecimalFormat("##.#").format(percentage)))));
+        } else {
+            levelHover = new ComponentBuilder(convert(highlight(String.format("%s\n\nCurrent Level: **Level %s**\nTotal EXP Earned: **%s**\n\n&3&lMAX LEVEL", String.format(chatLevelFormat, ((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')):((rank.getPrefixColor() != null)?rank.getPrefixColor():'3')) + "&l", "LEVEL " + player.getStats().getLevel()), player.getStats().getLevel(), String.format("%,d", player.getStats().getTotalXpEarned())))));
         }
+        level.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, levelHover.create()));
+        chatMessage.addExtra(level);
+
+        chatMessage.addExtra(convert("&r "));
 
         //Adding rank prefix if it exists.
         if (rank.getPrefixAppearance() != null) {
-            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase())));
+            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null)?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
+                if (player.getActiveSubscription() != null) {
+                    if (rank instanceof Elite || rank instanceof Master) {
+                        hoverText.append(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+                    } else if (rank.getPrefixHoverURL() == null) {
+                        hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+                        prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.block2block.me/"));
+                    } else {
+                        hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText().replace("\n\n&aClick to visit the store!", ""), player.getActiveSubscription().getColor())));
+                    }
+                } else if (rank instanceof Elite || rank instanceof Master) {
+                    hoverText.append(convert("&aClick to visit the store!"));
+                }
                 prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
             }
             if (rank.getPrefixHoverURL() != null) {
@@ -176,17 +202,27 @@ public class TextFormatter {
 
             chatMessage.addExtra(prefix);
             chatMessage.addExtra(" ");
+        } else if (player.getActiveSubscription() != null) {
+            TextComponent prefix = new TextComponent(convert(String.format("&%s+&r", player.getActiveSubscription().getColor())));
+
+            ComponentBuilder hoverText = new ComponentBuilder(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
+            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
+
+            prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, player.getActiveSubscription().getClickURL()));
+
+            chatMessage.addExtra(prefix);
+            chatMessage.addExtra(" ");
         }
+
+
+        String name = player.getName();
 
         //Adding in name color.
         if (player.getTeam() != null) {
-            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor())));
+            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor() + name)));
         } else {
-            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor())));
+            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor() + name)));
         }
-
-        //Adding in name.
-        chatMessage.addExtra(player.getPlayer().getDisplayName());
 
 
         //Adding in spacer.

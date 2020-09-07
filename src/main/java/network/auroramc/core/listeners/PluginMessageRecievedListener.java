@@ -7,11 +7,17 @@ import net.md_5.bungee.api.chat.TextComponent;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
+import network.auroramc.core.api.players.friends.Friend;
+import network.auroramc.core.api.players.friends.FriendStatus;
+import network.auroramc.core.api.players.friends.FriendsList;
 import network.auroramc.core.api.stats.Achievement;
+import network.auroramc.core.gui.friends.Friends;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+
+import java.util.UUID;
 
 public class PluginMessageRecievedListener implements PluginMessageListener {
     @Override
@@ -121,6 +127,82 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                 AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
                 long amount = in.readLong();
                 player.getStats().removeTicketsEarned(amount, false);
+            } else if (subchannel.equalsIgnoreCase("PlusSubscription")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                player.newSubscription();
+            } else if (subchannel.equalsIgnoreCase("PlusExtend")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                if (player.getActiveSubscription() != null) {
+                    player.getActiveSubscription().extend(in.readInt());
+                }
+            } else if (subchannel.equalsIgnoreCase("FriendRequestAccepted")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+
+                boolean online = in.readBoolean();
+                String server = in.readUTF();
+                if (server.equals("null")) {
+                    server = null;
+                }
+                FriendStatus status = FriendStatus.valueOf(in.readUTF());
+                player.getFriendsList().friendRequestAccepted(uuid, online, server, status, false);
+            } else if (subchannel.equalsIgnoreCase("FriendRequestDenied")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                player.getFriendsList().friendRequestRemoved(uuid, false);
+            } else if (subchannel.equalsIgnoreCase("FriendDeleted")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                player.getFriendsList().friendRemoved(uuid, false);
+            } else if (subchannel.equalsIgnoreCase("FriendVisibilitySet")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                player.getFriendsList().setVisibilityMode(FriendsList.VisibilityMode.valueOf(in.readUTF()),false);
+            } else if (subchannel.equalsIgnoreCase("FriendStatusSet")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                player.getFriendsList().setCurrentStatus(FriendStatus.valueOf(in.readUTF()),false);
+            } else if (subchannel.equalsIgnoreCase("FriendStatusUpdate")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                player.getFriendsList().getFriends().get(uuid).setStatus(FriendStatus.valueOf(in.readUTF()));
+            } else if (subchannel.equalsIgnoreCase("FriendFavourited")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                player.getFriendsList().getFriends().get(UUID.fromString(in.readUTF())).favourited(false);
+            } else if (subchannel.equalsIgnoreCase("FriendUnfavourited")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                player.getFriendsList().getFriends().get(UUID.fromString(in.readUTF())).unfavourited(false);
+            } else if (subchannel.equalsIgnoreCase("FriendRequestAdded")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                boolean outgoing = in.readBoolean();
+                String name = in.readUTF();
+                int amcId = in.readInt();
+                player.getFriendsList().newFriendRequest(uuid, name, amcId, outgoing);
+            } else if (subchannel.equalsIgnoreCase("FriendLoggedOn")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                String server = in.readUTF();
+                if (server.equals("null")) {
+                    server = null;
+                }
+                FriendStatus status = FriendStatus.valueOf(in.readUTF());
+                player.getFriendsList().getFriends().get(uuid).loggedOn(server, status);
+            } else if (subchannel.equalsIgnoreCase("FriendLoggedOff")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                player.getFriendsList().getFriends().get(uuid).loggedOff();
+            } else if (subchannel.equalsIgnoreCase("FriendServerUpdated")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                UUID uuid = UUID.fromString(in.readUTF());
+                String server = in.readUTF();
+                if (server.equals("null")) {
+                    server = null;
+                }
+                player.getFriendsList().getFriends().get(uuid).updateServer(server);
+            } else if (subchannel.equalsIgnoreCase("OpenFriendGUI")) {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(Bukkit.getPlayer(in.readUTF()));
+                Friends friends = new Friends(player);
+                friends.open(player);
+                AuroraMCAPI.openGUI(player, friends);
             }
         }
     }

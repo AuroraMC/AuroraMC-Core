@@ -8,9 +8,7 @@ import network.auroramc.core.achievements.party.*;
 import network.auroramc.core.achievements.time.*;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.commands.admin.*;
-import network.auroramc.core.commands.general.CommandAchievements;
-import network.auroramc.core.commands.general.CommandLink;
-import network.auroramc.core.commands.general.CommandStats;
+import network.auroramc.core.commands.general.*;
 import network.auroramc.core.commands.moderation.*;
 import network.auroramc.core.listeners.*;
 import network.auroramc.core.managers.CommandManager;
@@ -60,7 +58,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerPermission(new SocialMedia());
         AuroraMCAPI.registerPermission(new StaffManagement());
         AuroraMCAPI.registerPermission(new Support());
-        AuroraMCAPI.registerPermission(new Ultimate());
+        AuroraMCAPI.registerPermission(new Plus());
         AuroraMCAPI.registerPermission(new Build());
 
         //Register Ranks with the API.
@@ -101,6 +99,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandAchievements());
         AuroraMCAPI.registerCommand(new CommandStats());
         AuroraMCAPI.registerCommand(new CommandBankServer());
+        AuroraMCAPI.registerCommand(new CommandPlus());
+        AuroraMCAPI.registerCommand(new CommandLevel());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());

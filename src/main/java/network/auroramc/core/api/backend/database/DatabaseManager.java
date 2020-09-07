@@ -3,12 +3,16 @@ package network.auroramc.core.api.backend.database;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.backend.ServerInfo;
 import network.auroramc.core.api.backend.database.util.MySQLConnectionPool;
+import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
 import network.auroramc.core.api.players.AuroraMCPlayer;
 import network.auroramc.core.api.players.Disguise;
 import network.auroramc.core.api.players.Mentee;
 import network.auroramc.core.api.players.Mentor;
+import network.auroramc.core.api.players.friends.Friend;
+import network.auroramc.core.api.players.friends.FriendStatus;
+import network.auroramc.core.api.players.friends.FriendsList;
 import network.auroramc.core.api.players.lookup.IPLookup;
 import network.auroramc.core.api.players.lookup.LookupUser;
 import network.auroramc.core.api.punishments.AdminNote;
@@ -1435,6 +1439,103 @@ public class DatabaseManager {
     public void crownsAdded(AuroraMCPlayer player, long amount) {
         try (Jedis connection = jedis.getResource()) {
             connection.hincrBy(String.format("bank.%s", player.getPlayer().getUniqueId().toString()), "tickets", amount);
+        }
+    }
+
+    public Character getPlusColour(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "plusColour")) {
+                return connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "plusColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public Character getLevelColour(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "levelColour")) {
+                return connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "levelColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public long getExpire(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "expire")) {
+                return Long.parseLong(connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "expire"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public int getDaysSubscribed(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "daysSubscribed")) {
+                return Integer.parseInt(connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "daysSubscribed"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public int getStreak(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "streak")) {
+                return Integer.parseInt(connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "streak"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public long getStreakStartTimestamp(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "streakStart")) {
+                return Long.parseLong(connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "streakStart"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public FriendsList getFriendsList(AuroraMCPlayer player) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT friends.amc_id, friends.friend, friends.type, auroramc_players.uuid, auroramc_players.name FROM friends INNER JOIN auroramc_players ON auroramc_players.id=friends.friend WHERE amc_id = ?");
+            statement.setInt(1, player.getId());
+
+            ResultSet set = statement.executeQuery();
+            Map<UUID, Friend> friends = new HashMap<>();
+            Map<UUID, Friend> pendingFriendRequests = new HashMap<>();
+            FriendsList.VisibilityMode visibilityMode;
+            FriendStatus status;
+
+            while (set.next()) {
+                Friend friend = new Friend(null, set.getInt(2), UUID.fromString(set.getString(4)), set.getString(5), Friend.FriendType.valueOf(set.getString(3)), null);
+                switch (friend.getType()) {
+                    case NORMAL:
+                    case FAVOURITE:
+                        friends.put(friend.getUuid(), friend);
+                        break;
+                    case PENDING_INCOMING:
+                    case PENDING_OUTGOING:
+                        pendingFriendRequests.put(friend.getUuid(), friend);
+                        break;
+                }
+            }
+
+            try (Jedis redisConnection = jedis.getResource()) {
+                visibilityMode = FriendsList.VisibilityMode.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "visibility"));
+                status = FriendStatus.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "status"));
+            }
+
+            return new FriendsList(player, friends, pendingFriendRequests, visibilityMode, status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -27,14 +27,14 @@ public class Stats extends GUI {
 
         for (int i = 0; i <= 8; i++) {
             if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
+                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
+                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
             }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
+            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
+            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
         }
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 3, false, player.getPlayer().getName()));
-        this.setItem(1, 4, new GUIItem(Material.NETHER_STAR, "&a&lGeneral Statistics", 1, "&rClick here to view your &aGeneral Statistics"));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
+        this.setItem(1, 4, new GUIItem(Material.NETHER_STAR, "&a&lGeneral Statistics", 1, "&rClick here to view &aGeneral Statistics"));
     }
 
     @Override

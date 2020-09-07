@@ -1,5 +1,7 @@
 package network.auroramc.core.gui;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
@@ -230,6 +232,12 @@ public class SetRank extends GUI {
                 }
             }
         }
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("SetRank");
+        out.writeUTF(name);
+        out.writeInt(rankId);
+        this.player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
         new BukkitRunnable() {
             @Override

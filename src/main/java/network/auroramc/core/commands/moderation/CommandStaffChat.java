@@ -25,7 +25,7 @@ public class CommandStaffChat extends Command {
             if (args.size() > 0) {
                 String message = String.join(" ", args);
                 player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessage(player, message));
-                player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 1);
+                player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                 for (Player target : Bukkit.getOnlinePlayers()) {
                     AuroraMCPlayer p = AuroraMCAPI.getPlayer(target);
                     if (p != null) {

@@ -29,13 +29,13 @@ public class GeneralStatistics extends GUI {
 
         for (int i = 0; i <= 8; i++) {
             if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
+                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
+                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
             }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 7));
+            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
+            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Statistics", name), 1, "", (short) 7));
         }
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", player.getPlayer().getName()), 1, "", (short) 3, false, player.getPlayer().getName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
         PunishmentLength ingame = new PunishmentLength(stats.getGameTimeMs()/3600000d);
@@ -45,16 +45,20 @@ public class GeneralStatistics extends GUI {
 
         this.setItem(3, 3, new GUIItem(Material.PAPER, "&d&lTemp Placeholder"));
 
-        String progress = "||||||||||||||||||||||||||||||";
-        double percentage = (((double) stats.getXpIntoLevel() / LevelUtils.xpForLevel(stats.getLevel() + 1))*100);
-        if (stats.getLevel() != 250) {
-            int amountToColour = (int) Math.floor(((percentage) / 100)*30);
-            progress = ((progress.substring(0, amountToColour) + "&r&l" + progress.substring(amountToColour + 1)));
+        if (stats.getLevel() == 250) {
+            this.setItem(2, 4, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Earned", 1, String.format("&rCurrent Level: **Level %s**;&rTotal EXP Earned: **%s**;;&r&3&lMAX LEVEL", stats.getLevel(), String.format("%,d", stats.getTotalXpEarned()))));
         } else {
-            percentage = 100.0;
-        }
+            String progress = "||||||||||||||||||||||||||||||";
+            double percentage = (((double) stats.getXpIntoLevel() / LevelUtils.xpForLevel(stats.getLevel() + 1))*100);
+            if (stats.getLevel() != 250) {
+                int amountToColour = (int) Math.floor(((percentage) / 100)*30);
+                progress = ((progress.substring(0, amountToColour) + "&r&l" + progress.substring(amountToColour + 1)));
+            } else {
+                percentage = 100.0;
+            }
 
-        this.setItem(2, 4, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Earned", 1, String.format("&rCurrent Level: **Level %s**;&rTotal EXP Earned: **%s**;;&r &3&l«%s» &r&b&l%s&r &3&l«%s»;&rProgress to Next Level: **%s%%**", stats.getLevel(), String.format("%,d", stats.getTotalXpEarned()), stats.getLevel() - ((stats.getLevel() == 250)?1:0), progress, stats.getLevel() + ((stats.getLevel() != 250)?1:0), new DecimalFormat("##.#").format(percentage))));
+            this.setItem(2, 4, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Earned", 1, String.format("&rCurrent Level: **Level %s**;&rTotal EXP Earned: **%s**;;&r &3&l«%s» &r&b&l%s&r &3&l«%s»;&rProgress to Next Level: **%s%%**", stats.getLevel(), String.format("%,d", stats.getTotalXpEarned()), stats.getLevel() - ((stats.getLevel() == 250)?1:0), progress, stats.getLevel() + ((stats.getLevel() != 250)?1:0), new DecimalFormat("##.#").format(percentage))));
+        }
 
         this.setItem(3, 5, new GUIItem(Material.BOOK, "&a&lGames Played", 1, String.format("&rTotal Games Played: **%s**;&rTotal Games Won: **%s**;&rTotal Games Lost: **%s**", stats.getGamesPlayed(), stats.getGamesWon(), stats.getGamesLost())));
 
