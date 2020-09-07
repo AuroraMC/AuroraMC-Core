@@ -1,10 +1,14 @@
 package network.auroramc.core.api.players;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import network.auroramc.core.api.AuroraMCAPI;
 import network.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
+import network.auroramc.core.api.players.friends.FriendStatus;
+import network.auroramc.core.api.players.friends.FriendsList;
 import network.auroramc.core.api.punishments.Punishment;
 import network.auroramc.core.api.punishments.PunishmentHistory;
 import network.auroramc.core.api.stats.PlayerBank;
@@ -36,6 +40,8 @@ public class AuroraMCPlayer {
     private boolean vanished;
     private PlayerStatistics statistics;
     private PlayerBank bank;
+
+    private FriendsList friendsList;
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -98,8 +104,30 @@ public class AuroraMCPlayer {
                 rank = AuroraMCAPI.getDbManager().getRank(pl);
                 if (rank.hasPermission("all")) {
                     activeSubscription = new PlusSubscription(pl);
+                } else {
+                    long endTimestamp = AuroraMCAPI.getDbManager().getExpire(pl);
+                    if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis()) {
+                        activeSubscription = new PlusSubscription(pl);
+                    }
                 }
                 subranks = AuroraMCAPI.getDbManager().getSubRanks(pl);
+
+                //Load the friends list.
+                friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
+
+                //If they have a rank-exclusive status set, check if they still have permission to use it.
+                if (friendsList.getCurrentStatus().getPermission() != null) {
+                    if (!hasPermission(friendsList.getCurrentStatus().getPermission().getNode())) {
+                        //They no longer have permission, default to Online.
+                        friendsList.setCurrentStatus(FriendStatus.ONLINE, true);
+                    }
+                }
+
+                //Get the bungee to send all of the friend data to the server
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("UpdateFriendsList");
+                out.writeUTF(name);
+                player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                 //Now that ranks are loaded, update everyones tab.
                 new BukkitRunnable() {
                     @Override
@@ -262,6 +290,8 @@ public class AuroraMCPlayer {
         scoreboard = oldPlayer.scoreboard;
         vanished = oldPlayer.vanished;
         statistics = oldPlayer.statistics;
+        bank = oldPlayer.bank;
+        friendsList = oldPlayer.friendsList;
     }
 
     public Rank getRank() {
@@ -345,6 +375,10 @@ public class AuroraMCPlayer {
             }
         }
 
+        if (activeSubscription != null) {
+            return activeSubscription.getPermission().getNode().equalsIgnoreCase(string);
+        }
+
         return false;
     }
 
@@ -360,6 +394,10 @@ public class AuroraMCPlayer {
                     }
                 }
             }
+        }
+
+        if (activeSubscription != null) {
+            return activeSubscription.getPermission().getId() == id;
         }
 
         return false;
@@ -541,5 +579,34 @@ public class AuroraMCPlayer {
 
     public PlayerBank getBank() {
         return bank;
+    }
+
+    public void expireSubscription() {
+        PlusSubscription subscription = activeSubscription;
+        activeSubscription = null;
+        if (subscription != null) {
+            subscription.expire();
+        }
+    }
+
+    public void newSubscription() {
+        AuroraMCPlayer pl = this;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (rank.hasPermission("all")) {
+                    activeSubscription = new PlusSubscription(pl);
+                } else {
+                    long endTimestamp = AuroraMCAPI.getDbManager().getExpire(pl);
+                    if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis()) {
+                        activeSubscription = new PlusSubscription(pl);
+                    }
+                }
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
+    public FriendsList getFriendsList() {
+        return friendsList;
     }
 }

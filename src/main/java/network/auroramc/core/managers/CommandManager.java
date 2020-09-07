@@ -35,7 +35,12 @@ public class CommandManager implements Listener {
         if (command != null) {
             for (Permission permission : command.getPermission()) {
                 if (player.hasPermission(permission.getId())) {
-                    command.execute(player, commandLabel, args);
+                    try {
+                        command.execute(player, commandLabel, args);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "An error occurred when executing this command. Please report this to the admins!"));
+                    }
                     return;
                 }
             }
