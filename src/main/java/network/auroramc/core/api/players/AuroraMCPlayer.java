@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AuroraMCPlayer {
 
@@ -40,8 +41,10 @@ public class AuroraMCPlayer {
     private boolean vanished;
     private PlayerStatistics statistics;
     private PlayerBank bank;
+    private UUID partyLeader;
 
     private FriendsList friendsList;
+    private ChatChannel channel;
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -261,6 +264,7 @@ public class AuroraMCPlayer {
 
                 bank = AuroraMCAPI.getDbManager().getBank(pl);
 
+                channel = AuroraMCAPI.getDbManager().getChannel(pl);
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
@@ -292,6 +296,8 @@ public class AuroraMCPlayer {
         statistics = oldPlayer.statistics;
         bank = oldPlayer.bank;
         friendsList = oldPlayer.friendsList;
+        channel = oldPlayer.channel;
+        partyLeader = oldPlayer.partyLeader;
     }
 
     public Rank getRank() {
@@ -608,5 +614,21 @@ public class AuroraMCPlayer {
 
     public FriendsList getFriendsList() {
         return friendsList;
+    }
+
+    public void setChannel(ChatChannel channel) {
+        this.channel = channel;
+    }
+
+    public ChatChannel getChannel() {
+        return channel;
+    }
+
+    public UUID getPartyLeader() {
+        return partyLeader;
+    }
+
+    public void setPartyLeader(UUID partyLeader) {
+        this.partyLeader = partyLeader;
     }
 }
