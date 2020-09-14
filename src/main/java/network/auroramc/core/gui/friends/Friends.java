@@ -238,6 +238,12 @@ public class Friends extends GUI {
             } else {
                 if (view == FriendsView.STATUS) {
                     FriendStatus newStatus = statuses.get(((currentPage - 1) * 28) + ((row - 1) * 7) + (column - 1));
+                    if (newStatus.getPermission() != null) {
+                        if (!player.hasPermission(newStatus.getPermission().getNode())) {
+                            player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
+                            return;
+                        }
+                    }
                     friendsList.setCurrentStatus(newStatus, true);
                     row = 1;
                     column = 1;
@@ -329,10 +335,26 @@ public class Friends extends GUI {
                             if (friend.getType() == Friend.FriendType.PENDING_INCOMING) {
                                 if (clickType.isLeftClick()) {
                                     //Accepted
+
+                                    int limit = 250;
+                                    if (player.hasPermission("elite")) {
+                                        limit += 50;
+                                    }
+                                    if (player.hasPermission("master")) {
+                                        limit += 50;
+                                    }
+
+                                    if (player.getFriendsList().getFriends().values().size() + (int) player.getFriendsList().getPendingFriendRequests().values().stream().filter((friend2) -> friend2.getType() == Friend.FriendType.PENDING_OUTGOING).count() >= limit) {
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Friends", "You have already reached your Friends limit! Cancel pending outgoing friend requests or delete friends in order to add more!"));
+                                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
+                                        return;
+                                    }
                                     friendsList.friendRequestAccepted(friend.getUuid(), false, null, FriendStatus.OFFLINE, true);
                                     player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
                                     displayOrder.remove(friend);
 
+                                    row = 1;
+                                    column = 1;
                                     if (displayOrder.size() < ((currentPage) * 28)) {
                                         this.updateItem(5, 7, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
                                     }
@@ -369,6 +391,8 @@ public class Friends extends GUI {
                                     player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
                                     displayOrder.remove(friend);
 
+                                    row = 1;
+                                    column = 1;
                                     if (displayOrder.size() < ((currentPage) * 28)) {
                                         this.updateItem(5, 7, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
                                     }
@@ -409,6 +433,8 @@ public class Friends extends GUI {
                                     player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
                                     displayOrder.remove(friend);
 
+                                    row = 1;
+                                    column = 1;
                                     if (displayOrder.size() < ((currentPage) * 28)) {
                                         this.updateItem(5, 7, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
                                     }
@@ -452,7 +478,7 @@ public class Friends extends GUI {
         }
     }
 
-    public void refresh() {
+    private void refresh() {
         switch (view) {
             case FAVOURITE:
                 List<Friend> onlineFriends = friendsList.getFriends().values().stream().filter((friend) -> ((friend.getType() == Friend.FriendType.FAVOURITE) && friend.isOnline())).collect(Collectors.toList());
@@ -485,6 +511,63 @@ public class Friends extends GUI {
                 displayOrder.addAll(friendsList.getPendingFriendRequests().values());
                 displayOrder.sort(Comparator.comparing(Friend::getName));
                 break;
+        }
+    }
+
+    public void reload() {
+        refresh();
+        int row = 1;
+        int column = 1;
+        for (int i = 0; i < 28; i++) {
+            //show the prev 28 items.
+            int pi = (((currentPage - 1) * 28) + i);
+            if (view == FriendsView.STATUS) {
+                if (statuses.size() <= pi) {
+                    this.updateItem(row, column, null);
+                    column++;
+                    if (column == 8) {
+                        row++;
+                        column = 1;
+                        if (row == 5) {
+                            break;
+                        }
+                    }
+                    continue;
+                }
+                FriendStatus status = statuses.get(pi);
+                this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&rClick here to display your;&rstatus as &%s%s&r.%s", status.getColour(), status.getName(), ((status.getPermission() != null) ? ((player.hasPermission(status.getPermission().getNode())) ? "" : ((status.getCustomPermissionText() != null) ? ";;&r&c" + status.getCustomPermissionText() : ";;&r&cYou do not have permission to set this status.")) : "")), (short) 0, (friendsList.getCurrentStatus() == status)));
+            } else {
+                if (displayOrder.size() <= pi) {
+                    this.updateItem(row, column, null);
+                    column++;
+                    if (column == 8) {
+                        row++;
+                        column = 1;
+                        if (row == 5) {
+                            break;
+                        }
+                    }
+                    continue;
+                }
+                Friend friend = displayOrder.get(pi);
+                if (view == FriendsView.REQUESTS) {
+                    this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                } else {
+                    if (view == FriendsView.DELETE) {
+                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : "")), ((friend.getStatus() != FriendStatus.OFFLINE) ? (short) 3 : (short) 0), false, friend.getName()));
+                    } else {
+                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((friend.getStatus() != FriendStatus.OFFLINE) ? (short) 3 : (short) 0), false, friend.getName()));
+                    }
+                }
+            }
+            column++;
+            if (column == 8) {
+                row++;
+                column = 1;
+                if (row == 5) {
+                    break;
+                }
+            }
         }
     }
 }

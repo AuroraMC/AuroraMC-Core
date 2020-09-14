@@ -6,10 +6,7 @@ import network.auroramc.core.api.backend.database.util.MySQLConnectionPool;
 import network.auroramc.core.api.permissions.PlusSubscription;
 import network.auroramc.core.api.permissions.Rank;
 import network.auroramc.core.api.permissions.SubRank;
-import network.auroramc.core.api.players.AuroraMCPlayer;
-import network.auroramc.core.api.players.Disguise;
-import network.auroramc.core.api.players.Mentee;
-import network.auroramc.core.api.players.Mentor;
+import network.auroramc.core.api.players.*;
 import network.auroramc.core.api.players.friends.Friend;
 import network.auroramc.core.api.players.friends.FriendStatus;
 import network.auroramc.core.api.players.friends.FriendsList;
@@ -1536,6 +1533,12 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public ChatChannel getChannel(AuroraMCPlayer player) {
+        try (Jedis redisConnection = jedis.getResource()) {
+            return ChatChannel.valueOf(redisConnection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "channel"));
         }
     }
 }
