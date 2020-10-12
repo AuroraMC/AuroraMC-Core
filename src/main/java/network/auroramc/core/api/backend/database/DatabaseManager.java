@@ -1541,4 +1541,32 @@ public class DatabaseManager {
             return ChatChannel.valueOf(redisConnection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "channel"));
         }
     }
+
+    public PlayerPreferences getPlayerPreferences(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            boolean friendRequests, partyRequests, chatVisibility, pingOnPrivateMessage, pingOnPartyChat, hubVisibility, hubSpeed, hubFlight, reportNotifications, hubInvisibility, ignoreHubKnockback, socialMediaNotifications, staffLoginNotifications, approvalNotifications, approvalProcessedNotifications, hubForcefield, hideDisguiseName;
+            PlayerPreferences.MuteInformMode muteInformMode = PlayerPreferences.MuteInformMode.valueOf(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "muteInformMode"));
+            PlayerPreferences.PrivateMessageMode privateMessageMode = PlayerPreferences.PrivateMessageMode.valueOf(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "privateMessagesMode"));
+
+            friendRequests = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "friendRequests"));
+            partyRequests = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "partyRequests"));
+            chatVisibility = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "chatVisibility"));
+            pingOnPrivateMessage = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "pingOnPrivateMessage"));
+            pingOnPartyChat = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "pingOnPartyChat"));
+            hubVisibility = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hubVisibility"));
+            hubSpeed = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hubSpeed"));
+            hubFlight = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hubFlight"));
+            reportNotifications = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "reportNotifications"));
+            hubInvisibility = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hubInvisibility"));
+            ignoreHubKnockback = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "ignoreHubKnockback"));
+            socialMediaNotifications = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "socialMediaNotifications"));
+            staffLoginNotifications = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "staffLoginNotifications"));
+            approvalNotifications = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "approvalNotifications"));
+            approvalProcessedNotifications = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "approvalProcessedNotifications"));
+            hubForcefield = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hubForcefield"));
+            hideDisguiseName = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hideDisguiseName"));
+
+            return new PlayerPreferences(player, friendRequests, partyRequests, muteInformMode, chatVisibility, privateMessageMode, pingOnPrivateMessage, pingOnPartyChat, hubVisibility, hubSpeed, hubFlight, reportNotifications, hubInvisibility, ignoreHubKnockback, socialMediaNotifications, staffLoginNotifications, approvalNotifications, approvalProcessedNotifications, hubForcefield, hideDisguiseName);
+        }
+    }
 }

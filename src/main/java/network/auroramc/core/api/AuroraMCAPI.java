@@ -130,6 +130,15 @@ public class AuroraMCAPI {
         return i.players.get(player);
     }
 
+    public static AuroraMCPlayer getPlayer(String name) {
+        for (AuroraMCPlayer player : i.players.values()) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public static ArrayList<AuroraMCPlayer> getPlayers() {
         return new ArrayList<>(i.players.values());
     }

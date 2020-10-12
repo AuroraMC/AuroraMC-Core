@@ -45,6 +45,7 @@ public class AuroraMCPlayer {
 
     private FriendsList friendsList;
     private ChatChannel channel;
+    private PlayerPreferences preferences;
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -59,8 +60,6 @@ public class AuroraMCPlayer {
         }
 
         this.vanished = AuroraMCAPI.getDbManager().isVanished(this);
-
-        //TODO: Load player statistics.
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -103,7 +102,7 @@ public class AuroraMCPlayer {
                         }
                     }
                 }
-
+                preferences = AuroraMCAPI.getDbManager().getPlayerPreferences(pl);
                 rank = AuroraMCAPI.getDbManager().getRank(pl);
                 if (rank.hasPermission("all")) {
                     activeSubscription = new PlusSubscription(pl);
@@ -274,7 +273,10 @@ public class AuroraMCPlayer {
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
-
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("UpdateParty");
+        out.writeUTF(name);
+        player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
     }
 
     public AuroraMCPlayer(AuroraMCPlayer oldPlayer) {
@@ -630,5 +632,9 @@ public class AuroraMCPlayer {
 
     public void setPartyLeader(UUID partyLeader) {
         this.partyLeader = partyLeader;
+    }
+
+    public PlayerPreferences getPreferences() {
+        return preferences;
     }
 }
