@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CommandPunish extends Command {
 
     public CommandPunish() {
-        super("punish", new ArrayList<>(Arrays.asList("punishuser","p")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"), AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("punish", new ArrayList<>(Arrays.asList("punishuser","pu")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"), AuroraMCAPI.getPermissions().get("admin"))), false, null);
     }
 
     @Override
