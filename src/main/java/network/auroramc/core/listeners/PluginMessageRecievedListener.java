@@ -29,12 +29,14 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
             ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
             String subchannel = in.readUTF();
             switch (subchannel) {
-                case "PlaySound":
-                    if (in.readUTF().equals("Message")) {
-                        Player player = Objects.requireNonNull(AuroraMCAPI.getPlayer(in.readUTF())).getPlayer();
-                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 2);
-                    }
+                case "PlaySound": {
+                    Player player = Objects.requireNonNull(AuroraMCAPI.getPlayer(in.readUTF())).getPlayer();
+                    String sound = in.readUTF();
+                    int volume = in.readInt();
+                    int pitch = in.readInt();
+                    player.playSound(player.getLocation(), Sound.valueOf(sound), volume, pitch);
                     break;
+                }
                 case "DisguiseCheckFail":
                     AuroraMCAPI.getPendingDisguiseChecks().remove(Objects.requireNonNull(AuroraMCAPI.getPlayer(in.readUTF())).getPlayer());
                     break;
@@ -398,7 +400,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                 case "PartySet": {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
-                    String uuidString = in.readLine();
+                    String uuidString = in.readUTF();
                     if (uuidString.equals("null")) {
                         player.setPartyLeader(null);
                     } else {
