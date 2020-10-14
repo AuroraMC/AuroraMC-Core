@@ -18,7 +18,7 @@ public class LeaveListener implements Listener {
 
         if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
             for (Player player2 : Bukkit.getOnlinePlayers()) {
-                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Leave", e.getPlayer().getName()));
+                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Quit", e.getPlayer().getName()));
             }
         }
     }
