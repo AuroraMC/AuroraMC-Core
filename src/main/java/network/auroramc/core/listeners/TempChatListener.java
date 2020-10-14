@@ -19,7 +19,7 @@ public class TempChatListener implements Listener {
             return;
         }
         switch (AuroraMCAPI.getPlayer(e.getPlayer()).getChannel()) {
-            case STAFF:
+            case STAFF: {
                 AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
                 player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessage(player, e.getMessage()));
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
@@ -36,11 +36,18 @@ public class TempChatListener implements Listener {
                     }
                 }
                 break;
+            }
             case ALL:
             case PARTY:
+                if (!AuroraMCAPI.getPlayer(e.getPlayer()).getPreferences().isChatVisibilityEnabled()) {
+                    e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "You currently have chat disabled! Please enable chat in order to send messages again."));
+                    return;
+                }
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
-                    player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(AuroraMCAPI.getPlayer(e.getPlayer()), e.getMessage()));
+                    if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
+                        player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(AuroraMCAPI.getPlayer(e.getPlayer()), e.getMessage()));
+                    }
                 }
                 break;
         }
