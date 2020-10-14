@@ -55,12 +55,13 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerPermission(new network.auroramc.core.permissions.permissions.Master());
         AuroraMCAPI.registerPermission(new Moderation());
         AuroraMCAPI.registerPermission(new network.auroramc.core.permissions.permissions.Player());
-        AuroraMCAPI.registerPermission(new SocialMedia());
+        AuroraMCAPI.registerPermission(new Social());
         AuroraMCAPI.registerPermission(new StaffManagement());
         AuroraMCAPI.registerPermission(new Support());
         AuroraMCAPI.registerPermission(new Plus());
         AuroraMCAPI.registerPermission(new Build());
         AuroraMCAPI.registerPermission(new Recruitment());
+        AuroraMCAPI.registerPermission(new SocialMedia());
 
         //Register Ranks with the API.
         AuroraMCAPI.registerRank(new Player());
@@ -84,6 +85,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerSubRank(new network.auroramc.core.permissions.subranks.StaffManagement());
         AuroraMCAPI.registerSubRank(new network.auroramc.core.permissions.subranks.Support());
         AuroraMCAPI.registerSubRank(new network.auroramc.core.permissions.subranks.Recruitment());
+        AuroraMCAPI.registerSubRank(new network.auroramc.core.permissions.subranks.SocialMedia());
 
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
