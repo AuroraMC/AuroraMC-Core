@@ -12,6 +12,6 @@ import java.util.Collections;
 
 public class Recruitment extends SubRank {
     public Recruitment() {
-        super(6, "Recruitment", new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("recruitment"))), Color.fromRGB(255, 170, 0), '6');
+        super(6, "Recruitment", new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("recruitment"), AuroraMCAPI.getPermissions().get("disguise"))), Color.fromRGB(255, 170, 0), '6');
     }
 }
