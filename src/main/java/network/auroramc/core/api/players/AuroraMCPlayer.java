@@ -300,6 +300,7 @@ public class AuroraMCPlayer {
         friendsList = oldPlayer.friendsList;
         channel = oldPlayer.channel;
         partyLeader = oldPlayer.partyLeader;
+        preferences = oldPlayer.preferences;
     }
 
     public Rank getRank() {
