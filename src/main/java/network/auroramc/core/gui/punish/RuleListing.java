@@ -221,6 +221,11 @@ public class RuleListing extends GUI {
                                 }
                             }
                         }
+
+                        //Send mute to the bungee to enforce it.
+                        out = ByteStreams.newDataOutput();
+                        out.writeUTF("ApprovalBan");
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                         return;
                     }
                 }
