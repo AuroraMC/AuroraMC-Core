@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ApprovalGUI extends GUI {
 
@@ -95,6 +96,12 @@ public class ApprovalGUI extends GUI {
             if (item.getDurability() == 5) {
                 //It was accepted.
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","Punishment approved."));
+                List<AuroraMCPlayer> players = AuroraMCAPI.getPlayers().stream().filter(auroraMCPlayer -> auroraMCPlayer.hasPermission("staffmanagement")).filter(auroraMCPlayer -> auroraMCPlayer.getPreferences().isApprovalProcessedNotificationsEnabled()).collect(Collectors.toList());
+                for (AuroraMCPlayer pl : players) {
+                    if (!pl.equals(player)) {
+                        pl.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has approved punishment **%s** for user **%s** issued by **%s**.", player.getName(), clickedPunishment.getPunishmentCode(), clickedPunishment.getPunishedName(), clickedPunishment.getPunisherName())));
+                    }
+                }
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -111,7 +118,12 @@ public class ApprovalGUI extends GUI {
             } else {
                 //It was denied.
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","Punishment denied."));
-
+                List<AuroraMCPlayer> players = AuroraMCAPI.getPlayers().stream().filter(auroraMCPlayer -> auroraMCPlayer.hasPermission("staffmanagement")).filter(auroraMCPlayer -> auroraMCPlayer.getPreferences().isApprovalProcessedNotificationsEnabled()).collect(Collectors.toList());
+                for (AuroraMCPlayer pl : players) {
+                    if (!pl.equals(player)) {
+                        pl.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has denied punishment **%s** for user **%s** issued by **%s**.", player.getName(), clickedPunishment.getPunishmentCode(), clickedPunishment.getPunishedName(), clickedPunishment.getPunisherName())));
+                    }
+                }
                 new BukkitRunnable() {
                     @Override
                     public void run() {
