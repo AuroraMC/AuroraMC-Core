@@ -5,6 +5,7 @@ import net.auroramc.core.api.permissions.SubRank;
 import org.bukkit.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Recruitment extends SubRank {
