@@ -39,7 +39,7 @@ public class JoinListener implements Listener {
                             "&rdenied for being false, **it will automatically be removed**, and the punishment will automatically\n" +
                             "&rbe removed from your Punishment History.\n" +
                             "\n" +
-                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.network.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
+                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
                     break;
                 case 3:
                     e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been banned from the network.\n" +
@@ -49,7 +49,7 @@ public class JoinListener implements Listener {
                             "\n" +
                             "&rPunishment Code: **%s**\n" +
                             "\n" +
-                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.network.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
+                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
                     break;
                 default:
                     e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been banned from the network.\n" +
@@ -59,7 +59,7 @@ public class JoinListener implements Listener {
                             "\n" +
                             "&rPunishment Code: **%s**\n" +
                             "\n" +
-                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.network.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
+                            "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), ban.getExtraNotes(), length.getFormatted(), ban.getCode())));
                     break;
             }
         }
@@ -105,7 +105,14 @@ public class JoinListener implements Listener {
                     player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getName()));
             }
         } else {
-            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Vanish", "You are currently vanished. To unvanish, just use **/vanish**."));
+            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
+                    "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
+                    "\n" +
+                    "&b&lYou are currently vanished!\n" +
+                    "\n" +
+                    "To unvanish, simply use /vanish.\n" +
+                    "\n" +
+                    "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
         }
     }
 
