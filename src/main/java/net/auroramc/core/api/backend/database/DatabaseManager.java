@@ -139,10 +139,6 @@ public class DatabaseManager {
             statement.setInt(1, id);
             statement.execute();
 
-            statement = connection.prepareStatement("INSERT INTO friends(amc_id, friends) VALUES (?,'');");
-            statement.setInt(1, id);
-            statement.execute();
-
             statement = connection.prepareStatement("INSERT INTO ignored(amc_id, users) VALUES (?,'');");
             statement.setInt(1, id);
             statement.execute();
@@ -173,6 +169,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return -2;
         }
     }
@@ -197,6 +194,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -243,6 +241,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -270,6 +269,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -282,7 +282,8 @@ public class DatabaseManager {
 
             return statement.execute();
 
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -493,7 +494,8 @@ public class DatabaseManager {
                 }
             }
             return success;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -626,7 +628,8 @@ public class DatabaseManager {
             }
 
             return success;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -673,7 +676,8 @@ public class DatabaseManager {
             }
 
             return rules;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }

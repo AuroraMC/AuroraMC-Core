@@ -69,7 +69,6 @@ public class AuroraMCPlayer {
                     id = AuroraMCAPI.getDbManager().newUser(pl);
                 }
                 pl.id = id;
-
                 //Get Punishment History and active mutes.
                 List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id);
                 history = new PunishmentHistory(id);
@@ -106,16 +105,18 @@ public class AuroraMCPlayer {
                 rank = AuroraMCAPI.getDbManager().getRank(pl);
                 if (rank.hasPermission("all")) {
                     activeSubscription = new PlusSubscription(pl);
-                } else {
+                }  else {
                     long endTimestamp = AuroraMCAPI.getDbManager().getExpire(pl);
                     if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis()) {
                         activeSubscription = new PlusSubscription(pl);
                     }
                 }
+
                 subranks = AuroraMCAPI.getDbManager().getSubRanks(pl);
 
                 //Load the friends list.
                 friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
+
 
                 //If they have a rank-exclusive status set, check if they still have permission to use it.
                 if (friendsList.getCurrentStatus().getPermission() != null) {
@@ -150,7 +151,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null)?"r":pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     team.setPrefix(s);
                                     continue;
@@ -174,7 +175,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((pl.getTeam() == null)?"r":pl.getTeam().getTeamColor());
+                                        s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
                                         if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
@@ -190,7 +191,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
+                                        s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
                                         team.setPrefix(s);
                                     }
                                 }
@@ -261,9 +262,11 @@ public class AuroraMCPlayer {
 
                 statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
 
+
                 bank = AuroraMCAPI.getDbManager().getBank(pl);
 
                 channel = AuroraMCAPI.getDbManager().getChannel(pl);
+
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
