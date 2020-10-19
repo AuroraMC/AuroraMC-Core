@@ -107,11 +107,11 @@ public class JoinListener implements Listener {
         } else {
             e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
-                    "\n" +
+                    "\n " +
                     "&b&lYou are currently vanished!\n" +
-                    "\n" +
-                    "To unvanish, simply use /vanish.\n" +
-                    "\n" +
+                    "\n  " +
+                    "&fTo unvanish, simply use /vanish.\n" +
+                    "\n   " +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
         }
     }
