@@ -11,6 +11,7 @@ import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.moderation.*;
+import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.permissions.permissions.*;
 import net.auroramc.core.permissions.permissions.BuildTeamManagement;
@@ -122,6 +123,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandPlus());
         AuroraMCAPI.registerCommand(new CommandLevel());
         AuroraMCAPI.registerCommand(new CommandPrefs());
+        AuroraMCAPI.registerCommand(new CommandRecruitmentLookup());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
@@ -189,7 +191,6 @@ public class AuroraMC extends JavaPlugin {
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);
-        Bukkit.getPluginManager().registerEvents(new TempJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new CommandManager(), this);
         Bukkit.getPluginManager().registerEvents(new GUIManager(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);

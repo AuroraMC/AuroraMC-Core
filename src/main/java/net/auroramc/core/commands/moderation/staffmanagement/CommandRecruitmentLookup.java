@@ -8,6 +8,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
+import net.auroramc.core.gui.misc.RecruitmentLookup;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +50,14 @@ public class CommandRecruitmentLookup extends Command {
                         history.registerPunishment(punishment);
                     }
 
-
+                    RecruitmentLookup recruitmentLookup = new RecruitmentLookup(args.get(0), history, stats, lookup);
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            recruitmentLookup.open(player);
+                            AuroraMCAPI.openGUI(player, recruitmentLookup);
+                        }
+                    }.runTask(AuroraMCAPI.getCore());
 
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());

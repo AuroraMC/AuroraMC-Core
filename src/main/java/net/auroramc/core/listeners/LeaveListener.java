@@ -16,11 +16,11 @@ public class LeaveListener implements Listener {
         AuroraMCAPI.playerLeave(e.getPlayer());
         TabCompleteInjector.removePlayer(e.getPlayer());
 
-        if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
+        /* if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
             for (Player player2 : Bukkit.getOnlinePlayers()) {
                 player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Quit", e.getPlayer().getName()));
             }
-        }
+        }*/
     }
 
 }
