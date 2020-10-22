@@ -19,7 +19,7 @@ public final class PlusSubscription {
             "&fin-game benefits and offers.\n" +
             "\n" +
             "&aClick to visit the store!";
-    private static final String clickURL = "http://store.auroramc.block2block.me/";
+    private static final String clickURL = "http://store.auroramc.net";
     private Character color;
     private Character levelColor;
     private long endTimestamp;

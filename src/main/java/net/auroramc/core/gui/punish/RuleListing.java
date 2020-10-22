@@ -207,7 +207,7 @@ public class RuleListing extends GUI {
                                 "&rdenied for being false, **it will automatically be removed**, and the punishment will automatically\n" +
                                 "&rbe removed from your Punishment History.\n" +
                                 "\n" +
-                                "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.network.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
+                                "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
 
                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
@@ -288,7 +288,7 @@ public class RuleListing extends GUI {
                     "\n" +
                     "&rPunishment Code: **%s**\n" +
                     "\n" +
-                    "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.network.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
+                    "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
 
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
