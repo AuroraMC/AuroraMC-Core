@@ -134,10 +134,6 @@ public class DatabaseManager {
 
             int id = getAuroraMCID(player.getPlayer().getUniqueId());
             //Creating records in necessary databases.
-            statement = connection.prepareStatement("INSERT INTO bank(amc_id, currency, level, xp_into_level, total_xp) VALUES (?, 0, 0, 0, 0);");
-
-            statement.setInt(1, id);
-            statement.execute();
 
             statement = connection.prepareStatement("INSERT INTO ignored(amc_id, users) VALUES (?,'');");
             statement.setInt(1, id);
@@ -838,6 +834,59 @@ public class DatabaseManager {
             statement.setString(2, reason);
 
             statement.setString(3, remover.getPlayer().getName());
+            statement.setLong(4, timestamp);
+            statement.setString(5, punishment.getPunishmentCode());
+            statement.execute();
+
+            if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() != 1) {
+                //This is a ban, remove it from redis (if it is the ban that is currently there).
+                try (Jedis con = jedis.getResource()) {
+                    if (con.sismember("bans", uuid.toString())) {
+                        if (con.exists(String.format("bans.%s", uuid))) {
+                            String[] args = con.get(String.format("bans.%s", uuid)).split(";");
+                            String code = args[5];
+                            if (code.equalsIgnoreCase(punishment.getPunishmentCode())) {
+                                //If this is not the case, there is another punishment that has been applied since this was. Check to see if another ban is valid.
+                                punishments = punishments.stream().filter(punishment2 -> punishment2.getStatus() == 1 || punishment2.getStatus() == 2 || punishment2.getStatus() == 3).collect(Collectors.toList());
+                                for (Punishment punishment1 : punishments) {
+                                    if (AuroraMCAPI.getRules().getRule(punishment1.getRuleID()).getType() != 1 && (punishment1.getExpire() > System.currentTimeMillis() || punishment1.getExpire() == -1) && (punishment1.getRemover() == null) && !punishment1.getPunishmentCode().equalsIgnoreCase(punishment.getPunishmentCode())) {
+                                        //This is an active ban. Apply this one instead.
+                                        con.set(String.format("bans.%s", uuid), punishment1.getRuleID() + ";" + punishment1.getExtraNotes() + ";" + punishment1.getStatus() + ";" + punishment1.getIssued() + ";" + punishment1.getExpire() + ";" + punishment1.getPunishmentCode());
+
+                                        if (punishment1.getExpire() != -1) {
+                                            con.expire(String.format("bans.%s", uuid), (int) ((punishment1.getExpire()-timestamp)/1000));
+                                        }
+
+                                        return;
+                                    }
+                                }
+                                //No valid bans, just remove the ban from redis.
+                                con.srem("bans", uuid.toString());
+                                con.del(String.format("bans.%s", uuid));
+                            }
+                        } else {
+                            //Ban is expired as the record isn't there.
+                            con.srem("bans", uuid.toString());
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removePunishment(String remover, long timestamp, String reason, Punishment punishment, UUID uuid, List<Punishment> punishments) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE punishments SET status = ?, removal_reason = ?,remover = ?, removal_timestamp = ? WHERE punishment_id = ?");
+            if (punishment.getStatus() == 3) {
+                statement.setInt(1, 6);
+            } else {
+                statement.setInt(1, 5);
+            }
+            statement.setString(2, reason);
+
+            statement.setString(3, remover);
             statement.setLong(4, timestamp);
             statement.setString(5, punishment.getPunishmentCode());
             statement.execute();
