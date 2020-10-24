@@ -29,7 +29,12 @@ public class CommandAppeal extends Command {
                         String code = args.remove(0);
                         Punishment punishment = AuroraMCAPI.getDbManager().getPunishment(code);
                         if (punishment != null) {
-                            // block you can do this
+                            if (args.get(2).equals("Reprieve")) {
+                                // reprieve code here.
+                            } else if (args.get(2).equals("False")) {
+                                // false code here.
+                            }
+
                         } else {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("No matches found for Punishment ID: [**%s**]", code)));
                         }
