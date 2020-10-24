@@ -14,6 +14,6 @@ public final class Master extends Rank {
         super(2, "Master", "Master", "&d«MASTER»\n \n" +
                 "&fThis rank is uncommon, and is\n" +
                 "&fonly found in the Realm of the\n" +
-                "Unknown! It's value is incomparable!\n\n", "http://store.auroramc.block2block.me/", 'd', 'f', 'd', 'f', false, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getRanks().get(1))), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("master"))), RankCategory.PLAYER, Color.fromRGB(255, 85, 255));
+                "Unknown! It's value is incomparable!\n\n", "http://store.auroramc.net/", 'd', 'f', 'd', 'f', false, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getRanks().get(1))), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("master"))), RankCategory.PLAYER, Color.fromRGB(255, 85, 255));
     }
 }

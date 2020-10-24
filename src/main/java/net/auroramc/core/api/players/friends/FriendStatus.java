@@ -10,7 +10,7 @@ public enum FriendStatus {
     IDLE("Idle", "Idle", 'e', null, null, true),
     DO_NOT_DISTURB("Do Not Disturb", "Do Not Disturb", 'c', null, null, true),
     AFK("Away From Keyboard", "AFK", '6', null, null, true),
-    COUNTING_MONEY("Counting Money", "Counting Money", 'b', AuroraMCAPI.getPermissions().get("elite"), "Purchase Elite at store.auroramc.network to gain access to this status.", true),
+    COUNTING_MONEY("Counting Money", "Counting Money", 'b', AuroraMCAPI.getPermissions().get("elite"), "Purchase Elite at store.auroramc.net to gain access to this status.", true),
     RECORDING("Recording a video", "Recording a video", '6', AuroraMCAPI.getPermissions().get("social"), null, false),
     LIVE_STREAMING("Live Streaming", "Live Streaming", '5', AuroraMCAPI.getPermissions().get("social"), null, false),
     CREATING_NEW_MAPS("Creating New Maps", "Creating New Maps", 'a', AuroraMCAPI.getPermissions().get("build"), null, false),
