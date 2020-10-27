@@ -40,7 +40,7 @@ public class CommandDisguise extends Command {
                                     Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
                                     if (rank != null) {
                                         if (rank.getCategory() != Rank.RankCategory.PLAYER) {
-                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as this player as they have a non-purchasable rank."));
+                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they have a non-purchasable rank."));
                                             return;
                                         }
                                     }
