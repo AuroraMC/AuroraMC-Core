@@ -41,7 +41,7 @@ public class CommandPunishmentLookup extends Command {
                                         "Rule Weight: **%s**\n" +
                                         "Issuer: **%s**\n" +
                                         "Expiry: **%s**\n",
-                                        code, punishment.getEvidence(), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()))));
+                                        code, ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()))));
                             } else {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Punishment Lookup for punishment **%s**:\n" +
                                         "Evidence: **%s**\n" +
@@ -50,7 +50,7 @@ public class CommandPunishmentLookup extends Command {
                                         "Reason: **%s**\n" +
                                         "Rule: **%s**\n" +
                                         "Rule Weight: **%s**\n",
-                                        code, punishment.getEvidence(), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
+                                        code, ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
                             }
 
                         } else {
