@@ -1,5 +1,7 @@
 package net.auroramc.core.commands.moderation.qualityassurance;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
@@ -32,9 +34,23 @@ public class CommandAppeal extends Command {
                                 if (args.get(0).equalsIgnoreCase("Reprieve")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Reprieved Punishment with ID [**%s**] has been removed successfully.", code)));
+                                    if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
+                                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                                        out.writeUTF("Unmute");
+                                        out.writeUTF(punishment.getPunishmentCode());
+                                        out.writeUTF(punishment.getPunishedName());
+                                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                                    }
                                 } else if (args.get(0).equalsIgnoreCase("False")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("False Punishment with ID [**%s**] has been removed successfully.", code)));
+                                    if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
+                                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                                        out.writeUTF("Unmute");
+                                        out.writeUTF(punishment.getPunishmentCode());
+                                        out.writeUTF(punishment.getPunishedName());
+                                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                                    }
                                 } else {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
                                 }
