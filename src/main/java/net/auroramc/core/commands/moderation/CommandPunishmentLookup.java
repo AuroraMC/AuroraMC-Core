@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
+import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -16,54 +17,39 @@ public class CommandPunishmentLookup extends Command {
         super("punishmentlookup", new ArrayList<>(Collections.singletonList("plookup")),  new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
     }
 
-    private static String[] statuses = {"&aActive","&6Pending Approval","&aSM Approved","&cSM Denied","&eExpired","&eExpired (Approved)","&7Warning"};
-    private static String[] weights = {"&2Light", "&aMedium", "&eHeavy", "&6Severe", "&4Extreme"};
+    private static final String[] statuses = {"&aActive","&6Pending Approval","&aSM Approved","&cSM Denied","&eExpired","&eExpired (Approved)","&7Warning"};
+    private static final String[] weights = {"&2Light", "&aMedium", "&eHeavy", "&6Severe", "&4Extreme"};
 
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         if(args.size() == 1) {
             if(args.get(0).matches("[A-Z0-9]{8}")) {
+                String code = args.remove(0);
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("Performing punishment lookup for [**%s**]", code)));
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        String code = args.remove(0);
                         Punishment punishment = AuroraMCAPI.getDbManager().getPunishment(code);
                         if(punishment != null) {
-                            String username = punishment.getPunisherName();
-                            int ruleId = punishment.getRuleID();
-                            Rule rule = AuroraMCAPI.getRules().getRule(ruleId);
-                            if(punishment.getStatus() == 5 || punishment.getStatus() == 6) {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Punishment Lookup for punishment **%s**:\n" +
-                                        "Punished: **%s**\n" +
-                                        "Evidence: **%s**\n" +
-                                        "Status: **%s**\n" +
-                                        "Reason: **%s**\n" +
-                                        "Rule: **%s**\n" +
-                                        "Rule Weight: **%s**\n" +
-                                        "Issuer: **%s**\n" +
-                                        "Expiry: **%s**\n" +
-                                        "Removal Reason:",
-                                        code, punishment.getPunishedName(), ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()), ((punishment.getRemovalReason() == null)?"Punishment Expired Automatically":punishment.getRemovalReason()))));
-                            } else {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Punishment Lookup for punishment **%s**:\n" +
-                                        "Punished: **%s**\n" +
-                                        "Evidence: **%s**\n" +
-                                        "Status: **%s**\n" +
-                                        "Issuer: **%s**\n" +
-                                        "Reason: **%s**\n" +
-                                        "Rule: **%s**\n" +
-                                        "Rule Weight: **%s**\n",
-                                        code, punishment.getPunishedName(), ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
-                            }
-
+                            String name = AuroraMCAPI.getDbManager().getNameFromID(punishment.getPunished());
+                            Rule rule = AuroraMCAPI.getRules().getRule(punishment.getRuleID());
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("Punishment Lookup for punishment **%s**:\n" +
+                                    "Punished User: **%s**\n" +
+                                    "Type: **%s**\n" +
+                                    "Reason: **%s**\n" +
+                                    "Weight: **%s**\n" +
+                                    "Issued at: **%s**\n" +
+                                    "Length: **%s**\n" +
+                                    "Issued By: **%s**\n" +
+                                    "Status: %s&r%s", code, name, ((punishment.getStatus() == 7)?"Warning":((rule.getType() == 1)?"Chat Offence":((rule.getType() == 2)?"Game Offence":"Misc Offence"))), rule.getRuleName() + " - " + punishment.getExtraNotes(), weights[rule.getWeight()-1], new Date(punishment.getIssued()), ((punishment.getExpire() == -1)?new PunishmentLength(-1):new PunishmentLength((punishment.getExpire() - punishment.getIssued()) / 3600000d)), punishment.getPunisherName(), statuses[punishment.getStatus()-1], ((punishment.getRemovalReason() == null)?"":String.format("\n\nRemoval Reason: **%s**\nRemoval Timestamp: **%s**\nRemoved By: **%s**", punishment.getRemovalReason(), new Date(punishment.getRemovalTimestamp()), punishment.getRemover())))));
                         } else {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("No matches found for Punishment ID: [**%s**]", code)));
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("No matches found for Punishment ID: [**%s**]", code)));
                         }
                     }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
 
         } else {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));
             }
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));

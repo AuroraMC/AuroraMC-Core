@@ -189,6 +189,25 @@ public class DatabaseManager {
         }
     }
 
+    public String getNameFromID(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+            statement.setInt(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return set.getString(1);
+            } else {
+                //NEW USER
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     public Rank getRank(AuroraMCPlayer player) {
