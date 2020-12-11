@@ -34,23 +34,26 @@ public class CommandPunishmentLookup extends Command {
                             Rule rule = AuroraMCAPI.getRules().getRule(ruleId);
                             if(punishment.getStatus() == 5 || punishment.getStatus() == 6) {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Punishment Lookup for punishment **%s**:\n" +
+                                        "Punished: **%s**\n" +
                                         "Evidence: **%s**\n" +
                                         "Status: **%s**\n" +
                                         "Reason: **%s**\n" +
                                         "Rule: **%s**\n" +
                                         "Rule Weight: **%s**\n" +
                                         "Issuer: **%s**\n" +
-                                        "Expiry: **%s**\n",
-                                        code, ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()))));
+                                        "Expiry: **%s**\n" +
+                                        "Removal Reason:",
+                                        code, punishment.getPunishedName(), ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()), ((punishment.getRemovalReason() == null)?"Punishment Expired Automatically":punishment.getRemovalReason()))));
                             } else {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Punishment Lookup for punishment **%s**:\n" +
+                                        "Punished: **%s**\n" +
                                         "Evidence: **%s**\n" +
                                         "Status: **%s**\n" +
                                         "Issuer: **%s**\n" +
                                         "Reason: **%s**\n" +
                                         "Rule: **%s**\n" +
                                         "Rule Weight: **%s**\n",
-                                        code, ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
+                                        code, punishment.getPunishedName(), ((punishment.getEvidence() == null)?"No Evidence Attached":punishment.getEvidence()), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
                             }
 
                         } else {
