@@ -8,10 +8,7 @@ import net.auroramc.core.api.punishments.Punishment;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CommandAppeal extends Command {
 
@@ -29,22 +26,31 @@ public class CommandAppeal extends Command {
                         String code = args.remove(0);
                         Punishment punishment = AuroraMCAPI.getDbManager().getPunishment(code);
                         if (punishment != null) {
-                            if (args.get(2).equals("Reprieve")) {
-                                // reprieve code here.
-                            } else if (args.get(2).equals("False")) {
-                                // false code here.
+                            if(punishment.getStatus() == 1 || punishment.getStatus() == 3) {
+                                UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(punishment.getPunished());
+                                List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(punishment.getPunished());
+                                if (args.get(2).equals("Reprieve")) {
+                                    AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
+                                    AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Reprieved Punishment with ID [**%s**] has been removed successfully."));
+                                } else if (args.get(2).equals("False")) {
+                                    AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
+                                    AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("False Punishment with ID [**%s**] has been removed successfully."));
+                                } else {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
+                                }
+                            } else {
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "This punishment currently cannot be appealed."));
                             }
-
                         } else {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("No matches found for Punishment ID: [**%s**]", code)));
                         }
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
             } else {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reason]"));
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
             }
         } else {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reason]"));
+            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
         }
 
 
