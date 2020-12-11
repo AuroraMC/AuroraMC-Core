@@ -38,7 +38,7 @@ public class CommandAppealLookup extends Command {
                                         "Status: **%s**\n" +
                                         "Reason: **%s**\n" +
                                         "Rule: **%s**\n" +
-                                        "Rule Weight: **%s**" +
+                                        "Rule Weight: **%s**\n" +
                                         "Issuer: **%s**\n" +
                                         "Expiry: **%s**\n",
                                         code, punishment.getEvidence(), statuses[punishment.getStatus()-1], punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1], username, new Date(punishment.getRemovalTimestamp()))));
