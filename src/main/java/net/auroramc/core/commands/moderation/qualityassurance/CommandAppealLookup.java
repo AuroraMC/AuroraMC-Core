@@ -47,9 +47,9 @@ public class CommandAppealLookup extends Command {
                                         "Evidence: **%s**\n" +
                                         "Status: **%s**\n" +
                                         "Issuer: **%s**\n" +
-                                        "Reason: **%s**" +
-                                        "Rule: **%s**" +
-                                        "Rule Weight: **%s**",
+                                        "Reason: **%s**\n" +
+                                        "Rule: **%s**\n" +
+                                        "Rule Weight: **%s**\n",
                                         code, punishment.getEvidence(), statuses[punishment.getStatus()-1], username, punishment.getExtraNotes(), rule.getRuleName(), weights[rule.getWeight()-1])));
                             }
 
