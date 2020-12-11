@@ -29,10 +29,10 @@ public class CommandAppeal extends Command {
                             if(punishment.getStatus() == 1 || punishment.getStatus() == 3) {
                                 UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(punishment.getPunished());
                                 List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(punishment.getPunished());
-                                if (args.get(0).equals("Reprieve")) {
+                                if (args.get(0).equalsIgnoreCase("Reprieve")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Reprieved Punishment with ID [**%s**] has been removed successfully.", code)));
-                                } else if (args.get(0).equals("False")) {
+                                } else if (args.get(0).equalsIgnoreCase("False")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("False Punishment with ID [**%s**] has been removed successfully.", code)));
                                 } else {
