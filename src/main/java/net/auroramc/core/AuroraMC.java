@@ -11,6 +11,7 @@ import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.moderation.*;
+import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.permissions.permissions.*;
@@ -124,6 +125,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandLevel());
         AuroraMCAPI.registerCommand(new CommandPrefs());
         AuroraMCAPI.registerCommand(new CommandRecruitmentLookup());
+        AuroraMCAPI.registerCommand(new CommandAppeal());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
