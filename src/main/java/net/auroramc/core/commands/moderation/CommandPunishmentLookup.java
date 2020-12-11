@@ -1,4 +1,4 @@
-package net.auroramc.core.commands.moderation.qualityassurance;
+package net.auroramc.core.commands.moderation;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class CommandAppealLookup extends Command {
+public class CommandPunishmentLookup extends Command {
 
-    public CommandAppealLookup() {
-        super("punishmentlookup", new ArrayList<>(Collections.singletonList("plookup")),  new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("debug.info"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
+    public CommandPunishmentLookup() {
+        super("punishmentlookup", new ArrayList<>(Collections.singletonList("plookup")),  new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
     }
 
     private static String[] statuses = {"&aActive","&6Pending Approval","&aSM Approved","&cSM Denied","&eExpired","&eExpired (Approved)","&7Warning"};
