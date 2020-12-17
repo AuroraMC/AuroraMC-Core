@@ -16,7 +16,7 @@ public enum FriendStatus {
     LIVE_STREAMING("Live Streaming", "Live Streaming", '5', AuroraMCAPI.getPermissions().get("social"), null, false),
     CREATING_NEW_MAPS("Creating New Maps", "Creating New Maps", 'a', AuroraMCAPI.getPermissions().get("build"), null, false),
     PROCESSING_REPORTS("&6&k0&r &9&lProcessing Reports &6&k0", "&6&k0&r &9Processing Reports &6&k0", '9', AuroraMCAPI.getPermissions().get("moderation"), null, false),
-    SWINGING_THE_BAN_HAMMER("&6&k0&r &9&lSwinging the Ban Hammer &6&k0", "&6&k0&r &9&lSwinging the Ban Hammer &6&k0", '9', AuroraMCAPI.getPermissions().get("approval.bypass"), null, false),
+    SWINGING_THE_BAN_HAMMER("&6&k0&r &9&lSwinging the Ban Hammer &6&k0", "&6&k0&r &9Swinging the Ban Hammer &6&k0", '9', AuroraMCAPI.getPermissions().get("approval.bypass"), null, false),
     PROGRAMMING("&2&k0&r &a&ldeveloper.setProgramming(true); &2&k0", "&2&k0&r &adeveloper.setProgramming(true) &2&k0", 'a', AuroraMCAPI.getPermissions().get("debug.info"), null, false);
     private final String title;
     private final String name;
