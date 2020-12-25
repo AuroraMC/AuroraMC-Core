@@ -90,14 +90,6 @@ public class PunishmentHistoryGUI extends GUI {
                 if (punishment.getStatus() == 7) {
                     //This is a warning.
                     this.setItem(row, column, new GUIItem(Material.PAPER, "&3&lWarning", 1, lore));
-                    column++;
-                    if (column == 8) {
-                        row++;
-                        column = 1;
-                        if (row == 5) {
-                            break;
-                        }
-                    }
                 } else {
                     switch (rule.getType()) {
                         case 1:
@@ -111,13 +103,13 @@ public class PunishmentHistoryGUI extends GUI {
                             break;
                     }
 
-                    column++;
-                    if (column == 8) {
-                        row++;
-                        column = 1;
-                        if (row == 5) {
-                            break;
-                        }
+                }
+                column++;
+                if (column == 8) {
+                    row++;
+                    column = 1;
+                    if (row == 5) {
+                        break;
                     }
                 }
 

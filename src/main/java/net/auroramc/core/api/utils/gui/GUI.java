@@ -35,7 +35,7 @@ public abstract class GUI {
     }
 
     public void setItem(int row, int column, GUIItem item) {
-        if (row > 5 || row < 0) {
+        if (row > 5 || row < 0 || row > rows) {
             throw new InvalidRowException();
         }
 
@@ -47,7 +47,7 @@ public abstract class GUI {
     }
 
     public void updateItem(int row, int column, GUIItem item) {
-        if (row > 5 || row < 0) {
+        if (row > 5 || row < 0 || row > rows) {
             throw new InvalidRowException();
         }
 

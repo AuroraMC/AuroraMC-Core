@@ -37,7 +37,7 @@ public class AuroraMCPlayer {
     private PunishmentHistory history;
     private List<Punishment> activeMutes;
     private List<BukkitTask> expiryTasks;
-    private PlayerScoreboard scoreboard;
+    private final PlayerScoreboard scoreboard;
     private boolean vanished;
     private PlayerStatistics statistics;
     private PlayerBank bank;
@@ -46,6 +46,10 @@ public class AuroraMCPlayer {
     private FriendsList friendsList;
     private ChatChannel channel;
     private PlayerPreferences preferences;
+
+    //Staff objects
+    private PlayerReport activeReport;
+
 
     public AuroraMCPlayer(Player player) {
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
@@ -267,6 +271,8 @@ public class AuroraMCPlayer {
 
                 channel = AuroraMCAPI.getDbManager().getChannel(pl);
 
+                activeReport = AuroraMCAPI.getDbManager().getActiveReport(id);
+
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
@@ -304,6 +310,7 @@ public class AuroraMCPlayer {
         channel = oldPlayer.channel;
         partyLeader = oldPlayer.partyLeader;
         preferences = oldPlayer.preferences;
+        activeReport = oldPlayer.activeReport;
     }
 
     public Rank getRank() {
