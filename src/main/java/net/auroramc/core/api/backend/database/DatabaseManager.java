@@ -29,10 +29,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -166,6 +163,24 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return -2;
+        }
+    }
+
+    public int getAuroraMCID(String name) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT id FROM auroramc_players WHERE name = ?");
+            statement.setString(1, name);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return set.getInt(1);
+            } else {
+                //NEW USER
+                return -1;
+            }
+
+        } catch (SQLException e) {
             return -2;
         }
     }
@@ -1055,7 +1070,7 @@ public class DatabaseManager {
 
     public List<Punishment> getUnassignedPunishments() {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT punishments.punishment_id, punishments.amc_id, punishments.rule_id, punishments.notes, punishments.punisher, punishments.issued, punishments.expire, punishments.status, punishments.evidence, punishments.suffix, punishments.removal_reason, punishments.remover, punishments.removal_timestamp, auroramc_players.name FROM punishments INNER JOIN auroramc_players ON auroramc_players.id=punishments.punisher WHERE (SELECT COUNT(*) FROM mentee_distribution WHERE mentees LIKE CONCAT('%', punishments.punisher, '%')) = 0 AND punishments.status = 2 ORDER BY issued ASC");
+            PreparedStatement statement = connection.prepareStatement("SELECT punishments.punishment_id, punishments.amc_id, punishments.rule_id, punishments.notes, punishments.punisher, punishments.issued, punishments.expire, punishments.status, punishments.evidence, punishments.suffix, punishments.removal_reason, punishments.remover, punishments.removal_timestamp, auroramc_players.name FROM punishments INNER JOIN auroramc_players ON auroramc_players.id=punishments.punisher WHERE (SELECT COUNT(*) FROM mentee_distribution WHERE REGEXP_LIKE(mentees, CONCAT('^', punishments.punisher,'$|^', punishments.punisher,',.*$|^.*,', punishments.punisher,'$|^.*,', punishments.punisher,',.*$'))) = 0 AND punishments.status = 2 ORDER BY issued ASC");
             ResultSet set = statement.executeQuery();
 
             List<Punishment> punishments = new ArrayList<>();
@@ -1658,6 +1673,212 @@ public class DatabaseManager {
             hideDisguiseName = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "hideDisguiseName"));
 
             return new PlayerPreferences(player, friendRequests, partyRequests, muteInformMode, chatVisibility, privateMessageMode, pingOnPrivateMessage, pingOnPartyChat, hubVisibility, hubSpeed, hubFlight, reportNotifications, hubInvisibility, ignoreHubKnockback, socialMediaNotifications, staffLoginNotifications, approvalNotifications, approvalProcessedNotifications, hubForcefield, hideDisguiseName);
+        }
+    }
+
+    public boolean reportDump(UUID uuid, JSONObject json, long timestamp) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO chatlogs VALUES (?, ?, ?, ?)");
+            statement.setString(1, uuid.toString());
+            statement.setString(2, AuroraMCAPI.getServerInfo().getName());
+            statement.setLong(3, timestamp);
+            statement.setString(4, json.toString());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public JSONObject getChatLog(UUID uuid) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT chatlog FROM chatlogs WHERE uuid = ?");
+            statement.setString(1, uuid.toString());
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                return new JSONObject(set.getString(1));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean updateChatlog(UUID uuid, JSONObject json) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE chatlogs SET chatlog = ? WHERE uuid = ?");
+            statement.setString(2, uuid.toString());
+            statement.setString(1, json.toString());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public PlayerReport assignReport(int handler, PlayerReport.QueueType queue, PlayerReport.ReportType type) {
+        try (Connection connection = mysql.getConnection()) {
+            CallableStatement statement = connection.prepareCall("{CALL handle_report(?,?,?)}");
+            statement.setInt(1, handler);
+            statement.setString(2, queue.name());
+            statement.setString(3, type.name());
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                return new PlayerReport(set.getInt(1), set.getInt(13), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), set.getString(12), PlayerReport.ReportOutcome.valueOf(set.getString(9)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
+            } else {
+                return null;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void handleReport(int report, PlayerReport.ReportOutcome outcome, PlayerReport.ReportReason acceptedReason) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE reports SET outcome = ?, reason_accepted = ? WHERE id = ?");
+            statement.setInt(3, report);
+            statement.setString(1, outcome.name());
+            if (acceptedReason == null) {
+                statement.setNull(2, Types.VARCHAR);
+            } else {
+                statement.setString(2, acceptedReason.name());
+            }
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void forwardReportToLeadership(int report) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE reports SET handler = NULL, queue = 'LEADERSHIP' WHERE id = ?");
+            statement.setInt(1, report);
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abortReport(int report) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE reports SET handler = NULL WHERE id = ?");
+            statement.setInt(1, report);
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public PlayerReport getActiveReport(int handler) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT reports.id, reports.reporters, reports.timestamp, reports.type, reports.chat_type, reports.reason, reports.handler, reports.outcome, reports.chatlog_uuid, reports.reason_accepted, reports.queue, auroramc_players.name, reports.suspect FROM reports INNER JOIN auroramc_players ON auroramc_players.id=reports.handler WHERE reports.handler = ? AND reports.outcome = 'PENDING'");
+            statement.setInt(1, handler);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(13));
+
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                return new PlayerReport(set.getInt(1), set.getInt(13), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), set.getString(12), PlayerReport.ReportOutcome.valueOf(set.getString(9)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
+            } else {
+                return null;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PlayerReport getRecentReport(int suspect, PlayerReport.ReportType type) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reports WHERE suspect = ? AND timestamp > ? AND outcome = 'PENDING' AND type = ?");
+            statement.setInt(1, suspect);
+            statement.setLong(2, (System.currentTimeMillis() - 60000));
+            statement.setString(3, type.name());
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(2));
+
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                return new PlayerReport(set.getInt(1), set.getInt(2), name, new ArrayList<>(Arrays.stream(set.getString(3).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(4), PlayerReport.ReportType.valueOf(set.getString(5)), ((set.getString(6) == null)?null: PlayerReport.ChatType.valueOf(set.getString(6))), PlayerReport.ReportReason.valueOf(set.getString(7)), set.getInt(8), null, PlayerReport.ReportOutcome.valueOf(set.getString(9)), ((set.getString(11) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(11))), (PlayerReport.QueueType.valueOf(set.getString(12))), ((set.getString(10) == null)?null:UUID.fromString(set.getString(10))));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void addReporter(int report, int reporter) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE reports SET reporters = concat(reporters, ',',?)  WHERE id = ?");
+            statement.setString(1, reporter + "");
+            statement.setInt(2, report);
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int newReport(int suspect, int reporter, long timestamp, PlayerReport.ReportType type, PlayerReport.ChatType chatType, PlayerReport.ReportReason reason, UUID chatlog, PlayerReport.QueueType queue) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO reports(suspect, reporters, timestamp, type, chat_type, reason, handler, outcome, chatlog_uuid, reason_accepted, queue) VALUES (?,?,?,?,?,?,NULL,'PENDING',?,NULL,?)");
+            statement.setInt(1, suspect);
+            statement.setInt(2, reporter);
+            statement.setLong(3, timestamp);
+            statement.setString(4, type.name());
+            if (chatType == null) {
+                statement.setNull(5, Types.VARCHAR);
+            } else {
+                statement.setString(5, chatType.name());
+            }
+            statement.setString(6, reason.name());
+            if (chatlog == null) {
+                statement.setNull(7, Types.VARCHAR);
+            } else {
+                statement.setString(7, chatlog.toString());
+            }
+            statement.setString(8, queue.name());
+
+            statement.execute();
+            statement = connection.prepareStatement("SELECT id FROM reports WHERE suspect = ? AND reporters = ? AND timestamp = ? AND type = ?");
+            statement.setInt(1, suspect);
+            statement.setInt(2, reporter);
+            statement.setLong(3, timestamp);
+            statement.setString(4, type.name());
+
+            ResultSet set = statement.executeQuery();
+            set.next();
+            return set.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }
