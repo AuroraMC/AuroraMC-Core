@@ -75,7 +75,7 @@ public class CommandReport extends Command {
                                 @Override
                                 public void run() {
                                     PlayerReport.QueueType queueType = PlayerReport.QueueType.NORMAL;
-                                    if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME) {
+                                    if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                         queueType = PlayerReport.QueueType.LEADERSHIP;
                                     }
                                     ReportManager.newReport(target.getId(), target.getPlayer().getName(), player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, null, reason, queueType);
@@ -110,7 +110,7 @@ public class CommandReport extends Command {
                                         }.runTask(AuroraMCAPI.getCore());
                                     } else {
                                         PlayerReport.QueueType queueType = PlayerReport.QueueType.NORMAL;
-                                        if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME) {
+                                        if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                             queueType = PlayerReport.QueueType.LEADERSHIP;
                                         }
                                         ReportManager.newReport(id, plname, player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, null, reason, queueType);

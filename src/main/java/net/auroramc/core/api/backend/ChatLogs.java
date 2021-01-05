@@ -2,6 +2,7 @@ package net.auroramc.core.api.backend;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -86,5 +87,14 @@ public class ChatLogs {
         synchronized (lock) {
             chatMessages.add(new ChatMessage(amcId, name, rank, message, isDead, channel));
         }
+    }
+
+    public static boolean hasChatted(int player) {
+        for (ChatMessage message : chatMessages) {
+            if (message.getAmcId() == player) {
+                return true;
+            }
+        }
+        return false;
     }
 }
