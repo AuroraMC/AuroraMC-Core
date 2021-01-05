@@ -41,7 +41,7 @@ public class AuroraMCPlayer {
     private boolean vanished;
     private PlayerStatistics statistics;
     private PlayerBank bank;
-    private UUID partyLeader;
+    private UUID partyUUID;
 
     private FriendsList friendsList;
     private ChatChannel channel;
@@ -308,7 +308,7 @@ public class AuroraMCPlayer {
         bank = oldPlayer.bank;
         friendsList = oldPlayer.friendsList;
         channel = oldPlayer.channel;
-        partyLeader = oldPlayer.partyLeader;
+        partyUUID = oldPlayer.partyUUID;
         preferences = oldPlayer.preferences;
         activeReport = oldPlayer.activeReport;
     }
@@ -637,12 +637,12 @@ public class AuroraMCPlayer {
         return channel;
     }
 
-    public UUID getPartyLeader() {
-        return partyLeader;
+    public UUID getPartyUUID() {
+        return partyUUID;
     }
 
-    public void setPartyLeader(UUID partyLeader) {
-        this.partyLeader = partyLeader;
+    public void setPartyLeader(UUID partyUUID) {
+        this.partyUUID = partyUUID;
     }
 
     public PlayerPreferences getPreferences() {

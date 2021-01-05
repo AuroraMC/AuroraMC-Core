@@ -113,7 +113,7 @@ public class ChatReportReasonListing extends GUI {
             new BukkitRunnable(){
                 @Override
                 public void run() {
-                    ReportManager.newReport(id, name, player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, chatType, reason, PlayerReport.QueueType.NORMAL);
+                    ReportManager.newReport(id, name, player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, chatType, reason, ((player.hasPermission("moderation"))? PlayerReport.QueueType.LEADERSHIP:PlayerReport.QueueType.NORMAL));
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
             player.getPlayer().closeInventory();
