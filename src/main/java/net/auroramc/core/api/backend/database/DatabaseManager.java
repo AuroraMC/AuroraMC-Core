@@ -1,5 +1,6 @@
 package net.auroramc.core.api.backend.database;
 
+import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerStatistics;
@@ -1732,10 +1733,12 @@ public class DatabaseManager {
 
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                ResultSet nameSet = statement.executeQuery();
+                PreparedStatement statement2 = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement2.setInt(1, set.getInt(13));
+                ResultSet nameSet = statement2.executeQuery();
                 nameSet.next();
                 String name = nameSet.getString(1);
-                return new PlayerReport(set.getInt(1), set.getInt(13), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), set.getString(12), PlayerReport.ReportOutcome.valueOf(set.getString(9)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
+                return new PlayerReport(set.getInt(1), set.getInt(13), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), set.getString(12), PlayerReport.ReportOutcome.valueOf(set.getString(8)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
             } else {
                 return null;
 
@@ -1880,5 +1883,25 @@ public class DatabaseManager {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public void addUsernameBan(String name) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.sadd("usernamebans", name.toLowerCase());
+        }
+    }
+
+    public int getOfflineReports(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            String amount = connection.hget("reports.offline", id + "");
+            if (amount != null) {
+                int total = Integer.parseInt(amount);
+                if (total > 0) {
+                    connection.hset("reports.offline", id + "", "0");
+                    return total;
+                }
+            }
+        }
+        return 0;
     }
 }

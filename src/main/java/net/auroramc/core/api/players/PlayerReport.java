@@ -1,5 +1,7 @@
 package net.auroramc.core.api.players;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.PunishUtils;
@@ -118,22 +120,47 @@ public class PlayerReport {
         this.outcome = outcome;
         this.reasonAccepted = acceptedReason;
 
+        Rule rule;
+        if (outcome == ReportOutcome.ACCEPTED) {
+            if (acceptedReason != null) {
+                rule = AuroraMCAPI.getRules().getRule(((alt)? acceptedReason.getAltRule() : acceptedReason.getDefaultRule()));
+                PunishUtils.punishUser(suspect, suspectName, player, rule, acceptedReason.getName() + " [Report #" + id + "]");
+            } else {
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("KickPlayer");
+                out.writeUTF(suspectName);
+                out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Username Manager", "This username is blacklisted.\n" +
+                        "\n" +
+                        "This username has been deemed inappropriate and is therefore\n" +
+                        "blacklisted from use on our network!\n\n" +
+                        "In order to join, simply change your name!"));
+                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-        if (acceptedReason == null) {
-            acceptedReason = reason;
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        AuroraMCAPI.getDbManager().addUsernameBan(suspectName);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+            }
         }
 
-        Rule rule = AuroraMCAPI.getRules().getRule(((alt)? acceptedReason.getAltRule() : acceptedReason.getDefaultRule()));
-        PunishUtils.punishUser(suspect, suspectName, player, rule, acceptedReason.name() + " [Report #" + id + "]");
+
         new BukkitRunnable(){
             @Override
             public void run() {
                 AuroraMCAPI.getDbManager().handleReport(id, outcome, reasonAccepted);
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("ReportHandled");
+                out.writeInt(id);
+                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
+
+        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "The report has been handled."));
     }
 
-    public void forwardToLeadership() {
+    public void forwardToLeadership(AuroraMCPlayer player) {
         this.handler = 0;
         this.handlerName = null;
         this.queue = QueueType.LEADERSHIP;
@@ -143,9 +170,10 @@ public class PlayerReport {
                 AuroraMCAPI.getDbManager().forwardReportToLeadership(id);
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "The report has been forwarded to the Leadership Team."));
     }
 
-    public void abort() {
+    public void abort(AuroraMCPlayer player) {
         this.handler = 0;
         this.handlerName = null;
         new BukkitRunnable(){
@@ -154,6 +182,8 @@ public class PlayerReport {
                 AuroraMCAPI.getDbManager().abortReport(id);
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
+
+        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "The report has been aborted."));
     }
 
     public enum ReportReason {

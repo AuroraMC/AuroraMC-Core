@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
@@ -11,6 +12,8 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 public class PunishUtils {
 
@@ -22,6 +25,10 @@ public class PunishUtils {
             public void run() {
                 //Generate a random 8 digit punishment code.
                 PunishmentHistory history = new PunishmentHistory(player);
+                List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(player);
+                for (Punishment punishment : punishments) {
+                    history.registerPunishment(punishment);
+                }
                 String code = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
                 int type = rule.getType();
 

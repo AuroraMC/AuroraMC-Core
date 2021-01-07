@@ -31,7 +31,6 @@ public class AuroraMCAPI {
     private static AuroraMCAPI i;
     private final DatabaseManager dbManager;
     private final AuroraMC core;
-    private final HashMap<Plugin, Cache> caches;
     private final TextFormatter formatter;
 
     //Registering stuff needed by the whole network.
@@ -53,7 +52,6 @@ public class AuroraMCAPI {
         if (i == null) {
             i = this;
             this.core = core;
-            caches = new HashMap<>();
             formatter = new TextFormatter();
             dbManager = new DatabaseManager();
 
@@ -74,24 +72,6 @@ public class AuroraMCAPI {
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
-    }
-
-    @Nullable
-    public static Cache getCache(Plugin plugin) {
-        return i.caches.get(plugin);
-    }
-
-    @Nullable
-    public static Cache getCache(String plugin) {
-        Plugin javaPlugin = Bukkit.getPluginManager().getPlugin(plugin);
-        if (javaPlugin != null) {
-            return i.caches.get(javaPlugin);
-        }
-        return null;
-    }
-
-    public static void registerCache(JavaPlugin plugin, Cache cache) {
-        i.caches.put(plugin, cache);
     }
 
     public static TextFormatter getFormatter() {

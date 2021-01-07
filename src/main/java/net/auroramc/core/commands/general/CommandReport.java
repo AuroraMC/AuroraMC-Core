@@ -78,7 +78,7 @@ public class CommandReport extends Command {
                                     if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                         queueType = PlayerReport.QueueType.LEADERSHIP;
                                     }
-                                    ReportManager.newReport(target.getId(), target.getPlayer().getName(), player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, null, reason, queueType);
+                                    ReportManager.newReport(target.getId(), target.getPlayer().getName(), player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
                                 }
                             }.runTaskAsynchronously(AuroraMCAPI.getCore());
                         }
@@ -113,7 +113,7 @@ public class CommandReport extends Command {
                                         if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                             queueType = PlayerReport.QueueType.LEADERSHIP;
                                         }
-                                        ReportManager.newReport(id, plname, player, System.currentTimeMillis(), PlayerReport.ReportType.CHAT, null, reason, queueType);
+                                        ReportManager.newReport(id, plname, player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
                                     }
                                 } else {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There is no report of that type. Please try again."));
