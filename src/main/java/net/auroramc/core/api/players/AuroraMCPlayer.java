@@ -49,6 +49,7 @@ public class AuroraMCPlayer {
 
     //Staff objects
     private PlayerReport activeReport;
+    private BukkitTask activeReportTask;
 
 
     public AuroraMCPlayer(Player player) {
@@ -272,6 +273,20 @@ public class AuroraMCPlayer {
                 channel = AuroraMCAPI.getDbManager().getChannel(pl);
 
                 activeReport = AuroraMCAPI.getDbManager().getActiveReport(id);
+
+                if (activeReport != null) {
+                    activeReportTask = new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", ""));
+                        }
+                    }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+                }
+
+                int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
+                if (offlineReports > 0) {
+                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
+                }
 
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
@@ -647,5 +662,31 @@ public class AuroraMCPlayer {
 
     public PlayerPreferences getPreferences() {
         return preferences;
+    }
+
+    public PlayerReport getActiveReport() {
+        return activeReport;
+    }
+
+    public void setActiveReport(PlayerReport activeReport) {
+        this.activeReport = activeReport;
+        if (activeReport == null) {
+            if (this.activeReportTask != null) {
+                this.activeReportTask.cancel();
+                this.activeReportTask = null;
+            }
+        } else {
+            this.activeReportTask = new BukkitRunnable(){
+                @Override
+                public void run() {
+                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", ""));
+                }
+            }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+        }
+
+    }
+
+    public BukkitTask getActiveReportTask() {
+        return activeReportTask;
     }
 }

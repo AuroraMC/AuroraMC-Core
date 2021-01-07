@@ -11,6 +11,8 @@ import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.CommandPunishmentLookup;
+import net.auroramc.core.commands.moderation.report.CommandReportClose;
+import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.permissions.permissions.*;
@@ -33,7 +35,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuroraMC extends JavaPlugin {
 
-    private CoreCache cache;
     private static AuroraMC i;
 
     @Override
@@ -41,9 +42,9 @@ public class AuroraMC extends JavaPlugin {
         reloadConfig();
         getLogger().info("Loading AuroraMC-Core...");
 
+        i = this;
         new AuroraMCAPI(this);
-        cache = new CoreCache(this);
-        AuroraMCAPI.registerCache(this, cache);
+
 
         AuroraMCAPI.loadRules();
         AuroraMCAPI.loadFilter();
@@ -115,6 +116,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandAppeal());
         AuroraMCAPI.registerCommand(new CommandPunishmentLookup());
         AuroraMCAPI.registerCommand(new CommandReport());
+        AuroraMCAPI.registerCommand(new CommandReportHandle());
+        AuroraMCAPI.registerCommand(new CommandReportClose());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
@@ -190,6 +193,8 @@ public class AuroraMC extends JavaPlugin {
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "Server", new PluginMessageRecievedListener());
+
+        getLogger().info("AuroraMC-Core loaded and ready to accept connections.");
     }
 
     public static AuroraMC get() {

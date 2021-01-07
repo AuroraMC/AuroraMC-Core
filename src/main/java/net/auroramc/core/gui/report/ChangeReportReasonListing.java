@@ -16,33 +16,29 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReportReasonListing extends GUI {
+public class ChangeReportReasonListing extends GUI {
 
     private final AuroraMCPlayer player;
-    private final int id;
-    private final String name;
     private final PlayerReport.ReportType type;
     private int currentPage;
     private final List<PlayerReport.ReportReason> reportReasons;
 
-    public ReportReasonListing(AuroraMCPlayer player, int id, String name, PlayerReport.ReportType type) {
-        super(String.format("&3&lReport %s", name), 5, true);
+    public ChangeReportReasonListing(AuroraMCPlayer player, PlayerReport.ReportType type) {
+        super("&3&lChange Report Reason", 5, true);
 
         this.player = player;
-        this.id = id;
-        this.name = name;
         this.type = type;
 
         for (int i = 0; i <= 8; i++) {
             if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
+                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
+                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
             }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
+            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
+            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
         }
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&rPlease choose a reason.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lChange Report Reason", 1, "&rPlease choose a reason.", (short)3, false, player.getActiveReport().getSuspectName()));
 
         this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == type).collect(Collectors.toList());
         if (reportReasons.size() > 10) {
@@ -60,7 +56,7 @@ public class ReportReasonListing extends GUI {
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
 
-            this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+            this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to accept this;&rreport as **%s**", reason.getName())));
             column++;
             if (column == 7) {
                 row++;
@@ -76,7 +72,7 @@ public class ReportReasonListing extends GUI {
 
     @Override
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
-        if (item.getType() == Material.GLASS || item.getType() == Material.SKULL_ITEM) {
+        if (item.getType() == Material.STAINED_GLASS_PANE || item.getType() == Material.SKULL_ITEM) {
             player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
             return;
         }
@@ -107,17 +103,19 @@ public class ReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+                this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
             }
         } else {
             PlayerReport.ReportReason reason = reportReasons.get(((currentPage - 1) * 10) + ((row - 2) * 5) + (column - 2));
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    ReportManager.newReport(id, name, player, System.currentTimeMillis(), type, null, reason, ((player.hasPermission("moderation"))? PlayerReport.QueueType.LEADERSHIP:PlayerReport.QueueType.NORMAL));
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
-            player.getPlayer().closeInventory();
+            if (reason.getAltRule() != null) {
+                ChangeReportReasonChooseRule chooseRule = new ChangeReportReasonChooseRule(player, reason);
+                chooseRule.open(player);
+                AuroraMCAPI.openGUI(player, chooseRule);
+            } else {
+                player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, reason, false);
+                player.setActiveReport(null);
+                player.getPlayer().closeInventory();
+            }
         }
     }
 }
