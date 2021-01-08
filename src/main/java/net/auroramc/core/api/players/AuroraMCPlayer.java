@@ -13,6 +13,7 @@ import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -278,7 +279,9 @@ public class AuroraMCPlayer {
                     activeReportTask = new BukkitRunnable(){
                         @Override
                         public void run() {
-                            player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", ""));
+                            if (activeReport != null) {
+                                player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
+                            }
                         }
                     }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
                 }
@@ -669,17 +672,21 @@ public class AuroraMCPlayer {
     }
 
     public void setActiveReport(PlayerReport activeReport) {
-        this.activeReport = activeReport;
+
         if (activeReport == null) {
             if (this.activeReportTask != null) {
                 this.activeReportTask.cancel();
                 this.activeReportTask = null;
             }
+            this.activeReport = null;
         } else {
+            this.activeReport = activeReport;
             this.activeReportTask = new BukkitRunnable(){
                 @Override
                 public void run() {
-                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", ""));
+                    if (activeReport != null) {
+                        player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
+                    }
                 }
             }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
         }
