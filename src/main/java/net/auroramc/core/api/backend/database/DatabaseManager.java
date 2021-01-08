@@ -1071,7 +1071,7 @@ public class DatabaseManager {
 
     public List<Punishment> getUnassignedPunishments() {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT punishments.punishment_id, punishments.amc_id, punishments.rule_id, punishments.notes, punishments.punisher, punishments.issued, punishments.expire, punishments.status, punishments.evidence, punishments.suffix, punishments.removal_reason, punishments.remover, punishments.removal_timestamp, auroramc_players.name FROM punishments INNER JOIN auroramc_players ON auroramc_players.id=punishments.punisher WHERE (SELECT COUNT(*) FROM mentee_distribution WHERE REGEXP_LIKE(mentees, CONCAT('^', punishments.punisher,'$|^', punishments.punisher,',.*$|^.*,', punishments.punisher,'$|^.*,', punishments.punisher,',.*$'))) = 0 AND punishments.status = 2 ORDER BY issued ASC");
+            PreparedStatement statement = connection.prepareStatement("SELECT punishments.punishment_id, punishments.amc_id, punishments.rule_id, punishments.notes, punishments.punisher, punishments.issued, punishments.expire, punishments.status, punishments.evidence, punishments.suffix, punishments.removal_reason, punishments.remover, punishments.removal_timestamp, auroramc_players.name FROM punishments INNER JOIN auroramc_players ON auroramc_players.id=punishments.punisher WHERE (SELECT COUNT(*) FROM mentee_distribution WHERE NOT (mentees REGEXP CONCAT('^', punishments.punisher,'$|^', punishments.punisher,',.*$|^.*,', punishments.punisher,'$|^.*,', punishments.punisher,',.*$'))) AND punishments.status = 2 ORDER BY issued ASC");
             ResultSet set = statement.executeQuery();
 
             List<Punishment> punishments = new ArrayList<>();
@@ -1903,5 +1903,31 @@ public class DatabaseManager {
             }
         }
         return 0;
+    }
+
+    public List<PlayerReport> getSubmittedReports(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT reports.id, reports.reporters, reports.timestamp, reports.type, reports.chat_type, reports.reason, reports.handler, reports.outcome, reports.chatlog_uuid, reports.reason_accepted, reports.queue, reports.suspect FROM reports WHERE (reports.reporters REGEXP CONCAT('^', ?,'$|^', ?,',.*$|^.*,', ?,'$|^.*,', ?,',.*$')) ORDER BY timestamp DESC LIMIT 56");
+            statement.setInt(1, id);
+            statement.setInt(2, id);
+            statement.setInt(3, id);
+            statement.setInt(4, id);
+
+            ResultSet set = statement.executeQuery();
+            List<PlayerReport> reports = new ArrayList<>();
+            while (set.next()) {
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(12));
+
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                reports.add(new PlayerReport(set.getInt(1), set.getInt(12), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), null, PlayerReport.ReportOutcome.valueOf(set.getString(8)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9)))));
+            }
+            return reports;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

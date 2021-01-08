@@ -2,11 +2,13 @@ package net.auroramc.core.api.utils;
 
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.PlayerReport;
 import net.md_5.bungee.api.chat.*;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.permissions.ranks.Elite;
 import net.auroramc.core.permissions.ranks.Master;
 import net.auroramc.core.permissions.ranks.Player;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -254,6 +256,31 @@ public class TextFormatter {
 
         Rank rank = ((sender.isDisguised())?sender.getActiveDisguise().getRank():sender.getRank());
         textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank instanceof Player)?'7':rank.getPrefixColor()), ((rank instanceof Player)?"Player":rank.getPrefixAppearance()), sender.getPlayer().getName())) + message);
+        return textComponent;
+    }
+
+    public BaseComponent formatReportMessage(PlayerReport report) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent("«REPORTS»");
+        prefix.setColor(ChatColor.DARK_AQUA.asBungee());
+        prefix.setBold(true);
+
+        textComponent.addExtra(prefix);
+
+
+        textComponent.addExtra(convert(String.format(" %s Report #%s\n" +
+                "\n" +
+                "&b&lSUSPECT:&r %s\n" +
+                "&b&lOFFENCE:&r %s", WordUtils.capitalizeFully(report.getType().name().replace("_", " ")), report.getId(), report.getSuspectName(), report.getReason().getName())));
+
+        if (report.getChatReportUUID() != null) {
+            textComponent.addExtra(convert("\n\n&b&lCHATLOG:&r "));
+            TextComponent chatLog = new TextComponent("Click here to view chatlog");
+            chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chat.auroramc.block2block.me/log?uuid=%s", report.getChatReportUUID().toString())));
+            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN.asBungee()).create()));
+            textComponent.addExtra(chatLog);
+        }
+
         return textComponent;
     }
 
