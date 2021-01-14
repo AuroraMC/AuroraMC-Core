@@ -1,9 +1,5 @@
 package net.auroramc.core.api.backend.database;
 
-import net.auroramc.core.AuroraMC;
-import net.auroramc.core.api.players.*;
-import net.auroramc.core.api.stats.GameStatistics;
-import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
@@ -20,7 +16,9 @@ import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.stats.Achievement;
+import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerBank;
+import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
 import org.bukkit.Bukkit;
@@ -1837,6 +1835,30 @@ public class DatabaseManager {
         }
     }
 
+    public PlayerReport getActiveReport(int suspect, PlayerReport.ReportType type) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reports WHERE suspect = ? AND outcome = 'PENDING' AND type = ?");
+            statement.setInt(1, suspect);
+            statement.setString(2, type.name());
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(2));
+
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                return new PlayerReport(set.getInt(1), set.getInt(2), name, new ArrayList<>(Arrays.stream(set.getString(3).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(4), PlayerReport.ReportType.valueOf(set.getString(5)), ((set.getString(6) == null)?null: PlayerReport.ChatType.valueOf(set.getString(6))), PlayerReport.ReportReason.valueOf(set.getString(7)), set.getInt(8), null, PlayerReport.ReportOutcome.valueOf(set.getString(9)), ((set.getString(11) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(11))), (PlayerReport.QueueType.valueOf(set.getString(12))), ((set.getString(10) == null)?null:UUID.fromString(set.getString(10))));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void addReporter(int report, int reporter) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE reports SET reporters = concat(reporters, ',',?)  WHERE id = ?");
@@ -1891,6 +1913,12 @@ public class DatabaseManager {
         }
     }
 
+    public boolean isUsernameBanned(String s) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.sismember("usernamebans", s.toLowerCase());
+        }
+    }
+
     public int getOfflineReports(int id) {
         try (Jedis connection = jedis.getResource()) {
             String amount = connection.hget("reports.offline", id + "");
@@ -1928,6 +1956,19 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean hasActiveSession(int player) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM sessions WHERE record_after IS NOT NULL AND timestamp + INTERVAL 1 DAY > now() AND amc_id = ?");
+            statement.setInt(1, player);
+
+            ResultSet set = statement.executeQuery();
+            return set.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

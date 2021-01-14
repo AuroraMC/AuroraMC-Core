@@ -2,8 +2,8 @@ package net.auroramc.core.gui.preferences;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.players.PlayerPreferences;
+import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;

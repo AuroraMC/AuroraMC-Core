@@ -1,8 +1,8 @@
 package net.auroramc.core.commands.moderation;
 
-import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.Mentor;
 import net.auroramc.core.gui.punish.staffmanagement.MenteeList;
 import net.auroramc.core.gui.punish.staffmanagement.MentorList;

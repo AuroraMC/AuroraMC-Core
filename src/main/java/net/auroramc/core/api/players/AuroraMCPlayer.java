@@ -2,10 +2,9 @@ package net.auroramc.core.api.players;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import net.auroramc.core.api.permissions.PlusSubscription;
-import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
+import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.friends.FriendStatus;
@@ -13,7 +12,7 @@ import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
-import org.apache.commons.lang.WordUtils;
+import net.auroramc.core.api.stats.PlayerStatistics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -286,11 +285,12 @@ public class AuroraMCPlayer {
                     }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
                 }
 
-                int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
-                if (offlineReports > 0) {
-                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
+                if (preferences.isReportNotificationsEnabled()) {
+                    int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
+                    if (offlineReports > 0) {
+                        player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
+                    }
                 }
-
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);

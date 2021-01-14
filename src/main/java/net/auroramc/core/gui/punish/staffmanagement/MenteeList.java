@@ -2,10 +2,10 @@ package net.auroramc.core.gui.punish.staffmanagement;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.players.Mentee;
 import net.auroramc.core.api.players.Mentor;
 import net.auroramc.core.api.punishments.Punishment;
+import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

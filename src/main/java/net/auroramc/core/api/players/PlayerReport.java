@@ -7,7 +7,10 @@ import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.PunishUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static net.auroramc.core.api.players.PlayerReport.ReportType.*;
 
@@ -143,13 +146,18 @@ public class PlayerReport {
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
             }
+        } else {
+            if (alt) {
+                this.outcome = ReportOutcome.ACCEPTED;
+            }
         }
 
+        ReportOutcome finalOutcome = this.outcome;
 
         new BukkitRunnable(){
             @Override
             public void run() {
-                AuroraMCAPI.getDbManager().handleReport(id, outcome, reasonAccepted);
+                AuroraMCAPI.getDbManager().handleReport(id, finalOutcome, reasonAccepted);
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("ReportHandled");
                 out.writeInt(id);

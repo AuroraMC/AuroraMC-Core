@@ -1,6 +1,5 @@
 package net.auroramc.core.api.permissions;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

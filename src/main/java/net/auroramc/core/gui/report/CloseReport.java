@@ -6,7 +6,6 @@ import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -1,12 +1,12 @@
 package net.auroramc.core.gui.misc;
 
-import net.auroramc.core.api.stats.PlayerStatistics;
-import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.stats.PlayerStatistics;
+import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;

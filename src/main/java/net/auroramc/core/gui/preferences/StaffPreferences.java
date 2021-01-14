@@ -30,7 +30,7 @@ public class StaffPreferences extends GUI {
         this.setItem(1, 2, new GUIItem(Material.SUGAR_CANE, "&3Hub Invisibility", 1, ";&rBecome completely invisible to all other players;&rwhilst you are roaming around the lobby."));
         this.setItem(2, 2, new GUIItem(Material.INK_SACK, "&3Hub Invisibility", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isHubInvisibilityEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isHubInvisibilityEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isHubInvisibilityEnabled())?(short)10:(short)8)));
 
-        this.setItem(1, 4, new GUIItem(Material.REDSTONE_TORCH_ON, "&3Social Media Login Notifications", 1, ";&rGives you a notification when there;&ris a new punishment to be approved."));
+        this.setItem(1, 4, new GUIItem(Material.REDSTONE_TORCH_ON, "&3Social Media Login Notifications", 1, ";&rGives you a notification when social;&rmedia ranked users join the network."));
         this.setItem(2, 4, new GUIItem(Material.INK_SACK, "&3Social Media Login Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isSocialMediaNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isSocialMediaNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isSocialMediaNotificationsEnabled())?(short)10:(short)8)));
 
         this.setItem(1, 6, new GUIItem(Material.REDSTONE, "&3Ignore Hub Knockback", 1, ";&rBecome completely invulnerable to;&rKnockback in our Lobby Servers."));

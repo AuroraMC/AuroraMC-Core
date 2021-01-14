@@ -1,12 +1,12 @@
 package net.auroramc.core.listeners;
 
-import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.utils.TabCompleteInjector;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
+import net.auroramc.core.api.utils.TabCompleteInjector;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
