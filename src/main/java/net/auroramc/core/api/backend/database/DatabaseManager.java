@@ -1810,12 +1810,13 @@ public class DatabaseManager {
         }
     }
 
-    public PlayerReport getRecentReport(int suspect, PlayerReport.ReportType type) {
+    public PlayerReport getRecentReport(int suspect, PlayerReport.ReportType type, PlayerReport.ReportReason reason) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reports WHERE suspect = ? AND timestamp > ? AND outcome = 'PENDING' AND type = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM reports WHERE suspect = ? AND timestamp > ? AND outcome = 'PENDING' AND type = ? AND reason = ?");
             statement.setInt(1, suspect);
             statement.setLong(2, (System.currentTimeMillis() - 60000));
             statement.setString(3, type.name());
+            statement.setString(4, reason.name());
 
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -1961,7 +1962,7 @@ public class DatabaseManager {
 
     public boolean hasActiveSession(int player) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM sessions WHERE record_after IS NOT NULL AND timestamp + INTERVAL 1 DAY > now() AND amc_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM sessions WHERE record_after IS NULL AND timestamp + INTERVAL 1 DAY > now() AND amc_id = ?");
             statement.setInt(1, player);
 
             ResultSet set = statement.executeQuery();

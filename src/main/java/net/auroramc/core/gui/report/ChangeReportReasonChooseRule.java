@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ChangeReportReasonChooseRule extends GUI {
 
@@ -40,8 +41,13 @@ public class ChangeReportReasonChooseRule extends GUI {
             player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
             return;
         }
-
-        player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, reason, column != 2);
+        PlayerReport report = player.getActiveReport();
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, reason, column != 2);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
         player.setActiveReport(null);
         player.getPlayer().closeInventory();
     }

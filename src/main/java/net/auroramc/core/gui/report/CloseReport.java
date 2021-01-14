@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class CloseReport extends GUI {
 
@@ -73,7 +74,13 @@ public class CloseReport extends GUI {
         switch (column) {
             case 1:
             case 2: {
-                player.getActiveReport().handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
+                PlayerReport report = player.getActiveReport();
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        report.handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
                 player.getPlayer().closeInventory();
                 break;
@@ -87,13 +94,25 @@ public class CloseReport extends GUI {
             }
             case 5:
             case 6: {
-                player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), false);
+                PlayerReport report = player.getActiveReport();
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), false);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
                 player.getPlayer().closeInventory();
                 break;
             }
             case 7: {
-                player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), true);
+                PlayerReport report = player.getActiveReport();
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), true);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
                 player.getPlayer().closeInventory();
                 break;

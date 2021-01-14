@@ -23,6 +23,10 @@ public class CommandReport extends Command {
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         if (args.size() > 0) {
             String name = args.remove(0);
+            if (name.equalsIgnoreCase(player.getName()) || name.equalsIgnoreCase(player.getPlayer().getName())) {
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You cannot report yourself silly!"));
+                return;
+            }
             AuroraMCPlayer target = AuroraMCAPI.getPlayer(name);
             if (args.size() == 0) {
                 if (target != null) {
