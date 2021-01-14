@@ -37,7 +37,7 @@ public class ReportManager {
                 }
                 case MISC:
                 case CHAT: {
-                    PlayerReport preport = AuroraMCAPI.getDbManager().getRecentReport(suspect, type);
+                    PlayerReport preport = AuroraMCAPI.getDbManager().getRecentReport(suspect, type, reason);
                     if (preport != null) {
                         if (preport.getReporters().contains(reporter.getId())) {
                             reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
@@ -109,7 +109,7 @@ public class ReportManager {
             switch (report.getType()) {
                 case HACKING:
                 case MISC: {
-                    if (AuroraMCAPI.getDbManager().hasActiveSession(report.getSuspect())) {
+                    if (!AuroraMCAPI.getDbManager().hasActiveSession(report.getSuspect())) {
                         report.handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
                         return true;
                     }

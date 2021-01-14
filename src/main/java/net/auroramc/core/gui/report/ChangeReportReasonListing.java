@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -110,7 +111,13 @@ public class ChangeReportReasonListing extends GUI {
                 chooseRule.open(player);
                 AuroraMCAPI.openGUI(player, chooseRule);
             } else {
-                player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, reason, false);
+                PlayerReport report = player.getActiveReport();
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, reason, false);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
                 player.getPlayer().closeInventory();
             }

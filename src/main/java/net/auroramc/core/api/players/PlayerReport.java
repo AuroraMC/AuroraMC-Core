@@ -139,31 +139,21 @@ public class PlayerReport {
                         "In order to join, simply change your name!"));
                 player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        AuroraMCAPI.getDbManager().addUsernameBan(suspectName);
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                AuroraMCAPI.getDbManager().addUsernameBan(suspectName);
+
             }
         } else {
             if (alt) {
                 this.outcome = ReportOutcome.ACCEPTED;
+                outcome = ReportOutcome.ACCEPTED;
             }
         }
 
-        ReportOutcome finalOutcome = this.outcome;
-
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().handleReport(id, finalOutcome, reasonAccepted);
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("ReportHandled");
-                out.writeInt(id);
-                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        AuroraMCAPI.getDbManager().handleReport(id, outcome, reasonAccepted);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("ReportHandled");
+        out.writeInt(id);
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "The report has been handled."));
     }

@@ -1,5 +1,6 @@
 package net.auroramc.core.gui.report;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.api.utils.gui.GUI;
@@ -8,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class CloseNameReport extends GUI {
 
@@ -38,9 +40,22 @@ public class CloseNameReport extends GUI {
         }
 
         if (item.getDurability() == 14) {
-            player.getActiveReport().handle(player, PlayerReport.ReportOutcome.ACCEPTED, null, false);
+            PlayerReport report = player.getActiveReport();
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, null, false);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
         } else {
-            player.getActiveReport().handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
+            PlayerReport report = player.getActiveReport();
+
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    report.handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
         player.setActiveReport(null);
         player.getPlayer().closeInventory();
