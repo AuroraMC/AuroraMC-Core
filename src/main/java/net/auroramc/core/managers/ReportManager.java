@@ -6,240 +6,133 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ChatLogs;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
-import org.bukkit.scheduler.BukkitRunnable;
+import net.auroramc.core.api.punishments.Punishment;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class ReportManager {
 
     private final static Object lock = new Object();
-    private static final List<PlayerReport> submittedReports;
-    private static final List<BukkitRunnable> reportTasks;
-
-    static {
-        submittedReports = new ArrayList<>();
-        reportTasks = new ArrayList<>();
-    }
 
     public static void newReport(int suspect, String suspectName, AuroraMCPlayer reporter, long timestamp, PlayerReport.ReportType type, PlayerReport.ChatType chatType, PlayerReport.ReportReason reason, PlayerReport.QueueType queue) {
         synchronized (lock) {
-            List<PlayerReport> report = submittedReports.stream().filter(playerReport -> (playerReport.getType() == type && playerReport.getSuspect() == suspect && playerReport.getChatType() == chatType)).collect(Collectors.toList());
-
-            if (report.size() > 0) {
-                //There is a cached recent report, for this user, check if the user has already reported this person.
-                List<PlayerReport> reportedPlayer = report.stream().filter(playerReport -> playerReport.getReporters().contains(reporter.getId())).collect(Collectors.toList());
-                if (reportedPlayer.size() != 0) {
-                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
-                    return;
-                }
-
-                //There isn't a cached report by this user for this suspect, see if they submitted one from a different server.
-                PlayerReport preport = AuroraMCAPI.getDbManager().getRecentReport(suspect, type);
-                if (preport != null) {
-                    if (preport.getReporters().contains(reporter.getId())) {
-                        reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
-                        return;
-                    }
-
-                    //They have not sent one for this user, append the reporter.
-                    if (preport.getType() == PlayerReport.ReportType.CHAT) {
-                        if (preport.getChatType() == PlayerReport.ChatType.PUBLIC) {
-                            ChatLogs.appendMessages(preport.getChatReportUUID());
-                        } else if (preport.getChatType() == PlayerReport.ChatType.PARTY) {
-                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                            out.writeUTF("ChatReportAppend");
-                            out.writeInt(preport.getId());
-                            reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            switch (type) {
+                case HACKING:
+                case INAPPROPRIATE_NAME: {
+                    PlayerReport preport = AuroraMCAPI.getDbManager().getActiveReport(suspect, type);
+                    if (preport == null) {
+                        //new report
+                        submitNewReport(suspect, suspectName, reporter, timestamp, type, chatType, reason, queue);
+                    } else {
+                        if (preport.getReporters().contains(reporter.getId())) {
+                            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
                         } else {
-                            int id = AuroraMCAPI.getDbManager().newReport(suspect, reporter.getId(), timestamp, type, chatType, reason, null, queue);
-                            if (id == -1) {
-                                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying submit this report. Please try again later."));
-                                return;
-                            }
-                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                            out.writeUTF("ChatReportSent");
-                            out.writeInt(id);
-                            reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                            preport.addReporter(reporter.getId());
                             reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                            PlayerReport playerReport = new PlayerReport(id, suspect, suspectName, new ArrayList<>(Collections.singletonList(reporter.getId())), timestamp, type, chatType, reason, -1, null, PlayerReport.ReportOutcome.PENDING, null, queue, null);
-                            submittedReports.add(playerReport);
-                            BukkitRunnable runnable = new BukkitRunnable(){
-                                @Override
-                                public void run() {
-                                    synchronized (lock) {
-                                        submittedReports.remove(playerReport);
-                                        reportTasks.remove(this);
-                                    }
-                                }
-                            };
-                            runnable.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 1200);
-                            reportTasks.add(runnable);
-                            return;
                         }
-                    }
-                    preport.addReporter(reporter.getId());
-                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                } else {
-                    //It was handled elsewhere, submit new report.
-                    UUID chatReportUUID = null;
-
-                    if (type == PlayerReport.ReportType.CHAT) {
-                        if (chatType == PlayerReport.ChatType.PUBLIC) {
-                            if (!ChatLogs.hasChatted(suspect)) {
-                                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "That player has not chatted in this server! Please make sure you are submitting from the server the message was said in!"));
-                                return;
-                            }
-                            chatReportUUID = ChatLogs.reportDump();
-                            if (chatReportUUID == null) {
-                                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying to upload a chat log. Please try again later."));
-                                return;
-                            }
-                        } else if (chatType == PlayerReport.ChatType.PARTY) {
-                            if (reporter.getPartyUUID() == null) {
-                                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You are not in a party, so cannot report party chat!"));
-                                return;
-                            }
-                        }
-
-                    }
-
-                    int id = AuroraMCAPI.getDbManager().newReport(suspect, reporter.getId(), timestamp, type, chatType, reason, chatReportUUID, queue);
-                    if (id == -1) {
-                        reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying submit this report. Please try again later."));
                         return;
                     }
-
-                    if (type == PlayerReport.ReportType.CHAT && chatType != PlayerReport.ChatType.PUBLIC) {
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("ChatReportSent");
-                        out.writeInt(id);
-                        reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-                    }
-
-                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                    PlayerReport playerReport = new PlayerReport(id, suspect, suspectName, new ArrayList<>(Collections.singletonList(reporter.getId())), timestamp, type, chatType, reason, -1, null, PlayerReport.ReportOutcome.PENDING, null, queue, chatReportUUID);
-                    submittedReports.add(playerReport);
-                    BukkitRunnable runnable = new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            synchronized (lock) {
-                                submittedReports.remove(playerReport);
-                                reportTasks.remove(this);
-                            }
-                        }
-                    };
-                    runnable.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 1200);
-                    reportTasks.add(runnable);
+                    break;
                 }
-            } else {
-                //There isn't a cached report for this suspect, see if there is one sent from another server/in the database from the last minute.
-                PlayerReport preport = AuroraMCAPI.getDbManager().getRecentReport(suspect, type);
-                if (preport != null) {
-                    if (preport.getReporters().contains(reporter.getId())) {
-                        reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
-                        return;
-                    }
-
-                    //Has not already submitted a report but one exists for this suspect and specified type.
-                    //They have not sent one for this user, append the reporter.
-
-                    if (preport.getType() == PlayerReport.ReportType.CHAT) {
-                        if (preport.getChatType() == PlayerReport.ChatType.PUBLIC) {
-                            ChatLogs.appendMessages(preport.getChatReportUUID());
-                        } else if (preport.getChatType() == PlayerReport.ChatType.PARTY) {
-                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                            out.writeUTF("ChatReportAppend");
-                            out.writeInt(preport.getId());
-                            reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                case MISC:
+                case CHAT: {
+                    PlayerReport preport = AuroraMCAPI.getDbManager().getRecentReport(suspect, type);
+                    if (preport != null) {
+                        if (preport.getReporters().contains(reporter.getId())) {
+                            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You have already reported that user!"));
                         } else {
-                            int id = AuroraMCAPI.getDbManager().newReport(suspect, reporter.getId(), timestamp, type, chatType, reason, null, queue);
-                            if (id == -1) {
-                                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying submit this report. Please try again later."));
-                                return;
-                            }
-                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                            out.writeUTF("ChatReportSent");
-                            out.writeInt(id);
-                            reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                            preport.addReporter(reporter.getId());
                             reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                            PlayerReport playerReport = new PlayerReport(id, suspect, suspectName, new ArrayList<>(Collections.singletonList(reporter.getId())), timestamp, type, chatType, reason, -1, null, PlayerReport.ReportOutcome.PENDING, null, queue, null);
-                            submittedReports.add(playerReport);
-                            BukkitRunnable runnable = new BukkitRunnable(){
-                                @Override
-                                public void run() {
-                                    synchronized (lock) {
-                                        submittedReports.remove(playerReport);
-                                        reportTasks.remove(this);
-                                    }
+                            if (preport.getType() == PlayerReport.ReportType.CHAT) {
+                                if (preport.getChatType() == PlayerReport.ChatType.PUBLIC) {
+                                    ChatLogs.appendMessages(preport.getChatReportUUID());
+                                } else if (preport.getChatType() == PlayerReport.ChatType.PARTY) {
+                                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                                    out.writeUTF("ChatReportAppend");
+                                    out.writeInt(preport.getId());
+                                    reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                                 }
-                            };
-                            runnable.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 1200);
-                            reportTasks.add(runnable);
-                            return;
+                            }
                         }
+                    } else {
+                        submitNewReport(suspect, suspectName, reporter, timestamp, type, chatType, reason, queue);
                     }
-
-                    preport.addReporter(reporter.getId());
-                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                    return;
+                    break;
                 }
-
-                //There is no currently pending report for this user, create one.
-                UUID chatReportUUID = null;
-
-                if (type == PlayerReport.ReportType.CHAT) {
-                    if (chatType == PlayerReport.ChatType.PUBLIC) {
-                        if (!ChatLogs.hasChatted(suspect)) {
-                            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "That player has not chatted in this server! Please make sure you are submitting from the server the message was said in!"));
-                            return;
-                        }
-                        chatReportUUID = ChatLogs.reportDump();
-                        if (chatReportUUID == null) {
-                            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying to upload a chat log. Please try again later."));
-                            return;
-                        }
-                    } else if (chatType == PlayerReport.ChatType.PARTY) {
-                        if (reporter.getPartyUUID() == null) {
-                            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You are not in a party, so cannot report party chat!"));
-                            return;
-                        }
-                    }
-
-                }
-
-                int id = AuroraMCAPI.getDbManager().newReport(suspect, reporter.getId(), timestamp, type, chatType, reason, chatReportUUID, queue);
-                if (id == -1) {
-                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying submit this report. Please try again later."));
-                    return;
-                }
-
-                if (type == PlayerReport.ReportType.CHAT && chatType != PlayerReport.ChatType.PUBLIC) {
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("ChatReportSent");
-                    out.writeInt(id);
-                    reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-                }
-
-                reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
-                PlayerReport playerReport = new PlayerReport(id, suspect, suspectName, new ArrayList<>(Collections.singletonList(reporter.getId())), timestamp, type, chatType, reason, -1, null, PlayerReport.ReportOutcome.PENDING, null, queue, chatReportUUID);
-                submittedReports.add(playerReport);
-                BukkitRunnable runnable = new BukkitRunnable(){
-                    @Override
-                    public void run() {
-                        synchronized (lock) {
-                            submittedReports.remove(playerReport);
-                            reportTasks.remove(this);
-                        }
-                    }
-                };
-                runnable.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 1200);
-                reportTasks.add(runnable);
             }
         }
     }
 
+    private static void submitNewReport(int suspect, String suspectName, AuroraMCPlayer reporter, long timestamp, PlayerReport.ReportType type, PlayerReport.ChatType chatType, PlayerReport.ReportReason reason, PlayerReport.QueueType queue) {
+        UUID chatReportUUID = null;
+
+        if (type == PlayerReport.ReportType.CHAT) {
+            if (chatType == PlayerReport.ChatType.PUBLIC) {
+                if (!ChatLogs.hasChatted(suspect)) {
+                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "That player has not chatted in this server! Please make sure you are submitting from the server the message was said in!"));
+                    return;
+                }
+                chatReportUUID = ChatLogs.reportDump();
+                if (chatReportUUID == null) {
+                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying to upload a chat log. Please try again later."));
+                    return;
+                }
+            } else if (chatType == PlayerReport.ChatType.PARTY) {
+                if (reporter.getPartyUUID() == null) {
+                    reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You are not in a party, so cannot report party chat!"));
+                    return;
+                }
+            }
+
+        }
+
+        int id = AuroraMCAPI.getDbManager().newReport(suspect, reporter.getId(), timestamp, type, chatType, reason, chatReportUUID, queue);
+        if (id == -1) {
+            reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "An error has occurred while trying submit this report. Please try again later."));
+            return;
+        }
+
+        if (type == PlayerReport.ReportType.CHAT && chatType != PlayerReport.ChatType.PUBLIC) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("ChatReportSent");
+            out.writeInt(id);
+            reporter.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+        }
+
+        reporter.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "Thank you for submitting a report! A member of our staff team will look into it as soon as possible!"));
+    }
+
+
+    public static boolean canAutoHandle(AuroraMCPlayer player, PlayerReport report) {
+        if (report != null) {
+            switch (report.getType()) {
+                case HACKING:
+                case MISC: {
+                    if (AuroraMCAPI.getDbManager().hasActiveSession(report.getSuspect())) {
+                        report.handle(player, PlayerReport.ReportOutcome.DENIED, null, false);
+                        return true;
+                    }
+                }
+                case CHAT:
+                    List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(report.getSuspect());
+                    for (Punishment punishment : punishments) {
+                        if ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1)) {
+                            if (punishment.getRuleID() == report.getReason().getDefaultRule()) {
+                                report.handle(player, PlayerReport.ReportOutcome.DENIED, null, true);
+                                return true;
+                            }
+                        }
+                    }
+                    break;
+                case INAPPROPRIATE_NAME:
+                    if (AuroraMCAPI.getDbManager().isUsernameBanned(report.getSuspectName().toLowerCase())) {
+                        report.handle(player, PlayerReport.ReportOutcome.DENIED, null, true);
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return false;
+    }
 }

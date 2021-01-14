@@ -5,6 +5,8 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
+import net.auroramc.core.managers.ReportManager;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
@@ -40,109 +42,77 @@ public class HandleReportType extends GUI {
 
     @Override
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
+
+        PlayerReport.ReportType type = PlayerReport.ReportType.CHAT;
+
         switch (item.getType()) {
             case STAINED_GLASS_PANE:
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
                 break;
-            case BOOK_AND_QUILL: {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (player.hasPermission("admin")) {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, PlayerReport.ReportType.CHAT);
-                            if (report == null) {
-                                report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.CHAT);
-                                if (report == null) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no chat reports in either report queue."));
-                                    return;
-                                }
-                            }
-                            player.setActiveReport(report);
-                        } else {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.CHAT);
-                            if (report == null) {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no chat reports to handle."));
-                                return;
-                            }
-                            player.setActiveReport(report);
-                        }
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
-                player.getPlayer().closeInventory();
+            case SIGN:
+                type = PlayerReport.ReportType.MISC;
                 break;
-            }
-            case SIGN: {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (player.hasPermission("admin")) {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, PlayerReport.ReportType.MISC);
-                            if (report == null) {
-                                report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.MISC);
-                                if (report == null) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no misc reports in either report queue."));
-                                    return;
-                                }
-                            }
-                            player.setActiveReport(report);
-                        } else {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.MISC);
-                            if (report == null) {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no misc reports to handle."));
-                                return;
-                            }
-                            player.setActiveReport(report);
-                        }
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
-                player.getPlayer().closeInventory();
+            case IRON_SWORD:
+                type = PlayerReport.ReportType.HACKING;
                 break;
-            }
-            case IRON_SWORD: {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (player.hasPermission("admin")) {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, PlayerReport.ReportType.HACKING);
-                            if (report == null) {
-                                report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.HACKING);
-                                if (report == null) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no hacking reports in either report queue."));
-                                    return;
-                                }
-                            }
-                            player.setActiveReport(report);
-                        } else {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.HACKING);
-                            if (report == null) {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no hacking reports to handle."));
-                                return;
-                            }
-                            player.setActiveReport(report);
-                        }
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
-                player.getPlayer().closeInventory();
+            case NAME_TAG:
+                type = PlayerReport.ReportType.INAPPROPRIATE_NAME;
                 break;
-            }
-            case NAME_TAG: {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                            PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, PlayerReport.ReportType.INAPPROPRIATE_NAME);
-                            if (report == null) {
-                                report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, PlayerReport.ReportType.INAPPROPRIATE_NAME);
-                                if (report == null) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no inappropriate name reports in either report queue."));
-                                    return;
-                                }
-                            }
-                            player.setActiveReport(report);
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
-                player.getPlayer().closeInventory();
-                break;
-            }
         }
+
+        PlayerReport.ReportType finalType = type;
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int autoHandled = 0;
+
+                if (player.hasPermission("admin")) {
+                    PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, finalType);
+
+                    while (ReportManager.canAutoHandle(player, report)) {
+                        autoHandled++;
+                        report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.LEADERSHIP, finalType);
+                    }
+
+                    if (report == null) {
+                        report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
+                        while (ReportManager.canAutoHandle(player, report)) {
+                            autoHandled++;
+                            report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
+                        }
+                        if (report == null) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports in either report queue.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                            if (autoHandled > 0) {
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
+                            }
+                            return;
+                        }
+                    }
+                    if (autoHandled > 0) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
+                    }
+                    player.setActiveReport(report);
+                } else {
+                    PlayerReport report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
+                    while (ReportManager.canAutoHandle(player, report)) {
+                        autoHandled++;
+                        report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
+                    }
+                    if (report == null) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports to handle.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                        if (autoHandled > 0) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
+                        }
+                        return;
+                    }
+                    if (autoHandled > 0) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
+                    }
+                    player.setActiveReport(report);
+                }
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        player.getPlayer().closeInventory();
     }
 }

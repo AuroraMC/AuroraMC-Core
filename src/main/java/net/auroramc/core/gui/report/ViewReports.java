@@ -1,14 +1,9 @@
 package net.auroramc.core.gui.report;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
-import net.auroramc.core.api.punishments.Punishment;
-import net.auroramc.core.api.punishments.PunishmentLength;
-import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;

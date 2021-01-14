@@ -1,7 +1,7 @@
 package net.auroramc.core.api.events.player.message;
 
-import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.events.player.PlayerEvent;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.event.Cancellable;
 
 public abstract class PlayerMessageEvent extends PlayerEvent implements Cancellable {

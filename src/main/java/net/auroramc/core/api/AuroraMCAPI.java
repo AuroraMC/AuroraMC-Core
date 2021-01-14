@@ -1,26 +1,22 @@
 package net.auroramc.core.api;
 
 import net.auroramc.core.AuroraMC;
+import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.DatabaseManager;
+import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.punishments.Rule;
+import net.auroramc.core.api.punishments.RuleBook;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.TextFormatter;
 import net.auroramc.core.api.utils.gui.GUI;
-import net.auroramc.core.api.backend.Cache;
-import net.auroramc.core.api.backend.ServerInfo;
-import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.SubRank;
-import net.auroramc.core.api.punishments.Rule;
-import net.auroramc.core.api.punishments.RuleBook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
