@@ -18,10 +18,12 @@ import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentL
 import net.auroramc.core.listeners.JoinListener;
 import net.auroramc.core.listeners.LeaveListener;
 import net.auroramc.core.listeners.PluginMessageRecievedListener;
-import net.auroramc.core.listeners.TempChatListener;
+import net.auroramc.core.listeners.ChatListener;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import net.auroramc.core.permissions.permissions.BuildTeamManagement;
+import net.auroramc.core.permissions.permissions.CommunityManagement;
+import net.auroramc.core.permissions.permissions.EventManagement;
 import net.auroramc.core.permissions.permissions.Player;
 import net.auroramc.core.permissions.permissions.*;
 import net.auroramc.core.permissions.ranks.Admin;
@@ -69,6 +71,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerPermission(new Build());
         AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Recruitment());
         AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.SocialMedia());
+        AuroraMCAPI.registerPermission(new EventManagement());
+        AuroraMCAPI.registerPermission(new CommunityManagement());
 
         //Register Ranks with the API.
         AuroraMCAPI.registerRank(new net.auroramc.core.permissions.ranks.Player());
@@ -93,6 +97,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerSubRank(new Support());
         AuroraMCAPI.registerSubRank(new Recruitment());
         AuroraMCAPI.registerSubRank(new SocialMedia());
+        AuroraMCAPI.registerSubRank(new net.auroramc.core.permissions.subranks.EventManagement());
+        AuroraMCAPI.registerSubRank(new net.auroramc.core.permissions.subranks.CommunityManagement());
 
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
@@ -121,6 +127,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandReportClose());
         AuroraMCAPI.registerCommand(new CommandViewReports());
         AuroraMCAPI.registerCommand(new CommandIgnore());
+        AuroraMCAPI.registerCommand(new CommandChatSlow());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
@@ -187,7 +194,7 @@ public class AuroraMC extends JavaPlugin {
 
 
         //Registering default Event Listeners
-        Bukkit.getPluginManager().registerEvents(new TempChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new CommandManager(), this);
         Bukkit.getPluginManager().registerEvents(new GUIManager(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);

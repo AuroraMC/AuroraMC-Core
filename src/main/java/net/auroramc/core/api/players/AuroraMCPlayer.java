@@ -43,6 +43,7 @@ public class AuroraMCPlayer {
     private PlayerStatistics statistics;
     private PlayerBank bank;
     private UUID partyUUID;
+    private long lastMessageSent;
 
     private FriendsList friendsList;
     private ChatChannel channel;
@@ -59,6 +60,8 @@ public class AuroraMCPlayer {
         AuroraMCPlayer pl = this;
         this.player = player;
         name = player.getName();
+
+        lastMessageSent = -1;
 
         Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(pl);
         if (disguise != null) {
@@ -778,5 +781,11 @@ public class AuroraMCPlayer {
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
     }
 
+    public long getLastMessageSent() {
+        return lastMessageSent;
+    }
 
+    public void messageSent() {
+        lastMessageSent = System.currentTimeMillis();
+    }
 }

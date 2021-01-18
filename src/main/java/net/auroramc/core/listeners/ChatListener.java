@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ChatLogs;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
+import net.auroramc.core.api.players.ChatSlowLength;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -11,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class TempChatListener implements Listener {
+public class ChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
@@ -46,6 +47,16 @@ public class TempChatListener implements Listener {
                     e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "You currently have chat disabled! Please enable chat in order to send messages again."));
                     return;
                 }
+                if (AuroraMCAPI.getChatSlow() != -1) {
+                    if (player.getLastMessageSent() != -1 && !(player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info"))) {
+                        if (System.currentTimeMillis() - player.getLastMessageSent() < AuroraMCAPI.getChatSlow() * 1000) {
+                            ChatSlowLength length = new ChatSlowLength(((AuroraMCAPI.getChatSlow() * 1000) - (System.currentTimeMillis() - player.getLastMessageSent())) / 1000d);
+                            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("There is currently a chat slow active in this server. You may chat again in **%s**.", length.getFormatted())));
+                            return;
+                        }
+                    }
+                }
+                player.messageSent();
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
