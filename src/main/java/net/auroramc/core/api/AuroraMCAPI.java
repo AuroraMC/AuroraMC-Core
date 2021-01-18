@@ -44,6 +44,8 @@ public class AuroraMCAPI {
 
     private final ServerInfo serverInfo;
 
+    private short chatslow;
+
     public AuroraMCAPI(AuroraMC core) {
         if (i == null) {
             i = this;
@@ -60,6 +62,8 @@ public class AuroraMCAPI {
             rules = new RuleBook();
             pendingDisguiseChecks = new HashMap<>();
             achievements = new HashMap<>();
+
+            chatslow = -1;
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
 
@@ -218,6 +222,12 @@ public class AuroraMCAPI {
 
     public static HashMap<Integer, Achievement> getAchievements() {
         return i.achievements;
+    }
+
+    public static short getChatSlow() {return i.chatslow;}
+
+    public static void setChatSlow(short chatSlow) {
+        i.chatslow = chatSlow;
     }
 }
 

@@ -4,6 +4,6 @@ import net.auroramc.core.api.permissions.Permission;
 
 public class SocialMedia extends Permission {
     public SocialMedia() {
-        super(15, "socialmedia");
+        super(16, "socialmedia");
     }
 }
