@@ -48,7 +48,7 @@ public class HandleReportType extends GUI {
         switch (item.getType()) {
             case STAINED_GLASS_PANE:
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
-                break;
+                return;
             case SIGN:
                 type = PlayerReport.ReportType.MISC;
                 break;

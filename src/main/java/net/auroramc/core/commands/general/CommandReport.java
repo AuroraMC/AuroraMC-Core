@@ -7,12 +7,15 @@ import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.ChatType;
 import net.auroramc.core.gui.report.Report;
 import net.auroramc.core.managers.ReportManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class CommandReport extends Command {
     public CommandReport() {
@@ -24,7 +27,7 @@ public class CommandReport extends Command {
         if (args.size() > 0) {
             String name = args.remove(0);
             if (name.equalsIgnoreCase(player.getName()) || name.equalsIgnoreCase(player.getPlayer().getName())) {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You cannot report yourself silly!"));
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You cannot report yourself, silly!"));
                 return;
             }
             AuroraMCPlayer target = AuroraMCAPI.getPlayer(name);
@@ -130,7 +133,22 @@ public class CommandReport extends Command {
 
     @Override
     public @NotNull List<String> onTabComplete(AuroraMCPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments) {
-        //TODO: tab complete.
-        return new ArrayList<>();
+        List<String> completions = new ArrayList<>();
+        if (numberArguments == 1) {
+            for (Player player1 : Bukkit.getOnlinePlayers()) {
+                if (player1.getName().toLowerCase().startsWith(lastToken.toLowerCase())) {
+                    completions.add(player1.getName());
+                }
+            }
+        } else if (numberArguments == 2) {
+            for (PlayerReport.ReportReason reason : PlayerReport.ReportReason.values()) {
+                for (String alias : reason.getAliases()) {
+                    if (alias.toLowerCase().startsWith(lastToken.toLowerCase())) {
+                        completions.add(alias);
+                    }
+                }
+            }
+        }
+        return completions;
     }
 }

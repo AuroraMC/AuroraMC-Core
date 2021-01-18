@@ -49,7 +49,9 @@ public class TempChatListener implements Listener {
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
-                        player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, e.getMessage()));
+                        if (!AuroraMCAPI.getPlayer(player2).isIgnored(player.getId()) || AuroraMCAPI.getPlayer(player2).hasPermission("moderation")) {
+                            player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, e.getMessage()));
+                        }
                     }
                 }
                 ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), false, ChatChannel.ALL);
