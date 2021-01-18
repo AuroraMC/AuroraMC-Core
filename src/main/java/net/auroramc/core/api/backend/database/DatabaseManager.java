@@ -1972,4 +1972,48 @@ public class DatabaseManager {
             return false;
         }
     }
+
+    public List<IgnoredPlayer> getIgnoredPlayers(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM ignored WHERE amc_id = ?");
+            statement.setInt(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                List<IgnoredPlayer> ignoredPlayers = new ArrayList<>();
+                String[] idArray = set.getString(2).split(",");
+                if (idArray.length == 1) {
+                    if (idArray[0].equalsIgnoreCase("")) {
+                        return ignoredPlayers;
+                    }
+                } else if (idArray.length == 0) {
+                    return ignoredPlayers;
+                }
+                List<Integer> ids = Arrays.stream(idArray).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+                for (int target : ids) {
+                    ignoredPlayers.add(new IgnoredPlayer(target, getNameFromID(target)));
+                }
+                return ignoredPlayers;
+            } else {
+                return new ArrayList<>();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void setIgnoredPlayers(int id, List<IgnoredPlayer> users) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE ignored SET users = ? WHERE amc_id = ?");
+            List<String> usersStrings = users.stream().map(IgnoredPlayer::toString).collect(Collectors.toList());
+            statement.setInt(2, id);
+            statement.setString(1, String.join(",", usersStrings));
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

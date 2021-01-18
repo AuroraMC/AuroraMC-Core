@@ -274,7 +274,7 @@ public class PunishmentHistoryGUI extends GUI {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","You cannot remove a punishment if you did not specify a reason."));
                         }
                     } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","You cannot remove a punishment that has already expired. If this is false, please replace the evidence with **/evidence False punishment**."));
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","You cannot remove a punishment that has already expired. If this is false, please replace the evidence with **/evidence <Punishment ID> False punishment**."));
                     }
 
                 }

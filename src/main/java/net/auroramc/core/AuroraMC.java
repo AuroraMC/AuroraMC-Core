@@ -9,6 +9,7 @@ import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.general.*;
+import net.auroramc.core.commands.general.ignore.CommandIgnore;
 import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
@@ -119,6 +120,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandReportHandle());
         AuroraMCAPI.registerCommand(new CommandReportClose());
         AuroraMCAPI.registerCommand(new CommandViewReports());
+        AuroraMCAPI.registerCommand(new CommandIgnore());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());

@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class AuroraMCPlayer {
@@ -46,6 +47,7 @@ public class AuroraMCPlayer {
     private FriendsList friendsList;
     private ChatChannel channel;
     private PlayerPreferences preferences;
+    private List<IgnoredPlayer> ignoredPlayers;
 
     //Staff objects
     private PlayerReport activeReport;
@@ -292,6 +294,8 @@ public class AuroraMCPlayer {
                     }
                 }
 
+                ignoredPlayers = AuroraMCAPI.getDbManager().getIgnoredPlayers(id);
+
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
                 Bukkit.getPluginManager().callEvent(creationEvent);
@@ -329,6 +333,7 @@ public class AuroraMCPlayer {
         partyUUID = oldPlayer.partyUUID;
         preferences = oldPlayer.preferences;
         activeReport = oldPlayer.activeReport;
+        ignoredPlayers = oldPlayer.ignoredPlayers;
     }
 
     public Rank getRank() {
@@ -696,4 +701,82 @@ public class AuroraMCPlayer {
     public BukkitTask getActiveReportTask() {
         return activeReportTask;
     }
+
+    public List<IgnoredPlayer> getIgnoredPlayers() {
+        return ignoredPlayers;
+    }
+
+    public boolean isIgnored(int id) {
+        for (IgnoredPlayer player : ignoredPlayers) {
+            if (player.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isIgnored(String name) {
+        for (IgnoredPlayer player : ignoredPlayers) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public IgnoredPlayer getIgnored(int id) {
+        for (IgnoredPlayer player : ignoredPlayers) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public IgnoredPlayer getIgnored(String name) {
+        for (IgnoredPlayer player : ignoredPlayers) {
+            if (player.getName().equalsIgnoreCase(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public void addIgnored(IgnoredPlayer user) {
+        ignoredPlayers.add(user);
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("IgnoreAdded");
+        out.writeUTF(name);
+        out.writeInt(user.getId());
+        out.writeUTF(user.getName());
+        player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
+    public void removeIgnored(IgnoredPlayer user) {
+        ignoredPlayers.remove(user);
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("IgnoreRemoved");
+        out.writeUTF(name);
+        out.writeInt(user.getId());
+        player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
+
 }

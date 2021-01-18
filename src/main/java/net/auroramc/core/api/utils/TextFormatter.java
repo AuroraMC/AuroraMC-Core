@@ -3,6 +3,7 @@ package net.auroramc.core.api.utils;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.IgnoredPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.permissions.ranks.Elite;
 import net.auroramc.core.permissions.ranks.Master;
@@ -280,6 +281,62 @@ public class TextFormatter {
             chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN.asBungee()).create()));
             textComponent.addExtra(chatLog);
         }
+
+        return textComponent;
+    }
+
+    public BaseComponent formatIgnoreList(AuroraMCPlayer player, int page) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent("«IGNORE»");
+        prefix.setColor(ChatColor.DARK_AQUA.asBungee());
+        prefix.setBold(true);
+
+        textComponent.addExtra(prefix);
+
+        textComponent.addExtra(convert(highlight(String.format("You have **%s** players ignored!\n\n", player.getIgnoredPlayers().size()))));
+
+        if (player.getIgnoredPlayers().size() > 0) {
+            for (int i = 0;i < 7;i++) {
+                int item = ((page - 1) * 7) + i;
+                if (item >= player.getIgnoredPlayers().size()) {
+                    break;
+                }
+                IgnoredPlayer ignoredPlayer = player.getIgnoredPlayers().get(item);
+                TextComponent unignore = new TextComponent("UNIGNORE");
+                unignore.setColor(net.md_5.bungee.api.ChatColor.RED);
+                unignore.setBold(true);
+                unignore.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to unignore this player.").color(net.md_5.bungee.api.ChatColor.RED).create()));
+                unignore.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/ignore remove %s", ignoredPlayer.getName())));
+
+                textComponent.addExtra(unignore);
+                textComponent.addExtra(" " + ignoredPlayer.getName() + "\n");
+            }
+        } else {
+            textComponent.addExtra(convert(highlight("You currently do not have anyone ignored. If you want to ignore someone, use **/ignore add <player>**.\n")));
+        }
+
+        textComponent.addExtra("\n");
+
+        TextComponent prev = new TextComponent("«");
+        prev.setColor(net.md_5.bungee.api.ChatColor.DARK_AQUA);
+        prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/ignore list %s", ((page == 1)?1:page-1))));
+        prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to the previous page.").color(net.md_5.bungee.api.ChatColor.WHITE).create()));
+        textComponent.addExtra(prev);
+
+        int totalPages = 1;
+
+        if (player.getIgnoredPlayers().size() > 0) {
+            totalPages = (player.getIgnoredPlayers().size() / 7) + ((player.getIgnoredPlayers().size() % 7 > 0)?1:0);
+        }
+
+        textComponent.addExtra(convert(String.format(" &3Page &b&l%s&r&3/&b&l%s&r ", page, totalPages)));
+
+        TextComponent next = new TextComponent("»");
+        next.setColor(net.md_5.bungee.api.ChatColor.DARK_AQUA);
+        next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/ignore list %s", ((page == totalPages)?page:page+1))));
+        next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to the next page.").color(net.md_5.bungee.api.ChatColor.WHITE).create()));
+        textComponent.addExtra(next);
+
 
         return textComponent;
     }
