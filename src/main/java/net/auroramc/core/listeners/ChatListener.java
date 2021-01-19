@@ -47,6 +47,17 @@ public class ChatListener implements Listener {
                     e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "You currently have chat disabled! Please enable chat in order to send messages again."));
                     return;
                 }
+                if (AuroraMCAPI.getChatSilenceEnd() != -2) {
+                    if (!(player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info"))) {
+                        if (AuroraMCAPI.getChatSilenceEnd() != -1) {
+                            ChatSlowLength length = new ChatSlowLength((AuroraMCAPI.getChatSilenceEnd() - System.currentTimeMillis())/1000d);
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("Chat is currently silenced. You may talk again in **%s**.", length.getFormatted())));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", "Chat is currently silenced."));
+                        }
+                        return;
+                    }
+                }
                 if (AuroraMCAPI.getChatSlow() != -1) {
                     if (player.getLastMessageSent() != -1 && !(player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info"))) {
                         if (System.currentTimeMillis() - player.getLastMessageSent() < AuroraMCAPI.getChatSlow() * 1000) {

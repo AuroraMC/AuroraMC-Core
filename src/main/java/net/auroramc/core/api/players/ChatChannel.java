@@ -5,6 +5,7 @@ public enum ChatChannel {
     ALL,
     PARTY,
     STAFF,
-    TEAM
+    TEAM,
+    NETWORK
 
 }
