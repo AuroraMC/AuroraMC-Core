@@ -128,6 +128,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandViewReports());
         AuroraMCAPI.registerCommand(new CommandIgnore());
         AuroraMCAPI.registerCommand(new CommandChatSlow());
+        AuroraMCAPI.registerCommand(new CommandChatSilence());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());

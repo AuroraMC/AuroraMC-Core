@@ -8,6 +8,7 @@ import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.ChatSlowLength;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.punishments.RuleBook;
 import net.auroramc.core.api.stats.Achievement;
@@ -17,6 +18,7 @@ import net.auroramc.core.api.utils.gui.GUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +47,8 @@ public class AuroraMCAPI {
     private final ServerInfo serverInfo;
 
     private short chatslow;
+    private long chatSilenceEnd;
+    private BukkitTask silenceTask;
 
     public AuroraMCAPI(AuroraMC core) {
         if (i == null) {
@@ -64,6 +68,8 @@ public class AuroraMCAPI {
             achievements = new HashMap<>();
 
             chatslow = -1;
+            chatSilenceEnd = -2;
+            silenceTask = null;
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
 
@@ -228,6 +234,56 @@ public class AuroraMCAPI {
 
     public static void setChatSlow(short chatSlow) {
         i.chatslow = chatSlow;
+    }
+
+    public static long getChatSilenceEnd() {
+        return i.chatSilenceEnd;
+    }
+
+    public static BukkitTask getSilenceTask() {
+        return i.silenceTask;
+    }
+
+    public static void enableChatSilence(short seconds, boolean sendMessage) {
+        if (i.silenceTask != null) {
+            i.silenceTask.cancel();
+        }
+        if (seconds != -1) {
+            i.chatSilenceEnd = System.currentTimeMillis() + (seconds*1000);
+            i.silenceTask = new BukkitRunnable(){
+                @Override
+                public void run() {
+                    if (i.chatSilenceEnd != -2) {
+                        disableSilence();
+                    }
+                }
+            }.runTaskLater(i.core, seconds*20);
+        } else {
+            i.chatSilenceEnd = -1;
+        }
+
+        ChatSlowLength length = new ChatSlowLength(seconds);
+        if (sendMessage) {
+            for (AuroraMCPlayer player : getPlayers()) {
+                if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("The chat has been silenced for **%s**. The goose has granted you immunity from it because of your rank!", length.getFormatted())));
+                } else {
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
+                }
+            }
+        }
+    }
+
+    public static void disableSilence() {
+        i.chatSilenceEnd = -2;
+        for (AuroraMCPlayer player : getPlayers()) {
+            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", "Chat is no longer silenced."));
+        }
+        if (i.silenceTask != null) {
+            BukkitTask task = i.silenceTask;
+            i.silenceTask = null;
+            task.cancel();
+        }
     }
 }
 
