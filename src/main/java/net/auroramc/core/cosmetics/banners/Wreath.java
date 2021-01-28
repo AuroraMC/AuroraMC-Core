@@ -3,6 +3,7 @@ package net.auroramc.core.cosmetics.banners;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,12 @@ public class Wreath extends Banner {
 
     static {
         patterns = new ArrayList<>();
+        patterns.add(new Pattern(DyeColor.YELLOW, PatternType.CREEPER));
+        patterns.add(new Pattern(DyeColor.RED, PatternType.SKULL));
+        patterns.add(new Pattern(DyeColor.GREEN, PatternType.FLOWER));
+        patterns.add(new Pattern(DyeColor.BLACK, PatternType.CIRCLE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.BLACK, PatternType.CIRCLE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.BLACK, PatternType.CIRCLE_MIDDLE));
     }
 
     public Wreath() {
