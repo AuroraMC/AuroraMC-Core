@@ -13,7 +13,12 @@ import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -787,5 +792,26 @@ public class AuroraMCPlayer {
 
     public void messageSent() {
         lastMessageSent = System.currentTimeMillis();
+    }
+
+    public void sendTitle(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime, ChatColor titleColor, ChatColor subtitleColor, boolean titleBold, boolean subTitleBold) {
+        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + title + "\",\"color\":\"" + titleColor.name().toLowerCase() + "\",\"bold\":\"" + ((titleBold) ? "true" : "false") + "\"}");
+        IChatBaseComponent chatSubtitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + subtitle + "\",\"color\":\"" + subtitleColor.name().toLowerCase() + "\",\"bold\":\"" + ((subTitleBold) ? "true" : "false") + "\"}");
+
+        if (subtitle != null) {
+            PacketPlayOutTitle subTitlePacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubtitle, fadeInTime, showTime, fadeOutTime);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitlePacket);
+        }
+
+        PacketPlayOutTitle titlePacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle, fadeInTime, showTime, fadeOutTime);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(titlePacket);
+
+    }
+
+    public void sendHotBar(String message, ChatColor color, boolean bold) {
+        IChatBaseComponent component = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\",\"color\":\"" + color.name().toLowerCase() + "\",\"bold\":\"" + ((bold) ? "true" : "false") + "\"}");
+
+        PacketPlayOutChat packet = new PacketPlayOutChat(component, (byte) 2);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 }
