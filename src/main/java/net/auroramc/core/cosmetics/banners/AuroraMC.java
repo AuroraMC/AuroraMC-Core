@@ -22,6 +22,6 @@ public class AuroraMC extends Banner {
     }
 
     public AuroraMC() {
-        super(3, "AuroraMC?", "&3AuroraMC?", "&3It's the best we could do, okay?", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.WHITE);
+        super(3, "AuroraMC?", "&3AuroraMC?", "&3It's the best we could do, okay?", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE);
     }
 }

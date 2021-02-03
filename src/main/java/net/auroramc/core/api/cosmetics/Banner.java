@@ -18,8 +18,8 @@ public abstract class Banner extends Cosmetic {
     private final List<Pattern> patterns;
     private final DyeColor base;
 
-    public Banner(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, List<Pattern> patterns, DyeColor base) {
-        super(id, CosmeticType.BANNER, name, displayName, description, unlockMode, currency, permissions, ranks);
+    public Banner(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, List<Pattern> patterns, DyeColor base) {
+        super(id, CosmeticType.BANNER, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage);
         this.patterns = patterns;
         this.base = base;
     }
@@ -29,7 +29,7 @@ public abstract class Banner extends Cosmetic {
     }
 
     @Override
-    public final void onEquip(AuroraMCPlayer player) {
+    public void onEquip(AuroraMCPlayer player) {
         ItemStack item = new ItemStack(Material.BANNER, 1);
         BannerMeta meta = (BannerMeta) item.getItemMeta();
         meta.setBaseColor(base);

@@ -25,7 +25,7 @@ public class UnitedStates extends Banner {
     }
 
     public UnitedStates() {
-        super(1, "United States Flag", "&cUnited States Flag", "&cUSA! USA! USA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.RED);
+        super(1, "United States Flag", "&cUnited States Flag", "&cUSA! USA! USA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.RED);
     }
 
 }

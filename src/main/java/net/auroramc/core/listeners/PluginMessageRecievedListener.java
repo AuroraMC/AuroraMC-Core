@@ -22,7 +22,7 @@ import java.util.UUID;
 public class PluginMessageRecievedListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player player2, byte[] bytes) {
-        if (channel.equals("Server")) {
+        if (channel.equals("auroramc:server")) {
             ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
             String subchannel = in.readUTF();
             switch (subchannel) {
