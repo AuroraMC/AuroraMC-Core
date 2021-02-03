@@ -49,7 +49,7 @@ public class TabCompleteInjector {
                                                 String[] complete = new String[finalCompletions.size()];
                                                 finalCompletions.toArray(complete);
                                                 PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(complete);
-                                                ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.sendMPacket(packetPlayOutTabComplete);
+                                                ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.sendPacket(packetPlayOutTabComplete);
                                                 break;
                                             }
                                         }
