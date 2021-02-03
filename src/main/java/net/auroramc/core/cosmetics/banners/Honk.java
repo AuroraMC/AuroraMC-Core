@@ -23,6 +23,6 @@ public class Honk extends Banner {
     }
 
     public Honk() {
-        super(6, "Honk", "&6Honk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(6, "Honk", "&6Honk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
     }
 }

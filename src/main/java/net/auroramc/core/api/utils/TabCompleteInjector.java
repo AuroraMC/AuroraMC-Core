@@ -10,6 +10,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import us.myles.ViaVersion.api.Via;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public class TabCompleteInjector {
                                                 String[] complete = new String[finalCompletions.size()];
                                                 finalCompletions.toArray(complete);
                                                 PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(complete);
-                                                ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.sendPacket(packetPlayOutTabComplete);
+                                                ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.sendMPacket(packetPlayOutTabComplete);
                                                 break;
                                             }
                                         }

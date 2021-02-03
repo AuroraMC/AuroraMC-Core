@@ -23,6 +23,6 @@ public class Wreath extends Banner {
     }
 
     public Wreath() {
-        super(10, "Wreath", "&2Wreath", "&2♫ It's beginning to look a lot like Christmas! ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(10, "Wreath", "&2Wreath", "&2♫ It's beginning to look a lot like Christmas! ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
     }
 }

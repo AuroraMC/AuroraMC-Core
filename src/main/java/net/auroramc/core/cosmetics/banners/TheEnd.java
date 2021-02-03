@@ -23,6 +23,6 @@ public class TheEnd extends Banner {
     }
 
     public TheEnd() {
-        super(7, "The End", "&5The End", "&5He wants your blocks...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(7, "The End", "&5The End", "&5He wants your blocks...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
     }
 }

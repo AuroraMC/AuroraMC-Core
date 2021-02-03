@@ -17,8 +17,9 @@ public abstract class Cosmetic {
     private final int currency;
     private final List<Permission> permissions;
     private final List<Rank> ranks;
+    private final String unlockMessage;
 
-    public Cosmetic(int id, CosmeticType type, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks) {
+    public Cosmetic(int id, CosmeticType type, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -28,6 +29,7 @@ public abstract class Cosmetic {
         this.currency = currency;
         this.permissions = permissions;
         this.ranks = ranks;
+        this.unlockMessage = unlockMessage;
     }
 
     public abstract void onEquip(AuroraMCPlayer player);
@@ -68,6 +70,10 @@ public abstract class Cosmetic {
 
     public UnlockMode getUnlockMode() {
         return unlockMode;
+    }
+
+    public String getUnlockMessage() {
+        return unlockMessage;
     }
 
     public enum CosmeticType {

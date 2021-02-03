@@ -16,6 +16,6 @@ public class Derp extends Banner {
     }
 
     public Derp() {
-        super(15, "Derp", "&eDerp", "&eDerpity Derpity Derp Derp", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(15, "Derp", "&eDerp", "&eDerpity Derpity Derp Derp", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
     }
 }

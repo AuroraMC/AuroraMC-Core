@@ -203,7 +203,7 @@ public class AuroraMC extends JavaPlugin {
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "Server", new PluginMessageRecievedListener());
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
 
         getLogger().info("AuroraMC-Core loaded and ready to accept connections.");
     }

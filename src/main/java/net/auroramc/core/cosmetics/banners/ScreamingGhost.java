@@ -16,6 +16,6 @@ public class ScreamingGhost extends Banner {
     }
 
     public ScreamingGhost() {
-        super(14, "Screaming Ghost", "&8Screaming Ghost", "&8Ooooooooh! Spook!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(14, "Screaming Ghost", "&8Screaming Ghost", "&8Ooooooooh! Spook!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Spooky Crates", patterns, DyeColor.BLACK);
     }
 }

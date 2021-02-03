@@ -16,6 +16,6 @@ public class JackOLantern extends Banner {
     }
 
     public JackOLantern() {
-        super(12, "Jack-O-Lantern", "&6Jack-O&8-Lantern", "&8Watch out for ghosts and ghouls!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(12, "Jack-O-Lantern", "&6Jack-O&8-Lantern", "&8Watch out for ghosts and ghouls!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Spooky Crates", patterns, DyeColor.BLACK);
     }
 }

@@ -16,6 +16,6 @@ public class Ogre extends Banner {
     }
 
     public Ogre() {
-        super(13, "Ogre", "&2Ogre", "&2He's gonna get you!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), patterns, DyeColor.BLACK);
+        super(13, "Ogre", "&2Ogre", "&2He's gonna get you!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
     }
 }
