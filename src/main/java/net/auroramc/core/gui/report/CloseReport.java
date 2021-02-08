@@ -98,7 +98,7 @@ public class CloseReport extends GUI {
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), false);
+                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, report.getReason(), false);
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
@@ -110,7 +110,7 @@ public class CloseReport extends GUI {
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, player.getActiveReport().getReason(), true);
+                        report.handle(player, PlayerReport.ReportOutcome.ACCEPTED, report.getReason(), true);
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 player.setActiveReport(null);
