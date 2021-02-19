@@ -24,8 +24,8 @@ public class CommandLag extends Command {
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         MemoryMXBean bean = ManagementFactory.getMemoryMXBean();
-        int threadsCurrentlyExecuting = Bukkit.getScheduler().getActiveWorkers().size();
-        int threadsAwaitingExecution = Bukkit.getScheduler().getPendingTasks().size();
+        long threadsCurrentlyExecuting = Bukkit.getScheduler().getActiveWorkers().size();
+        long threadsAwaitingExecution = Bukkit.getScheduler().getPendingTasks().size();
         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Resource Monitor", String.format("Server lag statistics:\n" +
                 "Used RAM: **%sMB**\n" +
                 "Total RAM: **%sMB**\n" +
