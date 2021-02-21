@@ -4,6 +4,7 @@ import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.DatabaseManager;
 import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
@@ -38,6 +39,7 @@ public class AuroraMCAPI {
     private final HashMap<Player, AuroraMCPlayer> players;
     private final HashMap<String, Command> commands;
     private final HashMap<AuroraMCPlayer, GUI> openGUIs;
+    private final HashMap<Integer, Cosmetic> cosmetics;
     private final RuleBook rules;
     private ChatFilter filter;
     private final HashMap<Integer, Achievement> achievements;
@@ -66,6 +68,7 @@ public class AuroraMCAPI {
             rules = new RuleBook();
             pendingDisguiseChecks = new HashMap<>();
             achievements = new HashMap<>();
+            cosmetics = new HashMap<>();
 
             chatslow = -1;
             chatSilenceEnd = -2;
@@ -183,6 +186,14 @@ public class AuroraMCAPI {
 
     public static void closeGUI(AuroraMCPlayer player) {
         i.openGUIs.remove(player);
+    }
+
+    public static void registerCosmetic(Cosmetic cosmetic) {
+        i.cosmetics.put(cosmetic.getId(), cosmetic);
+    }
+
+    public static HashMap<Integer, Cosmetic> getCosmetics() {
+        return new HashMap<>(i.cosmetics);
     }
 
     public static RuleBook getRules() {

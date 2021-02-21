@@ -18,14 +18,7 @@ public class SocialPreferences extends GUI {
         super("&3&lSocial Preferences", 3, true);
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 4) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lSocial Preferences", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lSocial Preferences", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lSocial Preferences", 1, "", (short) 7));
-            this.setItem(3, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lSocial Preferences", 1, "", (short) 7));
-        }
+        border("&3&lSocial Preferences", "");
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBack"));
 
         this.setItem(1, 2, new GUIItem(Material.SKULL_ITEM, "&3Friend Requests", 1, ";&rDisabling this will prevent any player from;&rbeing able to send you friend requests.", (short)3));

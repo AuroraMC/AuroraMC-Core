@@ -38,14 +38,8 @@ public class Friends extends GUI {
 
         this.friendsList = player.getFriendsList();
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Friends", 1, "", (short) 7));
-        }
+        border("&3&lYour Friends", "");
+
         this.setItem(0, 1, new GUIItem(Material.NETHER_STAR, "&3&lFavourite Friends", 1, ";&rClick here to change the;&rview to **Favourite Friends**;&ronly.", (short) 0, true));
         this.setItem(0, 3, new GUIItem(Material.BOOK, "&3&lAll Friends", 1, ";&rClick here to change the;&rview to **All Friends**.", (short) 0, false));
         this.setItem(0, 5, new GUIItem(Material.PAPER, "&3&lFriend Requests", 1, ";&rClick here to change the;&rview to **Friend Requests**.", (short) 0, false));

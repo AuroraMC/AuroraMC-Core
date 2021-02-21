@@ -1,4 +1,4 @@
-package net.auroramc.core.gui;
+package net.auroramc.core.gui.plus;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -21,14 +21,7 @@ public class LevelColour extends GUI {
 
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Level Colour", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Level Colour", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Level Colour", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Level Colour", 1, "", (short) 7));
-        }
+        border("&3&lYour Level Colour", "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Level Colour", 1, String.format("&rCurrent Level Colour: &%s%s", player.getActiveSubscription().getLevelColor(), WordUtils.capitalizeFully(ChatColor.getByChar(player.getActiveSubscription().getLevelColor()).name().replace("_", " ").toLowerCase())), (short) 3, false));
 
 

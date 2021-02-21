@@ -18,14 +18,7 @@ public class ChatPreferences extends GUI {
         super("&3&lChat Preferences", 5, true);
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChat Preferences", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChat Preferences", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChat Preferences", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChat Preferences", 1, "", (short) 7));
-        }
+        border("&3&lChat Preferences", "");
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBack"));
 
         this.setItem(1, 3, new GUIItem(Material.PAPER, "&3Chat Visibility", 1, ";&rDisabling this will prevent you from being;&rable to view other player's chat messages."));

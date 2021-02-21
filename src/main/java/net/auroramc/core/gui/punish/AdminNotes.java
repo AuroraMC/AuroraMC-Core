@@ -34,14 +34,7 @@ public class AdminNotes extends GUI {
         this.notes = AuroraMCAPI.getDbManager().getAdminNotes(id);
         page = 1;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Admin Notes", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Admin Notes", name), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Admin Notes", name), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Admin Notes", name), 1, "", (short) 7));
-        }
+        border(String.format("&3&l%s's Admin Notes", name), "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Admin Notes", name), 1, "&rAdmin Notes", (short) 3, false, name));
         this.setItem(5, 4, new GUIItem(Material.WOOL, "&a&lAdd Note", 1, "&rAdd your current reason as;&ra note!", (short) 5));

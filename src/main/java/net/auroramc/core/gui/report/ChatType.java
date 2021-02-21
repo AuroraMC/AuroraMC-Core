@@ -27,14 +27,7 @@ public class ChatType extends GUI {
         this.name = name;
         this.reason = null;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 3) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-        }
+        border(String.format("&3&lReport %s", name), "");
 
         this.setItem(0, 4, new GUIItem(Material.BOOK_AND_QUILL, String.format("&3&lReport %s", name), 1, "&rPlease choose a type of report."));
 

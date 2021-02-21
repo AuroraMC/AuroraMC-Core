@@ -5,10 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class TieredAcheivement extends Achievement{
+public abstract class TieredAcheivement extends Achievement {
 
     private final Map<Integer, AchievementTier> tiers;
-
 
     public TieredAcheivement(int achievementId, String name, String description, String rewards, boolean visible, boolean locked, AchievementCategory category) {
         super(achievementId, name, description, rewards, visible, locked, category);

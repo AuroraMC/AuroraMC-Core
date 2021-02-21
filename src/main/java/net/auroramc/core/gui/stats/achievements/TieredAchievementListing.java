@@ -21,14 +21,7 @@ public class TieredAchievementListing extends GUI {
 
     public TieredAchievementListing(AuroraMCPlayer player, Achievement achievement, ItemStack item) {
         super("&3&l" + achievement.getName(), 2, true);
-        for (int i = 0; i <= 8; i++) {
-            if (i < 2) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-        }
+        border(String.format("&3&l%s's Achievements", player.getPlayer().getName()), "");
         item.setType(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.getLore();

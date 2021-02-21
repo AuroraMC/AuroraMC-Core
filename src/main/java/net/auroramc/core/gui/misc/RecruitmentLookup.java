@@ -20,14 +20,7 @@ public class RecruitmentLookup extends GUI {
     public RecruitmentLookup(String name, PunishmentHistory history, PlayerStatistics statistics, IPLookup ipprofile) {
         super("&3&lRecruitment Lookup", 2, true);
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 3) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 7));
-        }
+        border(String.format("&3&l%s's Lookup Information", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 3, false, name));
 
         this.setItem(1, 2, new GUIItem(Material.WATCH, "&3&lIn-Game Time", 1, String.format(";&rRequirement met? %s;&rTotal In-game Time: **%s**", ((statistics.getLobbyTimeMs() + statistics.getGameTimeMs() >= 36000000)?"&a✔":"&c✘"), (new PunishmentLength(statistics.getLobbyTimeMs() + statistics.getGameTimeMs() / 3600000d)).toString())));

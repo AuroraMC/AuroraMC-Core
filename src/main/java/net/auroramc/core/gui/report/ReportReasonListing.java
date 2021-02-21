@@ -33,14 +33,7 @@ public class ReportReasonListing extends GUI {
         this.name = name;
         this.type = type;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&lReport %s", name), 1, "", (short) 7));
-        }
+        border(String.format("&3&lReport %s", name), "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&rPlease choose a reason.", (short)3, false, name));
 

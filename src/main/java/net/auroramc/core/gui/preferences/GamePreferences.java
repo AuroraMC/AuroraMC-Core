@@ -17,14 +17,7 @@ public class GamePreferences extends GUI {
         super("&3&lGame Preferences", 5, true);
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lGame Preferences", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lGame Preferences", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lGame Preferences", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lGame Preferences", 1, "", (short) 7));
-        }
+        border("&3&lGame Preferences", "");
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBack"));
 
     }

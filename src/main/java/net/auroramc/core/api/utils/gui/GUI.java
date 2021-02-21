@@ -5,6 +5,7 @@ import net.auroramc.core.api.exception.InvalidColumnException;
 import net.auroramc.core.api.exception.InvalidRowException;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -46,16 +47,28 @@ public abstract class GUI {
         inventory.get(row).setItem(column, item);
     }
 
+    public void border(String name, String lore) {
+        GUIItem item = new GUIItem(Material.STAINED_GLASS_PANE, name, 1, lore, (short) 7);
+        for (int i = 0; i <= 8; i++) {
+            if (i <= rows) {
+                this.setItem(i, 0, item);
+                this.setItem(i, 8, item);
+            }
+            this.setItem(0, i, item);
+            this.setItem(rows, i, item);
+        }
+    }
+
+    public void fill(String name, String lore) {
+        for (int x = 0;x <= 8;x++) {
+            for (int y = 0;y<=rows;y++) {
+                this.setItem(x, y, new GUIItem(Material.STAINED_GLASS_PANE, name, 1, lore, (short) 7));
+            }
+        }
+    }
+
     public void updateItem(int row, int column, GUIItem item) {
-        if (row > 5 || row < 0 || row > rows) {
-            throw new InvalidRowException();
-        }
-
-        if (column > 8 || column < 0) {
-            throw new InvalidColumnException();
-        }
-
-        inventory.get(row).setItem(column, item);
+        setItem(row, column, item);
         if (item == null) {
             inv.clear((row * 9) + column);
         } else {
