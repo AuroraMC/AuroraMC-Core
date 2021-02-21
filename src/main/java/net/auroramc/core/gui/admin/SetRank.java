@@ -1,4 +1,4 @@
-package net.auroramc.core.gui;
+package net.auroramc.core.gui.admin;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;

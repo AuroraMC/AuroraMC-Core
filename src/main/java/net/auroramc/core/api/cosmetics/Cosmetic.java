@@ -1,5 +1,6 @@
 package net.auroramc.core.api.cosmetics;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -30,6 +31,8 @@ public abstract class Cosmetic {
         this.permissions = permissions;
         this.ranks = ranks;
         this.unlockMessage = unlockMessage;
+
+        AuroraMCAPI.registerCosmetic(this);
     }
 
     public abstract void onEquip(AuroraMCPlayer player);
@@ -77,16 +80,26 @@ public abstract class Cosmetic {
     }
 
     public enum CosmeticType {
-        PARTICLE,
-        PET,
-        HAT,
-        BANNER,
-        MORPH,
-        KILL_MESSAGE,
-        PROJECTILE_TRAIL,
-        DEATH_EFFECT,
-        WIN_EFFECT,
-        GADGET
+        PARTICLE("Particle Effect"),
+        PET("Pet"),
+        HAT("Hat"),
+        BANNER("Banner"),
+        MORPH("Morph"),
+        KILL_MESSAGE("Kill Message"),
+        PROJECTILE_TRAIL("Projectile Trail"),
+        DEATH_EFFECT("Death Effect"),
+        WIN_EFFECT("Win Effect"),
+        GADGET("Gadget");
+
+        private final String name;
+
+        CosmeticType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
     }
 
     public enum UnlockMode {

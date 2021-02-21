@@ -3,6 +3,7 @@ package net.auroramc.core.api.players;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
@@ -23,10 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class AuroraMCPlayer {
 
@@ -58,6 +56,11 @@ public class AuroraMCPlayer {
     //Staff objects
     private PlayerReport activeReport;
     private BukkitTask activeReportTask;
+
+    //Cosmetic objects
+    private List<Cosmetic> unlockedCosmetics;
+    private HashMap<Cosmetic.CosmeticType, Cosmetic> activeCosmetics;
+    private HashMap<Cosmetic, BukkitTask> runningCosmeticTasks;
 
 
     public AuroraMCPlayer(Player player) {
@@ -342,6 +345,11 @@ public class AuroraMCPlayer {
         preferences = oldPlayer.preferences;
         activeReport = oldPlayer.activeReport;
         ignoredPlayers = oldPlayer.ignoredPlayers;
+        lastMessageSent = oldPlayer.lastMessageSent;
+        activeReportTask = oldPlayer.activeReportTask;
+        unlockedCosmetics = oldPlayer.unlockedCosmetics;
+        activeCosmetics = oldPlayer.activeCosmetics;
+        runningCosmeticTasks = oldPlayer.runningCosmeticTasks;
     }
 
     public Rank getRank() {
@@ -793,6 +801,20 @@ public class AuroraMCPlayer {
     public void messageSent() {
         lastMessageSent = System.currentTimeMillis();
     }
+
+    public HashMap<Cosmetic, BukkitTask> getRunningCosmeticTasks() {
+        return runningCosmeticTasks;
+    }
+
+    public HashMap<Cosmetic.CosmeticType, Cosmetic> getActiveCosmetics() {
+        return activeCosmetics;
+    }
+
+    public List<Cosmetic> getUnlockedCosmetics() {
+        return unlockedCosmetics;
+    }
+
+
 
     public void sendTitle(String title, String subtitle, int fadeInTime, int showTime, int fadeOutTime, ChatColor titleColor, ChatColor subtitleColor, boolean titleBold, boolean subTitleBold) {
         IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + title + "\",\"color\":\"" + titleColor.name().toLowerCase() + "\",\"bold\":\"" + ((titleBold) ? "true" : "false") + "\"}");

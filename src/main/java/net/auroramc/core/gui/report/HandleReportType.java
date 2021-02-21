@@ -21,14 +21,7 @@ public class HandleReportType extends GUI {
         super("&3&lChoose a report type", 2, true);
 
         this.player = player;
-        for (int i = 0; i <= 8; i++) {
-            if (i < 3) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChoose a report type", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChoose a report type", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChoose a report type", 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChoose a report type", 1, "", (short) 7));
-        }
+        border("&3&lChoose a report type", "");
         int column = 2;
         if (player.hasPermission("admin")) {
             column--;

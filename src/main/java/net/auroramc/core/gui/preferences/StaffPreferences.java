@@ -17,14 +17,7 @@ public class StaffPreferences extends GUI {
         super("&3&lStaff Preferences", 3, true);
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 4) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lStaff Preferences", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lStaff Preferences", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lStaff Preferences", 1, "", (short) 7));
-            this.setItem(3, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lStaff Preferences", 1, "", (short) 7));
-        }
+        border("&3&lStaff Preferences", "");
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBack"));
 
         this.setItem(1, 2, new GUIItem(Material.SUGAR_CANE, "&3Hub Invisibility", 1, ";&rBecome completely invisible to all other players;&rwhilst you are roaming around the lobby."));

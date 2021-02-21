@@ -28,14 +28,7 @@ public class ChangeReportReasonListing extends GUI {
         this.player = player;
         this.type = type;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lChange Report Reason", 1, "", (short) 7));
-        }
+        border("&3&lChange Report Reason", "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lChange Report Reason", 1, "&rPlease choose a reason.", (short)3, false, player.getActiveReport().getSuspectName()));
 

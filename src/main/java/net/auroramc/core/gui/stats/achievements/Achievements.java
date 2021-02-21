@@ -23,14 +23,7 @@ public class Achievements extends GUI {
 
         long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter((achievement -> !achievement.isVisible())).count();
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, "", (short) 7));
-        }
+        border(String.format("&3&l%s's Achievements", player.getPlayer().getName()), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Achievements", player.getPlayer().getName()), 1, String.format(";&rAchieved: **%s**;&rTotal Achievements: **%s**", player.getStats().getAchievementsGained().size(), totalAchievements), (short) 3, false, player.getPlayer().getName()));
 
         long totalGeneralAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GENERAL).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GENERAL).filter((achievement -> !achievement.isVisible())).count();

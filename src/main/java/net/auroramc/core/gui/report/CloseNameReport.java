@@ -20,11 +20,7 @@ public class CloseNameReport extends GUI {
 
         this.player = player;
 
-        for (int i = 0; i <= 8; i++) {
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-            this.setItem(1, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-        }
+        fill("&r ", "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lUsername Report", 1, String.format(";&rReported Username: **%s**.", player.getActiveReport().getSuspectName()), (short)3, false, player.getActiveReport().getSuspectName()));
 

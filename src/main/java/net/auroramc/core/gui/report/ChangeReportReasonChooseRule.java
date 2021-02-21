@@ -23,11 +23,7 @@ public class ChangeReportReasonChooseRule extends GUI {
         this.player = player;
         this.reason = reason;
 
-        for (int i = 0; i <= 8; i++) {
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-            this.setItem(1, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-            this.setItem(2, i, new GUIItem(Material.STAINED_GLASS_PANE, "&r ", 1, "", (short) 7));
-        }
+        fill("&r ", "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s Report", WordUtils.capitalizeFully(player.getActiveReport().getType().name())), 1, String.format(";&rUser reported: **%s**;&rReason: **%s**", player.getActiveReport().getSuspectName(), player.getActiveReport().getReason().getName()), (short)3, false, player.getActiveReport().getSuspectName()));
 

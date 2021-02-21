@@ -24,14 +24,7 @@ public class ViewReports extends GUI {
         this.player = player;
         this.reports = reports;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Reports", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Reports", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Reports", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Reports", 1, "", (short) 7));
-        }
+        border("&3&lYour Reports", "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Reports", 1, ";&rView all reports you have submitted.", (short)3, false, player.getName()));
 

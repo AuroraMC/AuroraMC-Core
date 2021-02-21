@@ -43,14 +43,7 @@ public class PunishmentHistoryGUI extends GUI {
         int row = 1;
         this.punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id).stream().filter(punishment -> punishment.getStatus() != 4).collect(Collectors.toList());
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Punishment History", name), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Punishment History", name), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Punishment History", name), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s's Punishment History", name), 1, "", (short) 7));
-        }
+        border(String.format("&3&l%s's Punishment History", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Punishment History", name), 1, "&rPunishment History", (short) 3, false, name));
         if (punishments.size() > 28) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));

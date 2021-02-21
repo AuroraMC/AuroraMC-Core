@@ -42,14 +42,7 @@ public class PunishmentList extends GUI {
         int row = 1;
         this.punishments = punishments;
 
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, ((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, ((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, ((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, ((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), 1, "", (short) 7));
-        }
+        border(((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, ((clickedMentee != null)?String.format("&3&l%s's Pending Punishments", clickedMentee.getName()):"&3&lUnassigned Pending Punishments"), 1, "&rPending Punishments", (short) 3, false, ((clickedMentee==null)?null:clickedMentee.getName())));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lView Mentee List"));
         if (punishments.size() > 28) {

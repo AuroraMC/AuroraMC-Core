@@ -15,14 +15,7 @@ public class Preferences extends GUI {
     public Preferences(AuroraMCPlayer player) {
         super("&3&lYour Preferences", 5, true);
         this.player = player;
-        for (int i = 0; i <= 8; i++) {
-            if (i < 6) {
-                this.setItem(i, 0, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Preferences", 1, "", (short) 7));
-                this.setItem(i, 8, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Preferences", 1, "", (short) 7));
-            }
-            this.setItem(0, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Preferences", 1, "", (short) 7));
-            this.setItem(5, i, new GUIItem(Material.STAINED_GLASS_PANE, "&3&lYour Preferences", 1, "", (short) 7));
-        }
+        border("&3&lYour Preferences", "");
 
         this.setItem(2, 2, new GUIItem(Material.PAPER, "&d&lSocial Preferences"));
         this.setItem(2, 4, new GUIItem(Material.MINECART, "&e&lGame Preferences"));

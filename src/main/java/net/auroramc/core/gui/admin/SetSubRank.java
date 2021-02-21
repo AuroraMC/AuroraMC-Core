@@ -1,4 +1,4 @@
-package net.auroramc.core.gui;
+package net.auroramc.core.gui.admin;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.SubRank;
