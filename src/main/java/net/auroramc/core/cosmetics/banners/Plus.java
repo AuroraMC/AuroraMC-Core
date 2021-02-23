@@ -3,6 +3,7 @@ package net.auroramc.core.cosmetics.banners;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -38,7 +39,7 @@ public class Plus extends Banner {
     }
 
     public Plus() {
-        super(16, "Plus", "&3Plus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("plus"))), new ArrayList<>(), "Purchase Plus to unlock this banner!", new ArrayList<>(), DyeColor.BLACK);
+        super(16, "Plus", "&3Plus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), new ArrayList<>(), "Purchase Plus to unlock this banner!", new ArrayList<>(), DyeColor.BLACK);
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.preferences.Preferences;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class CommandPrefs extends Command {
     public CommandPrefs() {
-        super("prefs", new ArrayList<>(Collections.singletonList("preferences")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("prefs", Collections.singletonList("preferences"), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override

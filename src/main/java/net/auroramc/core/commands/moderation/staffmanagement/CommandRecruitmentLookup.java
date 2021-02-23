@@ -9,6 +9,7 @@ import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.misc.RecruitmentLookup;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +22,7 @@ public class CommandRecruitmentLookup extends Command {
 
 
     public CommandRecruitmentLookup() {
-        super("rlookup", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("recruitment"))), false, null);
+        super("rlookup", Collections.emptyList(), Collections.singletonList(Permission.RECRUITMENT), false, null);
     }
 
     @Override

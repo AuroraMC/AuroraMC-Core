@@ -2,13 +2,14 @@ package net.auroramc.core.permissions.subranks;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.SubRank;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Recruitment extends SubRank {
+public final class Recruitment extends SubRank {
     public Recruitment() {
-        super(6, "Recruitment", new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("recruitment"), AuroraMCAPI.getPermissions().get("disguise"))), Color.fromRGB(255, 170, 0), '6');
+        super(6, "Recruitment", Arrays.asList(Permission.RECRUITMENT, Permission.DISGUISE), Color.fromRGB(255, 170, 0), '6');
     }
 }

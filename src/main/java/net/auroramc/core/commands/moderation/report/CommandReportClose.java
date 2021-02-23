@@ -6,6 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.CloseNameReport;
 import net.auroramc.core.gui.report.CloseReport;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CommandReportClose extends Command {
 
 
     public CommandReportClose() {
-        super("reportclose", new ArrayList<>(Arrays.asList("rc", "closereport", "rclose")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("moderation"))), false, null);
+        super("reportclose", Arrays.asList("rc", "closereport", "rclose"), Collections.singletonList(Permission.MODERATION), false, null);
     }
 
     @Override

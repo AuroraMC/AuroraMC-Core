@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.report.HandleReportType;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CommandReportHandle extends Command {
 
 
     public CommandReportHandle() {
-        super("reporthandle", new ArrayList<>(Arrays.asList("rh", "handlereport", "rhandle")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("moderation"))), false, null);
+        super("reporthandle", Arrays.asList("rh", "handlereport", "rhandle"), Collections.singletonList(Permission.MODERATION), false, null);
     }
 
     @Override

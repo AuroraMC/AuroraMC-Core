@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.events.VanishEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +16,7 @@ public class CommandVanish extends Command {
 
 
     public CommandVanish() {
-        super("vanish", new ArrayList<>(Collections.singletonList("v")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("moderation"))), false, null);
+        super("vanish", Collections.singletonList("v"), Collections.singletonList(Permission.MODERATION), false, null);
     }
 
     @Override

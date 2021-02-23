@@ -6,6 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.Mentor;
 import net.auroramc.core.gui.punish.staffmanagement.MenteeList;
 import net.auroramc.core.gui.punish.staffmanagement.MentorList;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +18,7 @@ public class CommandSM extends Command {
 
 
     public CommandSM() {
-        super("sm", new ArrayList<>(Arrays.asList("approval","punishapproval","mentees","mentors","staffmanagement")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("staffmanagement"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("sm", Arrays.asList("approval","punishapproval","mentees","mentors","staffmanagement"), Arrays.asList(Permission.STAFF_MANAGEMENT, Permission.ADMIN), false, null);
     }
 
     @Override

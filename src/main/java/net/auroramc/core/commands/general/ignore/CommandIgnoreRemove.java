@@ -8,12 +8,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandIgnoreRemove extends Command {
 
     public CommandIgnoreRemove() {
-        super("remove", new ArrayList<>(), new ArrayList<>(), false, null);
+        super("remove", Collections.emptyList(), Collections.emptyList(), false, null);
     }
 
     @Override

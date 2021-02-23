@@ -4,7 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.permissions.permissions.Plus;
+import net.auroramc.core.permissions.Permission;
 import net.auroramc.core.permissions.ranks.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -26,7 +26,7 @@ public final class PlusSubscription {
     private int daysSubscribed;
     private final int subscriptionStreak;
     private final long streakStartTimestamp;
-    private final Permission permission = new Plus();
+    private final Permission permission = Permission.PLUS;
     private BukkitTask expireTask;
 
     public PlusSubscription(AuroraMCPlayer player) {

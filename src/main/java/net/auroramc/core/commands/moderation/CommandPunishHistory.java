@@ -5,6 +5,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.punish.PunishmentHistoryGUI;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,7 +17,7 @@ public class CommandPunishHistory extends Command {
 
 
     public CommandPunishHistory() {
-        super("punishhistory", new ArrayList<>(Arrays.asList("ph","history","punishmenthistory")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), true, null);
+        super("punishhistory", Arrays.asList("ph","history","punishmenthistory"), Collections.singletonList(Permission.PLAYER), true, null);
     }
 
     @Override

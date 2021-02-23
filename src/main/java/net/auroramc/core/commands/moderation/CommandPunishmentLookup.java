@@ -6,6 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ import java.util.*;
 public class CommandPunishmentLookup extends Command {
 
     public CommandPunishmentLookup() {
-        super("punishmentlookup", new ArrayList<>(Collections.singletonList("plookup")),  new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("punishmentlookup", Collections.singletonList("plookup"),  Arrays.asList(Permission.MODERATION,Permission.ADMIN), false, null);
     }
 
     private static final String[] statuses = {"&aActive","&6Pending Approval","&aSM Approved","&cSM Denied","&eExpired","&eExpired (Approved)","&7Warning"};

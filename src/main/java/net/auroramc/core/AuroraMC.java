@@ -21,11 +21,6 @@ import net.auroramc.core.listeners.PluginMessageRecievedListener;
 import net.auroramc.core.listeners.ChatListener;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
-import net.auroramc.core.permissions.permissions.BuildTeamManagement;
-import net.auroramc.core.permissions.permissions.CommunityManagement;
-import net.auroramc.core.permissions.permissions.EventManagement;
-import net.auroramc.core.permissions.permissions.Player;
-import net.auroramc.core.permissions.permissions.*;
 import net.auroramc.core.permissions.ranks.Admin;
 import net.auroramc.core.permissions.ranks.*;
 import net.auroramc.core.permissions.subranks.Recruitment;
@@ -38,41 +33,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuroraMC extends JavaPlugin {
 
-    private static AuroraMC i;
 
     @Override
     public void onEnable() {
         reloadConfig();
         getLogger().info("Loading AuroraMC-Core...");
 
-        i = this;
-        new AuroraMCAPI(this);
+        AuroraMCAPI.init(this);
 
 
         AuroraMCAPI.loadRules();
         AuroraMCAPI.loadFilter();
-
-        //Register Permissions with the API.
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Admin());
-        AuroraMCAPI.registerPermission(new All());
-        AuroraMCAPI.registerPermission(new BuildTeamManagement());
-        AuroraMCAPI.registerPermission(new BypassApproval());
-        AuroraMCAPI.registerPermission(new DebugAction());
-        AuroraMCAPI.registerPermission(new DebugInfo());
-        AuroraMCAPI.registerPermission(new Disguise());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Elite());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Master());
-        AuroraMCAPI.registerPermission(new Moderation());
-        AuroraMCAPI.registerPermission(new Player());
-        AuroraMCAPI.registerPermission(new Social());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.StaffManagement());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Support());
-        AuroraMCAPI.registerPermission(new Plus());
-        AuroraMCAPI.registerPermission(new Build());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.Recruitment());
-        AuroraMCAPI.registerPermission(new net.auroramc.core.permissions.permissions.SocialMedia());
-        AuroraMCAPI.registerPermission(new EventManagement());
-        AuroraMCAPI.registerPermission(new CommunityManagement());
 
         //Register Ranks with the API.
         AuroraMCAPI.registerRank(new net.auroramc.core.permissions.ranks.Player());
@@ -206,10 +177,6 @@ public class AuroraMC extends JavaPlugin {
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
 
         getLogger().info("AuroraMC-Core loaded and ready to accept connections.");
-    }
-
-    public static AuroraMC get() {
-        return i;
     }
 
     @Override

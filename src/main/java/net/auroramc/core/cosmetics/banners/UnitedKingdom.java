@@ -1,8 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
 import net.auroramc.core.api.cosmetics.Banner;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;

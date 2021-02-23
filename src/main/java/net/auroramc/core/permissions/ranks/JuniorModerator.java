@@ -2,6 +2,7 @@ package net.auroramc.core.permissions.ranks;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 
 import java.util.ArrayList;
@@ -15,6 +16,6 @@ public final class JuniorModerator extends Rank {
                         "&fJunior Mods answer any questions or\n" +
                         "&fqueries players have, as well as\n" +
                         "&fmoderate the network. Junior Mods have\n" +
-                        "&fless permissions than Moderators.", null, '9', 'f', '9', 'f', false, new ArrayList<>(Collections.singletonList(AuroraMCAPI.getRanks().get(2))), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("moderation"))), RankCategory.MODERATION, Color.fromRGB(85, 85, 255));
+                        "&fless permissions than Moderators.", null, '9', 'f', '9', 'f', false, Collections.singletonList(AuroraMCAPI.getRanks().get(2)), Collections.singletonList(Permission.MODERATION), RankCategory.MODERATION, Color.fromRGB(85, 85, 255));
     }
 }

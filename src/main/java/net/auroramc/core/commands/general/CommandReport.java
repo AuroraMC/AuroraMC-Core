@@ -7,6 +7,7 @@ import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.ChatType;
 import net.auroramc.core.gui.report.Report;
 import net.auroramc.core.managers.ReportManager;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,7 +20,7 @@ import java.util.Locale;
 
 public class CommandReport extends Command {
     public CommandReport() {
-        super("report", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("report", Collections.emptyList(), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override
