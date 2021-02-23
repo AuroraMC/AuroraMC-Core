@@ -10,7 +10,10 @@ import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public class CommandPunishmentLookup extends Command {
 

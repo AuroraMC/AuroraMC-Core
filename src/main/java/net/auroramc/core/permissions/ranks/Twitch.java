@@ -5,7 +5,6 @@ import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
