@@ -1,10 +1,8 @@
 package net.auroramc.core.cosmetics.banners;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.permissions.Permission;
-import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
@@ -12,7 +10,10 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Plus extends Banner {
 

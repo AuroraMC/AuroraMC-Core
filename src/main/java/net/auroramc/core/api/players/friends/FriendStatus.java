@@ -1,6 +1,5 @@
 package net.auroramc.core.api.players.friends;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.permissions.Permission;
 
 public enum FriendStatus {

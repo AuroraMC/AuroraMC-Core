@@ -1,10 +1,8 @@
 package net.auroramc.core.permissions.subranks;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.SubRank;
 import org.bukkit.Color;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public final class CommunityManagement extends SubRank {

@@ -1,11 +1,9 @@
 package net.auroramc.core.permissions.ranks;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public final class Player extends Rank {
