@@ -2,19 +2,19 @@ package net.auroramc.core.commands.general.ignore;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.IgnoredPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandIgnoreAdd extends Command {
 
     public CommandIgnoreAdd() {
-        super("add", new ArrayList<>(), new ArrayList<>(), false, null);
+        super("add", Collections.emptyList(), Collections.emptyList(), false, null);
     }
 
     @Override

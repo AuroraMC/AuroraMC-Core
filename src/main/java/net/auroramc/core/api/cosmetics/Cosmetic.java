@@ -1,9 +1,9 @@
 package net.auroramc.core.api.cosmetics;
 
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 
 import java.util.List;
 

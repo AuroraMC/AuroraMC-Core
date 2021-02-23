@@ -1,8 +1,7 @@
 package net.auroramc.core.api.cosmetics;
 
-import net.auroramc.core.api.cosmetics.Cosmetic;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.entity.Projectile;
 
 import java.util.List;

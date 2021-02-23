@@ -1,10 +1,12 @@
 package net.auroramc.core.api.permissions;
 
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Rank {
@@ -21,12 +23,12 @@ public abstract class Rank {
     private final char connectorColor;
     private final char defaultChatColor;
     private final boolean canUseColorCodes;
-    private final ArrayList<Permission> permissions;
-    private final ArrayList<Rank> inheritance;
+    private final List<Permission> permissions;
+    private final List<Rank> inheritance;
     private final RankCategory category;
     private final Color color;
 
-    public Rank(@NotNull int id, @NotNull String name, @Nullable String prefixAppearance, @Nullable String prefixHoverText, @Nullable String prefixHoverURL, @Nullable Character prefixColor, @NotNull char nameColor, @NotNull char connectorColor, @NotNull char defaultChatColor, @NotNull boolean canUseColorCodes, @Nullable ArrayList<Rank> inherit, @NotNull ArrayList<Permission> permissions, @NotNull RankCategory category, @NotNull Color guiColor) {
+    public Rank(@NotNull int id, @NotNull String name, @Nullable String prefixAppearance, @Nullable String prefixHoverText, @Nullable String prefixHoverURL, @Nullable Character prefixColor, @NotNull char nameColor, @NotNull char connectorColor, @NotNull char defaultChatColor, @NotNull boolean canUseColorCodes, @NotNull List<Rank> inherit, @NotNull List<Permission> permissions, @NotNull RankCategory category, @NotNull Color guiColor) {
         this.id = id;
         this.name = name;
         this.prefixAppearance = prefixAppearance;
@@ -71,8 +73,8 @@ public abstract class Rank {
         return id;
     }
 
-    public final ArrayList<Permission> getPermissions() {
-        return new ArrayList<>(permissions);
+    public final List<Permission> getPermissions() {
+        return permissions;
     }
 
     public final String getPrefixAppearance() {
@@ -106,8 +108,8 @@ public abstract class Rank {
         return false;
     }
 
-    public final ArrayList<Rank> getInheritance() {
-        return new ArrayList<>(inheritance);
+    public final List<Rank> getInheritance() {
+        return inheritance;
     }
 
     public final boolean hasPermission(int id) {

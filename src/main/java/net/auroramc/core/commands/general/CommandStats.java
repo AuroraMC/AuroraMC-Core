@@ -6,6 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.stats.stats.Stats;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 public class CommandStats extends Command {
     public CommandStats() {
-        super("stats", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("stats", Collections.emptyList(), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override

@@ -6,12 +6,13 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandIgnoreList extends Command {
 
     public CommandIgnoreList() {
-        super("list", new ArrayList<>(), new ArrayList<>(), false, null);
+        super("list", Collections.emptyList(), Collections.emptyList(), false, null);
     }
 
     @Override

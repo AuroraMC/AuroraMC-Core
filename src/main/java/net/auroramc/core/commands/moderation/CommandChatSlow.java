@@ -2,9 +2,9 @@ package net.auroramc.core.commands.moderation;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatSlowLength;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class CommandChatSlow extends Command {
 
 
     public CommandChatSlow() {
-        super("chatslow", new ArrayList<>(Collections.singletonList("slow")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("admin"), AuroraMCAPI.getPermissions().get("cm"), AuroraMCAPI.getPermissions().get("events"), AuroraMCAPI.getPermissions().get("socialmedia"), AuroraMCAPI.getPermissions().get("staffmanagement"))), false, null);
+        super("chatslow", Collections.singletonList("slow"), Arrays.asList(Permission.ADMIN, Permission.EVENT_MANAGEMENT, Permission.SOCIAL_MEDIA, Permission.STAFF_MANAGEMENT), false, null);
     }
 
     @Override

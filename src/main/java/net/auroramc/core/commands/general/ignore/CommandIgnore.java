@@ -2,8 +2,8 @@ package net.auroramc.core.commands.general.ignore;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ public class CommandIgnore extends Command {
 
 
     public CommandIgnore() {
-        super("ignore", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("ignore", Collections.emptyList(), Collections.singletonList(Permission.PLAYER), false, null);
         this.registerSubcommand("add", new ArrayList<>(), new CommandIgnoreAdd());
         this.registerSubcommand("remove", new ArrayList<>(), new CommandIgnoreRemove());
         this.registerSubcommand("list", new ArrayList<>(), new CommandIgnoreList());

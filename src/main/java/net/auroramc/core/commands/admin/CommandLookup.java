@@ -6,6 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.players.lookup.LookupUser;
 import net.auroramc.core.api.utils.UUIDUtil;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +16,7 @@ public class CommandLookup extends Command {
 
 
     public CommandLookup() {
-        super("lookup", new ArrayList<>(Arrays.asList("iplookup","ip")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("lookup", Arrays.asList("iplookup","ip"), Collections.singletonList(Permission.ADMIN), false, null);
     }
 
     @Override

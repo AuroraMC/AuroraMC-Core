@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.stats.achievements.Achievements;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class CommandAchievements extends Command {
     public CommandAchievements() {
-        super("achievements", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("achievements", Collections.emptyList(), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override

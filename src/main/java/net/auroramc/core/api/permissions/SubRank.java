@@ -1,20 +1,22 @@
 package net.auroramc.core.api.permissions;
 
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class SubRank {
 
     private final int id;
     private final String name;
-    private final ArrayList<Permission> permissions;
+    private final List<Permission> permissions;
     private final Color color;
     private final char menuColor;
 
-    public SubRank(@NotNull int id, @NotNull String name, @NotNull ArrayList<Permission> permissions, @NotNull Color color, @NotNull char menuColor) {
+    public SubRank(@NotNull int id, @NotNull String name, @NotNull List<Permission> permissions, @NotNull Color color, @NotNull char menuColor) {
         this.id = id;
         this.name = name;
         this.permissions = permissions;
@@ -26,7 +28,7 @@ public abstract class SubRank {
         return name;
     }
 
-    public final ArrayList<Permission> getPermissions() {
+    public final List<Permission> getPermissions() {
         return new ArrayList<>(permissions);
     }
 

@@ -6,6 +6,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ import java.util.*;
 public class CommandAppeal extends Command {
 
     public CommandAppeal() {
-        super("appeal", new ArrayList<>(Collections.singletonList("acceptappeal")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("debug.info"),AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("appeal", Collections.singletonList("acceptappeal"), Arrays.asList(Permission.DEBUG_INFO, Permission.ADMIN), false, null);
     }
 
     @Override

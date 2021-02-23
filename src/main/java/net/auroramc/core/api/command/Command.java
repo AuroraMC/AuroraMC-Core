@@ -1,7 +1,7 @@
 package net.auroramc.core.api.command;
 
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ import java.util.Map;
 public abstract class Command {
 
     private final String mainCommand;
-    private final ArrayList<String> aliases;
+    private final List<String> aliases;
     protected final Map<String, Command> subcommands;
     private final List<Permission> permission;
     private final boolean showPermissionMessage;
     private final String customPermissionMessage;
 
-    public Command(String mainCommand, ArrayList<String> alises, List<Permission> permission, boolean showPermissionMessage, String customPermissionMessage) {
+    public Command(String mainCommand, List<String> alises, List<Permission> permission, boolean showPermissionMessage, String customPermissionMessage) {
         this.mainCommand = mainCommand.toLowerCase();
         this.aliases = alises;
         this.subcommands = new HashMap<>();
@@ -46,8 +46,8 @@ public abstract class Command {
         return subcommands.get(subCommand);
     }
 
-    public ArrayList<String> getAliases() {
-        return new ArrayList<>(aliases);
+    public List<String> getAliases() {
+        return aliases;
     }
 
     public List<Permission> getPermission() {

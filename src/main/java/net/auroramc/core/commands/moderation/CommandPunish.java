@@ -5,6 +5,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.punish.Punish;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class CommandPunish extends Command {
 
     public CommandPunish() {
-        super("punish", new ArrayList<>(Arrays.asList("punishuser","pu")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("moderation"), AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("punish", Arrays.asList("punishuser","pu"), Arrays.asList(Permission.MODERATION, Permission.ADMIN), false, null);
     }
 
     @Override

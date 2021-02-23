@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.plus.PlusColour;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CommandPlus extends Command {
 
 
     public CommandPlus() {
-        super("plus", new ArrayList<>(Arrays.asList("pluscolor", "pluscolour")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("plus"))), true, "You must have an active Plus subscription in order to use this command!");
+        super("plus", Arrays.asList("pluscolor", "pluscolour"), Collections.singletonList(Permission.PLUS), true, "You must have an active Plus subscription in order to use this command!");
     }
 
     @Override

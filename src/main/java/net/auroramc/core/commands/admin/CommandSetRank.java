@@ -6,6 +6,7 @@ import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.admin.SetRank;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,7 +21,7 @@ public class CommandSetRank extends Command {
 
 
     public CommandSetRank() {
-        super("setrank", new ArrayList<>(Arrays.asList("sr", "updaterank")), new ArrayList<>(Arrays.asList(AuroraMCAPI.getPermissions().get("admin"),AuroraMCAPI.getPermissions().get("btm"),AuroraMCAPI.getPermissions().get("staffmanagement"),AuroraMCAPI.getPermissions().get("support"))), false, null);
+        super("setrank", Arrays.asList("sr", "updaterank"), Arrays.asList(Permission.ADMIN,Permission.BUILD_TEAM_MANAGEMENT,Permission.STAFF_MANAGEMENT,Permission.SUPPORT), false, null);
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ public class CommandEvidence extends Command {
 
 
     public CommandEvidence() {
-        super("evidence", new ArrayList<>(Arrays.asList("attachevidence","setevidence","addevidence")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("moderation"))), false, null);
+        super("evidence", Arrays.asList("attachevidence","setevidence","addevidence"), Collections.singletonList(Permission.MODERATION), false, null);
     }
 
     @Override

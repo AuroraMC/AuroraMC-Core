@@ -7,6 +7,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +20,7 @@ public class CommandDisguise extends Command {
 
 
     public CommandDisguise() {
-        super("disguise", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("disguise"))), false, null);
+        super("disguise", Collections.emptyList(), Collections.singletonList(Permission.DISGUISE), false, null);
     }
 
     @Override

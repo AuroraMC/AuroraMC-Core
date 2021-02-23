@@ -3,6 +3,7 @@ package net.auroramc.core.commands.admin;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class CommandLag extends Command {
 
 
     public CommandLag() {
-        super("lag", new ArrayList<>(), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("all"))), false, null);
+        super("lag", Collections.emptyList(), Arrays.asList(Permission.ALL, Permission.DEBUG_INFO), false, null);
     }
 
     @Override

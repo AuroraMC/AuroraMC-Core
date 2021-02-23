@@ -3,6 +3,7 @@ package net.auroramc.core.commands.general;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,7 @@ public class CommandLink extends Command {
 
 
     public CommandLink() {
-        super("link", new ArrayList<>(Arrays.asList("discordlink","discord")), Collections.singletonList(AuroraMCAPI.getPermissions().get("player")), true, null);
+        super("link", Arrays.asList("discordlink","discord"), Collections.singletonList(Permission.PLAYER), true, null);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CommandUndisguise extends Command {
 
 
     public CommandUndisguise() {
-        super("undisguise", new ArrayList<>(Collections.singletonList("ud")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("disguise"))), false, null);
+        super("undisguise", Collections.singletonList("ud"), Collections.singletonList(Permission.DISGUISE), false, null);
     }
 
     @Override

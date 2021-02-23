@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatSlowLength;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CommandChatSilence extends Command {
 
 
     public CommandChatSilence() {
-        super("silence", new ArrayList<>(Collections.singletonList("chatsilence")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("admin"))), false, null);
+        super("silence", Collections.singletonList("chatsilence"), Collections.singletonList(Permission.ADMIN), false, null);
     }
 
     @Override

@@ -5,7 +5,6 @@ import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.DatabaseManager;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.cosmetics.Cosmetic;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -27,55 +26,53 @@ import java.util.List;
 
 public class AuroraMCAPI {
 
-    private static AuroraMCAPI i;
-    private final DatabaseManager dbManager;
-    private final AuroraMC core;
-    private final TextFormatter formatter;
+    private static DatabaseManager dbManager;
+    private static AuroraMC core;
+    private static final TextFormatter formatter;
 
     //Registering stuff needed by the whole network.
-    private final HashMap<Integer, Rank> ranks;
-    private final HashMap<Integer, SubRank> subranks;
-    private final HashMap<String, Permission> permissions;
-    private final HashMap<Player, AuroraMCPlayer> players;
-    private final HashMap<String, Command> commands;
-    private final HashMap<AuroraMCPlayer, GUI> openGUIs;
-    private final HashMap<Integer, Cosmetic> cosmetics;
-    private final RuleBook rules;
-    private ChatFilter filter;
-    private final HashMap<Integer, Achievement> achievements;
+    private static final HashMap<Integer, Rank> ranks;
+    private static final HashMap<Integer, SubRank> subranks;
+    private static final HashMap<Player, AuroraMCPlayer> players;
+    private static final HashMap<String, Command> commands;
+    private static final HashMap<AuroraMCPlayer, GUI> openGUIs;
+    private static final HashMap<Integer, Cosmetic> cosmetics;
+    private static final RuleBook rules;
+    private static ChatFilter filter;
+    private static final HashMap<Integer, Achievement> achievements;
 
-    private final HashMap<Player, String> pendingDisguiseChecks;
+    private static final HashMap<Player, String> pendingDisguiseChecks;
 
-    private final ServerInfo serverInfo;
+    private static ServerInfo serverInfo;
 
-    private short chatslow;
-    private long chatSilenceEnd;
-    private BukkitTask silenceTask;
+    private static short chatslow;
+    private static long chatSilenceEnd;
+    private static BukkitTask silenceTask;
 
-    public AuroraMCAPI(AuroraMC core) {
-        if (i == null) {
-            i = this;
-            this.core = core;
-            formatter = new TextFormatter();
+    static {
+        ranks = new HashMap<>();
+        subranks = new HashMap<>();
+        players = new HashMap<>();
+        commands = new HashMap<>();
+        openGUIs = new HashMap<>();
+        rules = new RuleBook();
+        pendingDisguiseChecks = new HashMap<>();
+        achievements = new HashMap<>();
+        cosmetics = new HashMap<>();
+        formatter = new TextFormatter();
+
+        chatslow = -1;
+        chatSilenceEnd = -2;
+        silenceTask = null;
+    }
+
+
+    public static void init(AuroraMC auroraMCCore) {
+        if (core == null) {
+            core = auroraMCCore;
             dbManager = new DatabaseManager();
 
-            ranks = new HashMap<>();
-            subranks = new HashMap<>();
-            permissions = new HashMap<>();
-            players = new HashMap<>();
-            commands = new HashMap<>();
-            openGUIs = new HashMap<>();
-            rules = new RuleBook();
-            pendingDisguiseChecks = new HashMap<>();
-            achievements = new HashMap<>();
-            cosmetics = new HashMap<>();
-
-            chatslow = -1;
-            chatSilenceEnd = -2;
-            silenceTask = null;
-
             //Identify what server it is on the bungeecord. Grab the details from mysql.
-
             serverInfo = dbManager.getServerDetails(Bukkit.getIp(), Bukkit.getPort());
             Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
         } else {
@@ -84,43 +81,39 @@ public class AuroraMCAPI {
     }
 
     public static TextFormatter getFormatter() {
-        return i.formatter;
+        return formatter;
     }
 
     public static AuroraMC getCore() {
-        return i.core;
+        return core;
     }
 
     public static DatabaseManager getDbManager() {
-        return i.dbManager;
+        return dbManager;
     }
 
     public static HashMap<Integer, Rank> getRanks() {
-        return new HashMap<>(i.ranks);
+        return new HashMap<>(ranks);
     }
 
     public static HashMap<Integer, SubRank> getSubRanks() {
-        return new HashMap<>(i.subranks);
-    }
-
-    public static HashMap<String, Permission> getPermissions() {
-        return new HashMap<>(i.permissions);
+        return new HashMap<>(subranks);
     }
 
     public static void newPlayer(AuroraMCPlayer player) {
-        i.players.put(player.getPlayer(), player);
+        players.put(player.getPlayer(), player);
     }
 
     public static void playerLeave(Player player) {
-        i.players.remove(player);
+        players.remove(player);
     }
 
     public static AuroraMCPlayer getPlayer(Player player) {
-        return i.players.get(player);
+        return players.get(player);
     }
 
     public static AuroraMCPlayer getPlayer(String name) {
-        for (AuroraMCPlayer player : i.players.values()) {
+        for (AuroraMCPlayer player : players.values()) {
             if (player.getName().equalsIgnoreCase(name)) {
                 return player;
             }
@@ -129,42 +122,38 @@ public class AuroraMCAPI {
     }
 
     public static ArrayList<AuroraMCPlayer> getPlayers() {
-        return new ArrayList<>(i.players.values());
+        return new ArrayList<>(players.values());
     }
 
     public static void registerRank(Rank rank) {
-        i.ranks.put(rank.getId(), rank);
+        ranks.put(rank.getId(), rank);
     }
 
     public static void registerSubRank(SubRank rank) {
-        i.subranks.put(rank.getId(), rank);
-    }
-
-    public static void registerPermission(Permission permission) {
-        i.permissions.put(permission.getNode(), permission);
+        subranks.put(rank.getId(), rank);
     }
 
     public static void registerAchievement(Achievement achievement) {
-        i.achievements.put(achievement.getAchievementId(), achievement);
+        achievements.put(achievement.getAchievementId(), achievement);
     }
 
     public static void registerCommand(Command command) {
-        i.commands.put(command.getMainCommand().toLowerCase(), command);
+        commands.put(command.getMainCommand().toLowerCase(), command);
         for (String alias : command.getAliases()) {
-            i.commands.put(alias.toLowerCase(), command);
+            commands.put(alias.toLowerCase(), command);
         }
     }
 
     public static Command getCommand(String label) {
-        return i.commands.get(label);
+        return commands.get(label);
     }
 
     public static Achievement getAchievement(int id) {
-        return i.achievements.get(id);
+        return achievements.get(id);
     }
 
     public static Achievement getAchievement(String name) {
-        for (Achievement achievement : i.achievements.values()) {
+        for (Achievement achievement : achievements.values()) {
             if (achievement.getName().equalsIgnoreCase(name)) {
                 return achievement;
             }
@@ -173,126 +162,126 @@ public class AuroraMCAPI {
     }
 
     public static List<String> getCommands() {
-        return new ArrayList<>(i.commands.keySet());
+        return new ArrayList<>(commands.keySet());
     }
 
     public static void openGUI(AuroraMCPlayer player, GUI gui) {
-        i.openGUIs.put(player, gui);
+        openGUIs.put(player, gui);
     }
 
     public static GUI getGUI(AuroraMCPlayer player) {
-        return i.openGUIs.get(player);
+        return openGUIs.get(player);
     }
 
     public static void closeGUI(AuroraMCPlayer player) {
-        i.openGUIs.remove(player);
+        openGUIs.remove(player);
     }
 
     public static void registerCosmetic(Cosmetic cosmetic) {
-        i.cosmetics.put(cosmetic.getId(), cosmetic);
+        cosmetics.put(cosmetic.getId(), cosmetic);
     }
 
     public static HashMap<Integer, Cosmetic> getCosmetics() {
-        return new HashMap<>(i.cosmetics);
+        return new HashMap<>(cosmetics);
     }
 
     public static RuleBook getRules() {
-        return i.rules;
+        return rules;
     }
 
     public static void loadRules() {
         new BukkitRunnable(){
             @Override
             public void run() {
-                i.rules.clear();
-                for (Rule rule : i.dbManager.getRules()) {
-                    i.rules.registerRule(rule);
+                rules.clear();
+                for (Rule rule : dbManager.getRules()) {
+                    rules.registerRule(rule);
                 }
             }
-        }.runTaskAsynchronously(i.core);
+        }.runTaskAsynchronously(core);
     }
 
     public static void loadFilter() {
         new BukkitRunnable(){
             @Override
             public void run() {
-                i.filter = i.dbManager.loadFilter();
+                filter = dbManager.loadFilter();
             }
-        }.runTaskAsynchronously(i.core);
+        }.runTaskAsynchronously(core);
     }
 
     public static ChatFilter getFilter() {
-        return i.filter;
+        return filter;
     }
 
     public static ServerInfo getServerInfo() {
-        return i.serverInfo;
+        return serverInfo;
     }
 
     public static HashMap<Player, String> getPendingDisguiseChecks() {
-        return i.pendingDisguiseChecks;
+        return pendingDisguiseChecks;
     }
 
     public static int getOpenGUIs() {
-        return i.openGUIs.size();
+        return openGUIs.size();
     }
 
     public static HashMap<Integer, Achievement> getAchievements() {
-        return i.achievements;
+        return achievements;
     }
 
-    public static short getChatSlow() {return i.chatslow;}
+    public static short getChatSlow() {return chatslow;}
 
     public static void setChatSlow(short chatSlow) {
-        i.chatslow = chatSlow;
+        chatslow = chatSlow;
     }
 
     public static long getChatSilenceEnd() {
-        return i.chatSilenceEnd;
+        return chatSilenceEnd;
     }
 
     public static BukkitTask getSilenceTask() {
-        return i.silenceTask;
+        return silenceTask;
     }
 
     public static void enableChatSilence(short seconds, boolean sendMessage) {
-        if (i.silenceTask != null) {
-            i.silenceTask.cancel();
+        if (silenceTask != null) {
+            silenceTask.cancel();
         }
         if (seconds != -1) {
-            i.chatSilenceEnd = System.currentTimeMillis() + (seconds*1000);
-            i.silenceTask = new BukkitRunnable(){
+            chatSilenceEnd = System.currentTimeMillis() + (seconds*1000);
+            silenceTask = new BukkitRunnable(){
                 @Override
                 public void run() {
-                    if (i.chatSilenceEnd != -2) {
+                    if (chatSilenceEnd != -2) {
                         disableSilence();
                     }
                 }
-            }.runTaskLater(i.core, seconds*20);
+            }.runTaskLater(core, seconds*20);
         } else {
-            i.chatSilenceEnd = -1;
+            chatSilenceEnd = -1;
         }
 
         ChatSlowLength length = new ChatSlowLength(seconds);
         if (sendMessage) {
             for (AuroraMCPlayer player : getPlayers()) {
                 if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
-                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("The chat has been silenced for **%s**. The goose has granted you immunity from it because of your rank!", length.getFormatted())));
+                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**. The goose has granted you immunity from it because of your rank!", length.getFormatted())));
                 } else {
-                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
+                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 }
             }
         }
     }
 
     public static void disableSilence() {
-        i.chatSilenceEnd = -2;
+        chatSilenceEnd = -2;
         for (AuroraMCPlayer player : getPlayers()) {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", "Chat is no longer silenced."));
+            player.getPlayer().sendMessage(formatter.pluginMessage("Silence", "Chat is no longer silenced."));
         }
-        if (i.silenceTask != null) {
-            BukkitTask task = i.silenceTask;
-            i.silenceTask = null;
+        if (silenceTask != null) {
+            BukkitTask task = silenceTask;
+            silenceTask = null;
             task.cancel();
         }
     }

@@ -4,6 +4,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.plus.LevelColour;
+import net.auroramc.core.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class CommandLevel extends Command {
 
 
     public CommandLevel() {
-        super("level", new ArrayList<>(Arrays.asList("levelcolor", "levelcolour")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("plus"))), true, "You must have an active Plus subscription in order to use this command!");
+        super("level", Arrays.asList("levelcolor", "levelcolour"), Collections.singletonList(Permission.PLUS), true, "You must have an active Plus subscription in order to use this command!");
     }
 
     @Override

@@ -5,6 +5,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.ViewReports;
+import net.auroramc.core.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class CommandViewReports extends Command {
     public CommandViewReports() {
-        super("viewreports", new ArrayList<>(Collections.singletonList("vr")), new ArrayList<>(Collections.singletonList(AuroraMCAPI.getPermissions().get("player"))), false, null);
+        super("viewreports", Collections.singletonList("vr"),Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override
