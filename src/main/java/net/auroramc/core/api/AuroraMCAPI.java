@@ -5,7 +5,6 @@ import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.DatabaseManager;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.cosmetics.Cosmetic;
-import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatSlowLength;
 import net.auroramc.core.api.punishments.Rule;
@@ -30,7 +29,6 @@ public class AuroraMCAPI {
     private static final TextFormatter formatter;
 
     //Registering stuff needed by the whole network.
-    private static final HashMap<Integer, SubRank> subranks;
     private static final HashMap<Player, AuroraMCPlayer> players;
     private static final HashMap<String, Command> commands;
     private static final HashMap<AuroraMCPlayer, GUI> openGUIs;
@@ -48,7 +46,6 @@ public class AuroraMCAPI {
     private static BukkitTask silenceTask;
 
     static {
-        subranks = new HashMap<>();
         players = new HashMap<>();
         commands = new HashMap<>();
         openGUIs = new HashMap<>();
@@ -89,10 +86,6 @@ public class AuroraMCAPI {
         return dbManager;
     }
 
-    public static HashMap<Integer, SubRank> getSubRanks() {
-        return new HashMap<>(subranks);
-    }
-
     public static void newPlayer(AuroraMCPlayer player) {
         players.put(player.getPlayer(), player);
     }
@@ -116,10 +109,6 @@ public class AuroraMCAPI {
 
     public static ArrayList<AuroraMCPlayer> getPlayers() {
         return new ArrayList<>(players.values());
-    }
-
-    public static void registerSubRank(SubRank rank) {
-        subranks.put(rank.getId(), rank);
     }
 
     public static void registerAchievement(Achievement achievement) {

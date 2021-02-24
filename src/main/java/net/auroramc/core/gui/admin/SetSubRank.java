@@ -1,10 +1,10 @@
 package net.auroramc.core.gui.admin;
 
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
+import net.auroramc.core.permissions.SubRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -43,11 +43,7 @@ public class SetSubRank extends GUI {
         int column = 0;
 
         //Generate GUI.
-        List<Integer> ids = new ArrayList<>(AuroraMCAPI.getSubRanks().keySet());
-        Collections.sort(ids);
-
-        for (int i : ids) {
-            SubRank rank = AuroraMCAPI.getSubRanks().get(i);
+        for (SubRank rank : SubRank.values()) {
             this.setItem(row, column, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getMenuColor(), rank.getName()), 1, String.format("&r&7Toggle %s's %s SubRank;;&r&7ID: &a%s", name, rank.getName(), rank.getId()), (short) 0, currentSubranks.contains(rank), rank.getColor()));
             column++;
             if (column > 8) {
@@ -63,7 +59,7 @@ public class SetSubRank extends GUI {
         String sid = lore.get(lore.size() - 1);
         sid = ChatColor.stripColor(sid.split(" ")[1]);
         int rankId = Integer.parseInt(sid);
-        SubRank rank = AuroraMCAPI.getSubRanks().get(rankId);
+        SubRank rank = SubRank.getByID(rankId);
 
         if (currentSubranks.contains(rank)) {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You have revoked the **%s** SubRank from **%s**.", rank.getName(), name)));
