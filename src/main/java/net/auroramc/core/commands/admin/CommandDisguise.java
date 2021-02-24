@@ -4,10 +4,10 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,7 +62,7 @@ public class CommandDisguise extends Command {
                                 out.writeUTF(args.get(0));
                                 //This is the variation of the command that was used, so the Bukkit plugin knows what message to send the player.
                                 out.writeInt(1);
-                                AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(0) + ";" + args.get(0) + ";" + AuroraMCAPI.getRanks().get(0).getId());
+                                AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(0) + ";" + args.get(0) + ";" + Rank.PLAYER.getId());
                                 player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
@@ -102,7 +102,7 @@ public class CommandDisguise extends Command {
                         out.writeUTF(args.get(0));
                         //This is the variation of the command that was used, so the Bukkit plugin knows what message to send the player.
                         out.writeInt(2);
-                        AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(1) + ";" + args.get(0) + ";" + AuroraMCAPI.getRanks().get(0).getId());
+                        AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(1) + ";" + args.get(0) + ";" + Rank.PLAYER.getId());
                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                     } else {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
@@ -116,7 +116,7 @@ public class CommandDisguise extends Command {
                             return;
                         }
                         Rank chosenRank = null;
-                        for (Rank rank : AuroraMCAPI.getRanks().values()) {
+                        for (Rank rank : Rank.values()) {
                             if (rank.getName().equalsIgnoreCase(args.get(2))) {
                                 if (rank.hasPermission("moderation") || rank.hasPermission("disguise") || rank.hasPermission("debug.info") || rank.hasPermission("build")) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You cannot disguise as that rank, you may only choose between premium ranks."));
@@ -126,7 +126,7 @@ public class CommandDisguise extends Command {
                             }
                         }
                         if (chosenRank ==  null) {
-                            chosenRank = AuroraMCAPI.getRanks().get(0);
+                            chosenRank = Rank.PLAYER;
                         }
 
                         UUID uuid = UUIDUtil.getUUID(args.get(0));

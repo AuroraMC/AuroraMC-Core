@@ -1,7 +1,7 @@
 package net.auroramc.core.api.cosmetics;
 
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.permissions.Rank;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.permissions.Permission;
-import net.auroramc.core.permissions.ranks.Player;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -56,13 +56,13 @@ public final class PlusSubscription {
     public char getColor() {
         if (color == null) {
             if (player.getActiveDisguise() != null) {
-                if (player.getActiveDisguise().getRank() instanceof Player) {
+                if (player.getActiveDisguise().getRank() == Rank.PLAYER) {
                     return '3';
                 } else {
                     return player.getActiveDisguise().getRank().getPrefixColor();
                 }
             } else {
-                if (player.getRank() instanceof Player) {
+                if (player.getRank() == Rank.PLAYER) {
                     return '3';
                 } else {
                     return player.getRank().getPrefixColor();
@@ -75,13 +75,13 @@ public final class PlusSubscription {
     public Character getLevelColor() {
         if (levelColor == null) {
             if (player.getActiveDisguise() != null) {
-                if (player.getActiveDisguise().getRank() instanceof Player) {
+                if (player.getActiveDisguise().getRank() == Rank.PLAYER) {
                     return '3';
                 } else {
                     return player.getActiveDisguise().getRank().getPrefixColor();
                 }
             } else {
-                if (player.getRank() instanceof Player) {
+                if (player.getRank() == Rank.PLAYER) {
                     return '3';
                 } else {
                     return player.getRank().getPrefixColor();

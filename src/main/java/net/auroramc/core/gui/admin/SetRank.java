@@ -3,11 +3,11 @@ package net.auroramc.core.gui.admin;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -53,18 +53,12 @@ public class SetRank extends GUI {
             this.setItem(5, 8, new GUIItem(Material.ARROW, String.format("&3&lSet %s's Subranks", name)));
         }
 
-        //Generate GUI
-        Map<Integer, Rank> ranks = AuroraMCAPI.getRanks();
-
-        //To make sure I sort them by ID, so appear correctly in the GUI.
-        List<Integer> rankIDs = new ArrayList<>(ranks.keySet());
-        Collections.sort(rankIDs);
+        Rank[] ranks = Rank.values();
 
         switch (variation) {
             case FULL:
 
-                for (int i : rankIDs) {
-                    Rank rank = ranks.get(i);
+                for (Rank rank : ranks) {
                     switch (rank.getCategory()) {
                         case PLAYER:
                             this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
@@ -100,16 +94,14 @@ public class SetRank extends GUI {
             case SOCIAL_MEDIA:
                 //Generate GUIs
                 if (currentRank.getCategory() == Rank.RankCategory.SOCIAL_MEDIA) {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
                             this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }
                 } else {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.SOCIAL_MEDIA) {
                             this.setItem(socialCat, 2, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&7Set %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short) 0, rank.getId() == currentRank.getId(), rank.getColor()));
                             socialCat++;
@@ -119,8 +111,7 @@ public class SetRank extends GUI {
                 break;
             case SUPPORT:
                 //Generate GUI
-                for (int i : rankIDs) {
-                    Rank rank = ranks.get(i);
+                for (Rank rank : ranks) {
                     if (rank.getCategory() == Rank.RankCategory.PLAYER) {
                         this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                         playerCat++;
@@ -129,16 +120,14 @@ public class SetRank extends GUI {
                 break;
             case BTM:
                 if (currentRank.getCategory() == Rank.RankCategory.CONTENT_CREATOR) {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
                             this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }
                 } else {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.CONTENT_CREATOR) {
                             if (rank.getId() < player.getRank().getId()) {
                                 this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&7Set %s's rank to %s;;&r&7ID: &a%s", name, rank.getPrefixAppearance(), rank.getId()), (short) 0, rank.getId() == currentRank.getId(), rank.getColor()));
@@ -153,16 +142,14 @@ public class SetRank extends GUI {
                 break;
             case STM:
                 if (currentRank.getCategory() == Rank.RankCategory.MODERATION) {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
                             this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }
                 } else {
-                    for (int i : rankIDs) {
-                        Rank rank = ranks.get(i);
+                    for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.MODERATION) {
                             if (rank.getId() < player.getRank().getId()) {
                                 this.setItem(moderationCat, 6, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&7Set %s's rank to %s;;&r&7ID: &a%s", name, rank.getPrefixAppearance(), rank.getId()), (short) 0, rank.getId() == currentRank.getId(), rank.getColor()));
@@ -212,7 +199,7 @@ public class SetRank extends GUI {
         String sid = lore.get(lore.size() - 1);
         sid = ChatColor.stripColor(sid.split(" ")[1]);
         int rankId = Integer.parseInt(sid);
-        Rank rank = AuroraMCAPI.getRanks().get(rankId);
+        Rank rank = Rank.getByID(rankId);
         player.getPlayer().closeInventory();
         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You set **%s's** rank to **%s**.", name, rank.getName())));
         AuroraMCPlayer setter = this.player;

@@ -4,7 +4,6 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
 import net.auroramc.core.api.players.friends.FriendStatus;
@@ -12,6 +11,7 @@ import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.gui.friends.Friends;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -41,7 +41,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
                     String[] disguise = AuroraMCAPI.getPendingDisguiseChecks().get(player.getPlayer()).split(";");
-                    Rank chosenRank = AuroraMCAPI.getRanks().get(Integer.parseInt(disguise[2]));
+                    Rank chosenRank = Rank.getByID(Integer.parseInt(disguise[2]));
                     if (player.disguise(disguise[0], disguise[1], chosenRank)) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("Disguise");
