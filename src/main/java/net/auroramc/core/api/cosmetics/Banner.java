@@ -1,8 +1,8 @@
 package net.auroramc.core.api.cosmetics;
 
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;

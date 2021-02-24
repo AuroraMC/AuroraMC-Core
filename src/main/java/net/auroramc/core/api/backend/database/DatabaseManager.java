@@ -3,7 +3,6 @@ package net.auroramc.core.api.backend.database;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.players.friends.Friend;
@@ -21,6 +20,7 @@ import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
+import net.auroramc.core.permissions.Rank;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -75,7 +75,7 @@ public class DatabaseManager {
                 signature = connection.get(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()));
                 name = connection.get(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()));
 
-                rank = AuroraMCAPI.getRanks().get(Integer.parseInt(connection.get(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()))));
+                rank = Rank.getByID(Integer.parseInt(connection.get(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()))));
 
                 return new Disguise(player, name, skin, signature, rank);
             }
@@ -232,13 +232,13 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             if (set.next()) {
 
-                return AuroraMCAPI.getRanks().get(set.getInt(1));
+                return Rank.getByID(set.getInt(1));
             } else {
                 //NEW USER
                 statement = connection.prepareStatement("INSERT INTO ranks (amc_id, rank) VALUES (?, ?)");
                 statement.setLong(1, player.getId());
                 statement.setInt(2, 0);
-                return AuroraMCAPI.getRanks().get(0);
+                return Rank.getByID(0);
             }
 
         } catch (SQLException e) {
@@ -254,10 +254,10 @@ public class DatabaseManager {
 
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                return AuroraMCAPI.getRanks().get(set.getInt(1));
+                return Rank.getByID(set.getInt(1));
             } else {
                 //NEW USER
-                return AuroraMCAPI.getRanks().get(0);
+                return Rank.getByID(0);
             }
 
         } catch (SQLException e) {

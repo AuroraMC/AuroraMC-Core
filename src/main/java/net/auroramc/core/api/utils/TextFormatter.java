@@ -1,13 +1,10 @@
 package net.auroramc.core.api.utils;
 
 import net.auroramc.core.api.permissions.PlusSubscription;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.IgnoredPlayer;
 import net.auroramc.core.api.players.PlayerReport;
-import net.auroramc.core.permissions.ranks.Elite;
-import net.auroramc.core.permissions.ranks.Master;
-import net.auroramc.core.permissions.ranks.Player;
+import net.auroramc.core.permissions.Rank;
 import net.md_5.bungee.api.chat.*;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
@@ -94,7 +91,7 @@ public class TextFormatter {
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
                 if (player.getActiveSubscription() != null) {
-                    if (rank instanceof Elite || rank instanceof Master) {
+                    if (rank == Rank.ELITE || rank == Rank.MASTER) {
                         hoverText.append(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
                     } else if (rank.getPrefixHoverURL() == null) {
                         hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
@@ -102,7 +99,7 @@ public class TextFormatter {
                     } else {
                         hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText().replace("\n\n&aClick to visit the store!", ""), player.getActiveSubscription().getColor())));
                     }
-                } else if (rank instanceof Elite || rank instanceof Master) {
+                } else if (rank == Rank.ELITE || rank == Rank.MASTER) {
                     hoverText.append(convert("&aClick to visit the store!"));
                 }
                 prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
@@ -186,7 +183,7 @@ public class TextFormatter {
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
                 if (player.getActiveSubscription() != null) {
-                    if (rank instanceof Elite || rank instanceof Master) {
+                    if (rank == Rank.ELITE || rank == Rank.MASTER) {
                         hoverText.append(convert(String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
                     } else if (rank.getPrefixHoverURL() == null) {
                         hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText(), player.getActiveSubscription().getColor())));
@@ -194,7 +191,7 @@ public class TextFormatter {
                     } else {
                         hoverText.append(convert("\n\n" + String.format(player.getActiveSubscription().getHoverText().replace("\n\n&aClick to visit the store!", ""), player.getActiveSubscription().getColor())));
                     }
-                } else if (rank instanceof Elite || rank instanceof Master) {
+                } else if (rank == Rank.ELITE || rank == Rank.MASTER) {
                     hoverText.append(convert("&aClick to visit the store!"));
                 }
                 prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
@@ -256,7 +253,7 @@ public class TextFormatter {
         textComponent.addExtra(prefix);
 
         Rank rank = ((sender.isDisguised())?sender.getActiveDisguise().getRank():sender.getRank());
-        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank instanceof Player)?'7':rank.getPrefixColor()), ((rank instanceof Player)?"Player":rank.getPrefixAppearance()), sender.getPlayer().getName())) + message);
+        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), sender.getPlayer().getName())) + message);
         return textComponent;
     }
 
