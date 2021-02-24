@@ -21,7 +21,6 @@ import net.auroramc.core.listeners.LeaveListener;
 import net.auroramc.core.listeners.PluginMessageRecievedListener;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
-import net.auroramc.core.permissions.subranks.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,18 +37,6 @@ public class AuroraMC extends JavaPlugin {
 
         AuroraMCAPI.loadRules();
         AuroraMCAPI.loadFilter();
-
-        //Register Subranks with the API.
-        AuroraMCAPI.registerSubRank(new JrQA());
-        AuroraMCAPI.registerSubRank(new SrQA());
-        AuroraMCAPI.registerSubRank(new SrDev());
-        AuroraMCAPI.registerSubRank(new StaffManagement());
-        AuroraMCAPI.registerSubRank(new Support());
-        AuroraMCAPI.registerSubRank(new Recruitment());
-        AuroraMCAPI.registerSubRank(new SocialMedia());
-        AuroraMCAPI.registerSubRank(new net.auroramc.core.permissions.subranks.EventManagement());
-        AuroraMCAPI.registerSubRank(new net.auroramc.core.permissions.subranks.CommunityManagement());
-
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
         AuroraMCAPI.registerCommand(new CommandLink());

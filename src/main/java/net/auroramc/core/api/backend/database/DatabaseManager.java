@@ -3,7 +3,6 @@ package net.auroramc.core.api.backend.database;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
-import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.players.friends.Friend;
 import net.auroramc.core.api.players.friends.FriendStatus;
@@ -21,6 +20,7 @@ import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
 import net.auroramc.core.permissions.Rank;
+import net.auroramc.core.permissions.SubRank;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -280,7 +280,7 @@ public class DatabaseManager {
                 Arrays.sort(ranks);
                 ArrayList<SubRank> subRanks = new ArrayList<>();
                 for (String rank : ranks) {
-                    subRanks.add(AuroraMCAPI.getSubRanks().get(Integer.parseInt(rank)));
+                    subRanks.add(SubRank.getByID(Integer.parseInt(rank)));
                 }
                 return subRanks;
             } else {
@@ -308,7 +308,7 @@ public class DatabaseManager {
                 Arrays.sort(ranks);
                 ArrayList<SubRank> subRanks = new ArrayList<>();
                 for (String rank : ranks) {
-                    subRanks.add(AuroraMCAPI.getSubRanks().get(Integer.parseInt(rank)));
+                    subRanks.add(SubRank.getByID(Integer.parseInt(rank)));
                 }
                 return subRanks;
             } else {
