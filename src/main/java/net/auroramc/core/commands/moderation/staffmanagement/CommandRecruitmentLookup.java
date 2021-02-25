@@ -9,7 +9,7 @@ import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.UUIDUtil;
 import net.auroramc.core.gui.misc.RecruitmentLookup;
-import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.api.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
