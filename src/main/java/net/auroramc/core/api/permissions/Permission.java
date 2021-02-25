@@ -1,4 +1,4 @@
-package net.auroramc.core.permissions;
+package net.auroramc.core.api.permissions;
 
 import org.jetbrains.annotations.NotNull;
 

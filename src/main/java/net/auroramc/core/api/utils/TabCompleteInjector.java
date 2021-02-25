@@ -4,7 +4,7 @@ import io.netty.channel.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.api.permissions.Permission;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

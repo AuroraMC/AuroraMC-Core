@@ -6,7 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.CloseNameReport;
 import net.auroramc.core.gui.report.CloseReport;
-import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.api.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

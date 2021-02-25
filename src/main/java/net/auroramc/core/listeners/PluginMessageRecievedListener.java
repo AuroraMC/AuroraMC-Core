@@ -11,7 +11,7 @@ import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.gui.friends.Friends;
-import net.auroramc.core.permissions.Rank;
+import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;

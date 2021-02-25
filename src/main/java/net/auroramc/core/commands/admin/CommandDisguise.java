@@ -6,8 +6,8 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.UUIDUtil;
-import net.auroramc.core.permissions.Permission;
-import net.auroramc.core.permissions.Rank;
+import net.auroramc.core.api.permissions.Permission;
+import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 

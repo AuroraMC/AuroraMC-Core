@@ -3,7 +3,7 @@ package net.auroramc.core.commands.moderation;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.api.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

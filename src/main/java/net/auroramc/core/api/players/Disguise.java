@@ -3,7 +3,7 @@ package net.auroramc.core.api.players;
 import com.mojang.authlib.properties.Property;
 import net.auroramc.core.api.utils.disguise.DisguiseUtil;
 import net.auroramc.core.api.utils.disguise.Skin;
-import net.auroramc.core.permissions.Rank;
+import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 import java.util.UUID;

@@ -6,7 +6,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.Mentor;
 import net.auroramc.core.gui.punish.staffmanagement.MenteeList;
 import net.auroramc.core.gui.punish.staffmanagement.MentorList;
-import net.auroramc.core.permissions.Permission;
+import net.auroramc.core.api.permissions.Permission;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
