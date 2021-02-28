@@ -1613,7 +1613,7 @@ public class DatabaseManager {
             Map<UUID, Friend> friends = new HashMap<>();
             Map<UUID, Friend> pendingFriendRequests = new HashMap<>();
             FriendsList.VisibilityMode visibilityMode;
-            FriendStatus status;
+            FriendStatus status = FriendStatus.ONLINE;
 
             while (set.next()) {
                 Friend friend = new Friend(null, set.getInt(2), UUID.fromString(set.getString(4)), set.getString(5), Friend.FriendType.valueOf(set.getString(3)), null);
@@ -1631,7 +1631,9 @@ public class DatabaseManager {
 
             try (Jedis redisConnection = jedis.getResource()) {
                 visibilityMode = FriendsList.VisibilityMode.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "visibility"));
-                status = FriendStatus.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "status"));
+                try {
+                    status = FriendStatus.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "status"));
+                } catch (IllegalArgumentException ignored) {}
             }
 
             return new FriendsList(player, friends, pendingFriendRequests, visibilityMode, status);
