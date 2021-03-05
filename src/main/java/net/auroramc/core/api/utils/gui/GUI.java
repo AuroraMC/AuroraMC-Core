@@ -62,7 +62,7 @@ public abstract class GUI {
     public void fill(String name, String lore) {
         for (int x = 0;x <= 8;x++) {
             for (int y = 0;y<=rows;y++) {
-                this.setItem(x, y, new GUIItem(Material.STAINED_GLASS_PANE, name, 1, lore, (short) 7));
+                this.setItem(y, x, new GUIItem(Material.STAINED_GLASS_PANE, name, 1, lore, (short) 7));
             }
         }
     }
