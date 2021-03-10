@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -23,6 +24,6 @@ public class Wreath extends Banner {
     }
 
     public Wreath() {
-        super(10, "Wreath", "&2Wreath", "&2♫ It's beginning to look a lot like Christmas! ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
+        super(10, "Wreath", "&2&lWreath", "&2♫ It's beginning to look a lot like &2Christmas! ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true);
     }
 }

@@ -1,8 +1,10 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,14 @@ public class JackOLantern extends Banner {
 
     static {
         patterns = new ArrayList<>();
+        patterns.add(new Pattern(DyeColor.ORANGE, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.RED, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.ORANGE, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.GRAY, PatternType.CREEPER));
+        patterns.add(new Pattern(DyeColor.LIME, PatternType.TRIANGLES_TOP));
     }
 
     public JackOLantern() {
-        super(12, "Jack-O-Lantern", "&6Jack-O&8-Lantern", "&8Watch out for ghosts and ghouls!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Spooky Crates", patterns, DyeColor.BLACK);
+        super(12, "Jack-O-Lantern", "&6&lJack-O&8&l-Lantern", "&8Watch out for ghosts and ghouls!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Spooky Crates", patterns, DyeColor.ORANGE, true);
     }
 }

@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -25,7 +26,7 @@ public class UnitedStates extends Banner {
     }
 
     public UnitedStates() {
-        super(1, "United States Flag", "&cUnited States Flag", "&cUSA! USA! USA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.RED);
+        super(1, "United States Flag", "&c&lUnited States Flag", "&cUSA! USA! USA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.RED, true);
     }
 
 }

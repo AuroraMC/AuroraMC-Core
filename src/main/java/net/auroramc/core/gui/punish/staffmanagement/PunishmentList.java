@@ -13,7 +13,9 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;
@@ -78,7 +80,12 @@ public class PunishmentList extends GUI {
                     this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Offence", 1, lore));
                     break;
                 case 2:
-                    this.setItem(row, column, new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore));
+                    GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore);
+                    ItemStack itemStack = guiItem.getItem();
+                    ItemMeta meta = itemStack.getItemMeta();
+                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                    itemStack.setItemMeta(meta);
+                    this.setItem(row, column, new GUIItem(itemStack));
                     break;
                 case 3:
                     this.setItem(row, column, new GUIItem(Material.SIGN, "&3&lMisc Offence", 1, lore));
@@ -193,7 +200,12 @@ public class PunishmentList extends GUI {
                         this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Offence", 1, lore));
                         break;
                     case 2:
-                        this.setItem(row, column, new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore));
+                        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore);
+                        ItemStack itemStack = guiItem.getItem();
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                        itemStack.setItemMeta(meta);
+                        this.updateItem(row, column, new GUIItem(itemStack));
                         break;
                     case 3:
                         this.setItem(row, column, new GUIItem(Material.SIGN, "&3&lMisc Offence", 1, lore));

@@ -9,7 +9,9 @@ import net.auroramc.core.managers.ReportManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -52,8 +54,12 @@ public class ReportReasonListing extends GUI {
                 break;
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
-
-            this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+            ItemStack itemStack = guiItem.getItem();
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            itemStack.setItemMeta(meta);
+            this.setItem(row, column, new GUIItem(itemStack));
             column++;
             if (column == 7) {
                 row++;
@@ -100,7 +106,12 @@ public class ReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+                ItemStack itemStack = guiItem.getItem();
+                ItemMeta meta = itemStack.getItemMeta();
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                itemStack.setItemMeta(meta);
+                this.updateItem(row, column, new GUIItem(itemStack));
             }
         } else {
             PlayerReport.ReportReason reason = reportReasons.get(((currentPage - 1) * 10) + ((row - 2) * 5) + (column - 2));

@@ -187,5 +187,43 @@ public enum Rank {
 
         return null;
     }
+
+    /**
+     * Checks whether the given rank is a parent of this rank.
+     * @param rank The parent you want to check.
+     * @return Whether rank is a parent or not.
+     */
+    public boolean isParent(Rank rank) {
+        if (rank.equals(this)) {
+            return true;
+        }
+
+        for (Rank rank2 : inheritance) {
+            if (rank2.isParent(rank)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether the given rank is a child of this rank.
+     * @param rank The child you want to check.
+     * @return Whether rank is a child or not.
+     */
+    public boolean isChild(Rank rank) {
+        if (rank.equals(this)) {
+            return true;
+        }
+
+        for (Rank rank2 : rank.inheritance) {
+            if (isChild(rank2)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 

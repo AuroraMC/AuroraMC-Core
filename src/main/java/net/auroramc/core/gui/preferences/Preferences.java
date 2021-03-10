@@ -6,7 +6,9 @@ import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Preferences extends GUI {
 
@@ -24,18 +26,33 @@ public class Preferences extends GUI {
         if (player.hasPermission("social") || player.hasPermission("moderation")) {
             if (player.hasPermission("admin")) {
                 this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&c&lMiscellaneous Preferences"));
-                this.setItem(3, 1, new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences"));
+                GUIItem guiItem = new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences");
+                ItemStack itemStack = guiItem.getItem();
+                ItemMeta meta = itemStack.getItemMeta();
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                itemStack.setItemMeta(meta);
+                this.setItem(3, 1, new GUIItem(itemStack));
                 this.setItem(3, 5, new GUIItem(Material.DIAMOND, "&6&lMedia Preferences"));
                 this.setItem(3, 7, new GUIItem(Material.GLOWSTONE_DUST, "&6&lStaff Management Preferences"));
             } else {
                 if (player.hasPermission("staffmanagement")) {
                     this.setItem(3, 2, new GUIItem(Material.NETHER_STAR, "&c&lMiscellaneous Preferences"));
                     this.setItem(3, 6, new GUIItem(Material.GLOWSTONE_DUST, "&6&lStaff Management Preferences"));
-                    this.setItem(3, 4, new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences"));
+                    GUIItem guiItem = new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences");
+                    ItemStack itemStack = guiItem.getItem();
+                    ItemMeta meta = itemStack.getItemMeta();
+                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                    itemStack.setItemMeta(meta);
+                    this.setItem(3, 4, new GUIItem(itemStack));
                 } else {
                     this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&c&lMiscellaneous Preferences"));
                     if (player.hasPermission("moderation")) {
-                        this.setItem(3, 5, new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences"));
+                        GUIItem guiItem = new GUIItem(Material.DIAMOND_AXE, "&9&lStaff Preferences");
+                        ItemStack itemStack = guiItem.getItem();
+                        ItemMeta meta = itemStack.getItemMeta();
+                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                        itemStack.setItemMeta(meta);
+                        this.setItem(3, 5, new GUIItem(itemStack));
                     } else {
                         this.setItem(3, 5, new GUIItem(Material.DIAMOND, "&6&lMedia Preferences"));
                     }

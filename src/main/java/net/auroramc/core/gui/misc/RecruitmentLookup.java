@@ -10,7 +10,9 @@ import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
 
@@ -122,7 +124,12 @@ public class RecruitmentLookup extends GUI {
             }
         }
         boolean requirementMetPunishments = (((!lightActive) && (light == -1 || System.currentTimeMillis() > light + 2592000000L)) && ((!mediumActive) && (medium == -1 || System.currentTimeMillis() > medium + 2592000000L)) && ((!heavyActive) && (heavy == -1 || System.currentTimeMillis() > heavy + 7776000000L)) && ((!severeActive) && (light == -1 || System.currentTimeMillis() > light + 15552000000L)) && ((!extremeActive) && (extreme == -1 || System.currentTimeMillis() > extreme + 2592000000L)));
-        this.setItem(1, 4, new GUIItem(Material.DIAMOND_SWORD, "&3&lRecent Punishment", 1, String.format(";&rRequirement met? %s;&rLast Punishments:;&rLight: **%s**;&rMedium: **%s**;&rHeavy: **%s**;&rSevere: **%s**;&rExtreme: **%s**", ((requirementMetPunishments)?"&a✔":"&c✘"), ((lightActive)?"&lACTIVE":((light == -1)?"Never Received":new Date(light).toString())), ((mediumActive)?"&lACTIVE":((medium == -1)?"Never Received":new Date(medium).toString())), ((heavyActive)?"&lACTIVE":((heavy == -1)?"Never Received":new Date(heavy).toString())), ((severeActive)?"&lACTIVE":((severe == -1)?"Never Received":new Date(severe).toString())), ((extremeActive)?"&lACTIVE":((extreme == -1)?"Never Received":new Date(extreme).toString())))));
+        GUIItem guiItem = new GUIItem(Material.DIAMOND_SWORD, "&3&lRecent Punishment", 1, String.format(";&rRequirement met? %s;&rLast Punishments:;&rLight: **%s**;&rMedium: **%s**;&rHeavy: **%s**;&rSevere: **%s**;&rExtreme: **%s**", ((requirementMetPunishments)?"&a✔":"&c✘"), ((lightActive)?"&lACTIVE":((light == -1)?"Never Received":new Date(light).toString())), ((mediumActive)?"&lACTIVE":((medium == -1)?"Never Received":new Date(medium).toString())), ((heavyActive)?"&lACTIVE":((heavy == -1)?"Never Received":new Date(heavy).toString())), ((severeActive)?"&lACTIVE":((severe == -1)?"Never Received":new Date(severe).toString())), ((extremeActive)?"&lACTIVE":((extreme == -1)?"Never Received":new Date(extreme).toString()))));
+        ItemStack itemStack = guiItem.getItem();
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemStack.setItemMeta(meta);
+        this.setItem(1, 4, new GUIItem(itemStack));
         this.setItem(1, 6, new GUIItem(Material.PAPER, "&3&lIP Profile", 1, String.format(";&rThis player has **%s** known alts.;&rOf those, **%s** have an active punishment.", ipprofile.getNames().size() - 1, ipprofile.getNames().stream().filter(lookupUser -> lookupUser.isBanned() || lookupUser.isMuted()).count())));
     }
 

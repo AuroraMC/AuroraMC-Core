@@ -7,7 +7,9 @@ import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Punish extends GUI {
@@ -30,7 +32,12 @@ public class Punish extends GUI {
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lPunish %s", name), 1, "&rPlease choose a punishment type.", (short)3, false, name));
 
         this.setItem(1, 2, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Rules", 1, String.format("&rPunish %s for a chat rule", name)));
-        this.setItem(1, 4, new GUIItem(Material.IRON_SWORD, "&3&lGame Rules", 1, String.format("&rPunish %s for a game rule", name)));
+        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lGame Rules", 1, String.format("&rPunish %s for a game rule", name));
+        ItemStack itemStack = guiItem.getItem();
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemStack.setItemMeta(meta);
+        this.setItem(1, 4, new GUIItem(itemStack));
         this.setItem(1, 6, new GUIItem(Material.SIGN, "&3&lMisc Rules", 1, String.format("&rPunish %s for a miscellaneous rule", name)));
 
         if (player.getRank().hasPermission("admin")) {

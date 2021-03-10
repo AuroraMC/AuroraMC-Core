@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.permissions.Permission;
@@ -10,16 +11,15 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Plus extends Banner {
 
     public static final Map<Character, DyeColor> colorMappings;
+    public static final List<Pattern> patterns;
 
     static {
+        //Creating colour mappings so its easier to map from colour code to dye
         colorMappings = new HashMap<>();
         colorMappings.put('0', DyeColor.BLACK);
         colorMappings.put('1', DyeColor.BLUE);
@@ -37,10 +37,18 @@ public class Plus extends Banner {
         colorMappings.put('d', DyeColor.MAGENTA);
         colorMappings.put('e', DyeColor.YELLOW);
         colorMappings.put('f', DyeColor.WHITE);
+
+        //Basic pattern for the GUI
+        patterns = new ArrayList<>();
+        patterns.add(new Pattern(DyeColor.CYAN, PatternType.STRIPE_CENTER));
+        patterns.add(new Pattern(DyeColor.CYAN, PatternType.STRIPE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        patterns.add(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
     }
 
     public Plus() {
-        super(16, "Plus", "&3Plus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), new ArrayList<>(), "Purchase Plus to unlock this banner!", new ArrayList<>(), DyeColor.BLACK);
+        super(16, "Plus", "&3&lPlus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), new ArrayList<>(), "Purchase Plus to unlock this banner!", patterns, DyeColor.WHITE, true);
     }
 
     @Override
@@ -54,9 +62,9 @@ public class Plus extends Banner {
         }
         meta.addPattern(new Pattern(color, PatternType.STRIPE_CENTER));
         meta.addPattern(new Pattern(color, PatternType.STRIPE_MIDDLE));
-        meta.addPattern(new Pattern(color, PatternType.STRIPE_TOP));
-        meta.addPattern(new Pattern(color, PatternType.STRIPE_BOTTOM));
-        meta.addPattern(new Pattern(color, PatternType.BORDER));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.BORDER));
         player.getPlayer().getInventory().setHelmet(item);
     }
 }

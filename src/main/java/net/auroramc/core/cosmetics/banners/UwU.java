@@ -1,8 +1,10 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,15 @@ public class UwU extends Banner {
 
     static {
         patterns = new ArrayList<>();
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.STRIPE_SMALL));
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.SKULL));
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.HALF_HORIZONTAL_MIRROR));
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.STRIPE_TOP));
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.STRIPE_MIDDLE));
+        patterns.add(new Pattern(DyeColor.PINK, PatternType.BORDER));
     }
 
     public UwU() {
-        super(17, "UwU", "&dUwU", "&dI wuv wou", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
+        super(17, "UwU", "&d&lUwU", "&dI wuv wou", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true);
     }
 }

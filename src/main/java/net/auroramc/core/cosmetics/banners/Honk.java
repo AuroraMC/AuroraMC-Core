@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -23,6 +24,6 @@ public class Honk extends Banner {
     }
 
     public Honk() {
-        super(6, "Honk", "&6Honk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK);
+        super(6, "Honk", "&6&lHonk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true);
     }
 }

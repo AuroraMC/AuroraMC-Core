@@ -99,7 +99,7 @@ public class ChatReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+                this.updateItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
             }
         } else {
             PlayerReport.ReportReason reason = reportReasons.get(((currentPage - 1) * 10) + ((row - 2) * 5) + (column - 2));

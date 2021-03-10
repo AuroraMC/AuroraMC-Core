@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -23,6 +24,6 @@ public class Blitzen extends Banner {
     }
 
     public Blitzen() {
-        super(9, "Blitzen", "&4Blitzen", "&4One of Santa's Reindeer", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.BLACK);
+        super(9, "Blitzen", "&4&lBlitzen", "&4One of Santa's Reindeer", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.BLACK, true);
     }
 }
