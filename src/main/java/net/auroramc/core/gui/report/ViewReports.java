@@ -7,7 +7,9 @@ import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Date;
 import java.util.List;
@@ -62,7 +64,12 @@ public class ViewReports extends GUI {
                 lore = String.format("%s;&rReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
             }
 
-            this.setItem(row, column, new GUIItem(item, name, 1, lore));
+            GUIItem guiItem = new GUIItem(item, name, 1, lore);
+            ItemStack itemStack = guiItem.getItem();
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            itemStack.setItemMeta(meta);
+            this.setItem(row, column, new GUIItem(itemStack));
 
             column++;
             if (column == 8) {
@@ -146,7 +153,12 @@ public class ViewReports extends GUI {
                     lore = String.format("%s;&rReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
                 }
 
-                this.setItem(row, column, new GUIItem(guiitem, name, 1, lore));
+                GUIItem guiItem = new GUIItem(guiitem, name, 1, lore);
+                ItemStack itemStack = guiItem.getItem();
+                ItemMeta meta = itemStack.getItemMeta();
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                itemStack.setItemMeta(meta);
+                this.updateItem(row, column, new GUIItem(itemStack));
 
                 column++;
                 if (column == 8) {

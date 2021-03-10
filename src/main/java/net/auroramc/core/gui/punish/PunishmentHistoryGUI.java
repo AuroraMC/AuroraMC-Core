@@ -13,7 +13,9 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;
@@ -89,7 +91,12 @@ public class PunishmentHistoryGUI extends GUI {
                             this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));
                             break;
                         case 2:
-                            this.setItem(row, column, new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));
+                            GUIItem item = new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1)));
+                            ItemStack stack = item.getItem();
+                            ItemMeta meta = stack.getItemMeta();
+                            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                            stack.setItemMeta(meta);
+                            this.setItem(row, column, new GUIItem(stack));
                             break;
                         case 3:
                             this.setItem(row, column, new GUIItem(Material.SIGN, "&3&lMisc Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));
@@ -200,7 +207,12 @@ public class PunishmentHistoryGUI extends GUI {
                                 this.updateItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));
                                 break;
                             case 2:
-                                this.updateItem(row, column, new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));
+                                GUIItem item2 = new GUIItem(Material.IRON_SWORD, "&3&lGame Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1)));
+                                ItemStack stack = item2.getItem();
+                                ItemMeta meta = stack.getItemMeta();
+                                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                stack.setItemMeta(meta);
+                                this.updateItem(row, column, new GUIItem(stack));
                                 break;
                             case 3:
                                 this.updateItem(row, column, new GUIItem(Material.SIGN, "&3&lMisc Offence", 1, lore, (short) 0, ((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))));

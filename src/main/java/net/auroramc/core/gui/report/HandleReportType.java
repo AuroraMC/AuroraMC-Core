@@ -10,7 +10,9 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class HandleReportType extends GUI {
@@ -30,7 +32,12 @@ public class HandleReportType extends GUI {
 
         this.setItem(1, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Report", 1, ";&rClick here to handle a chat report."));
         this.setItem(1, column + 2, new GUIItem(Material.SIGN, "&3&lMisc Report", 1, ";&rClick here to handle a misc report."));
-        this.setItem(1, column + 4, new GUIItem(Material.IRON_SWORD, "&3&lHacking Report", 1, ";&rClick here to handle a hacking report."));
+        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lHacking Report", 1, ";&rClick here to handle a hacking report.");
+        ItemStack itemStack = guiItem.getItem();
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemStack.setItemMeta(meta);
+        this.setItem(1, column + 4, new GUIItem(itemStack));
     }
 
     @Override

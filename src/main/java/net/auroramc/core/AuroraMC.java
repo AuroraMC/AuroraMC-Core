@@ -15,6 +15,7 @@ import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
+import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.listeners.ChatListener;
 import net.auroramc.core.listeners.JoinListener;
 import net.auroramc.core.listeners.LeaveListener;
@@ -22,6 +23,8 @@ import net.auroramc.core.listeners.PluginMessageRecievedListener;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AuroraMC extends JavaPlugin {
@@ -66,6 +69,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandIgnore());
         AuroraMCAPI.registerCommand(new CommandChatSlow());
         AuroraMCAPI.registerCommand(new CommandChatSilence());
+        AuroraMCAPI.registerCommand(new CommandCosmetics());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
@@ -129,6 +133,30 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new Unholy());
         AuroraMCAPI.registerAchievement(new Beast());
         AuroraMCAPI.registerAchievement(new God());
+
+        //Load all cosmetics.
+        AuroraMCAPI.registerCosmetic(new AngryCraig());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.banners.AuroraMC());
+        AuroraMCAPI.registerCosmetic(new Blitzen());
+        AuroraMCAPI.registerCosmetic(new BunniWabbit());
+        AuroraMCAPI.registerCosmetic(new CandyCane());
+        AuroraMCAPI.registerCosmetic(new Derp());
+        AuroraMCAPI.registerCosmetic(new Honk());
+        AuroraMCAPI.registerCosmetic(new JackOLantern());
+        AuroraMCAPI.registerCosmetic(new NinjaMonkey());
+        AuroraMCAPI.registerCosmetic(new Ogre());
+        AuroraMCAPI.registerCosmetic(new Pirate());
+        AuroraMCAPI.registerCosmetic(new Plus());
+        AuroraMCAPI.registerCosmetic(new RainbowRoad());
+        AuroraMCAPI.registerCosmetic(new ScreamingGhost());
+        AuroraMCAPI.registerCosmetic(new TheEnd());
+        AuroraMCAPI.registerCosmetic(new TheGoose());
+        AuroraMCAPI.registerCosmetic(new UnitedKingdom());
+        AuroraMCAPI.registerCosmetic(new UnitedStates());
+        AuroraMCAPI.registerCosmetic(new UwU());
+        AuroraMCAPI.registerCosmetic(new Wreath());
+
+
 
 
         //Registering default Event Listeners

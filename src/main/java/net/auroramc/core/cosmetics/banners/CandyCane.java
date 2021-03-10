@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -24,6 +25,6 @@ public class CandyCane extends Banner {
     }
 
     public CandyCane() {
-        super(11, "Candy Cane", "&cCandy&r &fCane", "&cMmmm tasty...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.BLACK);
+        super(11, "Candy Cane", "&c&lCandy&r &f&lCane", "&cMmmm tasty...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.RED, true);
     }
 }

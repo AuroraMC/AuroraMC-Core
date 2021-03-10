@@ -310,6 +310,10 @@ public class AuroraMCPlayer {
 
                 ignoredPlayers = AuroraMCAPI.getDbManager().getIgnoredPlayers(id);
 
+                unlockedCosmetics = new ArrayList<>();
+                runningCosmeticTasks = new HashMap<>();
+                activeCosmetics = new HashMap<>();
+
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
                 Bukkit.getPluginManager().callEvent(creationEvent);

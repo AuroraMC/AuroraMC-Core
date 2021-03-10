@@ -8,7 +8,9 @@ import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
@@ -48,7 +50,12 @@ public class ChangeReportReasonListing extends GUI {
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
 
-            this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to accept this;&rreport as **%s**", reason.getName())));
+            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to accept this;&rreport as **%s**", reason.getName()));
+            ItemStack itemStack = guiItem.getItem();
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            itemStack.setItemMeta(meta);
+            this.setItem(row, column, new GUIItem(itemStack));
             column++;
             if (column == 7) {
                 row++;
@@ -95,7 +102,12 @@ public class ChangeReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                this.setItem(row, column, new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+                ItemStack itemStack = guiItem.getItem();
+                ItemMeta meta = itemStack.getItemMeta();
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                itemStack.setItemMeta(meta);
+                this.updateItem(row, column, new GUIItem(itemStack));
             }
         } else {
             PlayerReport.ReportReason reason = reportReasons.get(((currentPage - 1) * 10) + ((row - 2) * 5) + (column - 2));

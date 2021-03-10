@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -18,10 +19,10 @@ public class AuroraMC extends Banner {
         patterns.add(new Pattern(DyeColor.CYAN, PatternType.STRIPE_LEFT));
         patterns.add(new Pattern(DyeColor.CYAN, PatternType.STRIPE_TOP));
         patterns.add(new Pattern(DyeColor.CYAN, PatternType.STRIPE_MIDDLE));
-        patterns.add(new Pattern(DyeColor.CYAN, PatternType.BORDER));
+        patterns.add(new Pattern(DyeColor.WHITE, PatternType.BORDER));
     }
 
     public AuroraMC() {
-        super(3, "AuroraMC?", "&3AuroraMC?", "&3It's the best we could do, okay?", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE);
+        super(3, "AuroraMC?", "&3&lAuroraMC?", "&3It's the best we could do, okay?", UnlockMode.TICKETS, 100, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
     }
 }

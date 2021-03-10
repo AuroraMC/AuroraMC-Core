@@ -1,5 +1,6 @@
 package net.auroramc.core.cosmetics.banners;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;
@@ -23,6 +24,6 @@ public class UnitedKingdom extends Banner {
     }
 
     public UnitedKingdom() {
-        super(0, "United Kingdom Flag", "&c&lUnited Kingdom Flag", "&c&lRULE BRITANIA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLUE);
+        super(0, "United Kingdom Flag", "&c&lUnited Kingdom Flag", "&c&lRULE BRITANIA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLUE, true);
     }
 }
