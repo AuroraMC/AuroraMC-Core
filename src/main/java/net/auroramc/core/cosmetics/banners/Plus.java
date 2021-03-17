@@ -65,6 +65,7 @@ public class Plus extends Banner {
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_TOP));
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM));
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.BORDER));
+        item.setItemMeta(meta);
         player.getPlayer().getInventory().setHelmet(item);
     }
 }
