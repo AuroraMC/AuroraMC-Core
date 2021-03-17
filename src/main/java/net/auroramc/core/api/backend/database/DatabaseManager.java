@@ -3,9 +3,9 @@ package net.auroramc.core.api.backend.database;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
+import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.players.friends.Friend;
-import net.auroramc.core.api.players.friends.FriendStatus;
 import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.players.lookup.LookupUser;
@@ -1613,7 +1613,7 @@ public class DatabaseManager {
             Map<UUID, Friend> friends = new HashMap<>();
             Map<UUID, Friend> pendingFriendRequests = new HashMap<>();
             FriendsList.VisibilityMode visibilityMode;
-            FriendStatus status = FriendStatus.ONLINE;
+            FriendStatus status = (FriendStatus) AuroraMCAPI.getCosmetics().get(100);
 
             while (set.next()) {
                 Friend friend = new Friend(null, set.getInt(2), UUID.fromString(set.getString(4)), set.getString(5), Friend.FriendType.valueOf(set.getString(3)), null);
@@ -1632,7 +1632,7 @@ public class DatabaseManager {
             try (Jedis redisConnection = jedis.getResource()) {
                 visibilityMode = FriendsList.VisibilityMode.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "visibility"));
                 try {
-                    status = FriendStatus.valueOf(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "status"));
+                    status = (FriendStatus) AuroraMCAPI.getCosmetics().get(Integer.parseInt(redisConnection.hget(String.format("friends.%s", player.getPlayer().getUniqueId()), "status")));
                 } catch (IllegalArgumentException ignored) {}
             }
 

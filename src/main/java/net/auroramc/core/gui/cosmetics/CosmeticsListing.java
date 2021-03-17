@@ -124,6 +124,7 @@ public class CosmeticsListing extends GUI {
                         return;
                     }
                     cosmetic.onUnequip(player);
+                    player.getActiveCosmetics().remove(type);
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cosmetic.getName())));
                 } else {
                     //enable and disable old one.

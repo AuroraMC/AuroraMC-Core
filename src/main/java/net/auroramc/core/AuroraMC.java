@@ -16,6 +16,7 @@ import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.*;
+import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.listeners.ChatListener;
 import net.auroramc.core.listeners.JoinListener;
 import net.auroramc.core.listeners.LeaveListener;
@@ -26,6 +27,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.persistence.Id;
 
 public class AuroraMC extends JavaPlugin {
 
@@ -155,9 +158,20 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new UnitedStates());
         AuroraMCAPI.registerCosmetic(new UwU());
         AuroraMCAPI.registerCosmetic(new Wreath());
-
-
-
+        AuroraMCAPI.registerCosmetic(new AFK());
+        AuroraMCAPI.registerCosmetic(new CountingMoney());
+        AuroraMCAPI.registerCosmetic(new CreatingNewMaps());
+        AuroraMCAPI.registerCosmetic(new DoNotDisturb());
+        AuroraMCAPI.registerCosmetic(new Idle());
+        AuroraMCAPI.registerCosmetic(new LiveStreaming());
+        AuroraMCAPI.registerCosmetic(new MasteringAllTheGames());
+        AuroraMCAPI.registerCosmetic(new Offline());
+        AuroraMCAPI.registerCosmetic(new Online());
+        AuroraMCAPI.registerCosmetic(new ProcessingReports());
+        AuroraMCAPI.registerCosmetic(new Programming());
+        AuroraMCAPI.registerCosmetic(new Recording());
+        AuroraMCAPI.registerCosmetic(new RuiningLives());
+        AuroraMCAPI.registerCosmetic(new SwingingTheBanHammer());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
