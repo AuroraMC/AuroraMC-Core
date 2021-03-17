@@ -25,6 +25,6 @@ public class RainbowRoad extends Banner {
     }
 
     public RainbowRoad() {
-        super(19, "Rainbow Road", "&1&lR&2&la&3&li&4&ln&5&lb&6&lo&7&lw&r &8&lR&9&lo&d&la&e&ld", "&9♫ Do do do do do do do do do do ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.LIGHT_BLUE, true);
+        super(19, "Rainbow Road", "&1&lR&2&la&3&li&4&ln&5&lb&6&lo&7&lw&r &8&lR&9&lo&d&la&e&ld", "&9♫ Do do do do do do do do do do ♫", UnlockMode.ALL, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.LIGHT_BLUE, true);
     }
 }

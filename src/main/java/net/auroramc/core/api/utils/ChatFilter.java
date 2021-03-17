@@ -35,7 +35,7 @@ public class ChatFilter {
             if (splitMessage.get(i).equalsIgnoreCase("ez") || splitMessage.get(i).matches("^[lL]+$")) {
                 Random random = new Random();
                 int phrase = random.nextInt(toxicReplacements.size());
-                return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&");
+                return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
             }
             filteredWords:
             for (String filteredWord : coreFilteredWords) {
@@ -93,7 +93,7 @@ public class ChatFilter {
         if (splitMessage.get(splitMessage.size() - 1).equalsIgnoreCase("ez") || splitMessage.get(splitMessage.size() - 1).matches("^[lL]+$")) {
             Random random = new Random();
             int phrase = random.nextInt(toxicReplacements.size());
-            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&");
+            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
         }
 
         String finalJoinedMessage = String.join(" ", finalMessage);
@@ -132,7 +132,7 @@ public class ChatFilter {
         if (word.equalsIgnoreCase("ez") || word.matches("^[lL]+$")) {
             Random random = new Random();
             int phrase = random.nextInt(toxicReplacements.size());
-            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&");
+            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
         }
 
         return word;

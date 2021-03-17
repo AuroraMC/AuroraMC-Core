@@ -2,10 +2,15 @@ package net.auroramc.core.gui.cosmetics;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Cosmetic;
+import net.auroramc.core.api.events.cosmetics.CosmeticDisableEvent;
+import net.auroramc.core.api.events.cosmetics.CosmeticEnableEvent;
+import net.auroramc.core.api.events.cosmetics.CosmeticSwitchEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,13 +19,17 @@ import java.util.stream.Collectors;
 
 public class CosmeticsListing extends GUI {
 
-    private AuroraMCPlayer player;
-    private List<Cosmetic> cosmetics;
+    private final AuroraMCPlayer player;
+    private final List<Cosmetic> cosmetics;
+    private int currentPage;
+    private final Cosmetic.CosmeticType type;
 
     public CosmeticsListing(AuroraMCPlayer player, Cosmetic.CosmeticType type, ItemStack item) {
         super(String.format("&3&l%s", type.getName()), 5, true);
 
         this.player = player;
+        this.currentPage = 1;
+        this.type = type;
 
         border(String.format("&3&l%s", type.getName()), "");
         this.setItem(0, 4, new GUIItem(item));
@@ -48,6 +57,104 @@ public class CosmeticsListing extends GUI {
 
     @Override
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
+        if (item.getType() == Material.STAINED_GLASS_PANE) {
+            player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
+            return;
+        }
+
+        if (item.getType() == Material.ARROW) {
+            if (row == 0 && column == 0) {
+                Cosmetics cosmetics = new Cosmetics(player);
+                cosmetics.open(player);
+                AuroraMCAPI.openGUI(player, cosmetics);
+                return;
+            }
+
+            if (row == 5) {
+                if (column == 1) {
+                    currentPage--;
+                    this.updateItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));
+
+                    if (currentPage == 1) {
+                        this.updateItem(5, 1, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s", type.getName()), 1, "", (short) 7));
+                    }
+                } else {
+                    currentPage++;
+                    if (cosmetics.size() < ((currentPage) * 28)) {
+                        this.updateItem(5, 7, new GUIItem(Material.STAINED_GLASS_PANE, String.format("&3&l%s", type.getName()), 1, "", (short) 7));
+                    }
+
+                    this.updateItem(5, 1, new GUIItem(Material.ARROW, "&3&lPrevious Page"));
+                }
+
+                column = 1;
+                row = 1;
+                for (int i = 0;i < 28;i++) {
+                    int pi = (((currentPage - 1) * 28) + i);
+                    if (cosmetics.size() <= pi) {
+                        this.updateItem(row, column, null);
+                        column++;
+                        if (column == 8) {
+                            row++;
+                            column = 1;
+                            if (row == 5) {
+                                break;
+                            }
+                        }
+                        continue;
+                    }
+
+                    Cosmetic cosmetic = cosmetics.get(pi);
+                    this.setItem(row, column, new GUIItem(cosmetic.getItem(player)));
+                }
+                return;
+            }
+        }
+
+        //Get clicked cosmetic.
+        Cosmetic cosmetic = cosmetics.get(((currentPage - 1) * 28) + ((row - 1) * 7) + (column - 1));
+        if (cosmetic.hasUnlocked(player)) {
+            if (player.getActiveCosmetics().get(type) != null) {
+                if (player.getActiveCosmetics().get(type).equals(cosmetic)) {
+                    //disable
+                    CosmeticDisableEvent cosmeticDisableEvent = new CosmeticDisableEvent(player, cosmetic);
+                    Bukkit.getPluginManager().callEvent(cosmeticDisableEvent);
+                    if (cosmeticDisableEvent.isCancelled()) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "You currently cannot disable that gadget!"));
+                        return;
+                    }
+                    cosmetic.onUnequip(player);
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cosmetic.getName())));
+                } else {
+                    //enable and disable old one.
+                    CosmeticSwitchEvent cosmeticSwitchEvent = new CosmeticSwitchEvent(player, cosmetic);
+                    Bukkit.getPluginManager().callEvent(cosmeticSwitchEvent);
+                    if (cosmeticSwitchEvent.isCancelled()) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "You currently cannot enable that gadget!"));
+                        return;
+                    }
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", player.getActiveCosmetics().get(type).getName())));
+                    player.getActiveCosmetics().get(type).onUnequip(player);
+                    cosmetic.onEquip(player);
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
+                    player.getActiveCosmetics().put(type, cosmetic);
+                }
+            } else {
+                //enable
+                CosmeticEnableEvent cosmeticEnableEvent = new CosmeticEnableEvent(player, cosmetic);
+                Bukkit.getPluginManager().callEvent(cosmeticEnableEvent);
+                if (cosmeticEnableEvent.isCancelled()) {
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "You currently cannot enable that gadget!"));
+                    return;
+                }
+                cosmetic.onEquip(player);
+                player.getActiveCosmetics().put(type, cosmetic);
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
+            }
+            player.getPlayer().closeInventory();
+        } else {
+            //Check if they can unlock using currency.
+        }
 
     }
 }

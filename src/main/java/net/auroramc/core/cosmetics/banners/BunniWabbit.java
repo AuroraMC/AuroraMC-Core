@@ -24,6 +24,6 @@ public class BunniWabbit extends Banner {
     }
 
     public BunniWabbit() {
-        super(8, "Bunni Wabbit", "&b&lBunni Wabbit", "&6I wike cawwots.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(8, "Bunni Wabbit", "&b&lBunni Wabbit", "&6I wike cawwots.", UnlockMode.ALL, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
     }
 }

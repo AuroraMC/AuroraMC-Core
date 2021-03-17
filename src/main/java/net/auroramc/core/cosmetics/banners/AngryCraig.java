@@ -24,6 +24,6 @@ public class AngryCraig extends Banner {
     }
 
     public AngryCraig() {
-        super(4, "Angry Craig", "&8&lAngry Craig", "&8Don't mess with him!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(4, "Angry Craig", "&8&lAngry Craig", "&8Don't mess with him!", UnlockMode.ALL, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
     }
 }

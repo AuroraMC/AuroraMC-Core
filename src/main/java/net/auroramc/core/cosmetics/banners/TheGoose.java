@@ -24,6 +24,6 @@ public class TheGoose extends Banner {
     }
 
     public TheGoose() {
-        super(5, "The Goose", "&f&lThe&r &6&lGoose", "&fPeace was never an option.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.CYAN, true);
+        super(5, "The Goose", "&f&lThe&r &6&lGoose", "&fPeace was never an option.", UnlockMode.ALL, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.CYAN, true);
     }
 }
