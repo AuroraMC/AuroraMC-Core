@@ -3,6 +3,7 @@ package net.auroramc.core.api.players.friends;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 
 import java.util.HashMap;
@@ -110,7 +111,7 @@ public class FriendsList {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendStatusSet");
             out.writeUTF(player.getName());
-            out.writeUTF(currentStatus.name());
+            out.writeInt(currentStatus.getId());
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
         }
     }

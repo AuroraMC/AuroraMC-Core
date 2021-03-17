@@ -4,9 +4,10 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
-import net.auroramc.core.api.players.friends.FriendStatus;
+import net.auroramc.core.api.players.friends.Friend;
 import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.gui.GUI;
@@ -206,7 +207,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     if (server.equals("null")) {
                         server = null;
                     }
-                    FriendStatus status = FriendStatus.valueOf(in.readUTF());
+                    FriendStatus status = (FriendStatus) AuroraMCAPI.getCosmetics().get(in.readInt());
                     player.getFriendsList().friendRequestAccepted(uuid, online, server, status, false);
                     if (AuroraMCAPI.getGUI(player) != null) {
                         GUI gui = AuroraMCAPI.getGUI(player);
@@ -261,7 +262,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                 case "FriendStatusSet": {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
-                    player.getFriendsList().setCurrentStatus(FriendStatus.valueOf(in.readUTF()), false);
+                    player.getFriendsList().setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(in.readInt()), false);
                     if (AuroraMCAPI.getGUI(player) != null) {
                         GUI gui = AuroraMCAPI.getGUI(player);
                         if (gui instanceof Friends) {
@@ -275,7 +276,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
                     UUID uuid = UUID.fromString(in.readUTF());
-                    player.getFriendsList().getFriends().get(uuid).setStatus(FriendStatus.valueOf(in.readUTF()));
+                    player.getFriendsList().getFriends().get(uuid).setStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(in.readInt()));
                     if (AuroraMCAPI.getGUI(player) != null) {
                         GUI gui = AuroraMCAPI.getGUI(player);
                         if (gui instanceof Friends) {
@@ -336,7 +337,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     if (server.equals("null")) {
                         server = null;
                     }
-                    FriendStatus status = FriendStatus.valueOf(in.readUTF());
+                    FriendStatus status = (FriendStatus) AuroraMCAPI.getCosmetics().get(in.readInt());
                     player.getFriendsList().getFriends().get(uuid).loggedOn(server, status);
                     if (AuroraMCAPI.getGUI(player) != null) {
                         GUI gui = AuroraMCAPI.getGUI(player);

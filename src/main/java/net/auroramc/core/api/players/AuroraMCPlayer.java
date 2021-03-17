@@ -4,9 +4,9 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Cosmetic;
+import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.permissions.PlusSubscription;
-import net.auroramc.core.api.players.friends.FriendStatus;
 import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
@@ -140,11 +140,9 @@ public class AuroraMCPlayer {
 
 
                 //If they have a rank-exclusive status set, check if they still have permission to use it.
-                if (friendsList.getCurrentStatus().getPermission() != null) {
-                    if (!hasPermission(friendsList.getCurrentStatus().getPermission().getNode())) {
+                if (!friendsList.getCurrentStatus().hasUnlocked(pl)) {
                         //They no longer have permission, default to Online.
-                        friendsList.setCurrentStatus(FriendStatus.ONLINE, true);
-                    }
+                        friendsList.setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(101), true);
                 }
 
                 //Get the bungee to send all of the friend data to the server

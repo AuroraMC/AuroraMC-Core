@@ -185,6 +185,9 @@ public abstract class Cosmetic {
             case ALL:
                 return true;
             case RANK: {
+                if (player.hasPermission("admin")) {
+                    return true;
+                }
                 for (Rank rank : ranks) {
                     if (player.getRank().isParent(rank)) {
                         return true;
@@ -193,6 +196,9 @@ public abstract class Cosmetic {
                 return false;
             }
             case PERMISSION: {
+                if (player.hasPermission("admin")) {
+                    return true;
+                }
                 for (Permission permission : permissions) {
                     if (player.hasPermission(permission.getId())) {
                         return true;

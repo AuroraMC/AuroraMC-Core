@@ -3,6 +3,7 @@ package net.auroramc.core.api.players.friends;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.FriendStatus;
 
 import java.util.UUID;
 
@@ -44,7 +45,7 @@ public class Friend {
     public void loggedOff() {
         this.online = false;
         this.server = null;
-        this.status = FriendStatus.OFFLINE;
+        this.status = (FriendStatus) AuroraMCAPI.getCosmetics().get(101);
     }
 
     public void favourited(boolean sendToBungee) {
@@ -107,7 +108,7 @@ public class Friend {
 
     public FriendStatus getStatus() {
         if (status == null) {
-            return FriendStatus.OFFLINE;
+            return (FriendStatus) AuroraMCAPI.getCosmetics().get(101);
         }
         return status;
     }
