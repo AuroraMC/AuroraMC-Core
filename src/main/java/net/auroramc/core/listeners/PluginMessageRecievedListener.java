@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
@@ -404,6 +405,20 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     } else {
                         player.setPartyLeader(UUID.fromString(uuidString));
                     }
+                    break;
+                }
+                case "CosmeticAdd": {
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
+                    assert player != null;
+                    Cosmetic cosmetic = AuroraMCAPI.getCosmetics().get(in.readInt());
+                    player.getUnlockedCosmetics().add(cosmetic);
+                    break;
+                }
+                case "CosmeticRemove": {
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
+                    assert player != null;
+                    Cosmetic cosmetic = AuroraMCAPI.getCosmetics().get(in.readInt());
+                    player.getUnlockedCosmetics().remove(cosmetic);
                     break;
                 }
             }

@@ -308,9 +308,17 @@ public class AuroraMCPlayer {
 
                 ignoredPlayers = AuroraMCAPI.getDbManager().getIgnoredPlayers(id);
 
-                unlockedCosmetics = new ArrayList<>();
+                unlockedCosmetics = AuroraMCAPI.getDbManager().getUnlockedCosmetics(player.getUniqueId());
                 runningCosmeticTasks = new HashMap<>();
-                activeCosmetics = new HashMap<>();
+                activeCosmetics = AuroraMCAPI.getDbManager().getActiveCosmetics(player.getUniqueId());
+                for (Cosmetic cosmetic : activeCosmetics.values()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            cosmetic.onEquip(pl);
+                        }
+                    }.runTask(AuroraMCAPI.getCore());
+                }
 
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);

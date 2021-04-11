@@ -8,6 +8,7 @@ import net.auroramc.core.achievements.party.*;
 import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.commands.admin.*;
+import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
 import net.auroramc.core.commands.moderation.*;
@@ -73,6 +74,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandChatSlow());
         AuroraMCAPI.registerCommand(new CommandChatSilence());
         AuroraMCAPI.registerCommand(new CommandCosmetics());
+        AuroraMCAPI.registerCommand(new CommandCosmetic());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
