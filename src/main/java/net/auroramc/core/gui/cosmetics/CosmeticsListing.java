@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -126,6 +127,12 @@ public class CosmeticsListing extends GUI {
                     cosmetic.onUnequip(player);
                     player.getActiveCosmetics().remove(type);
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cosmetic.getName())));
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            AuroraMCAPI.getDbManager().unequipCosmetic(player.getPlayer().getUniqueId(), cosmetic);
+                        }
+                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 } else {
                     //enable and disable old one.
                     CosmeticSwitchEvent cosmeticSwitchEvent = new CosmeticSwitchEvent(player, cosmetic);
@@ -135,10 +142,18 @@ public class CosmeticsListing extends GUI {
                         return;
                     }
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", player.getActiveCosmetics().get(type).getName())));
+                    Cosmetic prevCosmetic = player.getActiveCosmetics().get(type);
                     player.getActiveCosmetics().get(type).onUnequip(player);
                     cosmetic.onEquip(player);
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
                     player.getActiveCosmetics().put(type, cosmetic);
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            AuroraMCAPI.getDbManager().unequipCosmetic(player.getPlayer().getUniqueId(), prevCosmetic);
+                            AuroraMCAPI.getDbManager().equipCosmetic(player.getPlayer().getUniqueId(), cosmetic);
+                        }
+                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 }
             } else {
                 //enable
@@ -148,9 +163,29 @@ public class CosmeticsListing extends GUI {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "You currently cannot enable that gadget!"));
                     return;
                 }
+                for (Cosmetic.CosmeticType type : cosmetic.getType().getConflicts()) {
+                    if (player.getActiveCosmetics().containsKey(type)) {
+                        Cosmetic cos = player.getActiveCosmetics().get(type);
+                        cos.onUnequip(player);
+                        player.getActiveCosmetics().remove(type);
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cos.getName())));
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                AuroraMCAPI.getDbManager().unequipCosmetic(player.getPlayer().getUniqueId(), cos);
+                            }
+                        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                    }
+                }
                 cosmetic.onEquip(player);
                 player.getActiveCosmetics().put(type, cosmetic);
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        AuroraMCAPI.getDbManager().equipCosmetic(player.getPlayer().getUniqueId(), cosmetic);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
             }
             player.getPlayer().closeInventory();
         } else {

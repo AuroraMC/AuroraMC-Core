@@ -84,8 +84,8 @@ public abstract class Cosmetic {
                 if (player.getBank().getTickets() >= currency) {
                     lore.add(AuroraMCAPI.getFormatter().convert(String.format("&eClick to unlock for %s tickets!", currency)));
                 } else {
-                    lore.add(AuroraMCAPI.getFormatter().convert("&cYou have insufficient funds to purchase"));
-                    lore.add(AuroraMCAPI.getFormatter().convert("&cthis cosmetic."));
+                    lore.add(AuroraMCAPI.getFormatter().convert("&cYou have insufficient funds"));
+                    lore.add(AuroraMCAPI.getFormatter().convert("&cto purchase this cosmetic."));
                 }
             } else {
                 lore.add(AuroraMCAPI.getFormatter().convert("&9" + unlockMessage));
@@ -160,14 +160,25 @@ public abstract class Cosmetic {
         GADGET("Gadget"),
         FRIEND_STATUS("Friend Status");
 
+        static {
+            HAT.conflicts = new CosmeticType[]{BANNER};
+            BANNER.conflicts = new CosmeticType[]{HAT};
+        }
+
         private final String name;
+        private CosmeticType[] conflicts;
 
         CosmeticType(String name) {
             this.name = name;
+            conflicts = new CosmeticType[]{};
         }
 
         public String getName() {
             return this.name;
+        }
+
+        public CosmeticType[] getConflicts() {
+            return conflicts;
         }
     }
 

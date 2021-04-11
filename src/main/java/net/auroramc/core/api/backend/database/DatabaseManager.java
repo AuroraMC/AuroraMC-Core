@@ -3,6 +3,7 @@ package net.auroramc.core.api.backend.database;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
+import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.players.friends.Friend;
@@ -2015,6 +2016,62 @@ public class DatabaseManager {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<Cosmetic> getUnlockedCosmetics(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            List<Cosmetic> cosmetics = new ArrayList<>();
+            Set<String> cosmeticsStrings = connection.smembers(String.format("cosmetics.unlocked.%s", uuid.toString()));
+            for (String s : cosmeticsStrings) {
+                int i = Integer.parseInt(s);
+                cosmetics.add(AuroraMCAPI.getCosmetics().get(i));
+            }
+            return cosmetics;
+        }
+    }
+
+    public boolean hasUnlockedCosmetic(UUID uuid, int id) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.sismember(String.format("cosmetics.unlocked.%s", uuid.toString()), id + "");
+        }
+    }
+
+    public void addCosmetic(UUID uuid, Cosmetic cosmetic) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.sadd(String.format("cosmetics.unlocked.%s", uuid.toString()), cosmetic.getId() + "");
+        }
+    }
+
+    public void removeCosmetic(UUID uuid, Cosmetic cosmetic) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.srem(String.format("cosmetics.unlocked.%s", uuid.toString()), cosmetic.getId() + "");
+        }
+    }
+
+    public HashMap<Cosmetic.CosmeticType, Cosmetic> getActiveCosmetics(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            HashMap<Cosmetic.CosmeticType, Cosmetic> activeCosmetics = new HashMap<>();
+            for (Cosmetic.CosmeticType type : Cosmetic.CosmeticType.values()) {
+                if (connection.hexists(String.format("cosmetics.active.%s", uuid.toString()), type.name())) {
+                    String id = connection.hget(String.format("cosmetics.active.%s", uuid.toString()), type.name());
+                    int i = Integer.parseInt(id);
+                    activeCosmetics.put(type, AuroraMCAPI.getCosmetics().get(i));
+                }
+            }
+            return activeCosmetics;
+        }
+    }
+
+    public void equipCosmetic(UUID uuid, Cosmetic cosmetic) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset(String.format("cosmetics.active.%s", uuid.toString()), cosmetic.getType().name(), cosmetic.getId() + "");
+        }
+    }
+
+    public void unequipCosmetic(UUID uuid, Cosmetic cosmetic) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hdel(String.format("cosmetics.active.%s", uuid.toString()), cosmetic.getType().name());
         }
     }
 }
