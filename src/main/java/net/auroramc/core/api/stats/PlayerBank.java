@@ -36,15 +36,6 @@ public class PlayerBank {
             player.getStats().addTicketsEarned(amount, false);
         }
 
-        if (player != null) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().ticketsAdded(player, amount);
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
-        }
-
         if (sendToServer) {
             if (player != null) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -61,15 +52,6 @@ public class PlayerBank {
         crowns += amount;
         if (countTowardStats) {
             player.getStats().addCrownsEarned(amount, false);
-        }
-
-        if (player != null) {
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().crownsAdded(player, amount);
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
 
         if (sendToServer) {
@@ -89,15 +71,6 @@ public class PlayerBank {
         crowns -= amount;
         if (removeFromStats) {
             player.getStats().removeCrownsEarned(amount, false);
-        }
-
-        if (player != null) {
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().crownsAdded(player, -amount);
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
 
         if (sendToServer) {
@@ -120,15 +93,6 @@ public class PlayerBank {
         tickets -= amount;
         if (removeFromStats) {
             player.getStats().removeTicketsEarned(amount, false);
-        }
-
-        if (player != null) {
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().ticketsAdded(player, -amount);
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
 
         if (sendToServer) {
