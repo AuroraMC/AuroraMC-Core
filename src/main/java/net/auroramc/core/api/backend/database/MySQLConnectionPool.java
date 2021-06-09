@@ -1,4 +1,4 @@
-package net.auroramc.core.api.backend.database.util;
+package net.auroramc.core.api.backend.database;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

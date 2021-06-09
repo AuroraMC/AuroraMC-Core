@@ -2,7 +2,6 @@ package net.auroramc.core.api.backend.database;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
-import net.auroramc.core.api.backend.database.util.MySQLConnectionPool;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.players.*;
@@ -856,7 +855,23 @@ public class DatabaseManager {
             statement.setInt(2, port);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                return new ServerInfo(set.getString(1), ip, port, new JSONObject(set.getString(4)));
+                return new ServerInfo(set.getString(1), ip, port, new JSONObject(set.getString(4)), set.getInt(5));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ServerInfo getServerDetailsByName(String name) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM servers WHERE servername = ?");
+            statement.setString(1, name);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return new ServerInfo(set.getString(1), set.getString(2), set.getInt(3), new JSONObject(set.getString(4)), set.getInt(5));
             } else {
                 return null;
             }

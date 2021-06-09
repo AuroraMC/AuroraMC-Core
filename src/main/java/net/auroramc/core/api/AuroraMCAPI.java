@@ -2,6 +2,7 @@ package net.auroramc.core.api;
 
 import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.backend.ServerInfo;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.database.DatabaseManager;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.cosmetics.Cosmetic;
@@ -69,6 +70,7 @@ public class AuroraMCAPI {
             //Identify what server it is on the bungeecord. Grab the details from mysql.
             serverInfo = dbManager.getServerDetails(Bukkit.getIp(), Bukkit.getPort());
             Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
+            CommunicationUtils.init();
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
