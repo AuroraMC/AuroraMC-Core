@@ -8,12 +8,14 @@ public class ServerInfo {
     private final String ip;
     private final int port;
     private final JSONObject serverType;
+    private final int protocolPort;
 
-    public ServerInfo(String name, String ip, int port, JSONObject serverType) {
+    public ServerInfo(String name, String ip, int port, JSONObject serverType, int protocolPort) {
         this.name = name;
         this.ip = ip;
         this.port = port;
         this.serverType = serverType;
+        this.protocolPort = protocolPort;
     }
 
     public String getName() {
@@ -30,5 +32,9 @@ public class ServerInfo {
 
     public String getIp() {
         return ip;
+    }
+
+    public int getProtocolPort() {
+        return protocolPort;
     }
 }

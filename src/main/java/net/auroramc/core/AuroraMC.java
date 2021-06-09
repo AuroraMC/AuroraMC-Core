@@ -7,6 +7,7 @@ import net.auroramc.core.achievements.loyalty.HappyBirthday;
 import net.auroramc.core.achievements.party.*;
 import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.general.*;
@@ -191,6 +192,6 @@ public class AuroraMC extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        CommunicationUtils.shutdown();
     }
 }
