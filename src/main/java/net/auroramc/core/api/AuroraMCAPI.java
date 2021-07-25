@@ -46,6 +46,8 @@ public class AuroraMCAPI {
     private static long chatSilenceEnd;
     private static BukkitTask silenceTask;
 
+    private static boolean rulesLoading;
+
     static {
         players = new HashMap<>();
         commands = new HashMap<>();
@@ -59,6 +61,7 @@ public class AuroraMCAPI {
         chatslow = -1;
         chatSilenceEnd = -2;
         silenceTask = null;
+        rulesLoading = false;
     }
 
 
@@ -170,6 +173,7 @@ public class AuroraMCAPI {
     }
 
     public static void loadRules() {
+        rulesLoading = true;
         new BukkitRunnable(){
             @Override
             public void run() {
@@ -177,6 +181,7 @@ public class AuroraMCAPI {
                 for (Rule rule : dbManager.getRules()) {
                     rules.registerRule(rule);
                 }
+                rulesLoading = false;
             }
         }.runTaskAsynchronously(core);
     }
@@ -264,6 +269,10 @@ public class AuroraMCAPI {
             silenceTask = null;
             task.cancel();
         }
+    }
+
+    public static boolean isRulesLoading() {
+        return rulesLoading;
     }
 }
 

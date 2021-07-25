@@ -15,6 +15,10 @@ public enum Protocol {
      */
     EMERGENCY_SHUTDOWN,
     /**
+     * Sent by the server to confirm shutdown has occurred after a message from Mission Control. This is sent after all of the shutdown tasks are complete, not when the server is actually shutdown.
+     */
+    CONFIRM_SHUTDOWN,
+    /**
      * Update the rules list.
      */
     UPDATE_RULES,
@@ -22,4 +26,16 @@ public enum Protocol {
      * Update map rotation.
      */
     UPDATE_MAPS,
+    /**
+     * Send an update to the daemon with an updated player count.
+     */
+    UPDATE_PLAYER_COUNT,
+    /**
+     * When a server is online and now available to take connections.
+     */
+    SERVER_ONLINE,
+    /**
+     * Remove a server from the rotation. Only sent to lobby servers to remove servers from the menu.
+     */
+    REMOVE_SERVER
 }

@@ -1,7 +1,10 @@
 package net.auroramc.core.api.backend.communication;
 
+import net.auroramc.core.AuroraMC;
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.events.ProtocolMessageEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,8 +32,14 @@ public class IncomingProtocolMessageThread extends Thread {
                 Socket connection = socket.accept();
                 ObjectInputStream objectInputStream = (ObjectInputStream) connection.getInputStream();
                 ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
-                ProtocolMessageEvent event = new ProtocolMessageEvent(message);
-                Bukkit.getPluginManager().callEvent(event);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        ProtocolMessageEvent event = new ProtocolMessageEvent(message);
+                        Bukkit.getPluginManager().callEvent(event);
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+
             }
         } catch (SocketException e) {
             listening = false;

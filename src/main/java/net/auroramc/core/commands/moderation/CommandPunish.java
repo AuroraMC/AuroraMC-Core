@@ -53,13 +53,7 @@ public class CommandPunish extends Command {
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        UUID uuid = UUIDUtil.getUUID(name);
-                        if (uuid == null) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("No matches for [**%s**]", name)));
-                            return;
-                        }
-
-                        int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);
+                        int id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
                         if (id < 1) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot be punished.", name)));
                             return;

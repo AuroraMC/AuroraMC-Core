@@ -1,5 +1,6 @@
 package net.auroramc.core.api.utils;
 
+import com.mojang.authlib.Agent;
 import org.bukkit.entity.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,6 +63,8 @@ public class UUIDUtil {
                     uuid = uuid + "-";
                 }
             }
+
+
 
             return UUID.fromString(uuid);
         } catch (Exception e) {
