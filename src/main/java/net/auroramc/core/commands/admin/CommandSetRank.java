@@ -29,30 +29,26 @@ public class CommandSetRank extends Command {
         if (args.size() == 1) {
             String name = args.get(0);
             if (name.matches("[a-zA-Z0-9_]{3,16}")) {
-                if (name.toLowerCase().equals(player.getPlayer().getName().toLowerCase())) {
+                if (name.equalsIgnoreCase(player.getPlayer().getName())) {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", "You cannot set your own rank."));
                     return;
                 }
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        UUID uuid = UUIDUtil.getUUID(name);
-                        if (uuid == null) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("No matches for [**%s**]", name)));
-                            return;
-                        }
-
-                        int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);
+                        int id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
                         if (id < 1) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("User [**%s**] has never joined the network, so cannot receive a rank.", name)));
                             return;
                         }
 
-                        Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
+                        Rank rank = AuroraMCAPI.getDbManager().getRank(id);
                         if (rank == null) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", "There has been an error trying to retrieve their rank from the Database. Please try again."));
                             return;
                         }
+
+                        UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(id);
 
                         if (player.getRank().hasPermission("admin")) {
                             if (rank.getId() >= player.getRank().getId()) {

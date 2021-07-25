@@ -28,17 +28,13 @@ public class CommandPunishHistory extends Command {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            UUID uuid = UUIDUtil.getUUID(args.get(0));
-                            if (uuid == null) {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("No matches for [**%s**]", args.get(0))));
-                                return;
-                            }
-
-                            int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);
+                            int id = AuroraMCAPI.getDbManager().getAuroraMCID(args.get(0));
                             if (id < 1) {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot have received a punishment.", args.get(0))));
                                 return;
                             }
+
+                            UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(id);
 
                             String name = args.remove(0);
                             PunishmentHistoryGUI gui = new PunishmentHistoryGUI(player, id, name, ((args.size() > 0)?String.join(" ", args):null), uuid);

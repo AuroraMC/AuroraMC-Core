@@ -27,7 +27,7 @@ public class CommandLookup extends Command {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        UUID uuid = UUIDUtil.getUUID(args.get(0));
+                        UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromName(args.get(0));
                         if (uuid == null) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("IP Lookup", String.format("Player [**%s**] does not exist.", args.get(0))));
                             return;
@@ -57,7 +57,7 @@ public class CommandLookup extends Command {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        UUID uuid = UUIDUtil.getUUID(args.get(0));
+                        UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromName(args.get(0));
                         if (uuid == null) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("IP Lookup", String.format("Player [**%s**] does not exist.", args.get(0))));
                             return;

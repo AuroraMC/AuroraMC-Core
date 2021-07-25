@@ -24,6 +24,7 @@ public class TextFormatter {
     private final String chatLevelFormat = "&%s«%s»";
     private final String chatUltimateFormat = "&%s&l%s";
     private final String chatStaffMessageFormat = " &r&%s%s %s &l»&r ";
+    private final String chatPrivateMessageFormat = "&b&l%s&r &3➜&r &b&l%s&r &3&l»&r %s";
 
     private final char normalColor = 'r';
     private final char highlightColor = 'b';
@@ -237,6 +238,10 @@ public class TextFormatter {
 
         //Returns the final result.
         return chatMessage;
+    }
+
+    public String privateMessage(String from, AuroraMCPlayer to, String message) {
+        return String.format(convert(chatPrivateMessageFormat), from, ((to.getActiveDisguise() != null)?to.getActiveDisguise().getName():to.getPlayer().getName()), message);
     }
 
     public BaseComponent formatStaffMessage(AuroraMCPlayer sender, String message) {

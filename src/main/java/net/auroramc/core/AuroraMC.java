@@ -26,11 +26,8 @@ import net.auroramc.core.listeners.PluginMessageRecievedListener;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.persistence.Id;
 
 public class AuroraMC extends JavaPlugin {
 
