@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PunishUtils {
 
@@ -23,6 +24,7 @@ public class PunishUtils {
             @SuppressWarnings("UnstableApiUsage")
             @Override
             public void run() {
+                UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player);
                 //Generate a random 8 digit punishment code.
                 PunishmentHistory history = new PunishmentHistory(player);
                 List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(player);
@@ -127,7 +129,7 @@ public class PunishUtils {
 
                     } else {
                         //Ban
-                        AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, UUIDUtil.getUUID(name).toString());
+                        AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, uuid.toString());
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("KickPlayer");
                         out.writeUTF(name);
@@ -213,7 +215,8 @@ public class PunishUtils {
             return;
         } else {
             //Ban
-            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, UUIDUtil.getUUID(name).toString());
+            String uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player).toString();
+            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, uuid);
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("KickPlayer");
             out.writeUTF(name);

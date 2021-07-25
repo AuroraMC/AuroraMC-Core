@@ -21,6 +21,9 @@ public class CommunicationUtils {
     }
 
     public static UUID sendMessage(ProtocolMessage message) {
+        if (message.getDestination().equalsIgnoreCase("Mission Control")) {
+
+        }
         ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination());
         if (info != null) {
             try (Socket socket = new Socket(info.getIp(), info.getProtocolPort())) {

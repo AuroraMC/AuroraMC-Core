@@ -65,8 +65,12 @@ public class AuroraMCPlayer {
     private HashMap<Cosmetic.CosmeticType, Cosmetic> activeCosmetics;
     private HashMap<Cosmetic, BukkitTask> runningCosmeticTasks;
 
+    //Just a variable so other systems knows when a player has been fully loaded.
+    private boolean loaded;
+
 
     public AuroraMCPlayer(Player player) {
+        loaded = false;
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
@@ -326,6 +330,7 @@ public class AuroraMCPlayer {
                 if (pl != creationEvent.getPlayer()) {
                     AuroraMCAPI.newPlayer(creationEvent.getPlayer());
                 }
+                loaded = true;
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -363,6 +368,7 @@ public class AuroraMCPlayer {
         unlockedCosmetics = oldPlayer.unlockedCosmetics;
         activeCosmetics = oldPlayer.activeCosmetics;
         runningCosmeticTasks = oldPlayer.runningCosmeticTasks;
+        loaded = oldPlayer.loaded;
     }
 
     public Rank getRank() {
@@ -848,5 +854,9 @@ public class AuroraMCPlayer {
 
         PacketPlayOutChat packet = new PacketPlayOutChat(component, (byte) 2);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    public boolean isLoaded() {
+        return loaded;
     }
 }

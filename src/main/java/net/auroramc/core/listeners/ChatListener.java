@@ -17,6 +17,15 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
+        if (AuroraMCAPI.getPlayer(e.getPlayer()) == null) {
+            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Chat Manager", "Your player profile is still loading, please wait to chat!"));
+            return;
+        } else {
+            if (!AuroraMCAPI.getPlayer(e.getPlayer()).isLoaded()) {
+                e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Chat Manager", "Your player profile is still loading, please wait to chat!"));
+                return;
+            }
+        }
         if (AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
             e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Vanish", "You cannot talk while vanished!"));
             return;

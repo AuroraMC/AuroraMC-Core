@@ -203,6 +203,25 @@ public class DatabaseManager {
         }
     }
 
+    public UUID getUUIDFromName(String name) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT uuid FROM auroramc_players WHERE name = ?");
+            statement.setString(1, name);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return UUID.fromString(set.getString(1));
+            } else {
+                //NEW USER
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getNameFromID(int id) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
@@ -238,6 +257,26 @@ public class DatabaseManager {
                 statement = connection.prepareStatement("INSERT INTO ranks (amc_id, rank) VALUES (?, ?)");
                 statement.setLong(1, player.getId());
                 statement.setInt(2, 0);
+                return Rank.getByID(0);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Rank getRank(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT rank FROM `ranks` WHERE amc_id = ?");
+            statement.setLong(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+
+                return Rank.getByID(set.getInt(1));
+            } else {
+                //NEW USER
                 return Rank.getByID(0);
             }
 
@@ -855,7 +894,7 @@ public class DatabaseManager {
             statement.setInt(2, port);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                return new ServerInfo(set.getString(1), ip, port, new JSONObject(set.getString(4)), set.getInt(5));
+                return new ServerInfo(set.getString(1), set.getString(2), set.getInt(3), ServerInfo.Network.valueOf(set.getString(4)), set.getBoolean(5), new JSONObject(set.getString(6)), set.getInt(7), set.getInt(8), set.getInt(9), set.getInt(10), set.getInt(11), set.getInt(12));
             } else {
                 return null;
             }
@@ -871,7 +910,7 @@ public class DatabaseManager {
             statement.setString(1, name);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                return new ServerInfo(set.getString(1), set.getString(2), set.getInt(3), new JSONObject(set.getString(4)), set.getInt(5));
+                return new ServerInfo(set.getString(1), set.getString(2), set.getInt(3), ServerInfo.Network.valueOf(set.getString(4)), set.getBoolean(5), new JSONObject(set.getString(6)), set.getInt(7), set.getInt(8), set.getInt(9), set.getInt(10), set.getInt(11), set.getInt(12));
             } else {
                 return null;
             }

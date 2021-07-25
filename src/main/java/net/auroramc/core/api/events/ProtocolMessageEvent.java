@@ -19,7 +19,6 @@ public class ProtocolMessageEvent extends Event {
         return message;
     }
 
-    @Override
     public HandlerList getHandlers() {
         return handlers;
     }

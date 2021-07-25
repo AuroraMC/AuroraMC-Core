@@ -42,7 +42,7 @@ public class GlobalAccountSuspension extends GUI {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    AuroraMCAPI.getDbManager().issuePunishment(code, id, 22, extraDetails, -1, System.currentTimeMillis(), -1, 1, UUIDUtil.getUUID(name).toString());
+                    AuroraMCAPI.getDbManager().issuePunishment(code, id, 22, extraDetails, -1, System.currentTimeMillis(), -1, 1, AuroraMCAPI.getDbManager().getUUIDFromName(name).toString());
                     List<String> strings = AuroraMCAPI.getDbManager().globalAccountSuspend(code, id, player.getId(), System.currentTimeMillis(), extraDetails);
                     for (String id : strings) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
