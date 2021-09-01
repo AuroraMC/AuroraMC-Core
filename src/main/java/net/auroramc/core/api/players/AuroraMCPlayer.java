@@ -51,6 +51,8 @@ public class AuroraMCPlayer {
     private UUID partyUUID;
     private long lastMessageSent;
 
+    private UUID lastAdminMessaged;
+
     private FriendsList friendsList;
     private ChatChannel channel;
     private PlayerPreferences preferences;
@@ -858,5 +860,13 @@ public class AuroraMCPlayer {
 
     public boolean isLoaded() {
         return loaded;
+    }
+
+    public void setLastAdminMessage(UUID lastMessaged) {
+        this.lastAdminMessaged = lastMessaged;
+    }
+
+    public UUID getLastAdminMessaged() {
+        return lastAdminMessaged;
     }
 }
