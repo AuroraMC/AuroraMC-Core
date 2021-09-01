@@ -241,7 +241,24 @@ public class DatabaseManager {
         }
     }
 
+    public String getNameFromUUID(String uuid) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE uuid = ?");
+            statement.setString(1, uuid);
 
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return set.getString(1);
+            } else {
+                //NEW USER
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public Rank getRank(AuroraMCPlayer player) {
         try (Connection connection = mysql.getConnection()) {
@@ -2030,6 +2047,12 @@ public class DatabaseManager {
         }
     }
 
+    public boolean hasActiveSession(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.exists(String.format("server.%s", uuid)) && connection.exists(String.format("proxy.%s", uuid));
+        }
+    }
+
     public List<IgnoredPlayer> getIgnoredPlayers(int id) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM ignored WHERE amc_id = ?");
@@ -2126,6 +2149,24 @@ public class DatabaseManager {
     public void unequipCosmetic(UUID uuid, Cosmetic cosmetic) {
         try (Jedis connection = jedis.getResource()) {
             connection.hdel(String.format("cosmetics.active.%s", uuid.toString()), cosmetic.getType().name());
+        }
+    }
+
+    public UUID getUUID(String name) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT uuid FROM auroramc_players WHERE name = ?");
+            statement.setString(1, name);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                return UUID.fromString(set.getString(1));
+            } else {
+                //NEW USER
+                return null;
+            }
+
+        } catch (SQLException e) {
+            return null;
         }
     }
 }
