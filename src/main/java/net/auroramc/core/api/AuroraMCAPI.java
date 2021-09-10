@@ -22,6 +22,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class AuroraMCAPI {
 
@@ -106,6 +107,15 @@ public class AuroraMCAPI {
     public static AuroraMCPlayer getPlayer(String name) {
         for (AuroraMCPlayer player : players.values()) {
             if (player.getName().equalsIgnoreCase(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static AuroraMCPlayer getPlayer(UUID uuid) {
+        for (AuroraMCPlayer player : players.values()) {
+            if (player.getPlayer().getUniqueId().equals(uuid)) {
                 return player;
             }
         }
