@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MVN_CREDS = credentials('maven-creds')
+    }
+
     tools {
         maven 'Maven'
         jdk 'JDK'
@@ -17,7 +21,7 @@ pipeline {
             }
         stage('Build') {
              steps {
-                 sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+                 sh 'mvn -Dmaven.test.failure.ignore=true -s $MVN_CREDS clean package'
              }
              post {
                 success {
