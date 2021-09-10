@@ -218,16 +218,8 @@ public class PunishUtils {
             String uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player).toString();
             AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, uuid);
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("KickPlayer");
-            out.writeUTF(name);
-            out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been banned from the network.\n" +
-                    "\n" +
-                    "&rReason: **%s - %s**\n" +
-                    "&rExpires:  **%s**\n" +
-                    "\n" +
-                    "&rPunishment Code: **%s**\n" +
-                    "\n" +
-                    "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
+            out.writeUTF("Ban");
+            out.writeUTF(code);
 
             issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
