@@ -18,14 +18,14 @@ pipeline {
                     echo "M2_HOME = ${M2_HOME}"
                 '''
             }
-            }
+        }
         stage('Build') {
              steps {
                  sh 'mvn -Dmaven.test.failure.ignore=true -s $MVN_CREDS clean package'
              }
              post {
                 success {
-                    archiveArtifacts artifacts: 'target/AuroraMC-Core-**.jar,src/main/resources/config.yml,src/main/resources/spigot.yml', followSymlinks: false
+                    archiveArtifacts artifacts: 'target/AuroraMC-Core-**.jar,src/main/resources/config.yml,src/main/resources/spigot.yml,src/main/resources/eula.txt', followSymlinks: false
                 }
              }
         }
