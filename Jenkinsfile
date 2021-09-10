@@ -25,7 +25,7 @@ pipeline {
              }
              post {
                 success {
-                    archiveArtifacts artifacts: 'target/AuroraMC-Core-**.jar', followSymlinks: false
+                    archiveArtifacts artifacts: 'target/AuroraMC-Core-**.jar,src/main/resources/config.yml,src/main/resources/spigot.yml', followSymlinks: false
                 }
              }
         }
