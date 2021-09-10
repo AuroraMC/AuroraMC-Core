@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
@@ -39,7 +40,9 @@ public class CommandStaffMessage extends Command {
                     String message = AuroraMCAPI.getFilter().filter(String.join(" ", args));
                     BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(player, target, message);
                     target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(player, message));
+                    target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                     player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(target, message));
+                    player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                     player.setLastAdminMessage(target.getPlayer().getUniqueId());
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p != target.getPlayer() && p != player.getPlayer()) {
@@ -57,17 +60,19 @@ public class CommandStaffMessage extends Command {
                             UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
                             if (uuid != null) {
                                 if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
-                                    //ProtocolMessage protocolMessage = new ProtocolMessage();
-                                    //CommunicationUtils.sendMessage(protocolMessage);
 
                                     args.remove(0);
                                     String message = AuroraMCAPI.getFilter().filter(String.join(" ", args));
+
+                                    ProtocolMessage protocolMessage = new ProtocolMessage(Protocol.STAFF_MESSAGE, AuroraMCAPI.getDbManager().getServer(uuid), uuid.toString(), player.getPlayer().getUniqueId().toString(), message);
+                                    CommunicationUtils.sendMessage(protocolMessage);
 
                                     String name = AuroraMCAPI.getDbManager().getNameFromUUID(uuid.toString());
                                     Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
 
                                     BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(player, rank, name, message);
                                     player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(rank, name, message));
+                                    player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
 
                                     for (Player p : Bukkit.getOnlinePlayers()) {
                                         if (p != player.getPlayer()) {
