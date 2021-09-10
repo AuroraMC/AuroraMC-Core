@@ -72,7 +72,7 @@ public class AuroraMCAPI {
             dbManager = new DatabaseManager();
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
-            serverInfo = dbManager.getServerDetails(Bukkit.getIp(), Bukkit.getPort());
+            serverInfo = dbManager.getServerDetailsByName(auroraMCCore.getConfig().getString("name"));
             Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
             CommunicationUtils.init();
         } else {
