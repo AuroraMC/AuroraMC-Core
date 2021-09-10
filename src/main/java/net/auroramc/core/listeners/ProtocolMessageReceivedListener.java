@@ -6,11 +6,16 @@ import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.ProtocolMessageEvent;
 import net.auroramc.core.api.events.ServerCloseRequestEvent;
+import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.UUID;
 
 public class ProtocolMessageReceivedListener implements Listener {
 
@@ -38,7 +43,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                 String sender = e.getMessage().getSender();
                 if (sender.equalsIgnoreCase("Mission Control")) {
                     message = AuroraMCAPI.getFormatter().pluginMessage("Mission Control", message);
-                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(to);
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(UUID.fromString(to));
                     if (player != null) {
                         player.getPlayer().sendMessage(message);
                     }
@@ -48,6 +53,29 @@ public class ProtocolMessageReceivedListener implements Listener {
                         message = AuroraMCAPI.getFormatter().privateMessage("Mission Control", player, message);
                         player.getPlayer().sendMessage(message);
                         player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
+                    }
+                }
+            }
+            case STAFF_MESSAGE: {
+                String message = e.getMessage().getExtraInfo();
+                String to = e.getMessage().getCommand();
+                String sender = e.getMessage().getSender();
+                AuroraMCPlayer target = AuroraMCAPI.getPlayer(UUID.fromString(to));
+                if (target != null) {
+                    UUID from = UUID.fromString(sender);
+                    Rank rank = AuroraMCAPI.getDbManager().getRank(from);
+                    String name = AuroraMCAPI.getDbManager().getNameFromUUID(sender);
+                    target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(rank, name, message));
+                    target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
+                    BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(rank, name, target, message);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p != target.getPlayer()) {
+                            if (AuroraMCAPI.getPlayer(p) != null) {
+                                if (AuroraMCAPI.getPlayer(p).hasPermission("moderation")) {
+                                    p.spigot().sendMessage(formatted);
+                                }
+                            }
+                        }
                     }
                 }
             }
