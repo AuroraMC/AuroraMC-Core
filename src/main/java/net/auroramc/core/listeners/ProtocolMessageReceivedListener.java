@@ -29,7 +29,7 @@ public class ProtocolMessageReceivedListener implements Listener {
             case UPDATE_PLAYER_COUNT: {
                 //Respond with the current player count.
                 int amount = Bukkit.getOnlinePlayers().size();
-                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_PLAYER_COUNT, "Mission Control", "reply", AuroraMCAPI.getServerInfo().getName(), "" + amount);
+                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_PLAYER_COUNT, "Mission Control", "reply", AuroraMCAPI.getServerInfo().getName(), amount + "\n" + AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
                 CommunicationUtils.sendMessage(message);
             }
             case SHUTDOWN: {
