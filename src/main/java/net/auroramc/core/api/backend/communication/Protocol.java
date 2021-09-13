@@ -41,5 +41,9 @@ public enum Protocol {
     /**
      *
      */
-    STAFF_MESSAGE
+    STAFF_MESSAGE,
+    /**
+     * Sent when the player count changes.
+     */
+    PLAYER_COUNT_CHANGE
 }

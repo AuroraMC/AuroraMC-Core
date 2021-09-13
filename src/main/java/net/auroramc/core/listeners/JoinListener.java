@@ -1,7 +1,11 @@
 package net.auroramc.core.listeners;
 
+import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.Protocol;
+import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.PunishmentLength;
@@ -93,6 +97,8 @@ public class JoinListener implements Listener {
                 }
             }
         }
+        ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "join", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
+        CommunicationUtils.sendMessage(message);
     }
 
     @EventHandler
