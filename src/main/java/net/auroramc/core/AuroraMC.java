@@ -8,6 +8,8 @@ import net.auroramc.core.achievements.party.*;
 import net.auroramc.core.achievements.time.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.Protocol;
+import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.general.*;
@@ -186,7 +188,9 @@ public class AuroraMC extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
 
-        getLogger().info("AuroraMC-Core loaded and ready to accept connections.");
+        getLogger().info("AuroraMC-Core loaded and ready to accept connections. Letting mission control know...");
+        ProtocolMessage message = new ProtocolMessage(Protocol.SERVER_ONLINE, "Mission Control", "", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name());
+        CommunicationUtils.sendMessage(message);
     }
 
     @Override

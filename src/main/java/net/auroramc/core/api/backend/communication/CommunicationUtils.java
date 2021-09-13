@@ -22,7 +22,15 @@ public class CommunicationUtils {
 
     public static UUID sendMessage(ProtocolMessage message) {
         if (message.getDestination().equalsIgnoreCase("Mission Control")) {
-
+            try (Socket socket = new Socket("10.40.14.221", 26656)) {
+                ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();
+                outputStream.writeObject(message);
+                outputStream.flush();
+                return message.getUuid();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination());
         if (info != null) {
