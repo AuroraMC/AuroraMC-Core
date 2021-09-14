@@ -22,7 +22,7 @@ public class CommunicationUtils {
 
     public static UUID sendMessage(ProtocolMessage message) {
         if (message.getDestination().equalsIgnoreCase("Mission Control")) {
-            try (Socket socket = new Socket("10.40.14.221", 26656)) {
+            try (Socket socket = new Socket("10.40.14.221", 35565)) {
                 ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();
                 outputStream.writeObject(message);
                 outputStream.flush();
