@@ -44,63 +44,7 @@
                     <keepDependenciesWithProvidedScope>false</keepDependenciesWithProvidedScope>
                     <filters>
                         <filter>
-                            <artifact>org.apache.commons:commons-dbcp2</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>org.jetbrains:annotations</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>commons-io:commons-io</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>commons-logging:commons-logging</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>org.apache.commons:commons-lang3</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>org.apache.commons:commons-pool2</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>org.apache.commons:commons-text</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>redis.clients:jedis</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.txt</exclude>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>org.json:json</artifact>
+                            <artifact>*:*</artifact>
                             <excludes>
                                 <exclude>META-INF/*.txt</exclude>
                                 <exclude>META-INF/*.MF</exclude>
