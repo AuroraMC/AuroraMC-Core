@@ -72,13 +72,13 @@ public class AuroraMCAPI {
             dbManager = new DatabaseManager();
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
-            serverInfo = dbManager.getServerDetailsByName(auroraMCCore.getConfig().getString("name"));
+            serverInfo = dbManager.getServerDetailsByName(auroraMCCore.getConfig().getString("name"), auroraMCCore.getConfig().getString("network"));
             if (serverInfo != null) {
                 Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
+                CommunicationUtils.init();
             } else {
                 Bukkit.getLogger().info("I dont know what server I am!");
             }
-            CommunicationUtils.init();
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
         }
