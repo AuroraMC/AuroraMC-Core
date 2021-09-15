@@ -1,5 +1,6 @@
 package net.auroramc.core.api.backend.communication;
 
+import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 
@@ -32,7 +33,7 @@ public class CommunicationUtils {
                 return null;
             }
         }
-        ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination());
+        ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination(), AuroraMCAPI.getServerInfo().getNetwork().name());
         if (info != null) {
             try (Socket socket = new Socket(info.getIp(), info.getProtocolPort())) {
                 ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();

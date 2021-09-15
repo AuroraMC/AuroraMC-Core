@@ -6,3 +6,4 @@ mysqlusername: PLACEHOLDER
 redisauth: PLACEHOLDER
 redishost: PLACEHOLDER
 name: PLACEHOLDER
+network: PLACEHOLDER
