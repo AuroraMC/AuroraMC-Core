@@ -921,10 +921,11 @@ public class DatabaseManager {
         return null;
     }
 
-    public ServerInfo getServerDetailsByName(String name) {
+    public ServerInfo getServerDetailsByName(String name, String network) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM servers WHERE servername = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM servers WHERE servername = ? AND network = ?");
             statement.setString(1, name);
+            statement.setString(2, network);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
                 return new ServerInfo(set.getString(1), set.getString(2), set.getInt(3), ServerInfo.Network.valueOf(set.getString(4)), set.getBoolean(5), new JSONObject(set.getString(6)), set.getInt(7), set.getInt(8), set.getInt(9), set.getInt(10), set.getInt(11), set.getInt(12));
