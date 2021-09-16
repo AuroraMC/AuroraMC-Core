@@ -84,6 +84,18 @@ public class ProtocolMessageReceivedListener implements Listener {
                 ServerCloseRequestEvent event = new ServerCloseRequestEvent(true, e.getMessage().getCommand());
                 Bukkit.getPluginManager().callEvent(event);
             }
+            case ALPHA_CHANGE: {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.kickPlayer(AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "&cThe alpha network has been closed.\n" +
+                            "\n" +
+                            "&rThanks for helping us test out our upcoming updates!\n" +
+                            "\n" +
+                            "Keep an eye on auroramc.net and our Discord server for information on when the network will be open again!"));
+                }
+                CommunicationUtils.sendMessage(new ProtocolMessage(Protocol.CONFIRM_SHUTDOWN, "Mission Control", "shutdown", AuroraMCAPI.getServerInfo().getName(), ""));
+                CommunicationUtils.shutdown();
+                break;
+            }
         }
     }
 
