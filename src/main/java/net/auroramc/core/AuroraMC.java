@@ -21,10 +21,7 @@ import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
-import net.auroramc.core.listeners.ChatListener;
-import net.auroramc.core.listeners.JoinListener;
-import net.auroramc.core.listeners.LeaveListener;
-import net.auroramc.core.listeners.PluginMessageRecievedListener;
+import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
@@ -183,6 +180,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GUIManager(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ProtocolMessageReceivedListener(), this);
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
