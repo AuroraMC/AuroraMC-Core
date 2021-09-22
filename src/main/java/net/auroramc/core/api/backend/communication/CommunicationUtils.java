@@ -24,7 +24,7 @@ public class CommunicationUtils {
     public static UUID sendMessage(ProtocolMessage message) {
         if (message.getDestination().equalsIgnoreCase("Mission Control")) {
             try (Socket socket = new Socket("10.40.14.221", 35565)) {
-                ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(message);
                 outputStream.flush();
                 return message.getUuid();
@@ -36,7 +36,7 @@ public class CommunicationUtils {
         ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination(), AuroraMCAPI.getServerInfo().getNetwork().name());
         if (info != null) {
             try (Socket socket = new Socket(info.getIp(), info.getProtocolPort())) {
-                ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(message);
                 outputStream.flush();
                 return message.getUuid();
