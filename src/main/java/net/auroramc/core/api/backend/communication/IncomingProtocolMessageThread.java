@@ -22,6 +22,7 @@ public class IncomingProtocolMessageThread extends Thread {
         this.port = port;
         this.setName("Incoming Protocol Messages Thread");
         this.setDaemon(true);
+        listening = true;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class IncomingProtocolMessageThread extends Thread {
             this.socket = socket;
             while (listening) {
                 Socket connection = socket.accept();
-                ObjectInputStream objectInputStream = (ObjectInputStream) connection.getInputStream();
+                ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
                 ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
                 new BukkitRunnable() {
                     @Override
