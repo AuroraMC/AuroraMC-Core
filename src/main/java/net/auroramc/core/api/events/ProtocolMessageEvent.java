@@ -23,7 +23,7 @@ public class ProtocolMessageEvent extends Event {
         return handlers;
     }
 
-    public static HandlerList getHandlersList() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 

@@ -25,17 +25,20 @@ public class ProtocolMessageReceivedListener implements Listener {
             case UPDATE_RULES: {
                 //Reload the rules.
                 AuroraMCAPI.loadRules();
+                break;
             }
             case UPDATE_PLAYER_COUNT: {
                 //Respond with the current player count.
                 int amount = Bukkit.getOnlinePlayers().size();
                 ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_PLAYER_COUNT, "Mission Control", "reply", AuroraMCAPI.getServerInfo().getName(), amount + "\n" + AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
                 CommunicationUtils.sendMessage(message);
+                break;
             }
             case SHUTDOWN: {
                 //Queue server for shutdown. Because this differs from server-to-server, implementation is set by the game engine/lobby/build core.
                 ServerCloseRequestEvent event = new ServerCloseRequestEvent(false, e.getMessage().getCommand());
                 Bukkit.getPluginManager().callEvent(event);
+                break;
             }
             case MESSAGE: {
                 String message = e.getMessage().getExtraInfo();
@@ -55,6 +58,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                         player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
                     }
                 }
+                break;
             }
             case STAFF_MESSAGE: {
                 String message = e.getMessage().getExtraInfo();
@@ -78,11 +82,13 @@ public class ProtocolMessageReceivedListener implements Listener {
                         }
                     }
                 }
+                break;
             }
             case EMERGENCY_SHUTDOWN: {
                 //Shutdown the server immediately. Because this differs from server-to-server, implementation is set by the game engine/lobby/build core.
                 ServerCloseRequestEvent event = new ServerCloseRequestEvent(true, e.getMessage().getCommand());
                 Bukkit.getPluginManager().callEvent(event);
+                break;
             }
             case ALPHA_CHANGE: {
                 for (Player player : Bukkit.getOnlinePlayers()) {
