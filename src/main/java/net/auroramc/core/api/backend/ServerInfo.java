@@ -1,5 +1,6 @@
 package net.auroramc.core.api.backend;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import org.json.JSONObject;
 
 public class ServerInfo {
@@ -39,6 +40,9 @@ public class ServerInfo {
     }
 
     public String getIp() {
+        if (AuroraMCAPI.getServerInfo().getIp().equalsIgnoreCase(ip)) {
+            return "172.18.0.1";
+        }
         return ip;
     }
 
