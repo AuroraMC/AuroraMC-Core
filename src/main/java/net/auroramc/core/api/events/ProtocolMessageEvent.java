@@ -23,5 +23,9 @@ public class ProtocolMessageEvent extends Event {
         return handlers;
     }
 
+    public static HandlerList getHandlersList() {
+        return handlers;
+    }
+
 
 }
