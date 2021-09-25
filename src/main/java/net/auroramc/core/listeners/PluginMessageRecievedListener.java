@@ -339,26 +339,31 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                         server = null;
                     }
                     FriendStatus status = (FriendStatus) AuroraMCAPI.getCosmetics().get(in.readInt());
-                    player.getFriendsList().getFriends().get(uuid).loggedOn(server, status);
-                    if (AuroraMCAPI.getGUI(player) != null) {
-                        GUI gui = AuroraMCAPI.getGUI(player);
-                        if (gui instanceof Friends) {
-                            Friends friends = (Friends) gui;
-                            friends.reload();
+                    if (player.isLoaded()) {
+                        player.getFriendsList().getFriends().get(uuid).loggedOn(server, status);
+                        if (AuroraMCAPI.getGUI(player) != null) {
+                            GUI gui = AuroraMCAPI.getGUI(player);
+                            if (gui instanceof Friends) {
+                                Friends friends = (Friends) gui;
+                                friends.reload();
+                            }
                         }
                     }
+
                     break;
                 }
                 case "FriendLoggedOff": {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
                     UUID uuid = UUID.fromString(in.readUTF());
-                    player.getFriendsList().getFriends().get(uuid).loggedOff();
-                    if (AuroraMCAPI.getGUI(player) != null) {
-                        GUI gui = AuroraMCAPI.getGUI(player);
-                        if (gui instanceof Friends) {
-                            Friends friends = (Friends) gui;
-                            friends.reload();
+                    if (player.isLoaded()) {
+                        player.getFriendsList().getFriends().get(uuid).loggedOff();
+                        if (AuroraMCAPI.getGUI(player) != null) {
+                            GUI gui = AuroraMCAPI.getGUI(player);
+                            if (gui instanceof Friends) {
+                                Friends friends = (Friends) gui;
+                                friends.reload();
+                            }
                         }
                     }
                     break;
