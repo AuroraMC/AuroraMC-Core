@@ -49,12 +49,8 @@ public class PunishUtils {
                         AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, -1, 7, null);
 
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Message");
-                        out.writeUTF(name);
-                        out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been issued a warning.\n" +
-                                "Reason: **%s - %s**\n" +
-                                "Punishment Code: **%s**", rule.getRuleName(), extraDetails, code)));
-
+                        out.writeUTF("Warning");
+                        out.writeUTF(code);
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have issued a warning to **%s**.\n" +
@@ -98,16 +94,6 @@ public class PunishUtils {
                     if (type == 1) {
                         AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, null);
                         //Mute
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Message");
-                        out.writeUTF(name);
-                        out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been muted for **%s**.\n" +
-                                "Reason: **%s - %s [Awaiting Approval]**\n" +
-                                "Punishment Code: **%s**\n\n" +
-                                "Your punishment has been applied by a Junior Moderator, and is severe enough to need approval from a Staff Management member to ensure that the punishment applied was correct. When it is approved, the full punishment length will automatically apply to you. If this punishment is denied for being false, **it will automatically be removed**, and the punishment will automatically be removed from your Punishment History.", length.getFormatted(), rule.getRuleName(), extraDetails, code)));
-
-                        issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have muted **%s** for **%s**.\n" +
                                 "Reason: **%s - %s [Awaiting Approval]**\n" +
                                 "Punishment Code: **%s**", name, length.getFormatted(), rule.getRuleName(), extraDetails, code)));
@@ -121,33 +107,17 @@ public class PunishUtils {
                         }
 
                         //Send mute to the bungee to enforce it.
-                        out = ByteStreams.newDataOutput();
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("Mute");
                         out.writeUTF(code);
-                        out.writeUTF(name);
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
                     } else {
                         //Ban
                         AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, uuid.toString());
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("KickPlayer");
-                        out.writeUTF(name);
-                        out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been banned from the network.\n" +
-                                "\n" +
-                                "&rReason: **%s - %s [Awaiting Approval]**\n" +
-                                "&rExpires:  **%s**\n" +
-                                "\n" +
-                                "&rPunishment Code: **%s**\n" +
-                                "\n" +
-                                "&rYour punishment has been applied by a Junior Moderator, and is severe enough to need approval\n" +
-                                "&rfrom a Staff Management member to ensure that the punishment applied was correct. When it is\n" +
-                                "&rapproved, the full punishment length will automatically apply to you. If this punishment is\n" +
-                                "&rdenied for being false, **it will automatically be removed**, and the punishment will automatically\n" +
-                                "&rbe removed from your Punishment History.\n" +
-                                "\n" +
-                                "&rIf you believe this was a false punishment, please appeal at appeal.auroramc.net.", rule.getRuleName(), extraDetails, length.getFormatted(), code)));
-
+                        out.writeUTF("Ban");
+                        out.writeUTF(code);
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have banned **%s** for **%s**.\n" +
@@ -185,15 +155,6 @@ public class PunishUtils {
         if (rule.getType() == 1) {
             AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, null);
             //Mute
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Message");
-            out.writeUTF(name);
-            out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments",String.format("You have been muted for **%s**.\n" +
-                    "Reason: **%s - %s**\n" +
-                    "Punishment Code: **%s**", length.getFormatted(), rule.getRuleName(), extraDetails, code)));
-
-            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-
             issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have muted **%s** for **%s**.\n" +
                     "Reason: **%s - %s**\n" +
                     "Punishment Code: **%s**", name, length.getFormatted(), rule.getRuleName(), extraDetails, code)));
@@ -207,20 +168,18 @@ public class PunishUtils {
             }
 
             //Send mute to the bungee to enforce it.
-            out = ByteStreams.newDataOutput();
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Mute");
             out.writeUTF(code);
-            out.writeUTF(name);
             issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-            return;
         } else {
             //Ban
             String uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player).toString();
             AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, uuid);
+
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Ban");
             out.writeUTF(code);
-
             issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
             issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have banned **%s** for **%s**.\n" +
@@ -234,7 +193,6 @@ public class PunishUtils {
                     }
                 }
             }
-            return;
         }
     }
 
