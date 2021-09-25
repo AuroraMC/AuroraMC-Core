@@ -38,7 +38,6 @@ public class CommandAppeal extends Command {
                                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                                         out.writeUTF("Unmute");
                                         out.writeUTF(punishment.getPunishmentCode());
-                                        out.writeUTF(punishment.getPunishedName());
                                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                                     }
                                 } else if (args.get(0).equalsIgnoreCase("False")) {
@@ -48,7 +47,6 @@ public class CommandAppeal extends Command {
                                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                                         out.writeUTF("Unmute");
                                         out.writeUTF(punishment.getPunishmentCode());
-                                        out.writeUTF(punishment.getPunishedName());
                                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                                     }
                                 } else {
