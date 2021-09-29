@@ -24,6 +24,6 @@ public class Blitzen extends Banner {
     }
 
     public Blitzen() {
-        super(9, "Blitzen", "&4&lBlitzen", "&4One of Santa's Reindeer", UnlockMode.ALL, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.BLACK, true);
+        super(9, "Blitzen", "&4&lBlitzen", "&4One of Santa's Reindeer", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.BLACK, true);
     }
 }
