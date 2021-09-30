@@ -164,6 +164,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new UnitedStates());
         AuroraMCAPI.registerCosmetic(new UwU());
         AuroraMCAPI.registerCosmetic(new Wreath());
+
+
         AuroraMCAPI.registerCosmetic(new AFK());
         AuroraMCAPI.registerCosmetic(new CountingMoney());
         AuroraMCAPI.registerCosmetic(new CreatingNewMaps());
@@ -178,6 +180,16 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Recording());
         AuroraMCAPI.registerCosmetic(new RuiningLives());
         AuroraMCAPI.registerCosmetic(new SwingingTheBanHammer());
+        AuroraMCAPI.registerCosmetic(new BusyHavingALife());
+        AuroraMCAPI.registerCosmetic(new CountingSheep());
+        AuroraMCAPI.registerCosmetic(new DabbinOnTheHaters());
+        AuroraMCAPI.registerCosmetic(new EatingDinner());
+        AuroraMCAPI.registerCosmetic(new GettingSomeZzzs());
+        AuroraMCAPI.registerCosmetic(new HitTheHay());
+        AuroraMCAPI.registerCosmetic(new KeepingAuroraMCGoing());
+        AuroraMCAPI.registerCosmetic(new WatchingCatVideos());
+
+
         AuroraMCAPI.registerCosmetic(new Star());
         AuroraMCAPI.registerCosmetic(new Snowman());
         AuroraMCAPI.registerCosmetic(new Tea());
