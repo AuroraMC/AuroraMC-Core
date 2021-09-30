@@ -158,7 +158,8 @@ public abstract class Cosmetic {
         DEATH_EFFECT("Death Effect"),
         WIN_EFFECT("Win Effect"),
         GADGET("Gadget"),
-        FRIEND_STATUS("Friend Status");
+        FRIEND_STATUS("Friend Status"),
+        PLUS_SYMBOL("Plus Symbol");
 
         static {
             HAT.conflicts = new CosmeticType[]{BANNER};

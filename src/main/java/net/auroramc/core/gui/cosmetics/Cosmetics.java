@@ -29,7 +29,7 @@ public class Cosmetics extends GUI {
         this.player = player;
 
         //Fill in GUI.
-        fill("&3&lCosmetics", "");
+        fill("&r&lCosmetics", "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Cosmetics", player.getPlayer().getName()), 1, "", (short) 3, false, player.getPlayer().getName()));
 
@@ -47,7 +47,8 @@ public class Cosmetics extends GUI {
         this.setItem(3, 1, new GUIItem(Material.SKULL_ITEM, "&7&lDeath Effect", 1, String.format(";&rYou have unlocked **%s** out of **%s** death effects.;;&r&7These are animations that will;&r&7play when you die in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.DEATH_EFFECT).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.DEATH_EFFECT).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
         this.setItem(4, 1, new GUIItem(Material.ARROW, "&2&lProjectile Trails", 1, String.format(";&rYou have unlocked **%s** out of **%s** projectile trails.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PROJECTILE_TRAIL).filter(cosmetic -> cosmetic.hasUnlocked(player)).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PROJECTILE_TRAIL).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
         this.setItem(2, 4, new GUIItem(Material.LEASH, "&c&lPets", 1, String.format(";&rYou have unlocked **%s** out of **%s** pets.;;&r&7These are effects that will follow;&r&7any projectile you use in games.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PET).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PET).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
-        this.setItem(3, 4, new GUIItem(Material.NOTE_BLOCK, "&5&lGadgets", 1, String.format(";&rYou have unlocked **%s** out of **%s** gadgets.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.GADGET).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.GADGET).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
+        this.setItem(3, 3, new GUIItem(Material.NOTE_BLOCK, "&5&lGadgets", 1, String.format(";&rYou have unlocked **%s** out of **%s** gadgets.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.GADGET).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.GADGET).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
+        this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&3&lPlus Symbols", 1, String.format(";&rYou have unlocked **%s** out of **%s** Plus symbols.;;&r&7These are icons that appear;&r&7after your name in tab.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PLUS_SYMBOL).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PLUS_SYMBOL).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
         this.setItem(1, 7, new GUIItem(Material.SKULL_ITEM, "&f&lHats", 1, String.format(";&rYou have unlocked **%s** out of **%s** hats.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.HAT).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.HAT).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count()), (short) 3, false, "AuroraMC"));
 
         GUIItem guiItem = new GUIItem(Material.BANNER, "&b&lBanners", 1, String.format(";&rYou have unlocked **%s** out of **%s** banners.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.BANNER).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.BANNER).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count()));
@@ -98,18 +99,14 @@ public class Cosmetics extends GUI {
                         return;
                 }
                 break;
+            case 3:
+                type = Cosmetic.CosmeticType.GADGET;
+                break;
             case 4:
-                switch (row) {
-                    case 2:
-                        type = Cosmetic.CosmeticType.PET;
-                        break;
-                    case 3:
-                        type = Cosmetic.CosmeticType.GADGET;
-                        break;
-                    default:
-                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
-                        return;
-                }
+                type = Cosmetic.CosmeticType.PET;
+                break;
+            case 5:
+                type = Cosmetic.CosmeticType.PLUS_SYMBOL;
                 break;
             case 7:
                 switch (row) {
