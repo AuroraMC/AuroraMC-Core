@@ -1,5 +1,6 @@
 package net.auroramc.core.api.cosmetics;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -22,9 +23,15 @@ public abstract class PlusSymbol extends Cosmetic {
 
     @Override
     public void onEquip(AuroraMCPlayer player) {
+        for (AuroraMCPlayer player1 : AuroraMCAPI.getPlayers()) {
+            player1.updateNametag(player);
+        }
     }
 
     @Override
     public void onUnequip(AuroraMCPlayer player) {
+        for (AuroraMCPlayer player1 : AuroraMCAPI.getPlayers()) {
+            player1.updateNametag(player);
+        }
     }
 }

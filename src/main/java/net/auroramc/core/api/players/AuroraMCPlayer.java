@@ -219,7 +219,7 @@ public class AuroraMCPlayer {
                                         if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                             }
                                         }
                                     }
@@ -252,7 +252,7 @@ public class AuroraMCPlayer {
                                             if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                 if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                     PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                                 }
                                             }
                                         }
@@ -277,7 +277,7 @@ public class AuroraMCPlayer {
                                             if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                                 }
                                             }
                                         }
@@ -302,7 +302,7 @@ public class AuroraMCPlayer {
                                         if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                             }
                                         }
                                     }
@@ -335,7 +335,7 @@ public class AuroraMCPlayer {
                                         if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                             }
                                         }
                                     }
@@ -359,7 +359,7 @@ public class AuroraMCPlayer {
                                         if (pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                                             }
                                         }
                                     }
@@ -656,8 +656,14 @@ public class AuroraMCPlayer {
                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                     this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                } else {
+                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
                 }
+            } else {
+                this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
             }
+        } else {
+            this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
         }
         if (!this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).hasEntry(player.getPlayer().getName())) {
             for (String old : this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).getEntries()) {
