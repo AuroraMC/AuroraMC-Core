@@ -59,6 +59,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandBankServer());
         AuroraMCAPI.registerCommand(new CommandPlus());
         AuroraMCAPI.registerCommand(new CommandLevel());
+        AuroraMCAPI.registerCommand(new CommandSymbol());
         AuroraMCAPI.registerCommand(new CommandPrefs());
         AuroraMCAPI.registerCommand(new CommandRecruitmentLookup());
         AuroraMCAPI.registerCommand(new CommandAppeal());

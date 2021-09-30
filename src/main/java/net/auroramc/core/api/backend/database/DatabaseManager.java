@@ -1637,6 +1637,16 @@ public class DatabaseManager {
         }
     }
 
+    public Character getSuffixColour(AuroraMCPlayer player) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "suffixColour")) {
+                return connection.hget(String.format("plus.%s", player.getPlayer().getUniqueId()), "suffixColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
     public long getExpire(AuroraMCPlayer player) {
         try (Jedis connection = jedis.getResource()) {
             if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "expire")) {
