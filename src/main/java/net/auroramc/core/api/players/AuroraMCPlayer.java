@@ -655,7 +655,7 @@ public class AuroraMCPlayer {
             if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                 } else {
                     this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
                 }
