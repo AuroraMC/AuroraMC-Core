@@ -24,7 +24,7 @@ import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.plussymbols.Snowman;
 import net.auroramc.core.cosmetics.plussymbols.Star;
 import net.auroramc.core.cosmetics.plussymbols.Tea;
-import net.auroramc.core.cosmetics.plussymbols.Trademark;
+import net.auroramc.core.cosmetics.plussymbols.Copyright;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -182,7 +182,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Snowman());
         AuroraMCAPI.registerCosmetic(new Tea());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.plussymbols.AuroraMC());
-        AuroraMCAPI.registerCosmetic(new Trademark());
+        AuroraMCAPI.registerCosmetic(new Copyright());
 
 
         //Registering default Event Listeners
