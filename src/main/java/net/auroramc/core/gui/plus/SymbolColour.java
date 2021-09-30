@@ -53,6 +53,9 @@ public class SymbolColour extends GUI {
             if (player.getActiveSubscription() != null) {
                 player.getActiveSubscription().setSuffixColor(color.getChar());
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Plus", String.format("Your Plus Symbol colour was set to **%s**.", ChatColor.stripColor(item.getItemMeta().getDisplayName()))));
+                for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
+                    player.updateNametag(this.player);
+                }
             } else {
                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Plus", "Your Plus subscription has expired!"));
             }
