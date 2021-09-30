@@ -21,7 +21,10 @@ import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
+import net.auroramc.core.cosmetics.plussymbols.Snowman;
 import net.auroramc.core.cosmetics.plussymbols.Star;
+import net.auroramc.core.cosmetics.plussymbols.Tea;
+import net.auroramc.core.cosmetics.plussymbols.Trademark;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -176,6 +179,11 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new RuiningLives());
         AuroraMCAPI.registerCosmetic(new SwingingTheBanHammer());
         AuroraMCAPI.registerCosmetic(new Star());
+        AuroraMCAPI.registerCosmetic(new Snowman());
+        AuroraMCAPI.registerCosmetic(new Tea());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.plussymbols.AuroraMC());
+        AuroraMCAPI.registerCosmetic(new Trademark());
+
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
