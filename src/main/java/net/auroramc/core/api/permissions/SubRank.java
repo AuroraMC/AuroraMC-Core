@@ -7,7 +7,6 @@ import java.util.*;
 
 public enum SubRank {
 
-    SENIOR_DEVELOPER(1, "Senior Developer", Arrays.asList(Permission.DEBUG_ACTION, Permission.ADMIN), Color.fromRGB(85, 255, 85), 'a'),
     JUNIOR_QUALITY_ASSURANCE(2, "Junior Quality Assurance", Collections.singletonList(Permission.DEBUG_INFO), Color.fromRGB(85, 255, 85), 'a'),
     SENIOR_QUALITY_ASSURANCE(3, "Senior Quality Assurance", Arrays.asList(Permission.DEBUG_INFO, Permission.DEBUG_ACTION), Color.fromRGB(85, 255, 85), 'a'),
     STAFF_MANAGEMENT(4, "Staff Management", Arrays.asList(Permission.STAFF_MANAGEMENT, Permission.DISGUISE), Color.fromRGB(255, 170, 0), '6'),

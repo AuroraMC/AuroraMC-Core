@@ -52,6 +52,12 @@ public enum Rank {
             "&fyou see on all our servers! They work\n" +
             "&fbehind the scenes coding the games you\n" +
             "&flove to play!", null, 'a', 'f', 'a', 'f', true, Collections.singletonList(MASTER), Collections.singletonList(Permission.DEBUG_INFO), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
+    SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&a«SR.DEV»\n \n" +
+            "&fSenior Developers oversee the development\n" +
+            "&fand everyday maintenance of the network.\n" +
+            "&fThey help give out developer assignments\n" +
+            "&fand help our design team plan upcoming\n" +
+            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     OWNER(9001, "Owner", "Owner", "&c«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +
