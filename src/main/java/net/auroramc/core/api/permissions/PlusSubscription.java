@@ -145,7 +145,7 @@ public final class PlusSubscription {
     }
 
     public void setSuffixColor(Character color) {
-        this.color = color;
+        this.suffixColor = color;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("SuffixColour");
         out.writeUTF(player.getName());
