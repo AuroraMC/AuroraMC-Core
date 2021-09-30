@@ -20,7 +20,7 @@ public class TextFormatter {
 
     private final String prefixFormat = "&3&l«%s» &r%s";
     private final String nonPrefixFormat = "&r%s";
-    private final String chatPrefixFormat = "&%s«%s%s»&r";
+    private final String chatPrefixFormat = "&%s«%s%s»";
     private final String chatLevelFormat = "&%s«%s»";
     private final String chatUltimateFormat = "&%s&l%s";
     private final String chatStaffMessageFormat = " &r&%s%s %s &l»&r ";

@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
+import net.auroramc.core.api.cosmetics.PlusSymbol;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.friends.FriendsList;
@@ -178,7 +179,16 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
-                                    team.setPrefix(s);
+                                    //Check for a valid subscription and give suffix if they have one enabled.
+                                    if (pl.getActiveSubscription() != null) {
+                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                            if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                            }
+                                        }
+                                    }
+
                                     continue;
                                 }
                                 AuroraMCPlayer player = AuroraMCAPI.getPlayer(bukkitPlayer);
@@ -203,6 +213,15 @@ public class AuroraMCPlayer {
                                         s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
+                                        if (pl.getActiveSubscription() != null) {
+                                            if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                                if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                    PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                }
+                                            }
+                                        }
+
                                         if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
                                             scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).unregister();
                                         }
@@ -218,6 +237,15 @@ public class AuroraMCPlayer {
                                         }
                                         s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
                                         team.setPrefix(s);
+
+                                        if (player.getActiveSubscription() != null) {
+                                            if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                                if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                    PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             } else {
@@ -235,7 +263,14 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
-                                    team.setPrefix(s);
+                                    if (pl.getActiveSubscription() != null) {
+                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                            if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                            }
+                                        }
+                                    }
                                     continue;
                                 }
                                 if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
@@ -261,6 +296,14 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    if (pl.getActiveSubscription() != null) {
+                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                            if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (pla.getRank().getId() <= pl.getRank().getId()) {
                                     pl.getPlayer().showPlayer(bukkitPlayer);
@@ -277,6 +320,14 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    if (pla.getActiveSubscription() != null) {
+                                        if (pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                            if (pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                                                PlusSymbol symbol = (PlusSymbol) pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -600,6 +651,14 @@ public class AuroraMCPlayer {
         s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
 
         this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setPrefix(s);
+        if (player.getActiveSubscription() != null) {
+            if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
+                    PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
+                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix(AuroraMCAPI.getFormatter().convert(String.format("&%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                }
+            }
+        }
         if (!this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).hasEntry(player.getPlayer().getName())) {
             for (String old : this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).getEntries()) {
                 this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).removeEntry(old);

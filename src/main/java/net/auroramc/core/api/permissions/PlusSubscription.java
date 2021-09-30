@@ -20,6 +20,7 @@ public final class PlusSubscription {
     private static final String clickURL = "http://store.auroramc.net";
     private Character color;
     private Character levelColor;
+    private Character suffixColor;
     private long endTimestamp;
     private int daysSubscribed;
     private final int subscriptionStreak;
@@ -32,6 +33,7 @@ public final class PlusSubscription {
 
         this.color = AuroraMCAPI.getDbManager().getPlusColour(player);
         this.levelColor = AuroraMCAPI.getDbManager().getLevelColour(player);
+        this. suffixColor = AuroraMCAPI.getDbManager().getSuffixColour(player);
 
         this.endTimestamp = AuroraMCAPI.getDbManager().getExpire(player);
         this.daysSubscribed = AuroraMCAPI.getDbManager().getDaysSubscribed(player);
@@ -89,6 +91,25 @@ public final class PlusSubscription {
         return levelColor;
     }
 
+    public Character getSuffixColor() {
+        if (suffixColor == null) {
+            if (player.getActiveDisguise() != null) {
+                if (player.getActiveDisguise().getRank() == Rank.PLAYER) {
+                    return '3';
+                } else {
+                    return player.getActiveDisguise().getRank().getPrefixColor();
+                }
+            } else {
+                if (player.getRank() == Rank.PLAYER) {
+                    return '3';
+                } else {
+                    return player.getRank().getPrefixColor();
+                }
+            }
+        }
+        return suffixColor;
+    }
+
     public long getEndTimestamp() {
         return endTimestamp;
     }
@@ -118,6 +139,15 @@ public final class PlusSubscription {
         this.levelColor = color;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("LevelColour");
+        out.writeUTF(player.getName());
+        out.writeChar(color);
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+    }
+
+    public void setSuffixColor(Character color) {
+        this.color = color;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("SuffixColour");
         out.writeUTF(player.getName());
         out.writeChar(color);
         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
