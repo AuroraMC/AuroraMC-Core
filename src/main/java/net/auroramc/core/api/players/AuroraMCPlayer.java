@@ -152,6 +152,41 @@ public class AuroraMCPlayer {
                         friendsList.setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(101), true);
                 }
 
+                linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
+
+                statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+
+
+                bank = AuroraMCAPI.getDbManager().getBank(pl);
+
+                channel = AuroraMCAPI.getDbManager().getChannel(pl);
+
+                activeReport = AuroraMCAPI.getDbManager().getActiveReport(id);
+
+                if (activeReport != null) {
+                    activeReportTask = new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            if (activeReport != null) {
+                                player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
+                            }
+                        }
+                    }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+                }
+
+                if (preferences.isReportNotificationsEnabled()) {
+                    int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
+                    if (offlineReports > 0) {
+                        player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
+                    }
+                }
+
+                ignoredPlayers = AuroraMCAPI.getDbManager().getIgnoredPlayers(id);
+
+                unlockedCosmetics = AuroraMCAPI.getDbManager().getUnlockedCosmetics(player.getUniqueId());
+                runningCosmeticTasks = new HashMap<>();
+                activeCosmetics = AuroraMCAPI.getDbManager().getActiveCosmetics(player.getUniqueId());
+
                 //Get the bungee to send all of the friend data to the server
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("UpdateFriendsList");
@@ -333,41 +368,6 @@ public class AuroraMCPlayer {
                         }
                     }
                 }.runTask(AuroraMCAPI.getCore());
-
-                linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
-
-                statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
-
-
-                bank = AuroraMCAPI.getDbManager().getBank(pl);
-
-                channel = AuroraMCAPI.getDbManager().getChannel(pl);
-
-                activeReport = AuroraMCAPI.getDbManager().getActiveReport(id);
-
-                if (activeReport != null) {
-                    activeReportTask = new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            if (activeReport != null) {
-                                player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
-                            }
-                        }
-                    }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
-                }
-
-                if (preferences.isReportNotificationsEnabled()) {
-                    int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
-                    if (offlineReports > 0) {
-                        player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
-                    }
-                }
-
-                ignoredPlayers = AuroraMCAPI.getDbManager().getIgnoredPlayers(id);
-
-                unlockedCosmetics = AuroraMCAPI.getDbManager().getUnlockedCosmetics(player.getUniqueId());
-                runningCosmeticTasks = new HashMap<>();
-                activeCosmetics = AuroraMCAPI.getDbManager().getActiveCosmetics(player.getUniqueId());
                 for (Cosmetic cosmetic : activeCosmetics.values()) {
                     new BukkitRunnable() {
                         @Override
