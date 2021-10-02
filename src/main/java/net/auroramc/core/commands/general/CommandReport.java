@@ -2,12 +2,12 @@ package net.auroramc.core.commands.general;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.ChatType;
 import net.auroramc.core.gui.report.Report;
 import net.auroramc.core.managers.ReportManager;
-import net.auroramc.core.api.permissions.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

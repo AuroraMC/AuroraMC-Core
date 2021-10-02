@@ -1,6 +1,5 @@
 package net.auroramc.core.api.utils;
 
-import com.mojang.authlib.Agent;
 import org.bukkit.entity.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;

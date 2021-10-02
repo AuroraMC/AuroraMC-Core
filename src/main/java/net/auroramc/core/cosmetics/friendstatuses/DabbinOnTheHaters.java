@@ -1,6 +1,5 @@
 package net.auroramc.core.cosmetics.friendstatuses;
 
-import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 
 import java.util.Collections;

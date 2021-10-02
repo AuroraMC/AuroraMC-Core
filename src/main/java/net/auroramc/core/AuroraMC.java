@@ -21,10 +21,7 @@ import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
-import net.auroramc.core.cosmetics.plussymbols.Snowman;
-import net.auroramc.core.cosmetics.plussymbols.Star;
-import net.auroramc.core.cosmetics.plussymbols.Tea;
-import net.auroramc.core.cosmetics.plussymbols.Copyright;
+import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -195,6 +192,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Tea());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.plussymbols.AuroraMC());
         AuroraMCAPI.registerCosmetic(new Copyright());
+        AuroraMCAPI.registerCosmetic(new Snowflake());
 
 
         //Registering default Event Listeners
