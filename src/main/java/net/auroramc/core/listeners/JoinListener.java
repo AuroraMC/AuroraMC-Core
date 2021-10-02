@@ -1,6 +1,5 @@
 package net.auroramc.core.listeners;
 
-import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;

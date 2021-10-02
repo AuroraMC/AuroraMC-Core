@@ -1,6 +1,5 @@
 package net.auroramc.core.cosmetics.banners;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Banner;
 import org.bukkit.DyeColor;
 import org.bukkit.block.banner.Pattern;

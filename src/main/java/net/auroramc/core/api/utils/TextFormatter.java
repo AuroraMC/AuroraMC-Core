@@ -1,10 +1,10 @@
 package net.auroramc.core.api.utils;
 
 import net.auroramc.core.api.permissions.PlusSubscription;
+import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.IgnoredPlayer;
 import net.auroramc.core.api.players.PlayerReport;
-import net.auroramc.core.api.permissions.Rank;
 import net.md_5.bungee.api.chat.*;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
