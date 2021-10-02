@@ -14,6 +14,9 @@ public class LeaveListener implements Listener {
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
+        if (AuroraMCAPI.getPlayer(e.getPlayer()) == null) {
+            return;
+        }
         if (AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask() != null) {
             AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask().cancel();
         }
@@ -33,6 +36,9 @@ public class LeaveListener implements Listener {
 
     @EventHandler
     public void onKick(PlayerKickEvent e) {
+        if (AuroraMCAPI.getPlayer(e.getPlayer()) == null) {
+            return;
+        }
         if (AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask() != null) {
             AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask().cancel();
         }
