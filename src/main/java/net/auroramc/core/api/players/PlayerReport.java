@@ -128,19 +128,6 @@ public class PlayerReport {
             if (acceptedReason != null) {
                 rule = AuroraMCAPI.getRules().getRule(((alt)? acceptedReason.getAltRule() : acceptedReason.getDefaultRule()));
                 PunishUtils.punishUser(suspect, suspectName, player, rule, acceptedReason.getName() + " [Report #" + id + "]");
-            } else {
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("KickPlayer");
-                out.writeUTF(suspectName);
-                out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Username Manager", "This username is blacklisted.\n" +
-                        "\n" +
-                        "This username has been deemed inappropriate and is therefore\n" +
-                        "blacklisted from use on our network!\n\n" +
-                        "In order to join, simply change your name!"));
-                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-
-                AuroraMCAPI.getDbManager().addUsernameBan(suspectName);
-
             }
         } else {
             if (alt) {
