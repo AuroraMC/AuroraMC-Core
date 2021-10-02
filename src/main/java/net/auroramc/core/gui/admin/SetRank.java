@@ -3,11 +3,11 @@ package net.auroramc.core.gui.admin;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
-import net.auroramc.core.api.permissions.Rank;
-import net.auroramc.core.api.permissions.SubRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,7 +17,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 public class SetRank extends GUI {
 

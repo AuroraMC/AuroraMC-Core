@@ -1,6 +1,5 @@
 package net.auroramc.core.api.backend.communication;
 
-import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.events.ProtocolMessageEvent;
 import org.bukkit.Bukkit;

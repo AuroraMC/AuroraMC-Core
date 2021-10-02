@@ -1,11 +1,9 @@
 package net.auroramc.core.api.backend.communication;
 
-import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 
 import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.UUID;
 

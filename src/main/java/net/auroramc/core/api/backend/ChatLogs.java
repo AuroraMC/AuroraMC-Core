@@ -1,8 +1,8 @@
 package net.auroramc.core.api.backend;
 
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.players.ChatChannel;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.players.ChatChannel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

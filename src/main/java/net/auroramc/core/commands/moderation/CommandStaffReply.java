@@ -1,7 +1,5 @@
 package net.auroramc.core.commands.moderation;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;

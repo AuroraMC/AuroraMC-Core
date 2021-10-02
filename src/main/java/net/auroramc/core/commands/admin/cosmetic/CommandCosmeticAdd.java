@@ -9,7 +9,10 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class CommandCosmeticAdd extends Command {
 
