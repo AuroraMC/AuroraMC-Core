@@ -166,8 +166,8 @@ public class AuroraMCPlayer {
                     }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
                 }
 
+                int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
                 if (preferences.isReportNotificationsEnabled()) {
-                    int offlineReports = AuroraMCAPI.getDbManager().getOfflineReports(id);
                     if (offlineReports > 0) {
                         player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
                     }
