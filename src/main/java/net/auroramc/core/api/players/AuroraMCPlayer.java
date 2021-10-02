@@ -145,17 +145,9 @@ public class AuroraMCPlayer {
                 //Load the friends list.
                 friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
 
-
-                //If they have a rank-exclusive status set, check if they still have permission to use it.
-                if (!friendsList.getCurrentStatus().hasUnlocked(pl)) {
-                        //They no longer have permission, default to Online.
-                        friendsList.setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(101), true);
-                }
-
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
                 statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
-
 
                 bank = AuroraMCAPI.getDbManager().getBank(pl);
 
@@ -186,6 +178,12 @@ public class AuroraMCPlayer {
                 unlockedCosmetics = AuroraMCAPI.getDbManager().getUnlockedCosmetics(player.getUniqueId());
                 runningCosmeticTasks = new HashMap<>();
                 activeCosmetics = AuroraMCAPI.getDbManager().getActiveCosmetics(player.getUniqueId());
+
+                //If they have a rank-exclusive status set, check if they still have permission to use it.
+                if (!friendsList.getCurrentStatus().hasUnlocked(pl)) {
+                    //They no longer have permission, default to Online.
+                    friendsList.setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(101), true);
+                }
 
                 //Get the bungee to send all of the friend data to the server
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();

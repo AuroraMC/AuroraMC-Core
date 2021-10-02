@@ -51,7 +51,7 @@ public class CommandCosmeticAdd extends Command {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("Cosmetic **%s %s** added to player **%s**.", cosmetic.getName(), cosmetic.getType().getName(), args.get(0))));
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("CosmeticAdd");
-                    out.writeUTF(player.getName());
+                    out.writeUTF(uuid.toString());
                     out.writeInt(cosID);
                     player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                 }
