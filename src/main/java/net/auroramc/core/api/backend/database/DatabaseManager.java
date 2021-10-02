@@ -1736,7 +1736,7 @@ public class DatabaseManager {
         try (Jedis connection = jedis.getResource()) {
             boolean friendRequests, partyRequests, chatVisibility, pingOnPrivateMessage, pingOnPartyChat, hubVisibility, hubSpeed, hubFlight, reportNotifications, hubInvisibility, ignoreHubKnockback, socialMediaNotifications, staffLoginNotifications, approvalNotifications, approvalProcessedNotifications, hubForcefield, hideDisguiseName;
             PlayerPreferences.MuteInformMode muteInformMode = PlayerPreferences.MuteInformMode.valueOf(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "muteInformMode"));
-            PlayerPreferences.PrivateMessageMode privateMessageMode = PlayerPreferences.PrivateMessageMode.valueOf(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "privateMessagesMode"));
+            PlayerPreferences.PrivateMessageMode privateMessageMode = PlayerPreferences.PrivateMessageMode.valueOf(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "privateMessageMode"));
 
             friendRequests = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "friendRequests"));
             partyRequests = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "partyRequests"));
