@@ -434,7 +434,6 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(uuid);
                     if (player != null) {
                         player.setRank(rank);
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("Your rank was set to **%s**.", rank.getName())));
                         for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
                             AuroraMCPlayer otherAMCPlayer = AuroraMCAPI.getPlayer(otherPlayer);
                             if (otherAMCPlayer != null) {
