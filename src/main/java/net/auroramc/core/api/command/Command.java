@@ -1,7 +1,7 @@
 package net.auroramc.core.api.command;
 
-import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.permissions.Permission;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
