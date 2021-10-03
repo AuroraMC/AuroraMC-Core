@@ -7,6 +7,8 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.UUID;
+
 public final class PlusSubscription {
 
     private final AuroraMCPlayer player;
@@ -47,6 +49,19 @@ public final class PlusSubscription {
                 }
             }.runTaskLater(AuroraMCAPI.getCore(), (endTimestamp - System.currentTimeMillis())/50);
         }
+    }
+
+    public PlusSubscription(UUID uuid) {
+        this.player = null;
+
+        this.color = AuroraMCAPI.getDbManager().getPlusColour(uuid);
+        this.levelColor = AuroraMCAPI.getDbManager().getLevelColour(uuid);
+        this. suffixColor = AuroraMCAPI.getDbManager().getSuffixColour(uuid);
+
+        this.endTimestamp = AuroraMCAPI.getDbManager().getExpire(uuid);
+        this.daysSubscribed = AuroraMCAPI.getDbManager().getDaysSubscribed(uuid);
+        this.streakStartTimestamp = AuroraMCAPI.getDbManager().getStreakStartTimestamp(uuid);
+        this.subscriptionStreak = AuroraMCAPI.getDbManager().getStreak(uuid);
     }
 
     public AuroraMCPlayer getPlayer() {

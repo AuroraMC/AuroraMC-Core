@@ -3,6 +3,7 @@ package net.auroramc.core.commands.general;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
+import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.UUIDUtil;
@@ -29,7 +30,7 @@ public class CommandStats extends Command {
             if (target != null) {
                 AuroraMCPlayer aTarget = AuroraMCAPI.getPlayer(target);
                 if (aTarget != null) {
-                    Stats achievements = new Stats(player, target.getName(), aTarget.getStats());
+                    Stats achievements = new Stats(player, target.getName(), aTarget.getStats(), aTarget.getActiveSubscription());
                     achievements.open(player);
                     AuroraMCAPI.openGUI(player, achievements);
                     return;
@@ -54,7 +55,8 @@ public class CommandStats extends Command {
                         }
 
                         PlayerStatistics stats = AuroraMCAPI.getDbManager().getStatistics(uuid);
-                        Stats statsMenu = new Stats(player, args.get(0), stats);
+                        PlusSubscription subscription = new PlusSubscription(uuid);
+                        Stats statsMenu = new Stats(player, args.get(0), stats, subscription);
                         new BukkitRunnable(){
                             @Override
                             public void run() {
@@ -70,7 +72,7 @@ public class CommandStats extends Command {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Statistics", "That players statistics are still loading, please wait to use this command!"));
         } else {
             if (player.getStats() != null) {
-                Stats achievements = new Stats(player, player.getName(), player.getStats());
+                Stats achievements = new Stats(player, player.getName(), player.getStats(), player.getActiveSubscription());
                 achievements.open(player);
                 AuroraMCAPI.openGUI(player, achievements);
             } else {
