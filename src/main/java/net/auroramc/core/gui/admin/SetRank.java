@@ -201,29 +201,14 @@ public class SetRank extends GUI {
         sid = ChatColor.stripColor(sid.split(" ")[1]);
         int rankId = Integer.parseInt(sid);
         Rank rank = Rank.getByID(rankId);
+        assert rank != null;
         player.getPlayer().closeInventory();
         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You set **%s's** rank to **%s**.", name, rank.getName())));
         AuroraMCPlayer setter = this.player;
 
-
-
-        Player player = Bukkit.getPlayer(uuid);
-        if (player != null) {
-            if (player.isOnline()) {
-                player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("Your rank was set to **%s**.", rank.getName())));
-                AuroraMCAPI.getPlayer(player).setRank(rank);
-                for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
-                    AuroraMCPlayer otherAMCPlayer = AuroraMCAPI.getPlayer(otherPlayer);
-                    if (otherAMCPlayer != null) {
-                        otherAMCPlayer.updateNametag(AuroraMCAPI.getPlayer(player));
-                    }
-                }
-            }
-        }
-
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("SetRank");
-        out.writeUTF(name);
+        out.writeUTF(uuid.toString());
         out.writeInt(rankId);
         this.player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 

@@ -7,12 +7,14 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
 import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.gui.friends.Friends;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -423,6 +425,42 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     assert player != null;
                     Cosmetic cosmetic = AuroraMCAPI.getCosmetics().get(in.readInt());
                     player.getUnlockedCosmetics().remove(cosmetic);
+                    break;
+                }
+                case "SetRank": {
+                    UUID uuid = UUID.fromString(in.readUTF());
+                    Rank rank = Rank.getByID(in.readInt());
+                    assert rank != null;
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(uuid);
+                    if (player != null) {
+                        player.setRank(rank);
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("Your rank was set to **%s**.", rank.getName())));
+                        for (Player otherPlayer : Bukkit.getOnlinePlayers()) {
+                            AuroraMCPlayer otherAMCPlayer = AuroraMCAPI.getPlayer(otherPlayer);
+                            if (otherAMCPlayer != null) {
+                                otherAMCPlayer.updateNametag(player);
+                            }
+                        }
+                    }
+                }
+                case "AddSubRank": {
+                    UUID uuid = UUID.fromString(in.readUTF());
+                    SubRank rank = SubRank.getByID(in.readInt());
+                    assert rank != null;
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(uuid);
+                    if (player != null) {
+                        player.grantSubrank(rank);
+                    }
+                    break;
+                }
+                case "RemoveSubRank": {
+                    UUID uuid = UUID.fromString(in.readUTF());
+                    SubRank rank = SubRank.getByID(in.readInt());
+                    assert rank != null;
+                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(uuid);
+                    if (player != null) {
+                        player.revokeSubrank(rank);
+                    }
                     break;
                 }
             }

@@ -1,5 +1,7 @@
 package net.auroramc.core.gui.admin;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -62,13 +64,11 @@ public class SetSubRank extends GUI {
         if (currentSubranks.contains(rank)) {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You have revoked the **%s** SubRank from **%s**.", rank.getName(), name)));
 
-            Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                if (player.isOnline()) {
-                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("The SubRank **%s** has been revoked from you.", rank.getName())));
-                    AuroraMCAPI.getPlayer(player).revokeSubrank(rank);
-                }
-            }
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("RemoveSubRank");
+            out.writeUTF(uuid.toString());
+            out.writeInt(rankId);
+            this.player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
             currentSubranks.remove(rank);
             item.removeEnchantment(Enchantment.DURABILITY);
@@ -83,13 +83,11 @@ public class SetSubRank extends GUI {
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You have given the **%s** SubRank to **%s**.", rank.getName(), name)));
 
-            Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                if (player.isOnline()) {
-                    player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Permissions", String.format("The SubRank **%s** has been given to you.", rank.getName())));
-                    AuroraMCAPI.getPlayer(player).grantSubrank(rank);
-                }
-            }
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("AddSubRank");
+            out.writeUTF(uuid.toString());
+            out.writeInt(rankId);
+            this.player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
             currentSubranks.add(rank);
             ItemMeta meta = item.getItemMeta();
