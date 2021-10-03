@@ -37,7 +37,9 @@ public class AdminNotes extends GUI {
         border(String.format("&3&l%s's Admin Notes", name), "");
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Admin Notes", name), 1, "&rAdmin Notes", (short) 3, false, name));
-        this.setItem(5, 4, new GUIItem(Material.WOOL, "&a&lAdd Note", 1, "&rAdd your current reason as;&ra note!", (short) 5));
+        if (extraDetails != null) {
+            this.setItem(5, 4, new GUIItem(Material.WOOL, "&a&lAdd Note", 1, "&rAdd your current reason as;&ra note!", (short) 5));
+        }
 
         if (notes.size() > 28) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));
