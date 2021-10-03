@@ -1,6 +1,7 @@
 package net.auroramc.core.gui.stats.stats;
 
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.stats.PlayerStatistics;
@@ -19,13 +20,15 @@ public class GeneralStatistics extends GUI {
     private final AuroraMCPlayer player;
     private final String name;
     private final PlayerStatistics stats;
+    private final PlusSubscription subscription;
 
-    public GeneralStatistics(AuroraMCPlayer player, String targetName, PlayerStatistics targetStatistics) {
+    public GeneralStatistics(AuroraMCPlayer player, String targetName, PlayerStatistics targetStatistics, PlusSubscription subscription) {
         super(String.format("&3&l%s's General Statistics", targetName), 5, true);
 
         this.player = player;
         this.name = targetName;
         this.stats = targetStatistics;
+        this.subscription = subscription;
 
         border(String.format("&3&l%s's Statistics", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
@@ -36,16 +39,20 @@ public class GeneralStatistics extends GUI {
         PunishmentLength total = new PunishmentLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
         this.setItem(2, 2, new GUIItem(Material.WATCH, "&c&lIn-Game Time", 1, String.format("&rTime In-Game: **%s**;&rTime In Hub: **%s**;&rTotal Time: **%s**", ingame, lobby, total)));
 
-        double value = (player.getActiveSubscription().getEndTimestamp() - System.currentTimeMillis()) / 3600000d;
+        if (subscription != null) {
+            double value = (subscription.getEndTimestamp() - System.currentTimeMillis()) / 3600000d;
 
-        String suffix = "Hours";
-        if (value >= 24) {
-            suffix = "Days";
-            value = value / 24;
+            String suffix = "Hours";
+            if (value >= 24) {
+                suffix = "Days";
+                value = value / 24;
+            }
+            value = (Math.round(value * 10))/10.0;
+            String expiresIn = value + " " + suffix;
+            this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lPlus Statistics", 1, ((subscription.getEndTimestamp() != -1)?String.format("&rTotal Days Subscribed (inc. future days): **%s**;&rCurrent Subscription Streak: **%s**;&rExpires: **%s from now**", subscription.getDaysSubscribed(), subscription.getSubscriptionStreak(), expiresIn):"&rNo subscription active.")));
+        } else {
+            this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lPlus Statistics", 1, "&rNo subscription active."));
         }
-        value = (Math.round(value * 10))/10.0;
-        String expiresIn = value + " " + suffix;
-        this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lYour Plus Statistics", 1, ((player.getActiveSubscription() != null && player.getActiveSubscription().getEndTimestamp() != -1)?String.format("&rTotal Days Subscribed (inc. future days): **%s**;&rCurrent Subscription Streak: **%s**;&rExpires: **%s from now**", player.getActiveSubscription().getDaysSubscribed(), player.getActiveSubscription().getSubscriptionStreak(), expiresIn):"&rNo subscription active.")));
 
         if (stats.getLevel() == 250) {
             this.setItem(2, 4, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Earned", 1, String.format("&rCurrent Level: **Level %s**;&rTotal EXP Earned: **%s**;;&r&3&lMAX LEVEL", stats.getLevel(), String.format("%,d", stats.getTotalXpEarned()))));
@@ -71,7 +78,7 @@ public class GeneralStatistics extends GUI {
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
         if (item.getType() == Material.ARROW) {
             AuroraMCAPI.closeGUI(player);
-            Stats stats = new Stats(player, name, this.stats);
+            Stats stats = new Stats(player, name, this.stats, this.subscription);
             stats.open(player);
             AuroraMCAPI.openGUI(player, stats);
         } else {

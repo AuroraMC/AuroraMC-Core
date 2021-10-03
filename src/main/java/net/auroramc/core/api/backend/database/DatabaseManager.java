@@ -1687,6 +1687,76 @@ public class DatabaseManager {
         }
     }
 
+    public Character getPlusColour(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "plusColour")) {
+                return connection.hget(String.format("plus.%s", uuid), "plusColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public Character getLevelColour(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "levelColour")) {
+                return connection.hget(String.format("plus.%s", uuid), "levelColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public Character getSuffixColour(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "suffixColour")) {
+                return connection.hget(String.format("plus.%s", uuid), "suffixColour").charAt(0);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public long getExpire(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "expire")) {
+                return Long.parseLong(connection.hget(String.format("plus.%s", uuid), "expire"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public int getDaysSubscribed(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "daysSubscribed")) {
+                return Integer.parseInt(connection.hget(String.format("plus.%s", uuid), "daysSubscribed"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public int getStreak(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "streak")) {
+                return Integer.parseInt(connection.hget(String.format("plus.%s", uuid), "streak"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    public long getStreakStartTimestamp(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.hexists(String.format("plus.%s", uuid), "streakStart")) {
+                return Long.parseLong(connection.hget(String.format("plus.%s", uuid), "streakStart"));
+            } else {
+                return -1;
+            }
+        }
+    }
+
     public FriendsList getFriendsList(AuroraMCPlayer player) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT friends.amc_id, friends.friend, friends.type, auroramc_players.uuid, auroramc_players.name FROM friends INNER JOIN auroramc_players ON auroramc_players.id=friends.friend WHERE amc_id = ?");
