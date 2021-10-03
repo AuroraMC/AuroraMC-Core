@@ -1,6 +1,5 @@
 package net.auroramc.core.api.events;
 
-import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

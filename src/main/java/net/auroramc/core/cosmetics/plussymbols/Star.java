@@ -2,11 +2,9 @@ package net.auroramc.core.cosmetics.plussymbols;
 
 import net.auroramc.core.api.cosmetics.PlusSymbol;
 import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.Material;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Star extends PlusSymbol {
 

@@ -1,10 +1,10 @@
 package net.auroramc.core.gui.admin;
 
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
-import net.auroramc.core.api.permissions.SubRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
