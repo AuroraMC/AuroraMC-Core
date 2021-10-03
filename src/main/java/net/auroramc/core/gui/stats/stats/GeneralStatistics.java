@@ -36,7 +36,16 @@ public class GeneralStatistics extends GUI {
         PunishmentLength total = new PunishmentLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
         this.setItem(2, 2, new GUIItem(Material.WATCH, "&c&lIn-Game Time", 1, String.format("&rTime In-Game: **%s**;&rTime In Hub: **%s**;&rTotal Time: **%s**", ingame, lobby, total)));
 
-        this.setItem(3, 3, new GUIItem(Material.PAPER, "&d&lTemp Placeholder"));
+        double value = (player.getActiveSubscription().getEndTimestamp() - System.currentTimeMillis()) / 3600000d;
+
+        String suffix = "Hours";
+        if (value >= 24) {
+            suffix = "Days";
+            value = value / 24;
+        }
+        value = (Math.round(value * 10))/10.0;
+        String expiresIn = value + " " + suffix;
+        this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lYour Plus Statistics", 1, ((player.getActiveSubscription() != null && player.getActiveSubscription().getEndTimestamp() != -1)?String.format("&rTotal Days Subscribed (inc. future days): **%s**;&rCurrent Subscription Streak: **%s**;&rExpires: **%s from now**", player.getActiveSubscription().getDaysSubscribed(), player.getActiveSubscription().getSubscriptionStreak(), expiresIn):"&rNo subscription active.")));
 
         if (stats.getLevel() == 250) {
             this.setItem(2, 4, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Earned", 1, String.format("&rCurrent Level: **Level %s**;&rTotal EXP Earned: **%s**;;&r&3&lMAX LEVEL", stats.getLevel(), String.format("%,d", stats.getTotalXpEarned()))));
