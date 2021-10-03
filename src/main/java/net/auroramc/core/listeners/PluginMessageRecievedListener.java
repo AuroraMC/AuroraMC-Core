@@ -442,6 +442,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                             }
                         }
                     }
+                    break;
                 }
                 case "AddSubRank": {
                     UUID uuid = UUID.fromString(in.readUTF());
