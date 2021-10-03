@@ -42,26 +42,12 @@ public class GlobalAccountSuspension extends GUI {
                 @Override
                 public void run() {
                     AuroraMCAPI.getDbManager().issuePunishment(code, id, 22, extraDetails, -1, System.currentTimeMillis(), -1, 1, AuroraMCAPI.getDbManager().getUUIDFromName(name).toString());
-                    List<String> strings = AuroraMCAPI.getDbManager().globalAccountSuspend(code, id, player.getId(), System.currentTimeMillis(), extraDetails);
-                    for (String id : strings) {
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("KickPlayer");
-                        out.writeUTF(id);
-                        out.writeUTF(AuroraMCAPI.getFormatter().pluginMessage("Punishments", String.format("" +
-                                "You have been Globally Account Suspended.\n" +
-                                "\n" +
-                                "&rThe administration team has decided that due to your previous actions,\n" +
-                                "&rwe are no longer going to allow your continued use of our services.\n" +
-                                "\n" +
-                                "&rThis type of punishment does not expire, and means you are no longer\n" +
-                                "&rallowed to join the network, use the forums or communicate in Discord.\n" +
-                                "\n" +
-                                "&rAll logged IPs are now banned, and any account used to connect to the network\n" +
-                                "&rthrough any logged IP will result in a permanent ban being issued.\n" +
-                                "\n" +
-                                "Reason: **%s**", extraDetails)));
-                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-                    }
+                    AuroraMCAPI.getDbManager().globalAccountSuspend(code, id, player.getId(), System.currentTimeMillis(), extraDetails);
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("GlobalAccountSuspend");
+                    out.writeUTF(code);
+                    out.writeUTF(extraDetails);
+                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punishments", "Successfully applied Global Account Suspension."));
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());

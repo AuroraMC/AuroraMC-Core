@@ -1366,7 +1366,7 @@ public class DatabaseManager {
         }
     }
 
-    public List<String> globalAccountSuspend(String code, int id, int issuer, long timestamp, String note) {
+    public void globalAccountSuspend(String code, int id, int issuer, long timestamp, String note) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT known_ip_profiles FROM auroramc_players WHERE id = ?");
             statement.setInt(1, id);
@@ -1400,10 +1400,8 @@ public class DatabaseManager {
                     }
                 }
             }
-            return usernames;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
