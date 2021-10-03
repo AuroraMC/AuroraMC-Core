@@ -3,7 +3,10 @@ package net.auroramc.core.api.permissions;
 import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum SubRank {
 
