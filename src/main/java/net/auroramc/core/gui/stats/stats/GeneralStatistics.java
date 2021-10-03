@@ -48,8 +48,10 @@ public class GeneralStatistics extends GUI {
                 value = value / 24;
             }
             value = (Math.round(value * 10))/10.0;
+            double roundedUp = Math.floor(value);
+            int totalSub = (int) (subscription.getDaysSubscribed() - roundedUp);
             String expiresIn = value + " " + suffix;
-            this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lPlus Statistics", 1, ((subscription.getEndTimestamp() != -1)?String.format("&rTotal Days Subscribed (inc. future days): **%s**;&rCurrent Subscription Streak: **%s**;&rExpires: **%s from now**", subscription.getDaysSubscribed(), subscription.getSubscriptionStreak(), expiresIn):"&rNo subscription active.")));
+            this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lPlus Statistics", 1, ((subscription.getEndTimestamp() != -1)?String.format("&rTotal Days Subscribed: **%s**;&rCurrent Subscription Streak: **%s**;&rExpires in: **%s**", totalSub, subscription.getSubscriptionStreak(), expiresIn):"&rNo subscription active.")));
         } else {
             this.setItem(3, 3, new GUIItem(Material.NETHER_STAR, "&d&lPlus Statistics", 1, "&rNo subscription active."));
         }
