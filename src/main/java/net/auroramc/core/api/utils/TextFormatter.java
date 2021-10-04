@@ -406,7 +406,7 @@ public class TextFormatter {
         if (report.getChatReportUUID() != null) {
             textComponent.addExtra(convert("\n\n&b&lCHATLOG:&r "));
             TextComponent chatLog = new TextComponent("Click here to view chatlog");
-            chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chat.auroramc.block2block.me/log?uuid=%s", report.getChatReportUUID().toString())));
+            chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chatlogs.auroramc.net/log?uuid=%s&id=%s", report.getChatReportUUID().toString(), report.getId())));
             chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN.asBungee()).create()));
             textComponent.addExtra(chatLog);
         }
