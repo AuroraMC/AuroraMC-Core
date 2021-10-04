@@ -24,6 +24,6 @@ public class CandyCane extends Banner {
     }
 
     public CandyCane() {
-        super(11, "Candy Cane", "&c&lCandy&r &f&lCane", "&cMmmm tasty...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.RED, true);
+        super(16, "Candy Cane", "&c&lCandy&r &f&lCane", "&cMmmm tasty...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Candy Crates", patterns, DyeColor.RED, true);
     }
 }
