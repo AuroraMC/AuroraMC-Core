@@ -19,6 +19,6 @@ public class NinjaMonkey extends Banner {
     }
 
     public NinjaMonkey() {
-        super(18, "Ninja Monkey", "&4&lNinja Monkey", "&4Watch out!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(23, "Ninja Monkey", "&4&lNinja Monkey", "&4Watch out!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.WHITE, true);
     }
 }
