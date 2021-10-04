@@ -56,7 +56,7 @@ public class CommandPunishmentLookup extends Command {
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));
             }
         } else {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));
+            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", "Invalid syntax. Correct syntax: **/punishmentlookup [Punishment Code]**"));
         }
 
     }
