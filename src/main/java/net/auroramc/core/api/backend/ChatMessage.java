@@ -31,7 +31,7 @@ public class ChatMessage {
             public void run() {
                 ChatLogs.removeChatMessage(msg);
             }
-        }.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 30000);
+        }.runTaskLaterAsynchronously(AuroraMCAPI.getCore(), 12000);
         this.channel = chatChannel;
     }
 
