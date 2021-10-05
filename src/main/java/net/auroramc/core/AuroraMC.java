@@ -192,6 +192,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new HitTheHay());
         AuroraMCAPI.registerCosmetic(new KeepingAuroraMCGoing());
         AuroraMCAPI.registerCosmetic(new WatchingCatVideos());
+        AuroraMCAPI.registerCosmetic(new CommittedForLife());
 
 
         AuroraMCAPI.registerCosmetic(new Star());
