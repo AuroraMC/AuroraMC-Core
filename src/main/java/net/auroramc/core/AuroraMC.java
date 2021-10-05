@@ -162,6 +162,10 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new UnitedStates());
         AuroraMCAPI.registerCosmetic(new France());
         AuroraMCAPI.registerCosmetic(new Poland());
+        AuroraMCAPI.registerCosmetic(new Denmark());
+        AuroraMCAPI.registerCosmetic(new Belgium());
+        AuroraMCAPI.registerCosmetic(new Germany());
+        AuroraMCAPI.registerCosmetic(new Japan());
         AuroraMCAPI.registerCosmetic(new UwU());
         AuroraMCAPI.registerCosmetic(new Wreath());
 
