@@ -22,6 +22,7 @@ import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentL
 import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.plussymbols.Plus;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -141,7 +142,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new Beast());
         AuroraMCAPI.registerAchievement(new God());
 
-        //Load all cosmetics.
+        //Banners
         AuroraMCAPI.registerCosmetic(new AngryCraig());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.banners.AuroraMC());
         AuroraMCAPI.registerCosmetic(new Blitzen());
@@ -153,7 +154,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new NinjaMonkey());
         AuroraMCAPI.registerCosmetic(new Ogre());
         AuroraMCAPI.registerCosmetic(new Pirate());
-        AuroraMCAPI.registerCosmetic(new Plus());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.banners.Plus());
         AuroraMCAPI.registerCosmetic(new RainbowRoad());
         AuroraMCAPI.registerCosmetic(new ScreamingGhost());
         AuroraMCAPI.registerCosmetic(new TheEnd());
@@ -169,7 +170,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new UwU());
         AuroraMCAPI.registerCosmetic(new Wreath());
 
-
+        //Friend Statuses
         AuroraMCAPI.registerCosmetic(new AFK());
         AuroraMCAPI.registerCosmetic(new CountingMoney());
         AuroraMCAPI.registerCosmetic(new CreatingNewMaps());
@@ -194,14 +195,28 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new WatchingCatVideos());
         AuroraMCAPI.registerCosmetic(new CommittedForLife());
 
-
+        //Plus Symbols
         AuroraMCAPI.registerCosmetic(new Star());
         AuroraMCAPI.registerCosmetic(new Snowman());
         AuroraMCAPI.registerCosmetic(new Tea());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.plussymbols.AuroraMC());
         AuroraMCAPI.registerCosmetic(new Copyright());
         AuroraMCAPI.registerCosmetic(new Snowflake());
-
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.plussymbols.Plus());
+        AuroraMCAPI.registerCosmetic(new Heart());
+        AuroraMCAPI.registerCosmetic(new Radioactive());
+        AuroraMCAPI.registerCosmetic(new Peace());
+        AuroraMCAPI.registerCosmetic(new ShootingStar());
+        AuroraMCAPI.registerCosmetic(new Mathematician());
+        AuroraMCAPI.registerCosmetic(new Flower());
+        AuroraMCAPI.registerCosmetic(new Music());
+        AuroraMCAPI.registerCosmetic(new Infinity());
+        AuroraMCAPI.registerCosmetic(new Arrow());
+        AuroraMCAPI.registerCosmetic(new Pencil());
+        AuroraMCAPI.registerCosmetic(new Balanced());
+        AuroraMCAPI.registerCosmetic(new Smile());
+        AuroraMCAPI.registerCosmetic(new Sunny());
+        AuroraMCAPI.registerCosmetic(new Hazard());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
