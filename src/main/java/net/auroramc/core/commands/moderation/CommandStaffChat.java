@@ -22,7 +22,7 @@ public class CommandStaffChat extends Command {
 
 
     public CommandStaffChat() {
-        super("staffchat", Arrays.asList("sc", "s", "staff"), Collections.singletonList(Permission.PLAYER), false, null);
+        super("staffchat", Arrays.asList("sc", "s", "staff", "doyourjobmod", "helpmemoderatoryouresupposedtohelppeoplewhichiswhyyoureamoderator"), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override
