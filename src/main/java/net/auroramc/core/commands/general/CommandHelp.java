@@ -36,17 +36,17 @@ public class CommandHelp extends Command {
 
         textComponent.addExtra(convert(String.format(" Click to be redirected to a help option.\n\n")));
 
-        TextComponent Rules = new TextComponent(" **→** AuroraMC Rules\n");
+        TextComponent Rules = new TextComponent(" **→ AuroraMC Rules**\n");
         Rules.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://auroramc.net/rules")));
         Rules.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see our rules!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(Rules);
 
-        TextComponent bugReport = new TextComponent(" **→** Report an issue with our systems\n");
+        TextComponent bugReport = new TextComponent(" **→ Report an issue with our systems**\n");
         bugReport.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://auroramc.net/bug-report/")));
         bugReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to report an issue with our systems!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(bugReport);
 
-        TextComponent playerReport = new TextComponent(" **→** Report a Rule Breaker\n");
+        TextComponent playerReport = new TextComponent(" **→ Report a Rule Breaker**\n");
         playerReport.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://auroramc.net/threads/forum-report-information-thread.168/")));
         playerReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(playerReport);
