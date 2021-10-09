@@ -50,7 +50,7 @@ public class CommandHelp extends Command {
         TextComponent store = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ AuroraMC Store**\n")));
         store.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
         store.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to visit our store!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(rules);
+        textComponent.addExtra(store);
 
         TextComponent support = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ Submit a Support Ticket**\n")));
         support.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support/"));
@@ -72,12 +72,12 @@ public class CommandHelp extends Command {
         playerReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(playerReport);
 
-        TextComponent knowledgeBase = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **If you have a question that isn't addressed in the above links, please check our Knowledgebase!**\n")));
+        TextComponent knowledgeBase = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **\nIf you have a question that isn't addressed in the above** **links, please check our Knowledgebase!**\n")));
         knowledgeBase.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/knowledgebase"));
         knowledgeBase.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to our knowledgebase!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(knowledgeBase);
 
-        textComponent.addExtra(convert(AuroraMCAPI.getFormatter().highlight("\nFor further assistance, contact online staff using /s [message]!")));
+        textComponent.addExtra(convert(AuroraMCAPI.getFormatter().highlight("**\nFor further assistance, contact online staff using /s!**")));
 
         player.getPlayer().spigot().sendMessage(textComponent);
     }
