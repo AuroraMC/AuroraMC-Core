@@ -46,6 +46,12 @@ public class CommandHelp extends Command {
         bugReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to report an issue with our systems!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(bugReport);
 
+        TextComponent playerReport = new TextComponent(" &b* Report a Rule Breaker\n");
+        bugReport.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://auroramc.net/threads/forum-report-information-thread.168/")));
+        bugReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(playerReport);
+
+
     }
 
     @Override
