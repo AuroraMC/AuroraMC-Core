@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandHelp extends Command {
 
     public CommandHelp() {
-        super("help", Arrays.asList("helpme", "ineedhelp"), Collections.singletonList(Permission.PLAYER), false, null);
+        super("help", Arrays.asList("help", "helpme", "helpmeorsiawillcomeandmakeyouthegreatest", "helpmeorelseillkillyou", "helpwouldbeappreciated"), Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override
