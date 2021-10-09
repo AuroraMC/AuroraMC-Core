@@ -51,6 +51,7 @@ public class CommandHelp extends Command {
         bugReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(playerReport);
 
+        textComponent.addExtra(convert(String.format("\n\nFor further assistance, feel free to contact any online staff member using /s")));
 
     }
 
