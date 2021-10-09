@@ -53,6 +53,7 @@ public class CommandHelp extends Command {
 
         textComponent.addExtra(convert(String.format("\n\nFor further assistance, feel free to contact any online staff member using /s")));
 
+        player.getPlayer().spigot().sendMessage(textComponent);
     }
 
     @Override
