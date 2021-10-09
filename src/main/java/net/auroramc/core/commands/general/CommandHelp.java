@@ -52,7 +52,7 @@ public class CommandHelp extends Command {
         playerReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(playerReport);
 
-        textComponent.addExtra(convert(AuroraMCAPI.getFormatter().highlight("\n\n**For further assistance, contact online staff using /s!**")));
+        textComponent.addExtra(convert(AuroraMCAPI.getFormatter().highlight("\n**For further assistance, contact online staff using /s!**")));
 
         player.getPlayer().spigot().sendMessage(textComponent);
     }
