@@ -41,47 +41,70 @@ public class CommandHelp extends Command {
 
         textComponent.addExtra(convert(" Click to be redirected to a help option.\n\n"));
 
-        TextComponent auroraMC = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ How AuroraMC works**\n")));
-        auroraMC.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
-        auroraMC.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see how AuroraMC works!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(auroraMC);
+        TextComponent arrow = new TextComponent(" ➤");
+        arrow.setColor(ChatColor.DARK_AQUA);
 
-        TextComponent rules = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ AuroraMC Rules**\n")));
-        rules.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/rules"));
-        rules.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see our rules!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(rules);
+        textComponent.addExtra(arrow);
 
-        TextComponent store = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ AuroraMC Store**\n")));
-        store.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
-        store.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to visit our store!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(store);
+        TextComponent component = new TextComponent(" How AuroraMC works\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see how AuroraMC works!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        TextComponent support = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ Submit a Support Ticket**\n")));
-        support.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support/"));
-        support.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to submit a support ticket!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(support);
+        component = new TextComponent(" AuroraMC Rules\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/rules"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see our rules!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        TextComponent appeal = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ Submit an appeal**\n")));
-        appeal.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/appeal/"));
-        appeal.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to submit an appeal!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(appeal);
+        component = new TextComponent(" AuroraMC Store\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to visit our store!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        TextComponent bugReport = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ Report an issue with our systems**\n")));
-        bugReport.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/bug-report/"));
-        bugReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to report an issue with our systems!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(bugReport);
+        component = new TextComponent(" Submit a Support Ticket\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to submit a support ticket!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        TextComponent playerReport = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **➤ Report a Rule Breaker**\n")));
-        playerReport.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/report-info/"));
-        playerReport.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(playerReport);
+        component = new TextComponent(" Submit an appeal\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/appeal/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to submit an appeal!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        TextComponent knowledgeBase = new TextComponent(convert(AuroraMCAPI.getFormatter().highlight(" **\nIf you have a question that isn't addressed in the above** **links, please check our Knowledgebase!**\n")));
-        knowledgeBase.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/knowledgebase"));
-        knowledgeBase.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to our knowledgebase!").color(ChatColor.LIGHT_PURPLE).create()));
-        textComponent.addExtra(knowledgeBase);
+        component = new TextComponent(" Report an issue with our systems\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/bug-report/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to report an issue with our systems!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
 
-        textComponent.addExtra(convert(AuroraMCAPI.getFormatter().highlight("**\nFor further assistance, contact online staff using /s!**")));
+        component = new TextComponent(" Report a Rule Breaker\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/report-info/"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see information on how to report rule breakers!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+
+        component = new TextComponent(" \nIf you have a question that isn't addressed in the above links, please check our Knowledgebase!\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/knowledgebase"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to our knowledgebase!").color(ChatColor.LIGHT_PURPLE).create()));
+        textComponent.addExtra(component);
+
+        component = new TextComponent("\nFor further assistance, contact online staff using /s!");
+        component.setColor(ChatColor.AQUA);
+        component.setBold(true);
+
+        textComponent.addExtra(component);
 
         player.getPlayer().spigot().sendMessage(textComponent);
     }
