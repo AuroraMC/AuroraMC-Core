@@ -95,14 +95,13 @@ public class CommandHelp extends Command {
         textComponent.addExtra(component);
 
         component = new TextComponent(" \nIf you have a question that isn't addressed in the above links, please check our Knowledgebase!\n");
-        component.setColor(ChatColor.AQUA);
+        component.setColor(ChatColor.WHITE);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/knowledgebase"));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to our knowledgebase!").color(ChatColor.LIGHT_PURPLE).create()));
         textComponent.addExtra(component);
 
-        component = new TextComponent("\nFor further assistance, contact online staff using /s!");
+        component = new TextComponent("\nFor further assistance, contact staff in your lobby using /s!");
         component.setColor(ChatColor.AQUA);
-        component.setBold(true);
 
         textComponent.addExtra(component);
 
