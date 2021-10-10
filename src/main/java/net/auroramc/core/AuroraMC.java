@@ -26,7 +26,6 @@ import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentL
 import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
-import net.auroramc.core.cosmetics.plussymbols.Plus;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
