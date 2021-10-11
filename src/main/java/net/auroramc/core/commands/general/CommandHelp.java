@@ -125,7 +125,7 @@ public class CommandHelp extends Command {
         component = new TextComponent(" Report a Rule Breaker\n");
         component.setColor(ChatColor.AQUA);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/report-info/"));
-        componentHover = new ComponentBuilder(convert("&3&Report a Rule Breaker\n"
+        componentHover = new ComponentBuilder(convert("&3&lReport a Rule Breaker\n"
                 + "\n"
                 + WordUtils.wrap("", 40, "\n&r", false)
                 + "\n\n&aClick here to report a Rule Breaker."));
