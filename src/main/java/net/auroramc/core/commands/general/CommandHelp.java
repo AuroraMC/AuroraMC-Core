@@ -13,6 +13,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -49,7 +50,16 @@ public class CommandHelp extends Command {
         TextComponent component = new TextComponent(" How AuroraMC works\n");
         component.setColor(ChatColor.AQUA);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to see how AuroraMC works!").color(ChatColor.LIGHT_PURPLE).create()));
+        ComponentBuilder componentHover = new ComponentBuilder(convert("&3&lHow AuroraMC works\n"
+        + "\n"
+        + WordUtils.wrap("AuroraMC is a very advanced Minecraft network that uses hundreds of thousands" +
+                " of lines of code to keep running, as well as several other services that are essential to push updates," +
+                " create new content and get the network running as smoothly as possible. To cater" +
+                " to those who are curious as well as stay as transparent as possible, we've put this document" +
+                " together to give you an insight into how the network operates, how we create updates" +
+                " and the tools we use in order to run the network.", 40, "\n&r", false)
+        + "\n\n&dClick here to view this document."));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
         textComponent.addExtra(arrow);
 
