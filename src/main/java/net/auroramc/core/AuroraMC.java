@@ -27,7 +27,6 @@ import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.Astronaut;
 import net.auroramc.core.cosmetics.plussymbols.*;
-import net.auroramc.core.cosmetics.plussymbols.Plus;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -200,6 +199,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new KeepingAuroraMCGoing());
         AuroraMCAPI.registerCosmetic(new WatchingCatVideos());
         AuroraMCAPI.registerCosmetic(new CommittedForLife());
+        AuroraMCAPI.registerCosmetic(new BugHunter());
 
         //Plus Symbols
         AuroraMCAPI.registerCosmetic(new Star());
