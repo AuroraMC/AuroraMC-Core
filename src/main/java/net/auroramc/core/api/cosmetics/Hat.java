@@ -70,8 +70,12 @@ public abstract class Hat extends Cosmetic {
         lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert("&r" + WordUtils.wrap(getDescription(), 40, ";&r", false)).split(";")));
         lore.add("");
         if (hasUnlocked) {
-            if (player.getActiveCosmetics().get(getType()).equals(this)) {
-                lore.add(AuroraMCAPI.getFormatter().convert("&cClick to disable!"));
+            if (player.getActiveCosmetics().get(this.getType()) != null) {
+                if (player.getActiveCosmetics().get(getType()).equals(this)) {
+                    lore.add(AuroraMCAPI.getFormatter().convert("&cClick to disable!"));
+                } else {
+                    lore.add(AuroraMCAPI.getFormatter().convert("&aClick to enable!"));
+                }
             } else {
                 lore.add(AuroraMCAPI.getFormatter().convert("&aClick to enable!"));
             }
