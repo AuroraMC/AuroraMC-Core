@@ -93,10 +93,13 @@ public abstract class Hat extends Cosmetic {
         }
 
         meta.setLore(lore);
-        if (player.getActiveCosmetics().get(getType()).equals(this)) {
-            meta.addEnchant(Enchantment.DURABILITY, 1, true);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        if (player.getActiveCosmetics().get(getType()) != null) {
+            if (player.getActiveCosmetics().get(getType()).equals(this)) {
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            }
         }
+
         item.setItemMeta(meta);
         return item;
     }
