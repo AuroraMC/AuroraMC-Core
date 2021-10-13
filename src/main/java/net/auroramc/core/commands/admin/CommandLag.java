@@ -37,7 +37,11 @@ public class CommandLag extends Command {
             while (resources.hasMoreElements()) {
                     Manifest manifest = new Manifest(resources.nextElement().openStream());
                     // check that this is your manifest and do what you need or get the next one
-                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking... " + manifest.getMainAttributes().size());
+                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
+
+                for (Object o : manifest.getMainAttributes().values()) {
+                    AuroraMCAPI.getCore().getLogger().info("value: " + o.toString());
+                }
 
                 if (manifest.getMainAttributes().containsKey("Module-Name")) {
                     AuroraMCAPI.getCore().getLogger().info("Module name is present.");
