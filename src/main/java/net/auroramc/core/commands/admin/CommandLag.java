@@ -35,10 +35,13 @@ public class CommandLag extends Command {
             Enumeration<URL> resources = getClass().getClassLoader()
                     .getResources("META-INF/MANIFEST.MF");
             while (resources.hasMoreElements()) {
+                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
                     Manifest manifest = new Manifest(resources.nextElement().openStream());
                     // check that this is your manifest and do what you need or get the next one
                 if (manifest.getMainAttributes().containsKey("Module-Name")) {
-                    if (manifest.getMainAttributes().getValue("Module-Name").equals("AuroraMC-Core")) {
+                    AuroraMCAPI.getCore().getLogger().info("Module name is present.");
+                    if (manifest.getMainAttributes().getValue("Module-Name").equalsIgnoreCase("AuroraMC-Core")) {
+                        AuroraMCAPI.getCore().getLogger().info("Module name is AuroraMC-Core.");
                         buildNumber = manifest.getMainAttributes().getValue("Jenkins-Build-Number");
                         gitCommit = manifest.getMainAttributes().getValue("Git-Commit");
                     }
