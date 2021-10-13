@@ -32,6 +32,7 @@ public abstract class Hat extends Cosmetic {
         profile.getProperties().put("textures", new Property("textures", Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", headUrl).getBytes())));
 
         head = new ItemStack(Material.SKULL_ITEM, 1);
+        head.setDurability((short)3);
         SkullMeta meta = (SkullMeta) head.getItemMeta();
         meta.setDisplayName(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().convert(displayName)));
         Field field;
