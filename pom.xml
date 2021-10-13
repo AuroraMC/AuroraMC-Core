@@ -38,6 +38,20 @@
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Jenkins-Build-Number>${BUILD_NUMBER}</Jenkins-Build-Number>
+                            <Jenkins-Build-Url>${BUILD_URL}</Jenkins-Build-Url>
+                            <Git-Commit>${GIT_COMMIT}</Git-Commit>
+                            <Implementation-Version>${project.version}.${GIT_COMMIT}.${BUILD_NUMBER}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
 
             <plugin>
