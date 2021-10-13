@@ -45,7 +45,7 @@ public class CommandLag extends Command {
                 }
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
 
 
@@ -56,7 +56,7 @@ public class CommandLag extends Command {
                 "Used RAM: **%sMB**\n" +
                 "Total RAM: **%sMB**\n" +
                 "Current Build Number: **%s**\n" +
-                "Git Commit: **%s**" +
+                "Git Commit: **%s**\n" +
                 "Threads Executing: **%s**\n" +
                 "Threads Scheduled: **%s**\n" +
                 "TPS (1m, 5m, 15m): **%s**, **%s**, **%s**\n" +
