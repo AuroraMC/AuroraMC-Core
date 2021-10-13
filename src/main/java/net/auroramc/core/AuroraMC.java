@@ -24,8 +24,15 @@ import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.*;
+import net.auroramc.core.cosmetics.banners.Belgium;
+import net.auroramc.core.cosmetics.banners.Denmark;
+import net.auroramc.core.cosmetics.banners.France;
+import net.auroramc.core.cosmetics.banners.Germany;
+import net.auroramc.core.cosmetics.banners.Japan;
+import net.auroramc.core.cosmetics.banners.Poland;
+import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
-import net.auroramc.core.cosmetics.hats.Astronaut;
+import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
@@ -226,6 +233,20 @@ public class AuroraMC extends JavaPlugin {
 
         //Hats
         AuroraMCAPI.registerCosmetic(new Astronaut());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Belgium());
+        AuroraMCAPI.registerCosmetic(new Brazil());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Denmark());
+        AuroraMCAPI.registerCosmetic(new Finland());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.France());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Germany());
+        AuroraMCAPI.registerCosmetic(new Italy());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Japan());
+        AuroraMCAPI.registerCosmetic(new Korea());
+        AuroraMCAPI.registerCosmetic(new Netherlands());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Poland());
+        AuroraMCAPI.registerCosmetic(new Portugal());
+        AuroraMCAPI.registerCosmetic(new Spain());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.UnitedStates());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
