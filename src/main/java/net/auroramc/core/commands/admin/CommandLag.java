@@ -39,7 +39,7 @@ public class CommandLag extends Command {
                     // check that this is your manifest and do what you need or get the next one
                 AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
 
-                for (Object o : manifest.getMainAttributes().values()) {
+                for (Object o : manifest.getMainAttributes().keySet()) {
                     AuroraMCAPI.getCore().getLogger().info("value: " + o.toString());
                 }
 
