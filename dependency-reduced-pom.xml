@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
-  -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.auroramc</groupId>
@@ -40,6 +36,19 @@
             <goals>
               <goal>shade</goal>
             </goals>
+            <configuration>
+              <transformers>
+                <transformer>
+                  <manifestEntries>
+                    <Jenkins-Build-Number>${BUILD_NUMBER}</Jenkins-Build-Number>
+                    <Jenkins-Build-Url>${BUILD_URL}</Jenkins-Build-Url>
+                    <Git-Commit>${GIT_COMMIT}</Git-Commit>
+                    <Implementation-Version>${project.version}.${GIT_COMMIT}.${BUILD_NUMBER}</Implementation-Version>
+                    <Module-Name>AuroraMC-Core</Module-Name>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
         <configuration>
