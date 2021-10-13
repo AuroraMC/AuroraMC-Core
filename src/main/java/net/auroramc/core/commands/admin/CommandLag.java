@@ -35,9 +35,10 @@ public class CommandLag extends Command {
             Enumeration<URL> resources = getClass().getClassLoader()
                     .getResources("META-INF/MANIFEST.MF");
             while (resources.hasMoreElements()) {
-                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
                     Manifest manifest = new Manifest(resources.nextElement().openStream());
                     // check that this is your manifest and do what you need or get the next one
+                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking... " + manifest.getMainAttributes().size());
+
                 if (manifest.getMainAttributes().containsKey("Module-Name")) {
                     AuroraMCAPI.getCore().getLogger().info("Module name is present.");
                     if (manifest.getMainAttributes().getValue("Module-Name").equalsIgnoreCase("AuroraMC-Core")) {
