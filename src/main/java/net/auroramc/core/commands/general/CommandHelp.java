@@ -127,7 +127,10 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/report-info/"));
         componentHover = new ComponentBuilder(convert("&3&lReport a Rule Breaker\n"
                 + "\n"
-                + WordUtils.wrap("", 40, "\n&r", false)
+                + WordUtils.wrap("If you have found somebody that is breaking the AuroraMC Rules, " +
+                "and a Staff Member is not present to handle it, you are able to submit a report " +
+                "and have it handled by our Reports Team! These documents go into details on how to use any " +
+                "report systems we have in place to make the server a better place.", 40, "\n&r", false)
                 + "\n\n&aClick here to report a Rule Breaker."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
