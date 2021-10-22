@@ -50,18 +50,18 @@ public enum Rank {
             "&fAdmins monitor their specific teams,\n" +
             "&fmaking sure all of the staff inside those\n" +
             "&fteams are working efficiently and to the\n" +
-            "&fbest of their ability.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fbest of their ability.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO, Permission.PANEL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     DEVELOPER(12, "Developer", "Dev", "&a«DEV»\n \n" +
             "&fDevelopers create the content that\n" +
             "&fyou see on all our servers! They work\n" +
             "&fbehind the scenes coding the games you\n" +
-            "&flove to play!", null, 'a', 'f', 'a', 'f', true, Collections.singletonList(MASTER), Collections.singletonList(Permission.DEBUG_INFO), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
+            "&flove to play!", null, 'a', 'f', 'a', 'f', true, Collections.singletonList(MASTER), Arrays.asList(Permission.DEBUG_INFO, Permission.PANEL), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
     SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&a«SR.DEV»\n \n" +
             "&fSenior Developers oversee the development\n" +
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
             "&fand help our design team plan upcoming\n" +
-            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     OWNER(9001, "Owner", "Owner", "&c«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +

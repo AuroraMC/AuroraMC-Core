@@ -26,7 +26,8 @@ public enum Permission {
     BYPASS_APPROVAL(14, "approval.bypass"),
     RECRUITMENT(15, "recruitment"),
     SOCIAL_MEDIA(16, "socialmedia"),
-    EVENT_MANAGEMENT(17, "events");
+    EVENT_MANAGEMENT(17, "events"),
+    PANEL(18, "panel");
 
     private final int id;
     private final String node;
