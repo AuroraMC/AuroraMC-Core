@@ -22,7 +22,8 @@ public enum SubRank {
     SOCIAL_MEDIA(7, "Social Media", Collections.singletonList(Permission.SOCIAL_MEDIA), Color.fromRGB(85, 85, 255), '9'),
     EVENT_MANAGEMENT(8, "Event Management", Collections.singletonList(Permission.EVENT_MANAGEMENT), Color.fromRGB(0, 170, 0), '2'),
     COMMUNITY_MANAGEMENT(9, "Community Management", Collections.emptyList(), Color.fromRGB(0, 170, 0), '2'),
-    RULES_COMMITTEE(10, "Rules Committee", Collections.singletonList(Permission.PANEL), Color.fromRGB(255, 170, 0), '6');
+    RULES_COMMITTEE(10, "Rules Committee", Collections.singletonList(Permission.PANEL), Color.fromRGB(255, 170, 0), '6'),
+    APPEALS(11, "Appeals Team", Collections.singletonList(Permission.PANEL), Color.fromRGB(0, 170, 0), '2');
 
 
     private final int id;
