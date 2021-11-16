@@ -85,10 +85,11 @@ public class CommandHelp extends Command {
 
         component = new TextComponent(" Submit a Support Ticket\n");
         component.setColor(ChatColor.AQUA);
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support/"));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support-tickets/"));
         componentHover = new ComponentBuilder(convert("&3&lSubmit a Support Ticket\n"
                 + "\n"
-                + WordUtils.wrap("", 40, "\n&r", false)
+                + WordUtils.wrap("If you are having issues with purchases or missing cosmetics, feel free to contact our" +
+                " Customer Support Team and they will look into and assist you as much as they can.", 40, "\n&r", false)
                 + "\n\n&aClick here to submit a support ticket."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
