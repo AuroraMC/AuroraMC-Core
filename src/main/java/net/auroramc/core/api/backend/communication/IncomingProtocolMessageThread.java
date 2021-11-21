@@ -36,6 +36,10 @@ public class IncomingProtocolMessageThread extends Thread {
                 Socket connection = socket.accept();
                 ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
                 ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
+                if (!message.getAuthenticationKey().equals(AuroraMCAPI.getServerInfo().getAuthKey())) {
+                    //Check if the auth keys match.
+                    return;
+                }
                 new BukkitRunnable() {
                     @Override
                     public void run() {
