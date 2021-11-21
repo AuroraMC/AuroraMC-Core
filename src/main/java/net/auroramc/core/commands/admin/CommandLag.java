@@ -18,6 +18,7 @@ import java.lang.management.MemoryMXBean;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 public class CommandLag extends Command {
@@ -39,16 +40,14 @@ public class CommandLag extends Command {
                     // check that this is your manifest and do what you need or get the next one
                 AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
 
-                for (Object o : manifest.getMainAttributes().keySet()) {
-                    AuroraMCAPI.getCore().getLogger().info("value: " + o.toString());
-                }
+                Attributes attributes = manifest.getMainAttributes();
 
-                if (manifest.getMainAttributes().containsKey("Module-Name")) {
+                if (attributes.containsKey("Module-Name")) {
                     AuroraMCAPI.getCore().getLogger().info("Module name is present.");
-                    if (manifest.getMainAttributes().getValue("Module-Name").equalsIgnoreCase("AuroraMC-Core")) {
+                    if (attributes.getValue("Module-Name").equalsIgnoreCase("AuroraMC-Core")) {
                         AuroraMCAPI.getCore().getLogger().info("Module name is AuroraMC-Core.");
-                        buildNumber = manifest.getMainAttributes().getValue("Jenkins-Build-Number");
-                        gitCommit = manifest.getMainAttributes().getValue("Git-Commit");
+                        buildNumber = attributes.getValue("Jenkins-Build-Number");
+                        gitCommit = attributes.getValue("Git-Commit");
                     }
                 }
             }
