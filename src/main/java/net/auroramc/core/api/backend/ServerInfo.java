@@ -15,8 +15,9 @@ public class ServerInfo {
     private int buildNumber, lobbyBuildNumber, gameBuildNumber, engineBuildNumber, buildBuildNumber;
     private final Network network;
     private final boolean forced;
+    private final String authKey;
 
-    public ServerInfo(String name, String ip, int port, Network network, boolean forced, JSONObject serverType, int protocolPort, int buildNumber, int lobbyBuildNumber, int engineBuildNumber, int gameBuildNumber, int buildBuildNumber) {
+    public ServerInfo(String name, String ip, int port, Network network, boolean forced, JSONObject serverType, int protocolPort, int buildNumber, int lobbyBuildNumber, int engineBuildNumber, int gameBuildNumber, int buildBuildNumber, String authKey) {
         this.name = name;
         this.ip = ip;
         this.port = port;
@@ -29,6 +30,7 @@ public class ServerInfo {
         this.lobbyBuildNumber = lobbyBuildNumber;
         this.network = network;
         this.forced = forced;
+        this.authKey = authKey;
     }
 
     public String getName() {
@@ -100,6 +102,10 @@ public class ServerInfo {
 
     public void setLobbyBuildNumber(int lobbyBuildNumber) {
         this.lobbyBuildNumber = lobbyBuildNumber;
+    }
+
+    public String getAuthKey() {
+        return authKey;
     }
 
     public enum Network {MAIN, TEST, ALPHA}
