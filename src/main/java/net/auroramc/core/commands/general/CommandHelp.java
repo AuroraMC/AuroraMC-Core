@@ -77,7 +77,8 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC Store\n"
                 + "\n"
-                + WordUtils.wrap("", 40, "\n&r", false)
+                + WordUtils.wrap("The AuroraMC Store is the only place to buy AuroraMC products. From ranks, cosmetics," +
+                " gift cards and more. It can all be found at store.auroramc.net", 40, "\n&r", false)
                 + "\n\n&aClick here to visit our store."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
