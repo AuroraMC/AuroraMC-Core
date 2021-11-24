@@ -494,10 +494,10 @@ public class TextFormatter {
             }
             if (i == codes.size()) {
                 forward = false;
-                i--;
+                i-=2;
             } else if (i == -1) {
                 forward = true;
-                i++;
+                i+=2;
             }
         }
         return finalMessage.toString();
