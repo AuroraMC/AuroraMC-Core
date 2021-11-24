@@ -477,7 +477,7 @@ public class TextFormatter {
 
     public String rainbow(String message) {
         List<Character> codes = new ArrayList<>(Arrays.asList('6','7','9','a','b','c','e','f'));
-        Collections.shuffle(codes);
+        // Collections.shuffle(codes);
         StringBuilder finalMessage = new StringBuilder();
         int i = 0;
         for (char c : message.toCharArray()) {
