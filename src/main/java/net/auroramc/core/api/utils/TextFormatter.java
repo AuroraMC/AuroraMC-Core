@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TextFormatter {
@@ -472,6 +473,21 @@ public class TextFormatter {
 
 
         return textComponent;
+    }
+
+    public String rainbow(String message) {
+        List<Character> codes = new ArrayList<>(Arrays.asList('1','2','3','4','5','6','7','8','9','a','b','c','e','f'));
+        Collections.shuffle(codes);
+        StringBuilder finalMessage = new StringBuilder();
+        int i = 0;
+        for (char c : message.toCharArray()) {
+            finalMessage.append("§").append(codes.get(i)).append(c);
+            i++;
+            if (i == codes.size()) {
+                i = 0;
+            }
+        }
+        return finalMessage.toString();
     }
 
 }
