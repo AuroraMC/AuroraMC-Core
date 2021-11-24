@@ -483,6 +483,7 @@ public class TextFormatter {
         boolean forward = true;
         for (char c : message.toCharArray()) {
             if (c == ' ') {
+                finalMessage.append(c);
                 continue;
             }
             finalMessage.append("§").append(codes.get(i)).append(c);
