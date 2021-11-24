@@ -24,7 +24,7 @@ public class CommandKillMessageTest extends Command {
 
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
-        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().rainbow("Block2Block was tied to a firework and exploded by Bunni"));
+        player.getPlayer().sendMessage("§bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("was tied to a firework and exploded by") + " §bBunni");
     }
 
     @Override
