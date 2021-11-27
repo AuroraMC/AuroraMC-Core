@@ -384,6 +384,7 @@ public class AuroraMCPlayer {
                 Bukkit.getPluginManager().callEvent(creationEvent);
                 if (pl != creationEvent.getPlayer()) {
                     AuroraMCAPI.newPlayer(creationEvent.getPlayer());
+                    pl.loaded = true;
                 }
                 loaded = true;
             }
@@ -423,6 +424,7 @@ public class AuroraMCPlayer {
         unlockedCosmetics = oldPlayer.unlockedCosmetics;
         activeCosmetics = oldPlayer.activeCosmetics;
         runningCosmeticTasks = oldPlayer.runningCosmeticTasks;
+        lastAdminMessaged = oldPlayer.lastAdminMessaged;
         loaded = oldPlayer.loaded;
     }
 
