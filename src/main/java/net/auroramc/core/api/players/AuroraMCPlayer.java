@@ -384,7 +384,7 @@ public class AuroraMCPlayer {
                 Bukkit.getPluginManager().callEvent(creationEvent);
                 if (pl != creationEvent.getPlayer()) {
                     AuroraMCAPI.newPlayer(creationEvent.getPlayer());
-                    pl.loaded = true;
+                    creationEvent.getPlayer().loaded = true;
                 }
                 loaded = true;
             }
