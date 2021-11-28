@@ -31,7 +31,7 @@ public class CommandKillMessageTest extends Command {
         player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("shot a parter popper at ") + "§bHeliology");
         player.getPlayer().sendMessage("");
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("The party didn't stop until Block2Block fell into the void"));
-        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("The party didn't stop until") + " §bBlock2Block" + AuroraMCAPI.getFormatter().rainbow("fell into the void"));
+        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("The party didn't stop until") + " §bBlock2Block" + AuroraMCAPI.getFormatter().rainbow(" fell into the void"));
         player.getPlayer().sendMessage("");
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block got too excited and fell off a cliff. What a donkey!"));
         player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("got too excited and fell off a cliff. What a donkey!"));
@@ -42,8 +42,8 @@ public class CommandKillMessageTest extends Command {
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block went too close to the piñata"));
         player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("went too close to the piñata"));
         player.getPlayer().sendMessage("");
-        player.getPlayer().sendMessage("§3§l«JOIN» " + AuroraMCAPI.getFormatter().rainbow("Block2Block is ready to party"));
-        player.getPlayer().sendMessage("§3§l«JOIN» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("is ready to party"));
+        player.getPlayer().sendMessage("§3§l«JOIN» " + AuroraMCAPI.getFormatter().rainbow("Block2Block is ready to party!"));
+        player.getPlayer().sendMessage("§3§l«JOIN» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("is ready to party!"));
     }
 
     @Override
