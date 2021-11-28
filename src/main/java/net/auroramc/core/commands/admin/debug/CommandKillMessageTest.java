@@ -24,7 +24,11 @@ public class CommandKillMessageTest extends Command {
 
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
-        player.getPlayer().sendMessage("§bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("was tied to a firework and exploded by") + " §bBunni");
+        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block" + AuroraMCAPI.getFormatter().rainbow(" was tied to a firework and exploded by ") + "§bHeliology");
+        player.getPlayer().sendMessage("§3§l«KILL» §b_Brandon" + AuroraMCAPI.getFormatter().rainbow(" was tied to a firework and exploded by ") + "§bBunni");
+        player.getPlayer().sendMessage("§3§l«KILL» §bLoofii" + AuroraMCAPI.getFormatter().rainbow(" was tied to a firework and exploded by ") + "§bBerend");
+        player.getPlayer().sendMessage("§3§l«KILL» §bjcild" + AuroraMCAPI.getFormatter().rainbow(" was tied to a firework and exploded by ") + "§bBlock2Block");
+        player.getPlayer().sendMessage("§3§l«KILL» §bAlexTheCoder" + AuroraMCAPI.getFormatter().rainbow(" was tied to a firework and exploded by ") + "§bBlock2Block");
     }
 
     @Override
