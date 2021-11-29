@@ -25,24 +25,17 @@ public class CommandKillMessageTest extends Command {
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block whacked Heliology with a sparkler"));
-        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("whacked ") + "§bHeliology " + AuroraMCAPI.getFormatter().rainbow("with a sparkler"));
         player.getPlayer().sendMessage("");
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block shot a party popper at Heliology"));
-        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("shot a party popper at ") + "§bHeliology");
         player.getPlayer().sendMessage("");
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("The party didn't stop until Block2Block threw _Brandon into the void"));
-        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("The party didn't stop until") + " §bBlock2Block" + AuroraMCAPI.getFormatter().rainbow("threw") + " §b_Brandon" + AuroraMCAPI.getFormatter().rainbow("into the void"));
         player.getPlayer().sendMessage("");
-        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block got too excited and pushed _Brandon off a cliff. What a donkey!"));
-        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("got too excited and pushed ") + "§b_Brandon " + AuroraMCAPI.getFormatter().rainbow("off a cliff. What a donkey!"));
+        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block got too excited and pushed _Brandon off a cliff."));
         player.getPlayer().sendMessage("");
-        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block was tied to a firework and exploded by Heliology"));
-        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("was tied to a firework and exploded by ") + "§bHeliology");
+        player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("jcild was tied to a firework and exploded by Heliology"));
         player.getPlayer().sendMessage("");
         player.getPlayer().sendMessage("§3§l«KILL» " + AuroraMCAPI.getFormatter().rainbow("Block2Block went too close to _Brandon's piñata"));
-        player.getPlayer().sendMessage("§3§l«KILL» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("went too close to ") + "§_Brandon's " + AuroraMCAPI.getFormatter().rainbow("piñata"));
         player.getPlayer().sendMessage("");
-        player.getPlayer().sendMessage("§3§l«JOIN» " + AuroraMCAPI.getFormatter().rainbow("Block2Block is ready to party!"));
         player.getPlayer().sendMessage("§3§l«JOIN» §bBlock2Block " + AuroraMCAPI.getFormatter().rainbow("is ready to party!"));
     }
 
