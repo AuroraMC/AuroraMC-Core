@@ -50,8 +50,9 @@ public class IncomingProtocolMessageThread extends Thread {
 
             }
         } catch (SocketException e) {
+            e.printStackTrace();
             listening = false;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
