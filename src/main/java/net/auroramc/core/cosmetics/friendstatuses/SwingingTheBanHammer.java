@@ -12,6 +12,6 @@ import java.util.Collections;
 public class SwingingTheBanHammer extends FriendStatus {
 
     public SwingingTheBanHammer() {
-        super(111, "&6&k0&r &9Swinging the Ban Hammer &6&k0", "&6&k0&r &9&lSwinging the Ban Hammer &6&k0", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.MODERATOR), "", "&6&k0&r &9&lSwinging the Ban Hammer &6&k0", '9', false);
+        super(111, "&6&k0&r &9Swinging the Ban Hammer &6&k0&r", "&6&k0&r &9&lSwinging the Ban Hammer &6&k0&r", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.MODERATOR), "", "&6&k0&r &9&lSwinging the Ban Hammer &6&k0&r", '9', false);
     }
 }
