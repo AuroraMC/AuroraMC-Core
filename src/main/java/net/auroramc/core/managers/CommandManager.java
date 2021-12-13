@@ -4,6 +4,7 @@
 
 package net.auroramc.core.managers;
 
+import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.events.CommandEngineOverwriteEvent;
@@ -22,13 +23,21 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public static void onCommand(PlayerCommandPreprocessEvent e) {
+        AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+        if (player == null) {
+            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "Your player profile is still loading, please wait to use commands!"));
+            return;
+        }
+        if (!player.isLoaded()) {
+            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "Your player profile is still loading, please wait to use commands!"));
+            return;
+        }
         CommandEngineOverwriteEvent event = new CommandEngineOverwriteEvent(e.getMessage(), AuroraMCAPI.getPlayer(e.getPlayer()));
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return;
         }
         e.setCancelled(true);
-        AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
         ArrayList<String> args = new ArrayList<>(Arrays.asList(e.getMessage().split(" ")));
         String commandLabel = args.remove(0).substring(1);
         onCommand(commandLabel, args, player);
