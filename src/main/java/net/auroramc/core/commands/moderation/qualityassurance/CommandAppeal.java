@@ -52,9 +52,18 @@ public class CommandAppeal extends Command {
                                         out.writeUTF("Unmute");
                                         out.writeUTF(punishment.getPunishmentCode());
                                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                                    } else if (args.get(0).equalsIgnoreCase("Compromised")) {
+                                        AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Compromised Account Recovered", punishment, uuid, punishments);
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Compromised Account Punishment with ID [**%s**] has been removed successfully.", code)));
+                                        if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
+                                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                                            out.writeUTF("Unmute");
+                                            out.writeUTF(punishment.getPunishmentCode());
+                                            player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                                        }
                                     }
                                 } else {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False | Compromised]"));
                                 }
                             } else {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "This punishment currently cannot be appealed."));
@@ -65,10 +74,10 @@ public class CommandAppeal extends Command {
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
             } else {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False | Compromised]"));
             }
         } else {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False]"));
+            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", "Invalid syntax. Correct syntax: **/appeal [Punishment ID] [Reprieve | False | Compromised]"));
         }
 
 
