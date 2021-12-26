@@ -31,11 +31,14 @@ public class ChatPreferences extends GUI {
         this.setItem(1, 5, new GUIItem(Material.EMPTY_MAP, "&3Private Messages", 1, ";&rToggle which players are able to;&rsend you private messages."));
         this.setItem(2, 5, new GUIItem(Material.INK_SACK, "&3Private Messages", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.ALL)?"&aAll":((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.FRIENDS_ONLY)?"&6Friends Only":"&cDisabled")), ((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.ALL)?"&6Friends Only":((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.FRIENDS_ONLY)?"&cDisabled":"&aAll"))), ((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.ALL)?(short)10:((player.getPreferences().getPrivateMessageMode() == PlayerPreferences.PrivateMessageMode.FRIENDS_ONLY)?(short)14:(short)8))));
 
-        this.setItem(3, 3, new GUIItem(Material.NOTE_BLOCK, "&3Ping on Party Chat", 1, ";&rDisabling this will stop you from being pinged;&rwhen you recieve a message in party chat.")) ;
-        this.setItem(4, 3, new GUIItem(Material.INK_SACK, "&3Ping on Party Chat", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPartyChatEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPartyChatEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPartyChatEnabled())?(short)10:(short)8)));
+        this.setItem(3, 2, new GUIItem(Material.NOTE_BLOCK, "&3Ping on Party Chat", 1, ";&rDisabling this will stop you from being pinged;&rwhen you recieve a message in party chat.")) ;
+        this.setItem(4, 2, new GUIItem(Material.INK_SACK, "&3Ping on Party Chat", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPartyChatEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPartyChatEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPartyChatEnabled())?(short)10:(short)8)));
 
-        this.setItem(3, 5, new GUIItem(Material.NOTE_BLOCK, "&3Ping on Private Message", 1, ";&rDisabling this will stop you from being pinged;&rwhen you recieve a PM.")) ;
-        this.setItem(4, 5, new GUIItem(Material.INK_SACK, "&3Ping on Private Message", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPrivateMessageEnabled())?(short)10:(short)8)));
+        this.setItem(3, 4, new GUIItem(Material.NOTE_BLOCK, "&3Ping on Private Message", 1, ";&rDisabling this will stop you from being pinged;&rwhen you recieve a PM.")) ;
+        this.setItem(4, 4, new GUIItem(Material.INK_SACK, "&3Ping on Private Message", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPrivateMessageEnabled())?(short)10:(short)8)));
+
+        this.setItem(3, 6, new GUIItem(Material.NOTE_BLOCK, "&3Ping on Chat Mention", 1, ";&rDisabling this will stop you from being pinged;&rwhen you recieve a chat mention.")) ;
+        this.setItem(4, 6, new GUIItem(Material.INK_SACK, "&3Ping on Chat Mention", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnChatMentionEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnChatMentionEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnChatMentionEnabled())?(short)10:(short)8)));
 
     }
 
@@ -64,12 +67,15 @@ public class ChatPreferences extends GUI {
                         }
                         break;
                     case 4:
-                        if (column == 3) {
+                        if (column == 2) {
                             player.getPreferences().setPingOnPartyChat(!player.getPreferences().isPingOnPartyChatEnabled());
-                            this.updateItem(4, 3, new GUIItem(Material.INK_SACK, "&3Ping on Party Chat", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPartyChatEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPartyChatEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPartyChatEnabled())?(short)10:(short)8)));
-                        } else {
+                            this.updateItem(4, 2, new GUIItem(Material.INK_SACK, "&3Ping on Party Chat", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPartyChatEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPartyChatEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPartyChatEnabled())?(short)10:(short)8)));
+                        } else if (column == 4) {
                             player.getPreferences().setPingOnPrivateMessage(!player.getPreferences().isPingOnPrivateMessageEnabled());
-                            this.updateItem(4, 5, new GUIItem(Material.INK_SACK, "&3Ping on Private Message", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPrivateMessageEnabled())?(short)10:(short)8)));
+                            this.updateItem(4, 4, new GUIItem(Material.INK_SACK, "&3Ping on Private Message", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnPrivateMessageEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnPrivateMessageEnabled())?(short)10:(short)8)));
+                        } else {
+                            player.getPreferences().setPingOnChatMention(!player.getPreferences().isPingOnChatMentionEnabled());
+                            this.updateItem(4, 6, new GUIItem(Material.INK_SACK, "&3Ping on Chat Mention", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isPingOnChatMentionEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isPingOnChatMentionEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isPingOnChatMentionEnabled())?(short)10:(short)8)));
                         }
                         break;
                 }

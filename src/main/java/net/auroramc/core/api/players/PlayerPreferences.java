@@ -22,6 +22,7 @@ public class PlayerPreferences {
     private PrivateMessageMode privateMessageMode;
     private boolean pingOnPrivateMessage;
     private boolean pingOnPartyChat;
+    private boolean pingOnChatMention;
 
     //Game Prefs
 
@@ -45,7 +46,7 @@ public class PlayerPreferences {
     private boolean hubForcefield;
     private boolean hideDisguiseName;
 
-    public PlayerPreferences(AuroraMCPlayer player, boolean friendRequests, boolean partyRequests, MuteInformMode muteInformMode, boolean chatVisibility, PrivateMessageMode privateMessageMode, boolean pingOnPrivateMessage, boolean pingOnPartyChat, boolean hubVisibility, boolean hubSpeed, boolean hubFlight, boolean reportNotifications, boolean hubInvisibility, boolean ignoreHubKnockback, boolean socialMediaNotifications, boolean staffLoginNotifications, boolean approvalNotifications, boolean approvalProcessedNotifications, boolean hubForcefield, boolean hideDisguiseName) {
+    public PlayerPreferences(AuroraMCPlayer player, boolean friendRequests, boolean partyRequests, MuteInformMode muteInformMode, boolean chatVisibility, PrivateMessageMode privateMessageMode, boolean pingOnPrivateMessage, boolean pingOnPartyChat, boolean hubVisibility, boolean hubSpeed, boolean hubFlight, boolean reportNotifications, boolean hubInvisibility, boolean ignoreHubKnockback, boolean socialMediaNotifications, boolean staffLoginNotifications, boolean approvalNotifications, boolean approvalProcessedNotifications, boolean hubForcefield, boolean hideDisguiseName, boolean pingOnChatMention) {
         this.player = player;
         this.friendRequests = friendRequests;
         this.partyRequests = partyRequests;
@@ -53,6 +54,7 @@ public class PlayerPreferences {
         this.chatVisibility = chatVisibility;
         this.privateMessageMode = privateMessageMode;
         this.pingOnPrivateMessage = pingOnPrivateMessage;
+        this.pingOnChatMention = pingOnChatMention;
         this.pingOnPartyChat = pingOnPartyChat;
         this.hubVisibility = hubVisibility;
         this.hubSpeed = hubSpeed;
@@ -140,6 +142,10 @@ public class PlayerPreferences {
 
     public boolean isStaffLoginNotificationsEnabled() {
         return staffLoginNotifications;
+    }
+
+    public boolean isPingOnChatMentionEnabled() {
+        return pingOnChatMention;
     }
 
     public MuteInformMode getMuteInformMode() {
@@ -283,6 +289,15 @@ public class PlayerPreferences {
         out.writeUTF("PingOnPrivateMessageChanged");
         out.writeUTF(player.getName());
         out.writeBoolean(pingOnPrivateMessage);
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+    }
+
+    public void setPingOnChatMention(boolean pingOnChatMention) {
+        this.pingOnChatMention = pingOnChatMention;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("PingOnChatMentionChanged");
+        out.writeUTF(player.getName());
+        out.writeBoolean(pingOnChatMention);
         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
     }
 
