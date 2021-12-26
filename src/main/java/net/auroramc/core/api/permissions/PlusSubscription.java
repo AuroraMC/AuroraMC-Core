@@ -45,7 +45,7 @@ public final class PlusSubscription {
         this.daysSubscribed = AuroraMCAPI.getDbManager().getDaysSubscribed(player);
         this.streakStartTimestamp = AuroraMCAPI.getDbManager().getStreakStartTimestamp(player);
         this.subscriptionStreak = AuroraMCAPI.getDbManager().getStreak(player);
-        if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis()) {
+        if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis() && (endTimestamp - System.currentTimeMillis()) < 2592000000L) {
             expireTask = new BukkitRunnable(){
                 @Override
                 public void run() {

@@ -11,6 +11,8 @@ import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class TabCompleteInjector {
 
-    public static void onJoin(AuroraMCPlayer player) {
+    public static void onJoin(Player pl) {
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
 
             @Override
@@ -38,6 +40,15 @@ public class TabCompleteInjector {
                             @Override
                             public void run() {
                                 //This is a command, tab complete it.
+                                AuroraMCPlayer player = AuroraMCAPI.getPlayer(pl);
+                                if (player == null) {
+                                    //Player has not yet loaded fully.
+                                    return;
+                                }
+                                if (!player.isLoaded()) {
+                                    //Player has not yet loaded fully.
+                                    return;
+                                }
                                 if (message.contains(" ")) {
                                     String commandLabel = message.split(" ")[0].replace("/","");
                                     Command command = AuroraMCAPI.getCommand(commandLabel);
@@ -91,15 +102,15 @@ public class TabCompleteInjector {
 
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
-                //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE: " + ChatColor.GREEN + packet.toString());
+                //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE FOR PLAYER " + pl.getName() + ": " + ChatColor.GREEN + packet.toString());
                 super.write(channelHandlerContext, packet, channelPromise);
             }
 
 
         };
 
-        ChannelPipeline pipeline = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection.networkManager.channel.pipeline();
-        pipeline.addBefore("packet_handler", player.getPlayer().getName(), channelDuplexHandler);
+        ChannelPipeline pipeline = ((CraftPlayer) pl).getHandle().playerConnection.networkManager.channel.pipeline();
+        pipeline.addBefore("packet_handler", pl.getName(), channelDuplexHandler);
     }
 
     public static void removePlayer(Player player) {
