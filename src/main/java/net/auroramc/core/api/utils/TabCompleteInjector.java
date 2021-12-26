@@ -10,6 +10,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -103,6 +104,9 @@ public class TabCompleteInjector {
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
                 //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE FOR PLAYER " + pl.getName() + ": " + ChatColor.GREEN + packet.toString());
+                if (packet instanceof PacketPlayOutPlayerInfo) {
+
+                }
                 super.write(channelHandlerContext, packet, channelPromise);
             }
 
