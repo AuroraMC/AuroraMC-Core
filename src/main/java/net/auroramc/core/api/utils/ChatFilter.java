@@ -4,6 +4,8 @@
 
 package net.auroramc.core.api.utils;
 
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,70 +36,8 @@ public class ChatFilter {
         }
 
         pairs:
-        for (int i = 0;i < splitMessage.size() - 1;i++) {
-            String pair = splitMessage.get(i).toLowerCase() + splitMessage.get(i+1).toLowerCase();
-            if (splitMessage.get(i).equalsIgnoreCase("ez") || splitMessage.get(i).matches("^[lL]+$")) {
-                Random random = new Random();
-                int phrase = random.nextInt(toxicReplacements.size());
-                return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
-            }
-            filteredWords:
-            for (String filteredWord : coreFilteredWords) {
-                if (pair.contains(filteredWord)) {
-                    for (String whitelistedWord : wordWhitelist) {
-                        if (pair.contains(whitelistedWord)) {
-                            continue filteredWords;
-                        }
-                    }
-                    //This is not in the word whitelist, filter it;
-                    //So as to skip the second part of the pair, add 1.
-                    if (!splitMessage.get(i).toLowerCase().contains(filteredWord) && splitMessage.get(i + 1).toLowerCase().contains(filteredWord)) {
-                        finalMessage.add(filterWord(splitMessage.get(i)));
-                        finalMessage.add("HONK!");
-                    } else if (splitMessage.get(i).toLowerCase().contains(filteredWord) && !splitMessage.get(i + 1).toLowerCase().contains(filteredWord)) {
-                        finalMessage.add("HONK!");
-                        finalMessage.add(filterWord(splitMessage.get(i+1)));
-                    } else {
-                        finalMessage.add("HONK!");
-                    }
-                    i++;
-                    if (i == splitMessage.size() - 2) {
-                        finalMessage.add(filterWord(splitMessage.get(i + 1)));
-                    }
-                    continue pairs;
-                }
-            }
-
-            for (String blacklistedWord : wordBlacklist) {
-                if (pair.contains(blacklistedWord)) {
-                    if (!splitMessage.get(i).toLowerCase().contains(blacklistedWord) && splitMessage.get(i + 1).toLowerCase().contains(blacklistedWord)) {
-                        finalMessage.add(filterWord(splitMessage.get(i)));
-                        finalMessage.add("HONK!");
-                    } else if (splitMessage.get(i).toLowerCase().contains(blacklistedWord) && !splitMessage.get(i + 1).toLowerCase().contains(blacklistedWord)) {
-                        finalMessage.add("HONK!");
-                        finalMessage.add(filterWord(splitMessage.get(i+1)));
-                    } else {
-                        finalMessage.add("HONK!");
-                    }
-                    //So as to skip the second part of the pair, add 1.
-                    i++;
-                    if (i == splitMessage.size() - 2) {
-                        finalMessage.add(filterWord(splitMessage.get(i + 1)));
-                    }
-                    continue pairs;
-                }
-            }
-
-            finalMessage.add(splitMessage.get(i));
-            if (i == splitMessage.size() - 2) {
-                finalMessage.add(filterWord(splitMessage.get(i + 1)));
-            }
-        }
-
-        if (splitMessage.get(splitMessage.size() - 1).equalsIgnoreCase("ez") || splitMessage.get(splitMessage.size() - 1).matches("^[lL]+$")) {
-            Random random = new Random();
-            int phrase = random.nextInt(toxicReplacements.size());
-            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
+        for (String word : splitMessage) {
+            finalMessage.add(filterWord(word));
         }
 
         String finalJoinedMessage = String.join(" ", finalMessage);
@@ -114,9 +54,9 @@ public class ChatFilter {
     private String filterWord(String word) {
         filteredWords:
         for (String filteredWord : coreFilteredWords) {
-            if (word.toLowerCase().contains(filteredWord)) {
+            if (word.toLowerCase().equalsIgnoreCase(filteredWord)) {
                 for (String whitelistedWord : wordWhitelist) {
-                    if (word.toLowerCase().contains(whitelistedWord)) {
+                    if (word.toLowerCase().equalsIgnoreCase(whitelistedWord)) {
                         break filteredWords;
                     }
                 }
@@ -127,13 +67,13 @@ public class ChatFilter {
         }
 
         for (String blacklistedWord : wordBlacklist) {
-            if (word.toLowerCase().contains(blacklistedWord)) {
+            if (word.toLowerCase().equalsIgnoreCase(blacklistedWord)) {
                 //So as to skip the second part of the pair, add 1.
                 return "HONK!";
             }
         }
 
-        if (word.equalsIgnoreCase("ez") || word.matches("^[lL]+$")) {
+        if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$")) {
             Random random = new Random();
             int phrase = random.nextInt(toxicReplacements.size());
             return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
