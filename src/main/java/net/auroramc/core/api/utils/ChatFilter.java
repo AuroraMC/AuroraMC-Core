@@ -98,9 +98,10 @@ public class ChatFilter {
                         finalMessage.add("§c" + player.getPlayer().getName() + "§r");
                         if (player.getActiveMutes().size() > 0 && player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
                             String msg = AuroraMCAPI.getFormatter().privateMessage(player.getPlayer().getName(), pl, "Hey! I'm currently muted and cannot message you right now.");
+                            pl.getPlayer().sendMessage(msg);
                             player.getPlayer().sendMessage(msg);
                         }
-                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 1);
+                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                         continue;
                     }
                 }
