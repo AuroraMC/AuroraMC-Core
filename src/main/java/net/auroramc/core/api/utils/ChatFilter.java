@@ -101,7 +101,9 @@ public class ChatFilter {
                             pl.getPlayer().sendMessage(msg);
                             player.getPlayer().sendMessage(msg);
                         }
-                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
+                        if (player.getPreferences().isPingOnChatMentionEnabled()) {
+                            player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
+                        }
                         continue;
                     }
                 }
