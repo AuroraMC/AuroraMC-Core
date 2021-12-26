@@ -81,7 +81,7 @@ public class ChatListener implements Listener {
                     }
                 }
                 player.messageSent();
-                e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
+                e.setMessage(AuroraMCAPI.getFilter().processMentions(player, AuroraMCAPI.getFilter().filter(e.getMessage())));
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
                         if (!AuroraMCAPI.getPlayer(player2).isIgnored(player.getId()) || AuroraMCAPI.getPlayer(player2).hasPermission("moderation")) {
