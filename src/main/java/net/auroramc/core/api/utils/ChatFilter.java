@@ -4,6 +4,11 @@
 
 package net.auroramc.core.api.utils;
 
+import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.PlayerPreferences;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -80,6 +85,32 @@ public class ChatFilter {
         }
 
         return word;
+    }
+
+    public String processMentions(AuroraMCPlayer pl, String message) {
+        List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
+        List<String> finalMessage = new ArrayList<>();
+        for (String word : splitMessage) {
+            Player player = Bukkit.getPlayer(word);
+            if (player != null) {
+                AuroraMCPlayer auroraMCPlayer = AuroraMCAPI.getPlayer(player);
+                if (auroraMCPlayer != null) {
+                    if (auroraMCPlayer.isLoaded()) {
+                        if (!auroraMCPlayer.isVanished()) {
+                            finalMessage.add("§c" + auroraMCPlayer.getPlayer().getName() + "§r");
+                            if (auroraMCPlayer.getActiveMutes().size() > 0 && auroraMCPlayer.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
+                                String msg = AuroraMCAPI.getFormatter().privateMessage(auroraMCPlayer.getPlayer().getName(), pl, "Hey! I'm currently muted and cannot message you right now.");
+                                auroraMCPlayer.getPlayer().sendMessage(msg);
+                            }
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
+                            continue;
+                        }
+                    }
+                }
+            }
+            finalMessage.add(word);
+        }
+        return String.join(" ", finalMessage);
     }
 
     public List<String> getCoreFilteredWords() {
