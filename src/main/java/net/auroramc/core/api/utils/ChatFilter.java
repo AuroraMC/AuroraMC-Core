@@ -91,20 +91,17 @@ public class ChatFilter {
         List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
         List<String> finalMessage = new ArrayList<>();
         for (String word : splitMessage) {
-            Player player = Bukkit.getPlayer(word);
+            AuroraMCPlayer player = AuroraMCAPI.getPlayer(word);
             if (player != null) {
-                AuroraMCPlayer auroraMCPlayer = AuroraMCAPI.getPlayer(player);
-                if (auroraMCPlayer != null) {
-                    if (auroraMCPlayer.isLoaded()) {
-                        if (!auroraMCPlayer.isVanished()) {
-                            finalMessage.add("§c" + auroraMCPlayer.getPlayer().getName() + "§r");
-                            if (auroraMCPlayer.getActiveMutes().size() > 0 && auroraMCPlayer.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
-                                String msg = AuroraMCAPI.getFormatter().privateMessage(auroraMCPlayer.getPlayer().getName(), pl, "Hey! I'm currently muted and cannot message you right now.");
-                                auroraMCPlayer.getPlayer().sendMessage(msg);
-                            }
-                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 100, 1);
-                            continue;
+                if (player.isLoaded()) {
+                    if (!player.isVanished()) {
+                        finalMessage.add("§c" + player.getPlayer().getName() + "§r");
+                        if (player.getActiveMutes().size() > 0 && player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
+                            String msg = AuroraMCAPI.getFormatter().privateMessage(player.getPlayer().getName(), pl, "Hey! I'm currently muted and cannot message you right now.");
+                            player.getPlayer().sendMessage(msg);
                         }
+                        player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 1);
+                        continue;
                     }
                 }
             }
