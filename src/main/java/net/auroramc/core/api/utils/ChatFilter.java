@@ -87,7 +87,7 @@ public class ChatFilter {
         return word;
     }
 
-    public String processMentions(AuroraMCPlayer pl, String message) {
+    public String processMentions(String message) {
         List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
         List<String> finalMessage = new ArrayList<>();
         for (String word : splitMessage) {
@@ -96,14 +96,25 @@ public class ChatFilter {
                 if (player.isLoaded()) {
                     if (!player.isVanished()) {
                         finalMessage.add("§c" + player.getPlayer().getName() + "§r");
-                        if (player.getActiveMutes().size() > 0 && player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
-                            String msg = AuroraMCAPI.getFormatter().privateMessage(player.getPlayer().getName(), pl, "Hey! I'm currently muted and cannot message you right now.");
-                            pl.getPlayer().sendMessage(msg);
-                            player.getPlayer().sendMessage(msg);
-                        }
-                        if (player.getPreferences().isPingOnChatMentionEnabled()) {
-                            player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
-                        }
+                        continue;
+                    }
+                }
+            }
+            finalMessage.add(word);
+        }
+        return String.join(" ", finalMessage);
+    }
+
+    public String processMentions(AuroraMCPlayer sender, AuroraMCPlayer recipient, String message) {
+        List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
+        List<String> finalMessage = new ArrayList<>();
+        boolean alreadyFound = false;
+        for (String word : splitMessage) {
+            if (word.equalsIgnoreCase(recipient.getPlayer().getName()) && !alreadyFound) {
+                if (recipient.isLoaded()) {
+                    if (!recipient.isVanished()) {
+                        finalMessage.add("§c" + recipient.getPlayer().getName() + "§r");
+                        alreadyFound = true;
                         continue;
                     }
                 }
