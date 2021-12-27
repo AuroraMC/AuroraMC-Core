@@ -121,10 +121,11 @@ public class TabCompleteInjector {
 
                     List<PacketPlayOutPlayerInfo.PlayerInfoData> data = (List<PacketPlayOutPlayerInfo.PlayerInfoData>) field.get(info);
 
+
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(pl);
                     if (player == null) {
-                        //Player has not yet loaded fully. Check if the person is the same person.
 
+                        //Player has not yet loaded fully. Check if the person is the same person.
                         if (action != PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER) {
                             //Player has not yet loaded fully.
                             return;
@@ -132,6 +133,7 @@ public class TabCompleteInjector {
                         if (!data.get(0).a().getId().equals(pl.getUniqueId())) {
                             return;
                         }
+
                         super.write(channelHandlerContext, packet, channelPromise);
                         return;
                     }
@@ -149,17 +151,22 @@ public class TabCompleteInjector {
                         return;
                     }
 
+
                     if (!player.isLoaded() && action == PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER) {
                         //Player has not yet loaded fully.
                         return;
                     }
 
+
                     List<PacketPlayOutPlayerInfo.PlayerInfoData> clone = new ArrayList<>(data);
 
 
                     for (PacketPlayOutPlayerInfo.PlayerInfoData d : clone) {
-                        AuroraMCPlayer player1 = AuroraMCAPI.getPlayer(d.a().getId());
+                        AuroraMCPlayer player1 = AuroraMCAPI.getPlayer(d.a().getName());
                         if (player1 != null) {
+                            if (player1.getPlayer().equals(pl)) {
+                                continue;
+                            }
                             if (!player1.isVanished() || player1.getRank().getId() <= player.getRank().getId()) {
                                 continue;
                             }
@@ -167,9 +174,11 @@ public class TabCompleteInjector {
                         data.remove(d);
                     }
 
+
                     if (data.size() == 0) {
                         return;
                     }
+
                     //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE FOR PLAYER " + pl.getName() + ": " + ChatColor.GREEN + packet.toString());
                 }
                 super.write(channelHandlerContext, packet, channelPromise);
