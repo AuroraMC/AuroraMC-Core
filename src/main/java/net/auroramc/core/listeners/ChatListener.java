@@ -9,6 +9,7 @@ import net.auroramc.core.api.backend.ChatLogs;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatChannel;
 import net.auroramc.core.api.players.ChatSlowLength;
+import net.auroramc.core.api.players.PlayerPreferences;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -81,11 +82,28 @@ public class ChatListener implements Listener {
                     }
                 }
                 player.messageSent();
-                e.setMessage(AuroraMCAPI.getFilter().processMentions(player, AuroraMCAPI.getFilter().filter(e.getMessage())));
+                e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
                         if (!AuroraMCAPI.getPlayer(player2).isIgnored(player.getId()) || AuroraMCAPI.getPlayer(player2).hasPermission("moderation")) {
-                            player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, e.getMessage()));
+                            if (player2.equals(player.getPlayer())) {
+                                player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                            } else {
+                                AuroraMCPlayer recipient = AuroraMCAPI.getPlayer(player2);
+                                String mentionedMessage = AuroraMCAPI.getFilter().processMentions(player, recipient, e.getMessage());
+                                player2.spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, mentionedMessage));
+                                if (!e.getMessage().equals(mentionedMessage)) {
+                                    if (recipient.getActiveMutes().size() > 0 && recipient.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
+                                        String msg = AuroraMCAPI.getFormatter().privateMessage(recipient.getPlayer().getName(), player, "Hey! I'm currently muted and cannot message you right now.");
+                                        recipient.getPlayer().sendMessage(msg);
+                                        player.getPlayer().sendMessage(msg);
+                                    }
+                                    if (recipient.getPreferences().isPingOnChatMentionEnabled()) {
+                                        recipient.getPlayer().playSound(recipient.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
