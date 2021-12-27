@@ -290,6 +290,8 @@ public class AuroraMCPlayer {
                                                     }
                                                 }
                                             }
+                                        } else {
+                                            pl.getPlayer().hidePlayer(bukkitPlayer);
                                         }
                                     }
                                 }
@@ -349,6 +351,8 @@ public class AuroraMCPlayer {
                                             }
                                         }
                                     }
+                                } else {
+                                    bukkitPlayer.hidePlayer(pl.getPlayer());
                                 }
                                 if (pla.getRank().getId() <= pl.getRank().getId()) {
                                     pl.getPlayer().showPlayer(bukkitPlayer);
@@ -373,6 +377,8 @@ public class AuroraMCPlayer {
                                             }
                                         }
                                     }
+                                } else {
+                                    pl.getPlayer().hidePlayer(bukkitPlayer);
                                 }
                             }
                         }

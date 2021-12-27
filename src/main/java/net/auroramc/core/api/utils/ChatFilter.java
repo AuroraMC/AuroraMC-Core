@@ -113,7 +113,7 @@ public class ChatFilter {
             if (word.equalsIgnoreCase(recipient.getPlayer().getName()) && !alreadyFound) {
                 if (recipient.isLoaded()) {
                     if (!recipient.isVanished()) {
-                        finalMessage.add("§c" + recipient.getPlayer().getName() + "§r");
+                        finalMessage.add("§b" + recipient.getPlayer().getName() + "§r");
                         alreadyFound = true;
                         continue;
                     }
