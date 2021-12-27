@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class BadConnection extends Achievement {
     public BadConnection() {
-        super(23, "Bad Connection", "Leave and rejoin 5 times in 15 minutes", "None", true, false, AchievementCategory.GENERAL);
+        super(23, "Bad Connection", "Leave and rejoin 5 times in 15 minutes", "None", false, false, AchievementCategory.GENERAL);
     }
 }
