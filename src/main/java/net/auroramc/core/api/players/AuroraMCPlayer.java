@@ -240,6 +240,7 @@ public class AuroraMCPlayer {
                                         if (player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()) != null) {
                                             player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()).unregister();
                                         }
+                                        bukkitPlayer.showPlayer(pl.getPlayer());
                                         org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                         team.addPlayer(pl.getPlayer());
                                         String s;
