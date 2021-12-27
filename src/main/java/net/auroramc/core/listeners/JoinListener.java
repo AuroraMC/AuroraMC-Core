@@ -84,22 +84,6 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerLoginEvent e) {
         AuroraMCPlayer player = new AuroraMCPlayer(e.getPlayer());
         AuroraMCAPI.newPlayer(player);
-
-        for (AuroraMCPlayer player2 : AuroraMCAPI.getPlayers()) {
-            if (player2!=player) {
-                if (player2.isVanished()) {
-                    e.getPlayer().getPlayer().hidePlayer(player2.getPlayer());
-                }
-            }
-        }
-
-        if (player.isVanished()) {
-            for (AuroraMCPlayer player2 : AuroraMCAPI.getPlayers()) {
-                if (player2!=player) {
-                    player2.getPlayer().hidePlayer(e.getPlayer());
-                }
-            }
-        }
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "join", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
     }
