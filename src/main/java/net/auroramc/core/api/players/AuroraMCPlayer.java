@@ -21,6 +21,7 @@ import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -203,6 +204,10 @@ public class AuroraMCPlayer {
                     @Override
                     @SuppressWarnings("deprecation")
                     public void run() {
+                        for (Player player1 : Bukkit.getOnlinePlayers()) {
+                            player1.hidePlayer(player);
+                            player.hidePlayer(player1);
+                        }
                         //This has to be run on the main thread.
                         for (Player bukkitPlayer : Bukkit.getOnlinePlayers()) {
                             if (!pl.isVanished()) {
