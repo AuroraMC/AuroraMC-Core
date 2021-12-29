@@ -30,6 +30,6 @@ public class Belgium extends Banner {
     }
 
     public Belgium() {
-        super(5, "Belgium", "&e&lBelgium", "There is currently no description for this cosmetic!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
+        super(5, "Belgium", "&e&lBelgium", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
     }
 }
