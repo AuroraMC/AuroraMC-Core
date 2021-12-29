@@ -11,6 +11,6 @@ import java.util.Collections;
 public class Japan extends Hat {
 
     public Japan() {
-        super(306, "Japan", "&c&lJap&f&lan", "There is currently no description for this cosmetic!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked in Crates", "d640ae466162a47d3ee33c4076df1cab96f11860f07edb1f0832c525a9e33323", true);
+        super(306, "Japan", "&c&lJap&f&lan", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked in Crates", "d640ae466162a47d3ee33c4076df1cab96f11860f07edb1f0832c525a9e33323", true);
     }
 }
