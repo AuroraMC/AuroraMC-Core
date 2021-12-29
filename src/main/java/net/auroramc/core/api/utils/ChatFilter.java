@@ -95,7 +95,7 @@ public class ChatFilter {
             if (player != null) {
                 if (player.isLoaded()) {
                     if (!player.isVanished()) {
-                        finalMessage.add("§c" + player.getPlayer().getName() + "§r");
+                        finalMessage.add("§b" + player.getPlayer().getName() + "§r");
                         continue;
                     }
                 }
