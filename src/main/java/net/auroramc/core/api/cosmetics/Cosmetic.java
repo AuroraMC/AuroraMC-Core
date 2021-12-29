@@ -193,6 +193,7 @@ public abstract class Cosmetic {
         TICKETS,
         STORE_PURCHASE,
         CRATE,
+        LEVEL,
         ALL
     }
 
