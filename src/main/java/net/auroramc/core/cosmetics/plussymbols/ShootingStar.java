@@ -12,6 +12,6 @@ import java.util.Collections;
 public class ShootingStar extends PlusSymbol {
 
     public ShootingStar() {
-        super(210, "Shooting Star", "&3&l☄ Shooting Star", "There is currently no description for this cosmetic!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.NETHER_STAR, (short)0, '☄');
+        super(210, "Shooting Star", "&3&l☄ Shooting Star", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.NETHER_STAR, (short)0, '☄');
     }
 }

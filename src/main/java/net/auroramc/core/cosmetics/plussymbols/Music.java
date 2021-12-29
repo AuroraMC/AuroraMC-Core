@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Music extends PlusSymbol {
 
     public Music() {
-        super(213, "Music", "&3&l♫ Music", "There is currently no description for this cosmetic!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.JUKEBOX, (short)0, '♫');
+        super(213, "Music", "&3&l♫ Music", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.JUKEBOX, (short)0, '♫');
     }
 }
