@@ -162,7 +162,7 @@ public class TabCompleteInjector {
 
 
                     for (PacketPlayOutPlayerInfo.PlayerInfoData d : clone) {
-                        AuroraMCPlayer player1 = AuroraMCAPI.getPlayer(d.a().getName());
+                        AuroraMCPlayer player1 = AuroraMCAPI.getPlayer(d.a().getId());
                         if (player1 != null) {
                             if (player1.getPlayer().equals(pl)) {
                                 continue;
