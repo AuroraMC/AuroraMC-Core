@@ -111,6 +111,14 @@ public class CosmeticsListing extends GUI {
 
                     Cosmetic cosmetic = cosmetics.get(pi);
                     this.updateItem(row, column, new GUIItem(cosmetic.getItem(player)));
+                    column++;
+                    if (column == 8) {
+                        row++;
+                        column = 1;
+                        if (row == 5) {
+                            break;
+                        }
+                    }
                 }
                 return;
             }
