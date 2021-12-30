@@ -34,6 +34,7 @@ import net.auroramc.core.cosmetics.banners.Poland;
 import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.*;
+import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
@@ -250,6 +251,37 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Portugal());
         AuroraMCAPI.registerCosmetic(new Spain());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.UnitedStates());
+        AuroraMCAPI.registerCosmetic(new ShulkerOne());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwo());
+        AuroraMCAPI.registerCosmetic(new ShulkerThree());
+        AuroraMCAPI.registerCosmetic(new ShulkerFour());
+        AuroraMCAPI.registerCosmetic(new ShulkerFive());
+        AuroraMCAPI.registerCosmetic(new ShulkerSix());
+        AuroraMCAPI.registerCosmetic(new ShulkerSeven());
+        AuroraMCAPI.registerCosmetic(new ShulkerEight());
+        AuroraMCAPI.registerCosmetic(new ShulkerNine());
+        AuroraMCAPI.registerCosmetic(new ShulkerTen());
+        AuroraMCAPI.registerCosmetic(new ShulkerEleven());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwelve());
+        AuroraMCAPI.registerCosmetic(new ShulkerThirteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerFourteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerFifteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerSixteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerSeventeen());
+        AuroraMCAPI.registerCosmetic(new ShulkerEighteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerNineteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwenty());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyOne());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyTwo());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyThree());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyFour());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyFive());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentySix());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentySeven());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyEight());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyNine());
+        AuroraMCAPI.registerCosmetic(new ShulkerThirty());
+
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
