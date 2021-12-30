@@ -261,6 +261,27 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new ShulkerEight());
         AuroraMCAPI.registerCosmetic(new ShulkerNine());
         AuroraMCAPI.registerCosmetic(new ShulkerTen());
+        AuroraMCAPI.registerCosmetic(new ShulkerEleven());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwelve());
+        AuroraMCAPI.registerCosmetic(new ShulkerThirteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerFourteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerFifteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerSixteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerSeventeen());
+        AuroraMCAPI.registerCosmetic(new ShulkerEighteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerNineteen());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwenty());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyOne());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyTwo());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyThree());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyFour());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyFive());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentySix());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentySeven());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyEight());
+        AuroraMCAPI.registerCosmetic(new ShulkerTwentyNine());
+        AuroraMCAPI.registerCosmetic(new ShulkerThirty());
+
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
