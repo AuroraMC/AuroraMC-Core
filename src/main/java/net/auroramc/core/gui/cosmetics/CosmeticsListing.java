@@ -110,7 +110,7 @@ public class CosmeticsListing extends GUI {
                     }
 
                     Cosmetic cosmetic = cosmetics.get(pi);
-                    this.setItem(row, column, new GUIItem(cosmetic.getItem(player)));
+                    this.updateItem(row, column, new GUIItem(cosmetic.getItem(player)));
                 }
                 return;
             }

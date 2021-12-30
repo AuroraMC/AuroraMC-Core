@@ -83,7 +83,15 @@ public class ChatListener implements Listener {
                 }
                 player.messageSent();
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
-                player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                if (player.isDisguised()) {
+                    if (player.getPreferences().isHideDisguiseNameEnabled()) {
+                        player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().undisguisedChatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                    } else {
+                        player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                    }
+                } else {
+                    player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().chatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                }
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
                     if (AuroraMCAPI.getPlayer(player2).getPreferences().isChatVisibilityEnabled()) {
                         if (!AuroraMCAPI.getPlayer(player2).isIgnored(player.getId()) || AuroraMCAPI.getPlayer(player2).hasPermission("moderation")) {
