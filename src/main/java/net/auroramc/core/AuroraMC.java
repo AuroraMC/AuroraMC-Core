@@ -34,8 +34,7 @@ import net.auroramc.core.cosmetics.banners.Poland;
 import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.*;
-import net.auroramc.core.cosmetics.hats.rewards.ShulkerOne;
-import net.auroramc.core.cosmetics.hats.rewards.ShulkerTwo;
+import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
@@ -254,6 +253,14 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.UnitedStates());
         AuroraMCAPI.registerCosmetic(new ShulkerOne());
         AuroraMCAPI.registerCosmetic(new ShulkerTwo());
+        AuroraMCAPI.registerCosmetic(new ShulkerThree());
+        AuroraMCAPI.registerCosmetic(new ShulkerFour());
+        AuroraMCAPI.registerCosmetic(new ShulkerFive());
+        AuroraMCAPI.registerCosmetic(new ShulkerSix());
+        AuroraMCAPI.registerCosmetic(new ShulkerSeven());
+        AuroraMCAPI.registerCosmetic(new ShulkerEight());
+        AuroraMCAPI.registerCosmetic(new ShulkerNine());
+        AuroraMCAPI.registerCosmetic(new ShulkerTen());
 
         //Registering default Event Listeners
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
