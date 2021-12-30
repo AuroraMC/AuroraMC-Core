@@ -193,6 +193,7 @@ public abstract class Cosmetic {
         TICKETS,
         STORE_PURCHASE,
         CRATE,
+        LEVEL,
         ALL
     }
 
@@ -224,6 +225,7 @@ public abstract class Cosmetic {
             }
             case STORE_PURCHASE:
             case CRATE:
+            case LEVEL:
             case TICKETS:{
                 return player.getUnlockedCosmetics().contains(this);
             }
