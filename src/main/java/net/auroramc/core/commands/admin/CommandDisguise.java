@@ -40,7 +40,7 @@ public class CommandDisguise extends Command {
                         new BukkitRunnable(){
                             @Override
                             public void run() {
-                                UUID uuid = UUIDUtil.getUUID(args.get(0));
+                                UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
                                 if (uuid != null) {
                                     Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
                                     if (rank != null) {
@@ -51,23 +51,28 @@ public class CommandDisguise extends Command {
                                     }
                                 }
 
-                                //Hand this off to the Bungee to do some checks on the username to check that they:
-                                //1 - are not online
-                                //2 - are not listed in the username blacklist
-                                //3 - would not get filtered if the username is put through the filter.
-                                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                                out.writeUTF("DisguiseCheck");
-                                out.writeUTF(player.getName());
-                                if (player.isDisguised()) {
-                                    out.writeUTF(player.getName());
-                                } else {
-                                    out.writeUTF("-");
+                                if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username is blacklisted."));
+                                    return;
                                 }
-                                out.writeUTF(args.get(0));
-                                //This is the variation of the command that was used, so the Bukkit plugin knows what message to send the player.
-                                out.writeInt(1);
-                                AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(0) + ";" + args.get(0) + ";" + Rank.PLAYER.getId());
-                                player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
+                                if (!AuroraMCAPI.getFilter().filter(args.get(0)).equals(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username would be filtered."));
+                                    return;
+                                }
+
+                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                    return;
+                                }
+
+                                new BukkitRunnable(){
+                                    @Override
+                                    public void run() {
+                                        player.disguise(args.get(0), args.get(0), Rank.PLAYER);
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s**. To undisguise, simply type **/undisguise**.", args.get(0))));
+                                    }
+                                }.runTask(AuroraMCAPI.getCore());
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
@@ -81,33 +86,44 @@ public class CommandDisguise extends Command {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You cannot disguise as yourself."));
                             return;
                         }
-                        UUID uuid = UUIDUtil.getUUID(args.get(0));
-                        if (uuid != null) {
-                            Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
-                            if (rank != null) {
-                                if (rank.getCategory() != Rank.RankCategory.PLAYER) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as this player as they have a non-purchasable rank."));
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
+                                if (uuid != null) {
+                                    Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
+                                    if (rank != null) {
+                                        if (rank.getCategory() != Rank.RankCategory.PLAYER) {
+                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as this player as they have a non-purchasable rank."));
+                                            return;
+                                        }
+                                    }
+                                }
+
+                                if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username is blacklisted."));
                                     return;
                                 }
+
+                                if (!AuroraMCAPI.getFilter().filter(args.get(0)).equals(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username would be filtered."));
+                                    return;
+                                }
+
+                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                    return;
+                                }
+
+                                new BukkitRunnable(){
+                                    @Override
+                                    public void run() {
+                                        player.disguise(args.get(1), args.get(0), Rank.PLAYER);
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s** with the skin of **%s**. To undisguise, simply type **/undisguise**.", args.get(0), args.get(1))));
+                                    }
+                                }.runTask(AuroraMCAPI.getCore());
                             }
-                        }
-                        //Hand this off to the Bungee to do some checks on the username to check that they:
-                        //1 - are not online
-                        //2 - are not listed in the username blacklist
-                        //3 - would not get filtered if the username is put through the filter.
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("DisguiseCheck");
-                        out.writeUTF(player.getName());
-                        if (player.isDisguised()) {
-                            out.writeUTF(player.getName());
-                        } else {
-                            out.writeUTF("-");
-                        }
-                        out.writeUTF(args.get(0));
-                        //This is the variation of the command that was used, so the Bukkit plugin knows what message to send the player.
-                        out.writeInt(2);
-                        AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(1) + ";" + args.get(0) + ";" + Rank.PLAYER.getId());
-                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
                     }
@@ -133,33 +149,47 @@ public class CommandDisguise extends Command {
                             chosenRank = Rank.PLAYER;
                         }
 
-                        UUID uuid = UUIDUtil.getUUID(args.get(0));
-                        if (uuid != null) {
-                            Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
-                            if (rank != null) {
-                                if (rank.getCategory() != Rank.RankCategory.PLAYER) {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they have a non-purchasable rank."));
+                        final Rank rank = chosenRank;
+
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
+                                if (uuid != null) {
+                                    Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
+                                    if (rank != null) {
+                                        if (rank.getCategory() != Rank.RankCategory.PLAYER) {
+                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they have a non-purchasable rank."));
+                                            return;
+                                        }
+                                    }
+                                }
+
+                                if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username is blacklisted."));
                                     return;
                                 }
+
+                                if (!AuroraMCAPI.getFilter().filter(args.get(0)).equals(args.get(0))) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username would be filtered."));
+                                    return;
+                                }
+
+                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                    return;
+                                }
+
+                                new BukkitRunnable(){
+                                    @Override
+                                    public void run() {
+
+                                        player.disguise(args.get(1), args.get(0), rank);
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s** with the skin of **%s**. To undisguise, simply type **/undisguise**.", args.get(0), args.get(1))));
+                                    }
+                                }.runTask(AuroraMCAPI.getCore());
                             }
-                        }
-                        //Hand this off to the Bungee to do some checks on the username to check that they:
-                        //1 - are not online
-                        //2 - are not listed in the username blacklistw r
-                        //3 - would not get filtered if the username is put through the filter.
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("DisguiseCheck");
-                        out.writeUTF(player.getName());
-                        if (player.isDisguised()) {
-                            out.writeUTF(player.getName());
-                        } else {
-                            out.writeUTF("-");
-                        }
-                        out.writeUTF(args.get(0));
-                        //This is the variation of the command that was used, so the Bukkit plugin knows what message to send the player.
-                        out.writeInt(2);
-                        AuroraMCAPI.getPendingDisguiseChecks().put(player.getPlayer(),args.get(1) + ";" + args.get(0) + ";" + chosenRank.getId());
-                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
                     }
