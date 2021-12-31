@@ -713,6 +713,7 @@ public class AuroraMCPlayer {
                 continue;
             }
             if (!player.isLoaded() || player.getRank().getId() < this.getRank().getId()) {
+                Bukkit.broadcastMessage("hiding player " + this.name + " for player " + player.getName());
                 player.getPlayer().hidePlayer(this.player);
                 if (player.getScoreboard().getScoreboard().getTeam(this.player.getName()) != null) {
                     player.getScoreboard().getScoreboard().getTeam(this.player.getName()).unregister();

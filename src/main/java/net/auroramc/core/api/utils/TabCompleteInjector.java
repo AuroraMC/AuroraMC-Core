@@ -163,23 +163,29 @@ public class TabCompleteInjector {
 
                     for (PacketPlayOutPlayerInfo.PlayerInfoData d : clone) {
                         AuroraMCPlayer player1 = AuroraMCAPI.getPlayer(d.a().getId());
-                        if (player1 != null) {
+                        if (player1 != null && player1.isLoaded()) {
                             if (player1.getPlayer().equals(pl)) {
                                 continue;
                             }
-                            if (!player1.isVanished() || player1.getRank().getId() <= player.getRank().getId()) {
-                                continue;
+                            if (action == PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER || action == PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER) {
+                                if (!player1.isVanished() || player1.getRank().getId() >= player.getRank().getId()) {
+                                    continue;
+                                }
+                            } else {
+                                if (!player1.isVanished() || player1.getRank().getId() <= player.getRank().getId()) {
+                                    continue;
+                                }
                             }
+                        } else if (action == PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER || action == PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER) {
+                            continue;
                         }
+
                         data.remove(d);
                     }
-
 
                     if (data.size() == 0) {
                         return;
                     }
-
-                    //Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "PACKET WRITE FOR PLAYER " + pl.getName() + ": " + ChatColor.GREEN + packet.toString());
                 }
                 super.write(channelHandlerContext, packet, channelPromise);
             }
