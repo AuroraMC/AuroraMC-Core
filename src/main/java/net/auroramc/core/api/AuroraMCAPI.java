@@ -45,7 +45,6 @@ public class AuroraMCAPI {
     private static ChatFilter filter;
     private static final HashMap<Integer, Achievement> achievements;
 
-    private static final HashMap<Player, String> pendingDisguiseChecks;
 
     private static ServerInfo serverInfo;
 
@@ -60,7 +59,6 @@ public class AuroraMCAPI {
         commands = new HashMap<>();
         openGUIs = new HashMap<>();
         rules = new RuleBook();
-        pendingDisguiseChecks = new HashMap<>();
         achievements = new HashMap<>();
         cosmetics = new HashMap<>();
         formatter = new TextFormatter();
@@ -223,9 +221,6 @@ public class AuroraMCAPI {
         return serverInfo;
     }
 
-    public static HashMap<Player, String> getPendingDisguiseChecks() {
-        return pendingDisguiseChecks;
-    }
 
     public static int getOpenGUIs() {
         return openGUIs.size();

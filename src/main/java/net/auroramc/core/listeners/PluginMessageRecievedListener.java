@@ -41,35 +41,6 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     player.playSound(player.getLocation(), Sound.valueOf(sound), volume, pitch);
                     break;
                 }
-                case "DisguiseCheckFail":
-                    AuroraMCAPI.getPendingDisguiseChecks().remove(Objects.requireNonNull(AuroraMCAPI.getPlayer(in.readUTF())).getPlayer());
-                    break;
-                case "DisguiseCheckSuccess": {
-                    AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
-                    assert player != null;
-                    String[] disguise = AuroraMCAPI.getPendingDisguiseChecks().get(player.getPlayer()).split(";");
-                    Rank chosenRank = Rank.getByID(Integer.parseInt(disguise[2]));
-                    if (player.disguise(disguise[0], disguise[1], chosenRank)) {
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Disguise");
-                        out.writeUTF(player.getName());
-                        out.writeUTF(disguise[0]);
-                        out.writeUTF(disguise[1]);
-                        out.writeInt(chosenRank.getId());
-                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-                        switch (in.readInt()) {
-                            case 1:
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s**. To undisguise, simply type **/undisguise**.", disguise[0])));
-                                break;
-                            case 2:
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s** with the skin of **%s**. To undisguise, simply type **/undisguise**.", disguise[1], disguise[0])));
-                                break;
-                        }
-                    } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Something went wrong when attempting to disguise. Maybe the disguise skin doesn't exist?"));
-                    }
-                    break;
-                }
                 case "XPAdd": {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
