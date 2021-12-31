@@ -60,7 +60,7 @@ public class TextFormatter {
 
     public String rankFormat(Rank rank, PlusSubscription subscription) {
         if (rank.getPrefixAppearance() != null) {
-            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null)?"+":"")));
+            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null && !rank.hasPermission("moderation") && !rank.hasPermission("build") && !rank.hasPermission("debug.info"))?"+":"")));
         } else {
             return "";
         }
@@ -95,7 +95,7 @@ public class TextFormatter {
 
         //Adding rank prefix if it exists.
         if (rank.getPrefixAppearance() != null) {
-            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null)?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
+            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null && !player.getRank().hasPermission("moderation") && !player.getRank().hasPermission("build") && !player.getRank().hasPermission("debug.info"))?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
                 if (player.getActiveSubscription() != null) {
@@ -187,7 +187,7 @@ public class TextFormatter {
 
         //Adding rank prefix if it exists.
         if (rank.getPrefixAppearance() != null) {
-            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null)?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
+            TextComponent prefix = new TextComponent(convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null && !player.getRank().hasPermission("moderation") && !player.getRank().hasPermission("build") && !player.getRank().hasPermission("debug.info"))?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))));
             if (rank.getPrefixHoverText() != null) {
                 ComponentBuilder hoverText = new ComponentBuilder(convert(rank.getPrefixHoverText()));
                 if (player.getActiveSubscription() != null) {
