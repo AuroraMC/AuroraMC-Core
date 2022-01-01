@@ -91,10 +91,19 @@ public class ChatFilter {
         List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
         List<String> finalMessage = new ArrayList<>();
         for (String word : splitMessage) {
+            AuroraMCPlayer disguise = AuroraMCAPI.getDisguisedPlayer(word);
+            if (disguise != null) {
+                if (disguise.isLoaded()) {
+                    if (!disguise.isVanished()) {
+                        finalMessage.add("§b" + disguise.getPlayer().getName() + "§r");
+                        continue;
+                    }
+                }
+            }
             AuroraMCPlayer player = AuroraMCAPI.getPlayer(word);
             if (player != null) {
                 if (player.isLoaded()) {
-                    if (!player.isVanished()) {
+                    if (!player.isVanished() && player.getActiveDisguise() == null) {
                         finalMessage.add("§b" + player.getPlayer().getName() + "§r");
                         continue;
                     }
@@ -113,9 +122,16 @@ public class ChatFilter {
             if (word.equalsIgnoreCase(recipient.getPlayer().getName()) && !alreadyFound) {
                 if (recipient.isLoaded()) {
                     if (!recipient.isVanished()) {
-                        finalMessage.add("§b" + recipient.getPlayer().getName() + "§r");
-                        alreadyFound = true;
-                        continue;
+                        if (recipient.getActiveDisguise() != null && !recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                            finalMessage.add("§b" + recipient.getPlayer().getName() + "§r");
+                            alreadyFound = true;
+                            continue;
+                        } else {
+                            finalMessage.add("§b" + recipient.getName() + "§r");
+                            alreadyFound = true;
+                            continue;
+                        }
+
                     }
                 }
             }
