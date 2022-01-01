@@ -49,6 +49,10 @@ public class CommandDisguise extends Command {
                                             return;
                                         }
                                     }
+                                    if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                        return;
+                                    }
                                 }
 
                                 if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
@@ -61,7 +65,7 @@ public class CommandDisguise extends Command {
                                     return;
                                 }
 
-                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
                                     return;
                                 }
@@ -94,9 +98,13 @@ public class CommandDisguise extends Command {
                                     Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
                                     if (rank != null) {
                                         if (rank.getCategory() != Rank.RankCategory.PLAYER) {
-                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as this player as they have a non-purchasable rank."));
+                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they have a non-purchasable rank."));
                                             return;
                                         }
+                                    }
+                                    if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                        return;
                                     }
                                 }
 
@@ -110,7 +118,7 @@ public class CommandDisguise extends Command {
                                     return;
                                 }
 
-                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
                                     return;
                                 }
@@ -163,6 +171,10 @@ public class CommandDisguise extends Command {
                                             return;
                                         }
                                     }
+                                    if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
+                                        return;
+                                    }
                                 }
 
                                 if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
@@ -175,7 +187,7 @@ public class CommandDisguise extends Command {
                                     return;
                                 }
 
-                                if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                                if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
                                     return;
                                 }

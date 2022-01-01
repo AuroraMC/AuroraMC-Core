@@ -88,6 +88,26 @@ public class DatabaseManager {
         return null;
     }
 
+    public Disguise getDisguise(String uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (connection.exists(String.format("disguise.%s.skin", uuid))) {
+                //They have an active disguise.
+                String skin,signature,name;
+                Rank rank;
+
+                skin = connection.get(String.format("disguise.%s.skin", uuid));
+                signature = connection.get(String.format("disguise.%s.signature", uuid));
+                name = connection.get(String.format("disguise.%s.name", uuid));
+
+                rank = Rank.getByID(Integer.parseInt(connection.get(String.format("disguise.%s.rank", uuid))));
+
+                return new Disguise(name, skin, signature, rank);
+            }
+        }
+
+        return null;
+    }
+
     public void setDisguise(AuroraMCPlayer player, Disguise disguise) {
         try (Jedis connection = jedis.getResource()) {
             Pipeline pipeline = connection.pipelined();
@@ -98,29 +118,44 @@ public class DatabaseManager {
             pipeline.set(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()), disguise.getSignature());
             pipeline.set(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()), disguise.getName());
             pipeline.set(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()), disguise.getRank().getId() + "");
+            pipeline.set(String.format("disguisenames.%s", disguise.getName()), player.getPlayer().getUniqueId().toString());
             pipeline.sync();
         }
     }
 
-    public void undisguise(AuroraMCPlayer player) {
+    public void undisguise(AuroraMCPlayer player, Disguise disguise) {
         try (Jedis connection = jedis.getResource()) {
             Pipeline pipeline = connection.pipelined();
             pipeline.del(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()));
             pipeline.del(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()));
             pipeline.del(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()));
             pipeline.del(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()));
+            pipeline.del(String.format("disguisenames.%s", disguise.getName()));
             pipeline.sync();
         }
     }
 
-    public void undisguise(String uuid) {
+    public void undisguise(String uuid, String disguiseName) {
         try (Jedis connection = jedis.getResource()) {
             Pipeline pipeline = connection.pipelined();
             pipeline.del(String.format("disguise.%s.skin", uuid));
             pipeline.del(String.format("disguise.%s.signature", uuid));
             pipeline.del(String.format("disguise.%s.name", uuid));
             pipeline.del(String.format("disguise.%s.rank", uuid));
+            pipeline.del(String.format("disguisenames.%s", disguiseName));
             pipeline.sync();
+        }
+    }
+
+    public boolean isAlreadyDisguise(String name) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.exists(String.format("disguisenames.%s", name));
+        }
+    }
+
+    public UUID getUUIDFromDisguise(String name) {
+        try (Jedis connection = jedis.getResource()) {
+            return UUID.fromString(connection.get(String.format("disguisenames.%s", name)));
         }
     }
 
@@ -1830,6 +1865,12 @@ public class DatabaseManager {
             pingOnChatMention = Boolean.parseBoolean(connection.hget(String.format("prefs.%s", player.getPlayer().getUniqueId()), "pingOnChatMention"));
 
             return new PlayerPreferences(player, friendRequests, partyRequests, muteInformMode, chatVisibility, privateMessageMode, pingOnPrivateMessage, pingOnPartyChat, hubVisibility, hubSpeed, hubFlight, reportNotifications, hubInvisibility, ignoreHubKnockback, socialMediaNotifications, staffLoginNotifications, approvalNotifications, approvalProcessedNotifications, hubForcefield, hideDisguiseName, pingOnChatMention);
+        }
+    }
+
+    public boolean isHideDisguiseName(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            return Boolean.parseBoolean(connection.hget(String.format("prefs.%s", uuid), "hideDisguiseName"));
         }
     }
 

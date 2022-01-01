@@ -10,6 +10,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.Disguise;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
@@ -229,7 +230,8 @@ public class SetRank extends GUI {
                     AuroraMCAPI.getDbManager().removeMentee(id);
                 }
                 if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                    AuroraMCAPI.getDbManager().undisguise(uuid.toString());
+                    Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(uuid.toString());
+                    AuroraMCAPI.getDbManager().undisguise(uuid.toString(), disguise.getName());
                     AuroraMCAPI.getDbManager().unvanish(uuid.toString());
                 }
             }

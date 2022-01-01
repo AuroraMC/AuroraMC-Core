@@ -50,6 +50,15 @@ public class Disguise {
         }
     }
 
+    public Disguise(String name, String skin, String signature, Rank rank) {
+        this.name = name;
+        this.player = null;
+        this.skin = skin;
+        this.signature = signature;
+        this.rank = rank;
+
+    }
+
     public void updateName(String name) {
         this.name = name;
     }

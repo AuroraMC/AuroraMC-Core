@@ -93,6 +93,7 @@ public class JoinListener implements Listener {
         TabCompleteInjector.onJoin(e.getPlayer());
         e.setJoinMessage(null);
         AuroraMCAPI.getPlayer(e.getPlayer()).setScoreboard();
+        AuroraMCAPI.getPlayer(e.getPlayer()).applyDisguise(false);
         if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
             for (Player player2 : Bukkit.getOnlinePlayers()) {
                     player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getName()));
