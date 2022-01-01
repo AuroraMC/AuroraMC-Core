@@ -217,7 +217,7 @@ public class AuroraMCPlayer {
                                     org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                     team.addPlayer(player);
                                     String s;
-                                    if (pl.getActiveDisguise() != null) {
+                                    if (pl.getActiveDisguise() != null && !pl.getPreferences().isHideDisguiseNameEnabled()) {
                                         s = AuroraMCAPI.getFormatter().rankFormat(pl.getActiveDisguise().getRank(), pl.getActiveSubscription());
                                     } else {
                                         s = AuroraMCAPI.getFormatter().rankFormat(pl.getRank(), pl.getActiveSubscription());
@@ -399,6 +399,15 @@ public class AuroraMCPlayer {
                         }
                     }.runTask(AuroraMCAPI.getCore());
                 }
+
+                if (disguise != null && preferences.isHideDisguiseNameEnabled()) {
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            pl.applyDisguise(true);
+                        }
+                    }.runTask(AuroraMCAPI.getCore());
+                }
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
                 Bukkit.getPluginManager().callEvent(creationEvent);
@@ -499,7 +508,12 @@ public class AuroraMCPlayer {
             Disguise activeDisguise = this.activeDisguise;
             if (!activeDisguise.getName().equals(name)) {
                 for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-                    player.getScoreboard().getScoreboard().getTeam(activeDisguise.getName()).unregister();
+                    if (player.getScoreboard().getScoreboard().getTeam(activeDisguise.getName()) != null) {
+                        player.getScoreboard().getScoreboard().getTeam(activeDisguise.getName()).unregister();
+                    }
+                    if (player.getScoreboard().getScoreboard().getTeam(name) != null) {
+                        player.getScoreboard().getScoreboard().getTeam(name).unregister();
+                    }
                 }
             }
             this.activeDisguise = null;
@@ -653,7 +667,8 @@ public class AuroraMCPlayer {
 
     public void updateNametag(AuroraMCPlayer player) {
         String s;
-        if (player.getActiveDisguise() != null) {
+        org.bukkit.scoreboard.Team team;
+        if ((player.getActiveDisguise() != null && player != this) || (player.getActiveDisguise() != null && player == this && !player.getPreferences().isHideDisguiseNameEnabled())) {
             //They are disguised, update their nametag.
             s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
             if (this.scoreboard.getScoreboard().getTeam(player.getName()) != null) {
@@ -663,37 +678,49 @@ public class AuroraMCPlayer {
             if (this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) == null) {
                 this.getScoreboard().getScoreboard().registerNewTeam(player.getPlayer().getName());
             }
+            team = this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName());
         } else {
             s = AuroraMCAPI.getFormatter().rankFormat(player.getRank(), player.getActiveSubscription());
             if (this.getScoreboard().getScoreboard().getTeam(player.getName()) == null) {
                 this.getScoreboard().getScoreboard().registerNewTeam(player.getName());
             }
+            team = this.getScoreboard().getScoreboard().getTeam(player.getName());
         }
         if (!s.equals("")) {
             s += " ";
         }
         s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
 
-        this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setPrefix(s);
+        team.setPrefix(s);
         if (player.getActiveSubscription() != null) {
             if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+
+                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
                 } else {
-                    this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
+                    team.setSuffix("");
                 }
             } else {
-                this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
+                team.setSuffix("");
             }
         } else {
-            this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).setSuffix("");
+            team.setSuffix("");
         }
-        if (!this.getScoreboard().getScoreboard().getTeam(player.getPlayer().getName()).hasEntry(player.getPlayer().getName())) {
-            for (String old : this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).getEntries()) {
-                this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).removeEntry(old);
+        if ((player.getActiveDisguise() != null && player != this) || (player == this && !player.getPreferences().isHideDisguiseNameEnabled())) {
+            if (!team.hasEntry(player.getPlayer().getName())) {
+                for (String old : team.getEntries()) {
+                    team.removeEntry(old);
+                }
+                team.addEntry(player.getPlayer().getName());
             }
-            this.scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).addEntry(player.getPlayer().getName());
+        } else {
+            if (!team.hasEntry(player.getName())) {
+                for (String old : team.getEntries()) {
+                    team.removeEntry(old);
+                }
+                team.addEntry(player.getName());
+            }
         }
     }
 

@@ -112,6 +112,17 @@ public class AuroraMCAPI {
         return players.get(player);
     }
 
+    public static AuroraMCPlayer getDisguisedPlayer(String name) {
+        for (AuroraMCPlayer player : players.values()) {
+            if (player.getActiveDisguise() != null) {
+                if (player.getActiveDisguise().getName().equalsIgnoreCase(name)) {
+                    return player;
+                }
+            }
+        }
+        return null;
+    }
+
     public static AuroraMCPlayer getPlayer(String name) {
         for (AuroraMCPlayer player : players.values()) {
             if (player.getName().equalsIgnoreCase(name)) {
@@ -120,6 +131,8 @@ public class AuroraMCAPI {
         }
         return null;
     }
+
+
 
     public static AuroraMCPlayer getPlayer(UUID uuid) {
         for (AuroraMCPlayer player : players.values()) {
