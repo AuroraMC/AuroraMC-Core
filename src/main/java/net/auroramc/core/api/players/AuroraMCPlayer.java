@@ -89,7 +89,9 @@ public class AuroraMCPlayer {
         Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(pl);
         if (disguise != null) {
             activeDisguise = disguise;
-            activeDisguise.apply(false);
+            if (!AuroraMCAPI.getDbManager().isHideDisguiseName(player.getUniqueId())) {
+                activeDisguise.apply(false);
+            }
         }
 
         this.vanished = AuroraMCAPI.getDbManager().isVanished(this);
@@ -485,9 +487,9 @@ public class AuroraMCPlayer {
         return activeDisguise.apply(true);
     }
 
-    public boolean applyDisguise() {
+    public boolean applyDisguise(boolean update) {
         if (activeDisguise != null) {
-            return activeDisguise.apply(true);
+            return activeDisguise.apply(update);
         }
         return true;
     }
@@ -505,7 +507,7 @@ public class AuroraMCPlayer {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    AuroraMCAPI.getDbManager().undisguise(pl);
+                    AuroraMCAPI.getDbManager().undisguise(pl, activeDisguise);
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
             return activeDisguise.undisguise();
@@ -874,6 +876,7 @@ public class AuroraMCPlayer {
         out.writeUTF("IgnoreAdded");
         out.writeUTF(name);
         out.writeInt(user.getId());
+        out.writeUTF(user.getName());
         out.writeUTF(user.getName());
         player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
