@@ -64,4 +64,8 @@ public class CommunicationUtils {
         }
     }
 
+    public static boolean isShutdown() {
+        return task == null;
+    }
+
 }
