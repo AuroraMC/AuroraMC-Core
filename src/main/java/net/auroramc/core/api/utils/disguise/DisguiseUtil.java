@@ -160,35 +160,39 @@ public class DisguiseUtil {
 
         Bukkit.getScheduler().runTaskLater(AuroraMCAPI.getCore(), () -> {
             try {
-                craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(craftPlayer.getHandle().getId()));
-                PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, craftPlayer.getHandle());
-                craftPlayer.getHandle().playerConnection.sendPacket(remove);
-                EntityTrackerEntry entry = ((WorldServer)((CraftPlayer) player).getHandle().world).tracker.trackedEntities.get(craftPlayer.getHandle().getId());
-                if (entry != null) {
-                    entry.clear(craftPlayer.getHandle());
-                }
-                craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, craftPlayer.getHandle()));
-                entry = ((WorldServer)(craftPlayer.getHandle().world)).tracker.trackedEntities.get(craftPlayer.getHandle().getId());
-                if (entry != null) {
-                    entry.updatePlayer(craftPlayer.getHandle());
-                }
-                craftPlayer.getHandle().playerConnection.sendPacket(respawnPlayer);
-                //Update look and location so that the client doesn't unload the chunks.
-                craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutPosition(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), new HashSet<>()));
-                craftPlayer.getHandle().updateAbilities();
-                MinecraftServer.getServer().getPlayerList().updateClient(craftPlayer.getHandle());
+                if (!AuroraMCAPI.getPlayer(player).getPreferences().isHideDisguiseNameEnabled()) {
+                    craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(craftPlayer.getHandle().getId()));
+                    PacketPlayOutPlayerInfo remove = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, craftPlayer.getHandle());
+                    craftPlayer.getHandle().playerConnection.sendPacket(remove);
+                    EntityTrackerEntry entry = ((WorldServer)((CraftPlayer) player).getHandle().world).tracker.trackedEntities.get(craftPlayer.getHandle().getId());
+                    if (entry != null) {
+                        entry.clear(craftPlayer.getHandle());
+                    }
+                    craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, craftPlayer.getHandle()));
+                    entry = ((WorldServer)(craftPlayer.getHandle().world)).tracker.trackedEntities.get(craftPlayer.getHandle().getId());
+                    if (entry != null) {
+                        entry.updatePlayer(craftPlayer.getHandle());
+                    }
+                    craftPlayer.getHandle().playerConnection.sendPacket(respawnPlayer);
+                    //Update look and location so that the client doesn't unload the chunks.
+                    craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutPosition(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), new HashSet<>()));
+                    craftPlayer.getHandle().updateAbilities();
+                    MinecraftServer.getServer().getPlayerList().updateClient(craftPlayer.getHandle());
 
-                player.setFlying(flying);
-                player.teleport(location);
-                player.updateInventory();
-                player.setLevel(level);
-                player.setExp(xp);
-                player.setMaxHealth(maxHealth);
-                player.setHealth(health);
+                    player.setFlying(flying);
+                    player.teleport(location);
+                    player.updateInventory();
+                    player.setLevel(level);
+                    player.setExp(xp);
+                    player.setMaxHealth(maxHealth);
+                    player.setHealth(health);
+                }
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
-                    player2.hidePlayer(player);
-                    player2.showPlayer(player);
-                    AuroraMCAPI.getPlayer(player2).updateNametag(AuroraMCAPI.getPlayer(player));
+                    if (player2.canSee(player)) {
+                        player2.hidePlayer(player);
+                        player2.showPlayer(player);
+                        AuroraMCAPI.getPlayer(player2).updateNametag(AuroraMCAPI.getPlayer(player));
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
