@@ -82,6 +82,10 @@ public class ChatListener implements Listener {
                     }
                 }
                 player.messageSent();
+                if (AuroraMCAPI.getFilter() == null) {
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                    return;
+                }
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
                 if (player.isDisguised()) {
                     if (player.getPreferences().isHideDisguiseNameEnabled()) {
