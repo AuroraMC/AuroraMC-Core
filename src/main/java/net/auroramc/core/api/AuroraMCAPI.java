@@ -215,9 +215,11 @@ public class AuroraMCAPI {
                 rulesLoading = false;
             }
         }.runTaskAsynchronously(core);
+        loadFilter();
     }
 
     public static void loadFilter() {
+        filter = null;
         new BukkitRunnable(){
             @Override
             public void run() {

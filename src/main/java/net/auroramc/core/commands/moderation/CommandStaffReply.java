@@ -37,6 +37,10 @@ public class CommandStaffReply extends Command {
                 if (player.getLastAdminMessaged() != null) {
                     AuroraMCPlayer target = AuroraMCAPI.getPlayer(player.getLastAdminMessaged());
                     if (target != null) {
+                        if (AuroraMCAPI.getFilter() == null) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                            return;
+                        }
                         String message = AuroraMCAPI.getFilter().filter(String.join(" ", args));
                         BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(player, target, message);
                         target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(player.getRank(), player.getName(), message));
@@ -60,6 +64,10 @@ public class CommandStaffReply extends Command {
                                 UUID uuid = player.getLastAdminMessaged();
                                     if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
                                         args.remove(0);
+                                        if (AuroraMCAPI.getFilter() == null) {
+                                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                                            return;
+                                        }
                                         String message = AuroraMCAPI.getFilter().filter(String.join(" ", args));
 
                                         ProtocolMessage protocolMessage = new ProtocolMessage(Protocol.STAFF_MESSAGE, AuroraMCAPI.getDbManager().getServer(uuid), uuid.toString(), player.getPlayer().getUniqueId().toString(), message);
