@@ -12,6 +12,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.Disguise;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -43,8 +44,21 @@ public class CommandStaffReply extends Command {
                         }
                         String message = AuroraMCAPI.getFilter().filter(String.join(" ", args));
                         BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(player, target, message);
-                        target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(player.getRank(), player.getName(), message));
-                        player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(target.getRank(), target.getName(), message));
+                        Rank playerRank = player.getRank();
+                        Rank targetRank = target.getRank();
+                        String playerName = player.getName();
+                        String targetName = target.getName();
+                        if (player.getActiveDisguise() != null) {
+                            playerName = player.getActiveDisguise().getName();
+                            playerRank = player.getActiveDisguise().getRank();
+                        }
+                        if (target.getActiveDisguise() != null) {
+                            targetName = target.getActiveDisguise().getName();
+                            targetRank = target.getActiveDisguise().getRank();
+                        }
+
+                        target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(playerRank, playerName, message));
+                        player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(targetRank, targetName, message));
                         player.setLastAdminMessage(target.getLastAdminMessaged());
                         target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                         player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
@@ -75,6 +89,12 @@ public class CommandStaffReply extends Command {
 
                                         String name = AuroraMCAPI.getDbManager().getNameFromUUID(uuid.toString());
                                         Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
+                                        Disguise activeDisguise = AuroraMCAPI.getDbManager().getDisguise(uuid.toString());
+                                        if (activeDisguise != null) {
+                                            rank = activeDisguise.getRank();
+                                            name = activeDisguise.getName();
+                                        }
+
 
                                         BaseComponent formatted = AuroraMCAPI.getFormatter().formatStaffMessage(player, rank, name, message);
                                         player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(rank, name, message));
