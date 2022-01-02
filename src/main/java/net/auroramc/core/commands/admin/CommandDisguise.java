@@ -59,7 +59,10 @@ public class CommandDisguise extends Command {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username is blacklisted."));
                                     return;
                                 }
-
+                                if (AuroraMCAPI.getFilter() == null) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                                    return;
+                                }
                                 if (!AuroraMCAPI.getFilter().filter(args.get(0)).equals(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username would be filtered."));
                                     return;
@@ -113,6 +116,10 @@ public class CommandDisguise extends Command {
                                     return;
                                 }
 
+                                if (AuroraMCAPI.getFilter() == null) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                                    return;
+                                }
                                 if (!AuroraMCAPI.getFilter().filter(args.get(0)).equals(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username would be filtered."));
                                     return;
@@ -179,6 +186,11 @@ public class CommandDisguise extends Command {
 
                                 if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as their username is blacklisted."));
+                                    return;
+                                }
+
+                                if (AuroraMCAPI.getFilter() == null) {
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
                                     return;
                                 }
 
