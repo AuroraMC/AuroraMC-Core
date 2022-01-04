@@ -56,7 +56,7 @@ public enum Rank {
             "&fyou see on all our servers! They work\n" +
             "&fbehind the scenes coding the games you\n" +
             "&flove to play!", null, 'a', 'f', 'a', 'f', true, Collections.singletonList(MASTER), Arrays.asList(Permission.DEBUG_INFO, Permission.PANEL), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
-    SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&a«SR.DEV»\n \n" +
+    SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&c«SR.DEV»\n \n" +
             "&fSenior Developers oversee the development\n" +
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
