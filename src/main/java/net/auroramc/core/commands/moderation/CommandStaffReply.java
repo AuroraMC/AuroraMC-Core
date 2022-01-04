@@ -59,7 +59,7 @@ public class CommandStaffReply extends Command {
 
                         target.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageFrom(playerRank, playerName, message));
                         player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatStaffMessageTo(targetRank, targetName, message));
-                        player.setLastAdminMessage(target.getLastAdminMessaged());
+                        player.setLastAdminMessage(target.getPlayer().getUniqueId());
                         target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                         player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
                         for (Player p : Bukkit.getOnlinePlayers()) {

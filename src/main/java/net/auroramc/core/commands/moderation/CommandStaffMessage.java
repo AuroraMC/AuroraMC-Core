@@ -34,10 +34,6 @@ public class CommandStaffMessage extends Command {
             if (player.getActiveMutes().size() == 0) {
                 AuroraMCPlayer player1 = AuroraMCAPI.getDisguisedPlayer(args.get(0));
                 if (player1 != null) {
-                    if (player1.getActiveDisguise() != null) {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("No match found for [**%s**]", args.get(0))));
-                        return;
-                    }
                     args.remove(0);
                     if (AuroraMCAPI.getFilter() == null) {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
@@ -61,9 +57,8 @@ public class CommandStaffMessage extends Command {
                     }
                     return;
                 }
-                Player proxiedPlayer = Bukkit.getPlayer(args.get(0));
-                if (proxiedPlayer != null) {
-                    AuroraMCPlayer target = AuroraMCAPI.getPlayer(proxiedPlayer);
+                AuroraMCPlayer target = AuroraMCAPI.getPlayer(args.get(0));
+                if (target != null) {
                     if (target.getActiveDisguise() != null) {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("No match found for [**%s**]", args.get(0))));
                         return;
