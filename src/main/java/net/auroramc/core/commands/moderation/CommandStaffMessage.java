@@ -34,10 +34,6 @@ public class CommandStaffMessage extends Command {
             if (player.getActiveMutes().size() == 0) {
                 AuroraMCPlayer player1 = AuroraMCAPI.getDisguisedPlayer(args.get(0));
                 if (player1 != null) {
-                    if (player1.getActiveDisguise() != null) {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("No match found for [**%s**]", args.get(0))));
-                        return;
-                    }
                     args.remove(0);
                     if (AuroraMCAPI.getFilter() == null) {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
