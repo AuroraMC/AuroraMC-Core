@@ -57,9 +57,8 @@ public class CommandStaffMessage extends Command {
                     }
                     return;
                 }
-                Player proxiedPlayer = Bukkit.getPlayer(args.get(0));
-                if (proxiedPlayer != null) {
-                    AuroraMCPlayer target = AuroraMCAPI.getPlayer(proxiedPlayer);
+                AuroraMCPlayer target = AuroraMCAPI.getPlayer(args.get(0));
+                if (target != null) {
                     if (target.getActiveDisguise() != null) {
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("No match found for [**%s**]", args.get(0))));
                         return;

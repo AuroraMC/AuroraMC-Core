@@ -31,6 +31,7 @@ public class TextFormatter {
     private final String chatStaffMessageFormat = " &r&%s%s %s &l»&r ";
     private final String chatStaffMessageFormatFrom = " &cFrom: &r&%s%s %s &l»&r ";
     private final String chatStaffMessageFormatTo = " &cTo: &r&%s%s %s &l»&r ";
+    private final String chatStaffMessageFormatAll = " &r&%s%s %s &4➜&r &r&%s%s %s &l»&r ";
     private final String chatPrivateMessageFormat = "&b&l%s&r &3➜&r &b&l%s&r &3&l»&r %s";
 
     private final char normalColor = 'r';
@@ -286,7 +287,7 @@ public class TextFormatter {
 
         Rank rank = ((sender.isDisguised())?sender.getActiveDisguise().getRank():sender.getRank());
         Rank rank2 = ((receiver.isDisguised())?receiver.getActiveDisguise().getRank():receiver.getRank());
-        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), ((sender.isDisguised())?sender.getActiveDisguise().getName():sender.getPlayer().getName()), ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), ((receiver.isDisguised())?receiver.getActiveDisguise().getName():receiver.getPlayer().getName()))) + message);
+        textComponent.addExtra(convert(String.format(chatStaffMessageFormatAll, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), ((sender.isDisguised())?sender.getActiveDisguise().getName():sender.getPlayer().getName()), ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), ((receiver.isDisguised())?receiver.getActiveDisguise().getName():receiver.getPlayer().getName()))) + message);
         return textComponent;
     }
 
@@ -304,7 +305,7 @@ public class TextFormatter {
         textComponent.addExtra(prefix);
 
         Rank rank2 = receiver.getRank();
-        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), name, ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), receiver.getName())) + message);
+        textComponent.addExtra(convert(String.format(chatStaffMessageFormatAll, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), name, ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), receiver.getName())) + message);
         return textComponent;
     }
 
@@ -322,7 +323,7 @@ public class TextFormatter {
         textComponent.addExtra(prefix);
 
         Rank rank = sender.getRank();
-        textComponent.addExtra(convert(String.format(chatStaffMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), sender.getName(), ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), name)) + message);
+        textComponent.addExtra(convert(String.format(chatStaffMessageFormatAll, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()), sender.getName(), ((rank2 == Rank.PLAYER)?'7':rank2.getPrefixColor()), ((rank2 == Rank.PLAYER)?"Player":rank2.getPrefixAppearance()), name)) + message);
         return textComponent;
     }
 
