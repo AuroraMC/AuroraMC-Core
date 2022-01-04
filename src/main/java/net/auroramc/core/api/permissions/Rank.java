@@ -61,7 +61,7 @@ public enum Rank {
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
             "&fand help our design team plan upcoming\n" +
-            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     OWNER(9001, "Owner", "Owner", "&c«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +
