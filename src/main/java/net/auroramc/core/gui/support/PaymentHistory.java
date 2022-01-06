@@ -25,7 +25,7 @@ public class PaymentHistory extends GUI {
         int row = 1;
         for (Payment payment : payments) {
             for (Payment.Package apackage : payment.getPackages()) {
-                this.setItem(row, column, new GUIItem(apackage.getMaterial(), apackage.getName(), 1, String.format("&rPayment ID: **%s**;&rTransaction ID: **%s**;&rAmount Paid: **%s**;Processed at: **%s**;&rStatus: %s", payment.getPaymentId(), payment.getTransactionId(), payment.getAmountPaid(), new Date(payment.getTimestamp()), ((payment.getStatus() == Payment.PaymentStatus.CHARGEDBACK)?"&c&lChargedBack":((payment.getStatus() == Payment.PaymentStatus.REFUNDED)?"&6&lRefunded":"&a&lProcessed")))));
+                this.setItem(row, column, new GUIItem(apackage.getMaterial(), apackage.getName(), 1, String.format(";&rPayment ID: **%s**;&rTransaction ID: **%s**;&rAmount Paid: **%s GBP**;&rProcessed at: **%s**;&rStatus: %s", payment.getPaymentId(), payment.getTransactionId(), payment.getAmountPaid(), new Date(payment.getTimestamp()), ((payment.getStatus() == Payment.PaymentStatus.CHARGEDBACK)?"&c&lChargedBack":((payment.getStatus() == Payment.PaymentStatus.REFUNDED)?"&6&lRefunded":"&a&lProcessed")))));
                 column++;
                 if (column == 8) {
                     row++;
