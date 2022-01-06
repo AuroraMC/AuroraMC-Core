@@ -19,6 +19,9 @@ import net.auroramc.core.api.punishments.AdminNote;
 import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.Rule;
+import net.auroramc.core.api.punishments.ipprofiles.IPProfile;
+import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
+import net.auroramc.core.api.punishments.ipprofiles.ProfileComparison;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerBank;
@@ -1407,90 +1410,250 @@ public class DatabaseManager {
 
     public void globalAccountSuspend(String code, int id, int issuer, long timestamp, String note) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT known_ip_profiles FROM auroramc_players WHERE id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT profile_id FROM ip_logs WHERE amc_id = ?");
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
-            set.next();
+            List<String> profiles = new ArrayList<>();
+            while (set.next()) {
+                profiles.add(set.getString(1));
+            }
 
             //Add these IP profiles to the list of banned ones.
             statement = connection.prepareStatement("INSERT INTO global_account_suspensions(punishment_id, root_account, issuer, banned_profiles, timestamp, reason) VALUES (?,?,?,?,?,?)");
             statement.setString(1, code);
             statement.setInt(2, id);
             statement.setInt(3, issuer);
-            statement.setString(4, set.getString(1));
+            statement.setString(4, String.join(",",profiles));
             statement.setString(5, timestamp + "");
             statement.setString(6, note);
             statement.execute();
-
-            List<String> usernames = new ArrayList<>();
-            for (String profileId : set.getString(1).split(",")) {
-                statement = connection.prepareStatement("SELECT ids FROM ip_profile WHERE profile_id = ?");
-                statement.setInt(1, Integer.parseInt(profileId));
-                set = statement.executeQuery();
-                set.next();
-                List<String> ids = new ArrayList<>(Arrays.asList(set.getString(1).split(",")));
-                for (String amcId : ids) {
-                    statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
-                    statement.setInt(1, Integer.parseInt(amcId));
-                    set = statement.executeQuery();
-                    set.next();
-                    if (!usernames.contains(set.getString(1))) {
-                        usernames.add(set.getString(1));
-                    }
-                }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public IPLookup ipLookup(UUID uuid) {
+    public PlayerProfile ipLookup(UUID uuid) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement =  connection.prepareStatement("SELECT last_used_profile FROM auroramc_players WHERE uuid = ?");
+            PreparedStatement statement =  connection.prepareStatement("SELECT id,name,last_used_profile FROM auroramc_players WHERE uuid = ?");
             statement.setString(1, uuid.toString());
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                if (set.getInt(1) > 0) {
-                    int profile = set.getInt(1);
-                    statement = connection.prepareStatement("SELECT * FROM ip_profile WHERE profile_id = ?");
+                int id = set.getInt(1);
+                String name = set.getString(2);
+                if (set.getInt(3) > 0) {
+                    int profile = set.getInt(3);
+                    statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = (SELECT last_used_by FROM ip_profile WHERE profile_id = ?)");
                     statement.setInt(1, profile);
                     set = statement.executeQuery();
                     set.next();
+                    String lastUsedby = set.getString(1);
 
-                    List<LookupUser> users = new ArrayList<>();
-                    String ip = set.getString(2);
-                    int amountBanned = 0;
-                    int amountMuted = 0;
-                    List<String> userids = new ArrayList<>(Arrays.asList(set.getString(3).split(",")));
-                    for (String userID : userids) {
-                        statement =  connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
-                        statement.setInt(1, Integer.parseInt(userID));
-                        set = statement.executeQuery();
-                        set.next();
-                        String name = set.getString(1);
+                    statement = connection.prepareStatement("SELECT * FROM ip_logs WHERE amc_id = ? ORDER BY last_used DESC");
+                    statement.setInt(1, id);
+                    set = statement.executeQuery();
+                    List<String> profiles = new ArrayList<>();
+                    List<String> sharedAccounts = new ArrayList<>();
+                    int bans = 0;
+                    int mutes = 0;
+                    int numberOfProfiles = 0;
+                    while (set.next()) {
+                        numberOfProfiles++;
+                        if (numberOfProfiles <= 5) {
+                            profiles.add(set.getString(2));
+                        }
+                        statement = connection.prepareStatement("SELECT ip_logs.amc_id, auroramc_players.name FROM ip_logs INNER JOIN auroramc_players ON auroramc_players.id=ip_logs.amc_id WHERE profile_id = ?");
+                        statement.setInt(1, set.getInt(2));
+                        ResultSet set2 = statement.executeQuery();
+                        while (set2.next()) {
+                            if (!sharedAccounts.contains(set2.getString(2))) {
+                                sharedAccounts.add(set2.getString(2));
+                                statement = connection.prepareStatement("SELECT * FROM punishments WHERE amc_id = ? AND (status = 1 OR status = 2 OR status = 3)");
+                                statement.setInt(1, set2.getInt(1));
+                                ResultSet set3 = statement.executeQuery();
+                                boolean banned = false;
+                                boolean muted = false;
+                                while (set3.next() && (!muted || !banned)) {
+                                    if (AuroraMCAPI.getRules().getRule(set3.getInt(3)).getType() == 1) {
+                                        muted = true;
+                                    } else {
+                                        banned = true;
+                                    }
+                                }
+                                if (muted) {
+                                    mutes++;
+                                }
+                                if (banned) {
+                                    bans++;
+                                }
+                            }
+                        }
+                    }
 
+                    boolean globalAccountSuspension = false;
+                    String globalAccountSuspensionReason = null;
+
+                    statement = connection.prepareStatement("SELECT global_account_suspensions.reason FROM global_account_suspensions WHERE (root_account = ?)");
+                    statement.setInt(1, id);
+                    set = statement.executeQuery();
+                    if (set.next()) {
+                        globalAccountSuspension = true;
+                        globalAccountSuspensionReason = set.getString(1);
+                    }
+
+
+                    return new PlayerProfile(name, numberOfProfiles, profiles, profile, lastUsedby, sharedAccounts.size(), sharedAccounts.subList(0,5), bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public IPProfile ipLookup(int profileId) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT profile_id, ip, last_used_by, last_used_at, ap.name FROM ip_profile INNER JOIN auroramc_players ap on ip_profile.last_used_by = ap.id WHERE profile_id = ?");
+            statement.setInt(1, profileId);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                long lastUsedAt = set.getTimestamp(4).getTime();
+                String lastUsedBy = set.getString(5);
+                List<String> sharedAccounts = new ArrayList<>();
+                int bans = 0;
+                int mutes = 0;
+                statement = connection.prepareStatement("SELECT ip_logs.amc_id, auroramc_players.name FROM ip_logs INNER JOIN auroramc_players ON auroramc_players.id=ip_logs.amc_id WHERE profile_id = ?");
+                statement.setInt(1, set.getInt(2));
+                ResultSet set2 = statement.executeQuery();
+                while (set2.next()) {
+                    if (!sharedAccounts.contains(set2.getString(2))) {
+                        sharedAccounts.add(set2.getString(2));
                         statement = connection.prepareStatement("SELECT * FROM punishments WHERE amc_id = ? AND (status = 1 OR status = 2 OR status = 3)");
-                        statement.setInt(1, Integer.parseInt(userID));
-                        set = statement.executeQuery();
+                        statement.setInt(1, set2.getInt(1));
+                        ResultSet set3 = statement.executeQuery();
                         boolean banned = false;
                         boolean muted = false;
-                        while (set.next() && (!muted || !banned)) {
-                            if (AuroraMCAPI.getRules().getRule(set.getInt(3)).getType() == 1) {
+                        while (set3.next() && (!muted || !banned)) {
+                            if (AuroraMCAPI.getRules().getRule(set3.getInt(3)).getType() == 1) {
                                 muted = true;
                             } else {
                                 banned = true;
                             }
                         }
                         if (muted) {
-                            amountMuted++;
+                            mutes++;
                         }
                         if (banned) {
-                            amountBanned++;
+                            bans++;
                         }
-                        users.add(new LookupUser(Integer.parseInt(userID), name, muted, banned));
                     }
+                }
 
-                    return new IPLookup(ip, profile, users, amountBanned, amountMuted);
+                boolean globalAccountSuspension = false;
+                String globalAccountSuspensionReason = null;
+
+                statement = connection.prepareStatement("SELECT global_account_suspensions.reason FROM global_account_suspensions WHERE (banned_profiles REGEXP CONCAT('^', ?,'$|^', ?,',.*$|^.*,', ?,'$|^.*,', ?,',.*$'))");
+                statement.setInt(1, profileId);
+                statement.setInt(2, profileId);
+                statement.setInt(3, profileId);
+                statement.setInt(4, profileId);
+                set = statement.executeQuery();
+                if (set.next()) {
+                    globalAccountSuspension = true;
+                    globalAccountSuspensionReason = set.getString(1);
+                }
+
+                return new IPProfile(profileId, sharedAccounts.size(), sharedAccounts.subList(0, 5), lastUsedBy, lastUsedAt, bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ProfileComparison ipLookup(UUID uuid, UUID uuid2) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement =  connection.prepareStatement("SELECT id,name,last_used_profile FROM auroramc_players WHERE uuid = ?");
+            statement.setString(1, uuid.toString());
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                String user1name = set.getString(2);
+                int user1id = set.getInt(1);
+                int user1profile = set.getInt(3);
+
+                statement =  connection.prepareStatement("SELECT id,name,last_used_profile FROM auroramc_players WHERE uuid = ?");
+                statement.setString(1, uuid2.toString());
+                set = statement.executeQuery();
+                if (set.next()) {
+                    String user2name = set.getString(2);
+                    int user2id = set.getInt(1);
+                    int user2profile = set.getInt(3);
+                    statement = connection.prepareStatement("SELECT * FROM ip_logs WHERE amc_id = ? ORDER BY last_used DESC");
+                    statement.setInt(1, user1id);
+                    set = statement.executeQuery();
+                    List<String> profiles = new ArrayList<>();
+                    List<String> sharedAccounts = new ArrayList<>();
+                    int bans = 0;
+                    int mutes = 0;
+                    while (set.next()) {
+                        profiles.add(set.getString(2));
+                        statement = connection.prepareStatement("SELECT ip_logs.amc_id, auroramc_players.name FROM ip_logs INNER JOIN auroramc_players ON auroramc_players.id=ip_logs.amc_id WHERE profile_id = ?");
+                        statement.setInt(1, set.getInt(2));
+                        ResultSet set2 = statement.executeQuery();
+                        while (set2.next()) {
+                            if (!sharedAccounts.contains(set2.getString(2))) {
+                                sharedAccounts.add(set2.getString(2));
+                            }
+                        }
+                    }
+                    List<String> finalProfiles = new ArrayList<>();
+                    List<String> finalAccounts = new ArrayList<>();
+                    int numberOfProfiles = 0;
+                    int numberOfAccounts = 0;
+                    statement = connection.prepareStatement("SELECT * FROM ip_logs WHERE amc_id = ? ORDER BY last_used DESC");
+                    statement.setInt(1, user2id);
+                    set = statement.executeQuery();
+                    while (set.next()) {
+                        if (profiles.contains(set.getString(2))) {
+                            numberOfProfiles++;
+                            if (finalProfiles.size() <= 4) {
+                                finalProfiles.add(set.getString(2));
+                            }
+                        }
+                        statement = connection.prepareStatement("SELECT ip_logs.amc_id, auroramc_players.name FROM ip_logs INNER JOIN auroramc_players ON auroramc_players.id=ip_logs.amc_id WHERE profile_id = ?");
+                        statement.setInt(1, set.getInt(2));
+                        ResultSet set2 = statement.executeQuery();
+                        while (set2.next()) {
+                            if (!finalAccounts.contains(set2.getString(2)) && sharedAccounts.contains(set2.getString(2))) {
+                                numberOfAccounts++;
+                                finalAccounts.add(set2.getString(2));
+                                statement = connection.prepareStatement("SELECT * FROM punishments WHERE amc_id = ? AND (status = 1 OR status = 2 OR status = 3)");
+                                statement.setInt(1, set2.getInt(1));
+                                ResultSet set3 = statement.executeQuery();
+                                boolean banned = false;
+                                boolean muted = false;
+                                while (set3.next() && (!muted || !banned)) {
+                                    if (AuroraMCAPI.getRules().getRule(set3.getInt(3)).getType() == 1) {
+                                        muted = true;
+                                    } else {
+                                        banned = true;
+                                    }
+                                }
+                                if (muted) {
+                                    mutes++;
+                                }
+                                if (banned) {
+                                    bans++;
+                                }
+                            }
+                        }
+                    }
+                    return new ProfileComparison(user1name, user2name, numberOfAccounts, finalAccounts, numberOfProfiles, finalProfiles, bans, mutes, user1id, user2id);
                 } else {
                     return null;
                 }

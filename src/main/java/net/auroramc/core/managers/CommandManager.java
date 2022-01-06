@@ -44,7 +44,7 @@ public class CommandManager implements Listener {
     }
 
     private static void onCommand(String commandLabel, List<String> args, AuroraMCPlayer player) {
-        Command command = AuroraMCAPI.getCommand(commandLabel);
+        Command command = AuroraMCAPI.getCommand(commandLabel.toLowerCase());
         if (command != null) {
             for (Permission permission : command.getPermission()) {
                 if (player.hasPermission(permission.getId())) {
