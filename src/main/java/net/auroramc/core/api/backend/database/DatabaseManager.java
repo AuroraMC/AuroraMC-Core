@@ -6,6 +6,7 @@ package net.auroramc.core.api.backend.database;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
+import net.auroramc.core.api.backend.store.Payment;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.permissions.Rank;
@@ -2442,6 +2443,32 @@ public class DatabaseManager {
                 }
             }
             return activeCosmetics;
+        }
+    }
+
+    public List<Payment> getPayments(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM store_payments WHERE amc_id = ? ORDER BY date_processed DESC");
+            statement.setInt(1, id);
+            ResultSet set = statement.executeQuery();
+            List<Payment> payments = new ArrayList<>();
+            while (set.next()) {
+                String[] packagesStrings = set.getString(6).split(",");
+                List<Payment.Package> packages = new ArrayList<>();
+                for (String packageString : packagesStrings) {
+                    packages.add(Payment.Package.getByID(Integer.parseInt(packageString)));
+                }
+                String[] uuidStrings = set.getString(7).split(",");
+                List<UUID> uuids = new ArrayList<>();
+                for (String uuidString : uuidStrings) {
+                    uuids.add(UUID.fromString(uuidString));
+                }
+                payments.add(new Payment(set.getInt(1), set.getInt(2), set.getString(3), set.getDouble(4), set.getLong(5), packages, uuids, Payment.PaymentStatus.valueOf(set.getString(8))));
+            }
+            return payments;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
