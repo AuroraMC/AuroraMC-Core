@@ -2458,10 +2458,12 @@ public class DatabaseManager {
                 for (String packageString : packagesStrings) {
                     packages.add(Payment.Package.getByID(Integer.parseInt(packageString)));
                 }
-                String[] uuidStrings = set.getString(7).split(",");
                 List<UUID> uuids = new ArrayList<>();
-                for (String uuidString : uuidStrings) {
-                    uuids.add(UUID.fromString(uuidString));
+                if (!set.getString(7).equals("")) {
+                    String[] uuidStrings = set.getString(7).split(",");
+                    for (String uuidString : uuidStrings) {
+                        uuids.add(UUID.fromString(uuidString));
+                    }
                 }
                 payments.add(new Payment(set.getInt(1), set.getInt(2), set.getString(3), set.getDouble(4), set.getLong(5), packages, uuids, Payment.PaymentStatus.valueOf(set.getString(8))));
             }
