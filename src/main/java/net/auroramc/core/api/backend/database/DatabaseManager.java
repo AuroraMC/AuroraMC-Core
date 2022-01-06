@@ -1500,6 +1500,9 @@ public class DatabaseManager {
                         globalAccountSuspensionReason = set.getString(1);
                     }
 
+                    sharedAccounts.remove(name);
+
+
                     if (sharedAccounts.size() > 5) {
                         sharedAccounts = sharedAccounts.subList(0,5);
                     }
@@ -1660,7 +1663,14 @@ public class DatabaseManager {
                             }
                         }
                     }
-                    return new ProfileComparison(user1name, user2name, numberOfAccounts, finalAccounts, numberOfProfiles, finalProfiles, bans, mutes, user1id, user2id);
+                    if (finalAccounts.remove(user1name)) {
+                        numberOfAccounts--;
+                    }
+                    if (finalAccounts.remove(user2name)) {
+                        numberOfAccounts--;
+                    }
+
+                    return new ProfileComparison(user1name, user2name, numberOfAccounts, finalAccounts, numberOfProfiles, finalProfiles, bans, mutes, user1profile, user2profile);
                 } else {
                     return null;
                 }
