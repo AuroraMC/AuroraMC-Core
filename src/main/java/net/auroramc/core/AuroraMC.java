@@ -17,6 +17,7 @@ import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
+import net.auroramc.core.commands.admin.iplookup.CommandIPLookup;
 import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
 import net.auroramc.core.commands.moderation.*;
@@ -93,6 +94,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandNotes());
         AuroraMCAPI.registerCommand(new CommandHelp());
         AuroraMCAPI.registerCommand(new CommandKillMessageTest());
+        AuroraMCAPI.registerCommand(new CommandIPLookup());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());

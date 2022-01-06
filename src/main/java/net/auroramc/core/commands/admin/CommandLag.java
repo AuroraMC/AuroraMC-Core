@@ -4,6 +4,7 @@
 
 package net.auroramc.core.commands.admin;
 
+import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
@@ -33,22 +34,17 @@ public class CommandLag extends Command {
         String buildNumber = null;
         String gitCommit = null;
         try {
-            Enumeration<URL> resources = getClass().getClassLoader()
+            Enumeration<URL> resources = AuroraMCAPI.getCore().getClass().getClassLoader()
                     .getResources("META-INF/MANIFEST.MF");
             while (resources.hasMoreElements()) {
                     Manifest manifest = new Manifest(resources.nextElement().openStream());
                     // check that this is your manifest and do what you need or get the next one
-                AuroraMCAPI.getCore().getLogger().info("Manifest found. Checking...");
+                    Attributes attributes = manifest.getMainAttributes();
 
-                Attributes attributes = manifest.getMainAttributes();
-
-                if (attributes.containsKey("Module-Name")) {
-                    AuroraMCAPI.getCore().getLogger().info("Module name is present.");
-                    if (attributes.getValue("Module-Name").equalsIgnoreCase("AuroraMC-Core")) {
-                        AuroraMCAPI.getCore().getLogger().info("Module name is AuroraMC-Core.");
-                        buildNumber = attributes.getValue("Jenkins-Build-Number");
-                        gitCommit = attributes.getValue("Git-Commit");
-                    }
+                buildNumber = attributes.getValue("Jenkins-Build-Number");
+                gitCommit = attributes.getValue("Git-Commit");
+                if (buildNumber != null && gitCommit != null) {
+                    break;
                 }
             }
         } catch (IOException e) {
