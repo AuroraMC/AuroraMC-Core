@@ -22,7 +22,7 @@ public class IPLookupCompare extends GUI {
         this.setItem(1, 4, new GUIItem(Material.REDSTONE_COMPARATOR, "&3&lComparing IP Profiles"));
         this.setItem(1, 5, new GUIItem(Material.SKULL_ITEM, playerProfile.getSecondUser(), 1, "", (short)3, false, playerProfile.getSecondUser()));
 
-        this.setItem(2, 3, new GUIItem(Material.BOOK_AND_QUILL, "&3&lAlternate Accounts", 1, String.format(";&rThese users have;&rs**%s** alt accounts in common.;;&rMost recent common alts:;**%s**", playerProfile.getAmountOfCommonAlts(), String.join("**;**", playerProfile.getCommonAlts()))));
+        this.setItem(2, 3, new GUIItem(Material.BOOK_AND_QUILL, "&3&lAlternate Accounts", 1, String.format(";&rThese users have;&r**%s** alt accounts in common.;;&rMost recent common alts:;**%s**", playerProfile.getAmountOfCommonAlts(), String.join("**;**", playerProfile.getCommonAlts()))));
         this.setItem(2, 4, new GUIItem(Material.BOOKSHELF, "&3&lCommon IP Profiles", 1, String.format("&rThese user have;**%s** IP Profiles in common.;;&rMost recent common profiles:;**IP Profile #%s**", playerProfile.getAmountOfCommonProfiles(), String.join("**;**IP Profile #", playerProfile.getCommonProfiles()))));
         this.setItem(2, 5, new GUIItem(Material.EMERALD_BLOCK, "&3&lPunishment Information", 1, String.format(";&rOf all known alts:;**%s** are currently muted.;**%s** are currently banned.", playerProfile.getMutes(), playerProfile.getBans())));
         this.setItem(3, 4, new GUIItem(Material.BOOK, "&3&lLatest Information", 1, String.format("&rLatest IP Profile for **%s**: **%s**;&rLatest IP Profile for **%s**: **%s**", playerProfile.getFirstUser(), playerProfile.getFirstProfile(), playerProfile.getSecondUser(), playerProfile.getSecondProfile())));
