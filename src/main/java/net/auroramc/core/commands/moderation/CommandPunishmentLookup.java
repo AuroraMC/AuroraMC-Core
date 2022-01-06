@@ -11,6 +11,11 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +46,7 @@ public class CommandPunishmentLookup extends Command {
                         if(punishment != null) {
                             String name = AuroraMCAPI.getDbManager().getNameFromID(punishment.getPunished());
                             Rule rule = AuroraMCAPI.getRules().getRule(punishment.getRuleID());
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("Punishment Lookup for punishment **%s**:\n" +
+                            TextComponent component = new TextComponent(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("Punishment Lookup for punishment **%s**:\n" +
                                     "Punished User: **%s**\n" +
                                     "Type: **%s**\n" +
                                     "Reason: **%s**\n" +
@@ -50,6 +55,22 @@ public class CommandPunishmentLookup extends Command {
                                     "Length: **%s**\n" +
                                     "Issued By: **%s**\n" +
                                     "Status: %s&r%s", code, name, ((punishment.getStatus() == 7)?"Warning":((rule.getType() == 1)?"Chat Offence":((rule.getType() == 2)?"Game Offence":"Misc Offence"))), rule.getRuleName() + " - " + punishment.getExtraNotes(), weights[rule.getWeight()-1], new Date(punishment.getIssued()), ((punishment.getExpire() == -1)?new PunishmentLength(-1):new PunishmentLength((punishment.getExpire() - punishment.getIssued()) / 3600000d)), punishment.getPunisherName(), statuses[punishment.getStatus()-1], ((punishment.getRemovalReason() == null)?"":String.format("\n \nRemoval Reason: **%s**\nRemoval Timestamp: **%s**\nRemoved By: **%s**", punishment.getRemovalReason(), new Date(punishment.getRemovalTimestamp()), punishment.getRemover())))));
+
+                            if (player.hasPermission("debug.info")) {
+                                TextComponent extra = new TextComponent("\n\n[Remove: Reprieve]");
+                                extra.setColor(ChatColor.GREEN);
+                                extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&aClick here to remove punishment as a reprieve.")).create()));
+                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/appeal " + code + " Reprieve"));
+                                component.addExtra(extra);
+
+                                extra = new TextComponent(" [Remove: False]");
+                                extra.setColor(ChatColor.RED);
+                                extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&cClick here to remove punishment as a false.")).create()));
+                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/appeal " + code + " False"));
+                                component.addExtra(extra);
+                            }
+
+                            player.getPlayer().spigot().sendMessage(component);
                         } else {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("No matches found for Punishment ID: [**%s**]", code)));
                         }
