@@ -1529,7 +1529,7 @@ public class DatabaseManager {
                 int bans = 0;
                 int mutes = 0;
                 statement = connection.prepareStatement("SELECT ip_logs.amc_id, auroramc_players.name FROM ip_logs INNER JOIN auroramc_players ON auroramc_players.id=ip_logs.amc_id WHERE profile_id = ?");
-                statement.setInt(1, set.getInt(2));
+                statement.setInt(1, set.getInt(1));
                 ResultSet set2 = statement.executeQuery();
                 while (set2.next()) {
                     if (!sharedAccounts.contains(set2.getString(2))) {
