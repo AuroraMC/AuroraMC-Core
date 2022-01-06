@@ -9,6 +9,7 @@ import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
@@ -23,7 +24,7 @@ import java.util.Date;
 public class RecruitmentLookup extends GUI {
 
 
-    public RecruitmentLookup(String name, PunishmentHistory history, PlayerStatistics statistics, IPLookup ipprofile) {
+    public RecruitmentLookup(String name, PunishmentHistory history, PlayerStatistics statistics, PlayerProfile ipprofile) {
         super("&3&lRecruitment Lookup", 2, true);
 
         border(String.format("&3&l%s's Lookup Information", name), "");
@@ -134,7 +135,7 @@ public class RecruitmentLookup extends GUI {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemStack.setItemMeta(meta);
         this.setItem(1, 4, new GUIItem(itemStack));
-        this.setItem(1, 6, new GUIItem(Material.PAPER, "&3&lIP Profile", 1, String.format(";&rThis player has **%s** known alts.;&rOf those, **%s** have an active punishment.", ipprofile.getNames().size() - 1, ipprofile.getNames().stream().filter(lookupUser -> lookupUser.isBanned() || lookupUser.isMuted()).count())));
+        this.setItem(1, 6, new GUIItem(Material.PAPER, "&3&lIP Profile", 1, String.format(";&rThis player has **%s** known alts.;&rOf those, **%s** are banned and **%s** are muted.", ipprofile.getSharedAccounts(), ipprofile.getBans(), ipprofile.getMutes())));
     }
 
     @Override

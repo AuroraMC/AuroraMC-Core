@@ -11,6 +11,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
+import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.gui.misc.RecruitmentLookup;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -42,7 +43,7 @@ public class CommandRecruitmentLookup extends Command {
 
                     UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(id);
 
-                    IPLookup lookup = AuroraMCAPI.getDbManager().ipLookup(uuid);
+                    PlayerProfile lookup = AuroraMCAPI.getDbManager().ipLookup(uuid);
                     PlayerStatistics stats = AuroraMCAPI.getDbManager().getStatistics(uuid);
                     List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id);
                     PunishmentHistory history = new PunishmentHistory(id);
