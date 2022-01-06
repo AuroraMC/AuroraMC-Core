@@ -231,8 +231,11 @@ public class SetRank extends GUI {
                 }
                 if (rank.getCategory() == Rank.RankCategory.PLAYER) {
                     Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(uuid.toString());
-                    AuroraMCAPI.getDbManager().undisguise(uuid.toString(), disguise.getName());
-                    AuroraMCAPI.getDbManager().unvanish(uuid.toString());
+                    if (disguise != null) {
+                        AuroraMCAPI.getDbManager().undisguise(uuid.toString(), disguise.getName());
+                        AuroraMCAPI.getDbManager().unvanish(uuid.toString());
+                    }
+
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
