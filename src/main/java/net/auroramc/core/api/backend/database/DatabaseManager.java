@@ -2465,7 +2465,7 @@ public class DatabaseManager {
                         uuids.add(UUID.fromString(uuidString));
                     }
                 }
-                payments.add(new Payment(set.getInt(1), set.getInt(2), set.getString(3), set.getDouble(4), set.getLong(5), packages, uuids, Payment.PaymentStatus.valueOf(set.getString(8))));
+                payments.add(new Payment(set.getInt(1), set.getInt(2), set.getString(3), set.getDouble(4), set.getTimestamp(5).getTime(), packages, uuids, Payment.PaymentStatus.valueOf(set.getString(8))));
             }
             return payments;
         } catch (SQLException e) {
