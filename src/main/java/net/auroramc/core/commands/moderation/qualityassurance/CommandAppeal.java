@@ -11,10 +11,13 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
+import net.auroramc.core.api.utils.DiscordWebhook;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class CommandAppeal extends Command {
 
@@ -37,6 +40,13 @@ public class CommandAppeal extends Command {
                                 List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(punishment.getPunished());
                                 if (args.get(0).equalsIgnoreCase("Reprieve")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
+                                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **Reprieve**.", player.getName(), code)).setColor(new Color(85, 255, 85)));
+                                    try {
+                                        discordWebhook.execute();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Reprieved Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
                                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -46,6 +56,13 @@ public class CommandAppeal extends Command {
                                     }
                                 } else if (args.get(0).equalsIgnoreCase("False")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
+                                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **False**.", player.getName(), code)).setColor(new Color(255, 85, 85)));
+                                    try {
+                                        discordWebhook.execute();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("False Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
                                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -55,6 +72,13 @@ public class CommandAppeal extends Command {
                                     }
                                 } else if (args.get(0).equalsIgnoreCase("Compromised")) {
                                     AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Compromised Account Recovered", punishment, uuid, punishments);
+                                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **Compromised**.", player.getName(), code)).setColor(new Color(255, 170, 0)));
+                                    try {
+                                        discordWebhook.execute();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Appeal", String.format("Compromised Account Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
                                         ByteArrayDataOutput out = ByteStreams.newDataOutput();

@@ -11,10 +11,12 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.utils.DiscordWebhook;
 import net.auroramc.core.api.utils.UUIDUtil;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -73,6 +75,32 @@ public class CommandDisguise extends Command {
                                     return;
                                 }
 
+                                switch (player.getRank().getId()) {
+                                    case 6:
+                                    case 5: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928786853421809694/5KJn2zEdjECztUgLzUXNt38GRuLlcEOmcstENVTjv6reFUmHqRUmCWbIveFi8HZoy8FV");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
+                                    default: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
+                                }
+
                                 new BukkitRunnable(){
                                     @Override
                                     public void run() {
@@ -80,6 +108,7 @@ public class CommandDisguise extends Command {
                                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", String.format("You are now disguised as **%s**. To undisguise, simply type **/undisguise**.", args.get(0))));
                                     }
                                 }.runTask(AuroraMCAPI.getCore());
+
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
@@ -128,6 +157,32 @@ public class CommandDisguise extends Command {
                                 if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
                                     return;
+                                }
+
+                                switch (player.getRank().getId()) {
+                                    case 6:
+                                    case 5: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928786853421809694/5KJn2zEdjECztUgLzUXNt38GRuLlcEOmcstENVTjv6reFUmHqRUmCWbIveFi8HZoy8FV");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s** with the skin of **%s**.", player.getName(), args.get(0), args.get(1))).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
+                                    default: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s** with the skin of **%s**.", player.getName(), args.get(0), args.get(1))).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
                                 }
 
                                 new BukkitRunnable(){
@@ -202,6 +257,32 @@ public class CommandDisguise extends Command {
                                 if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You may not disguise as this player as they are currently online."));
                                     return;
+                                }
+
+                                switch (player.getRank().getId()) {
+                                    case 6:
+                                    case 5: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928786853421809694/5KJn2zEdjECztUgLzUXNt38GRuLlcEOmcstENVTjv6reFUmHqRUmCWbIveFi8HZoy8FV");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s** with the skin of **%s**.", player.getName(), args.get(0), args.get(1))).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
+                                    default: {
+                                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has disguised as **%s** with the skin of **%s**.", player.getName(), args.get(0), args.get(1))).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
+                                        try {
+                                            discordWebhook.execute();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        break;
+                                    }
                                 }
 
                                 new BukkitRunnable(){
