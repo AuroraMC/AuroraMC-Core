@@ -1500,8 +1500,11 @@ public class DatabaseManager {
                         globalAccountSuspensionReason = set.getString(1);
                     }
 
+                    if (sharedAccounts.size() > 5) {
+                        sharedAccounts = sharedAccounts.subList(0,5);
+                    }
 
-                    return new PlayerProfile(name, numberOfProfiles, profiles, profile, lastUsedby, sharedAccounts.size(), sharedAccounts.subList(0,5), bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
+                    return new PlayerProfile(name, numberOfProfiles, profiles, profile, lastUsedby, sharedAccounts.size(), sharedAccounts, bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
                 } else {
                     return null;
                 }
@@ -1566,7 +1569,11 @@ public class DatabaseManager {
                     globalAccountSuspensionReason = set.getString(1);
                 }
 
-                return new IPProfile(profileId, sharedAccounts.size(), sharedAccounts.subList(0, 5), lastUsedBy, lastUsedAt, bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
+                if (sharedAccounts.size() > 5) {
+                    sharedAccounts = sharedAccounts.subList(0,5);
+                }
+
+                return new IPProfile(profileId, sharedAccounts.size(), sharedAccounts, lastUsedBy, lastUsedAt, bans, mutes, globalAccountSuspension, globalAccountSuspensionReason);
             } else {
                 return null;
             }
