@@ -60,13 +60,19 @@ public class CommandPunishmentLookup extends Command {
                                 TextComponent extra = new TextComponent("\n\n[Remove: Reprieve]");
                                 extra.setColor(ChatColor.GREEN);
                                 extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&aClick here to remove punishment as a reprieve.")).create()));
-                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/appeal " + code + " Reprieve"));
+                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/appeal " + code + " Reprieve"));
+                                component.addExtra(extra);
+
+                                extra = new TextComponent("\n\n[Remove: Compromised]");
+                                extra.setColor(ChatColor.GOLD);
+                                extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&6Click here to remove punishment as Compromised.")).create()));
+                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/appeal " + code + " Compromised"));
                                 component.addExtra(extra);
 
                                 extra = new TextComponent(" [Remove: False]");
                                 extra.setColor(ChatColor.RED);
-                                extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&cClick here to remove punishment as a false.")).create()));
-                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/appeal " + code + " False"));
+                                extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&cClick here to remove punishment as false.")).create()));
+                                extra.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/appeal " + code + " False"));
                                 component.addExtra(extra);
                             }
 
