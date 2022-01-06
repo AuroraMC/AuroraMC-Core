@@ -63,7 +63,7 @@ public class CommandPunishmentLookup extends Command {
                                 extra.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/appeal " + code + " Reprieve"));
                                 component.addExtra(extra);
 
-                                extra = new TextComponent("\n\n[Remove: Compromised]");
+                                extra = new TextComponent(" [Remove: Compromised]");
                                 extra.setColor(ChatColor.GOLD);
                                 extra.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&6Click here to remove punishment as Compromised.")).create()));
                                 extra.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/appeal " + code + " Compromised"));
