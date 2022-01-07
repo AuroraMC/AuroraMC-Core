@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,9 +65,18 @@ public class PunishUtils {
                         for (Player player1 : Bukkit.getOnlinePlayers()) {
                             if (!player1.equals(issuer.getPlayer())) {
                                 if (AuroraMCAPI.getPlayer(player1).getRank().hasPermission("moderation")) {
-                                    player1.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has issued a warning to **%s** for **%s - %s**.", issuer.getPlayer().getName(), name, rule.getRuleName(), extraDetails)));
+                                    player1.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("**%s** has issued a warning to **%s** for **%s - %s**.", issuer.getPlayer().getName(), name, rule.getRuleName(), extraDetails)));
                                 }
                             }
+                        }
+
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has warned **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
+                        try {
+                            discordWebhook.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         return;
                     }
@@ -116,6 +126,15 @@ public class PunishUtils {
                         out.writeUTF(code);
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s [Awaiting Approval]**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
+                        try {
+                            discordWebhook.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     } else {
                         //Ban
                         AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, uuid.toString());
@@ -140,6 +159,15 @@ public class PunishUtils {
                         out = ByteStreams.newDataOutput();
                         out.writeUTF("ApprovalBan");
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has banned **%s** for reason **%s - %s [Awaiting Approval]**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
+                        try {
+                            discordWebhook.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -176,6 +204,14 @@ public class PunishUtils {
             out.writeUTF("Mute");
             out.writeUTF(code);
             issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+            discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
+            try {
+                discordWebhook.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             //Ban
             String uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player).toString();
@@ -196,6 +232,14 @@ public class PunishUtils {
                         player1.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has banned **%s** for **%s**. Reason: **%s - %s**.", issuer.getPlayer().getName(), name, length.getFormatted(),  rule.getRuleName(), extraDetails)));
                     }
                 }
+            }
+            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+            discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has banned **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
+            try {
+                discordWebhook.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
