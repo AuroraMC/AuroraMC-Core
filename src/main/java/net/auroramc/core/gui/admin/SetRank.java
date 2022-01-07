@@ -11,6 +11,7 @@ import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.Disguise;
+import net.auroramc.core.api.utils.DiscordWebhook;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -236,6 +238,15 @@ public class SetRank extends GUI {
                         AuroraMCAPI.getDbManager().unvanish(uuid.toString());
                     }
 
+                }
+
+                DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Rank Set").setDescription(String.format("**%s** has set **%s's** rank as **%s**.", player.getName(), name, rank.name())).setColor(new Color(rank.getColor().asRGB())));
+                try {
+                    discordWebhook.execute();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());

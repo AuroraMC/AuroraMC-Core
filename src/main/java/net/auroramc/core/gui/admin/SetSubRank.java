@@ -9,6 +9,7 @@ import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.utils.DiscordWebhook;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,6 +84,14 @@ public class SetSubRank extends GUI {
                 @Override
                 public void run() {
                     AuroraMCAPI.getDbManager().revokeSubrank(id, rank);
+                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Added").setDescription(String.format("**%s** has remove SubRank **%s** from player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
+                    try {
+                        discordWebhook.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
         } else {
@@ -103,6 +113,14 @@ public class SetSubRank extends GUI {
                 @Override
                 public void run() {
                     AuroraMCAPI.getDbManager().giveSubrank(id, rank);
+                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Removed").setDescription(String.format("**%s** has added SubRank **%s** to player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
+                    try {
+                        discordWebhook.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
         }
