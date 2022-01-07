@@ -240,7 +240,7 @@ public class SetRank extends GUI {
 
                 }
 
-                DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+                DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
 
                 discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Rank Set").setDescription(String.format("**%s** has set **%s's** rank as **%s**.", player.getName(), name, rank.name())).setColor(new Color(rank.getColor().asRGB())));
                 try {
