@@ -33,6 +33,9 @@ public class CommandHelp extends Command {
 
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
+        if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(13))) {
+            player.getStats().achievementGained(AuroraMCAPI.getAchievement(13), 1, true);
+        }
         TextComponent textComponent = new TextComponent("");
         TextComponent prefix = new TextComponent("«HELP»");
         prefix.setColor(ChatColor.DARK_AQUA);
