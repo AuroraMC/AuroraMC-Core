@@ -55,6 +55,9 @@ public class Friend {
     public void favourited(boolean sendToBungee) {
         this.type = FriendType.FAVOURITE;
         if (sendToBungee) {
+            if (!list.getPlayer().getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(33))) {
+                list.getPlayer().getStats().achievementGained(AuroraMCAPI.getAchievement(33), 1, true);
+            }
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendFavourited");
             out.writeUTF(list.getPlayer().getName());
