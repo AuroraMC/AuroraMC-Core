@@ -86,7 +86,13 @@ public class ChatListener implements Listener {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
                     return;
                 }
+                player.getStats().addProgress(AuroraMCAPI.getAchievement(6), 1, player.getStats().getAchievementsGained().getOrDefault(AuroraMCAPI.getAchievement(6), 0), true);
                 e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
+                if (e.getMessage().contains("mod")) {
+                    if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(14))) {
+                        player.getStats().achievementGained(AuroraMCAPI.getAchievement(14), 1, true);
+                    }
+                }
                 if (player.isDisguised()) {
                     if (player.getPreferences().isHideDisguiseNameEnabled()) {
                         player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().undisguisedChatMessage(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));

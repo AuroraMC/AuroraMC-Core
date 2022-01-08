@@ -43,6 +43,9 @@ public class FriendsList {
     }
 
     public void friendRequestAccepted(UUID uuid, boolean online, String server, FriendStatus status, boolean sendToBungee) {
+        if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
+            player.getStats().achievementGained(AuroraMCAPI.getAchievement(30), 1, true);
+        }
         if (sendToBungee) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendRequestAccepted");
@@ -59,6 +62,9 @@ public class FriendsList {
     public void friendRequestRemoved(UUID uuid, boolean sendToBungee) {
         Friend friend = pendingFriendRequests.remove(uuid);
         if (sendToBungee) {
+            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(32))) {
+                player.getStats().achievementGained(AuroraMCAPI.getAchievement(32), 1, true);
+            }
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendRequestDenied");
             out.writeUTF(player.getName());
@@ -70,6 +76,9 @@ public class FriendsList {
     public void friendRemoved(UUID uuid, boolean sendToBungee) {
         friends.remove(uuid);
         if (sendToBungee) {
+            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(31))) {
+                player.getStats().achievementGained(AuroraMCAPI.getAchievement(31), 1, true);
+            }
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendDeleted");
             out.writeUTF(player.getName());

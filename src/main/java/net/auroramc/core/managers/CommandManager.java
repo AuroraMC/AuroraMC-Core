@@ -65,9 +65,15 @@ public class CommandManager implements Listener {
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "You do not have permission to use that command!"));
                 }
             } else {
+                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(27))) {
+                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(27), 1, true);
+                }
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "That command is unrecognised."));
             }
         } else {
+            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(27))) {
+                player.getStats().achievementGained(AuroraMCAPI.getAchievement(27), 1, true);
+            }
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Command Manager", "That command is unrecognised."));
         }
     }
