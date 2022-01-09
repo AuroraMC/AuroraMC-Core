@@ -25,7 +25,7 @@ public abstract class TieredAcheivement extends Achievement {
 
     public int achievedTier(int currentTier, long metric) {
         if (tiers.size() > currentTier) {
-            if (metric > tiers.get(currentTier).getRequirement()) {
+            if (metric > tiers.get(currentTier + 1).getRequirement()) {
                 return currentTier + 1;
             } else {
                 return -1;
