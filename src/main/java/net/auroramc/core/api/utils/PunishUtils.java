@@ -70,7 +70,7 @@ public class PunishUtils {
                             }
                         }
 
-                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
                         discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has warned **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
                         try {
@@ -126,7 +126,7 @@ public class PunishUtils {
                         out.writeUTF(code);
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
                         discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s [Awaiting Approval]**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
                         try {
@@ -160,7 +160,7 @@ public class PunishUtils {
                         out.writeUTF("ApprovalBan");
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
                         discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has banned **%s** for reason **%s - %s [Awaiting Approval]**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
                         try {
@@ -204,7 +204,7 @@ public class PunishUtils {
             out.writeUTF("Mute");
             out.writeUTF(code);
             issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
             discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
             try {
@@ -233,7 +233,7 @@ public class PunishUtils {
                     }
                 }
             }
-            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+            DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
             discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has banned **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
             try {

@@ -43,10 +43,10 @@ public class FriendsList {
     }
 
     public void friendRequestAccepted(UUID uuid, boolean online, String server, FriendStatus status, boolean sendToBungee) {
-        if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
-            player.getStats().achievementGained(AuroraMCAPI.getAchievement(30), 1, true);
-        }
         if (sendToBungee) {
+            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
+                player.getStats().achievementGained(AuroraMCAPI.getAchievement(30), 1, true);
+            }
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendRequestAccepted");
             out.writeUTF(player.getName());
