@@ -86,7 +86,7 @@ public class SetSubRank extends GUI {
                     AuroraMCAPI.getDbManager().revokeSubrank(id, rank);
                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
 
-                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Added").setDescription(String.format("**%s** has remove SubRank **%s** from player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Added").setDescription(String.format("**%s** has removed SubRank **%s** from player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
                     try {
                         discordWebhook.execute();
                     } catch (Exception e) {
