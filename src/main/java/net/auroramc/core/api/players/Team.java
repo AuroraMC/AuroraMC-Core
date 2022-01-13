@@ -10,4 +10,6 @@ public interface Team {
 
     char getTeamColor();
 
+    String getName();
+
 }
