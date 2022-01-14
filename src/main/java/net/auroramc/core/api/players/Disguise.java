@@ -310,23 +310,7 @@ public class Disguise {
         }
         String[] skin = AuroraMCAPI.getDbManager().getRandomSkin().split(";");
 
-        String skinTotal = "{\n" +
-                "  \"timestamp\" : " + System.currentTimeMillis() + ",\n" +
-                "  \"profileId\" : \"" + player.getPlayer().getUniqueId().toString().replace("-","") + "\",\n" +
-                "  \"profileName\" : \"" + name + "\",\n" +
-                "  \"textures\" : {\n" +
-                "    \"SKIN\" : {\n" +
-                "      \"url\" : \"" + skin[0] + "\"" +
-                ((skin.length > 1 && skin[1].equalsIgnoreCase("slim"))?
-                        ",\n" +
-                "      \"metadata\" : {\n" +
-                "        \"model\" : \"slim\"\n" +
-                "      }":"") + "\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
-
         Rank rank = Rank.getByID(random.nextInt(3));
-        return new Disguise(player, name, new String(Base64.getEncoder().encode(skinTotal.getBytes())), null, rank);
+        return new Disguise(player, name, skin[0], skin[1], rank);
     }
 }
