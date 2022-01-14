@@ -30,8 +30,7 @@ import java.util.UUID;
 
 public class DisguiseUtil {
 
-    private static final String defaultSkinValue = "ewogICJ0aW1lc3RhbXAiIDogMTU5Mzg3NzM0MDc1NywKICAicHJvZmlsZUlkIiA6ICJiMGMzYzA1OThjMjQ0NjY0OWFkYzAzNjE0ZTdhN2UwNSIsCiAgInByb2ZpbGVOYW1lIiA6ICI3dWtlIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2M2YmUzNzc5YzlmOWRlYjg5MzJjM2I3YmQyNTc4ODhkMTU4OTY5YWM5MWFhMjYzNTE1NzJmMWFkODdjNTE5NDgiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==";
-    private static final String defaultSkinSignature = "UGHYsvsAZeykNWqutvZD6q4K1KvzolcpLT4yJEPBeCo1vso3gZy0YoExx1RmFyaQu8rzP107sbHg7HaC04d4bg0/m6EjgKLbMV8B3gXbObWEoJ7PzyU/31ezJ11W4wqlSuF3D23DBSA8d2WB3cADiRXkhvMVEHEtXBX3oQZ5U1ZQlGpiVpi3a/hsfbMn2KjYsI25P/koNoBpdKuCy8oYFTd46kOdUW7/OXiBRKjKhUV/TAFxQ7rATMwrp7m4qZpQkfogK5e6lsYj9BueOrKy/Fn5JgejBP7Cx7Dl+u51kGKE/ngbudmzt92eu7H/VzTOY+0zS9d753aFzPyX9WWpfyXCb+o+wzUaccIzome1IX8UKxoVvz+Oh0FFg+E7FihNmdt5liJxPXvS6Bgs+GnaENJBhSb3+lpsSEVAXlqzJ9TZZGCN/1AdchUVhPxrWNUqfqyg9AZAhf0KtfUqVNCcd/QjvTsp5FvkGCkPiFf6Ev4wRTb5n2/vLgPXGDHh/pGFnilfroODI0sjuUUkJLP+ZRcKuiiX5+ain4mMMtNzbgpnLD3HRV7IRfb7Thbxtof2riUODLd5tFikz4isUngxjTERV1pA0xcKbyL6b1iYQ5ZDmzKv/wjCGgQd1jrkVeK0Hkf2WEaF2PkqxCf+lWlLY+kIBnvtRyP1cJDJ+RDR/I0=";
+    private static final String defaultSkinValue = "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzZiZTM3NzljOWY5ZGViODkzMmMzYjdiZDI1Nzg4OGQxNTg5NjlhYzkxYWEyNjM1MTU3MmYxYWQ4N2M1MTk0OCJ9fX0===";
 
     public static boolean changeSkin(Player player, String skin, String signature, boolean update, AuroraMCPlayer amcPlayer, boolean undisguise) {
         GameProfile playerProfile = ((CraftPlayer) player).getHandle().getProfile();
@@ -98,7 +97,7 @@ public class DisguiseUtil {
                             @Override
                             public void run() {
                                 updatePlayer(player);
-                                changeSkin(player, defaultSkinValue, defaultSkinSignature, true, amcPlayer, false);
+                                changeSkin(player, defaultSkinValue, null, true, amcPlayer, false);
                             }
                         }.runTask(AuroraMCAPI.getCore());
                     }
