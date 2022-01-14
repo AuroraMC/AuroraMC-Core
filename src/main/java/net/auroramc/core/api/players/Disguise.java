@@ -118,7 +118,7 @@ public class Disguise {
                 if (skin.equals(player.getName())) {
                     return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature(), update, this.player, false);
                 }
-                if (signature != null) {
+                if (skinName == null) {
                     return DisguiseUtil.disguise(player.getPlayer(), name, skin, signature, update, this.player, false);
                 }
                 return DisguiseUtil.disguise(player.getPlayer(), name, skin, this, update, this.player);
@@ -126,7 +126,7 @@ public class Disguise {
                 if (skin.equals(player.getName())) {
                     return DisguiseUtil.disguise(player.getPlayer(), name, this.originalTexture.getValue(), this.originalTexture.getSignature(), update, this.player, false);
                 }
-                if (signature != null) {
+                if (skinName == null) {
                     return DisguiseUtil.changeSkin(player.getPlayer(), skin, signature, update, this.player, false);
                 }
                 DisguiseUtil.changeSkin(player.getPlayer(), skin, update, this, this.player);
