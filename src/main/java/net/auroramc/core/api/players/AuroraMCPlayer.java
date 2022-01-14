@@ -495,14 +495,13 @@ public class AuroraMCPlayer {
         return activeDisguise.apply(true);
     }
 
-    public Disguise randomDisguise() {
+    public void randomDisguise() {
         if (this.activeDisguise != null) {
             activeDisguise.switchDisguise();
         }
 
         activeDisguise = Disguise.randomDisguise(this);
         activeDisguise.apply(true);
-        return activeDisguise;
     }
 
     public boolean applyDisguise(boolean update) {
