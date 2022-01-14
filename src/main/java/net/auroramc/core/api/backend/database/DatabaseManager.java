@@ -29,6 +29,7 @@ import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
+import net.auroramc.core.api.utils.disguise.Skin;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -2509,6 +2510,12 @@ public class DatabaseManager {
     public String getRandomSkin() {
         try (Jedis connection = jedis.getResource()) {
             return connection.srandmember("randomskins");
+        }
+    }
+
+    public void pushSkin(Skin skin) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.sadd("randomskins", skin.getValue() + ";" + skin.getSignature());
         }
     }
 }
