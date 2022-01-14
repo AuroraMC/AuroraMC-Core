@@ -26,7 +26,7 @@ public class CommandDisguise extends Command {
 
 
     public CommandDisguise() {
-        super("disguise", Collections.emptyList(), Collections.singletonList(Permission.DISGUISE), false, null);
+        super("disguise", Collections.singletonList("nick"), Collections.singletonList(Permission.DISGUISE), false, null);
     }
 
     @Override
@@ -35,6 +35,11 @@ public class CommandDisguise extends Command {
             switch (args.size()) {
                 case 1:
                     if (args.get(0).matches("[a-zA-Z0-9_]{3,16}")) {
+                        if (args.get(0).equalsIgnoreCase("random")) {
+
+                        } else if (!player.hasPermission("disguise.custom")) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+                        }
                         if (args.get(0).equalsIgnoreCase(player.getName())) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You cannot disguise as yourself."));
                             return;
@@ -112,7 +117,12 @@ public class CommandDisguise extends Command {
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
+                        if (!player.hasPermission("disguise.custom")) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**\n" +
+                                    "If you wish to use a random disguise, use **/disguise random**."));
+                        }
                     }
                     break;
                 case 2:
@@ -195,7 +205,12 @@ public class CommandDisguise extends Command {
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
+                        if (!player.hasPermission("disguise.custom")) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**\n" +
+                                    "If you wish to use a random disguise, use **/disguise random**."));
+                        }
                     }
                     break;
                 case 3:
@@ -296,15 +311,30 @@ public class CommandDisguise extends Command {
                             }
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     } else {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
+                        if (!player.hasPermission("disguise.custom")) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**\n" +
+                                    "If you wish to use a random disguise, use **/disguise random**."));
+                        }
                     }
                     break;
                 default:
-                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
+                    if (!player.hasPermission("disguise.custom")) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+                    } else {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**\n" +
+                                "If you wish to use a random disguise, use **/disguise random**."));
+                    }
                     break;
             }
         } else {
-            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**"));
+            if (!player.hasPermission("disguise.custom")) {
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
+            } else {
+                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise <user> [skin] [rank]**\n" +
+                        "If you wish to use a random disguise, use **/disguise random**."));
+            }
         }
     }
 

@@ -2503,5 +2503,11 @@ public class DatabaseManager {
             return null;
         }
     }
+
+    public String getRandomSkin() {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.srandmember("randomskins");
+        }
+    }
 }
 

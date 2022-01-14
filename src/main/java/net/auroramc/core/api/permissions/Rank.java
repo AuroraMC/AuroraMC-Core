@@ -26,11 +26,11 @@ public enum Rank {
     YOUTUBE(5, "YouTube", "YouTube", "&6«YOUTUBE»\n\n" +
             "&fThis rank is given to YouTube\n" +
             "&fcontent creators on AuroraMC.\n \n" +
-            "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '6', 'f', 'e', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL), Rank.RankCategory.SOCIAL_MEDIA, Color.fromRGB(255, 170, 0)),
+            "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '6', 'f', 'e', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), Rank.RankCategory.SOCIAL_MEDIA, Color.fromRGB(255, 170, 0)),
     TWITCH(6, "Twitch", "Twitch", "&5«TWITCH»\n\n" +
             "&fThis rank is given to Twitch\n" +
             "&fstreamers on AuroraMC.\n \n" +
-            "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '5', 'f', 'd', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
+            "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '5', 'f', 'd', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
     BUILDER(7, "Builder", "Builder", "&a«BUILDER»\n \n" +
             "&fBuilders create and fix all of the\n" +
             "&fmaps you can find on the network!", null, 'a', 'f', 'a', 'f', false, Collections.singletonList(MASTER), Collections.singletonList(Permission.BUILD), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
@@ -45,12 +45,12 @@ public enum Rank {
     MODERATOR(10, "Moderator", "Mod", "&9«MOD»\n \n" +
             "&rMods answer any questions or\n" +
             "&fqueries players have, as well as\n" +
-            "&fmoderate the network. ", null, '9', 'f', '9', 'f', false, Collections.singletonList(JUNIOR_MODERATOR), Collections.singletonList(Permission.BYPASS_APPROVAL), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
+            "&fmoderate the network. ", null, '9', 'f', '9', 'f', false, Collections.singletonList(JUNIOR_MODERATOR), Arrays.asList(Permission.BYPASS_APPROVAL, Permission.DISGUISE), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
     ADMIN(11, "Administrator", "Admin", "&c«ADMIN»\n \n" +
             "&fAdmins monitor their specific teams,\n" +
             "&fmaking sure all of the staff inside those\n" +
             "&fteams are working efficiently and to the\n" +
-            "&fbest of their ability.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO, Permission.PANEL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fbest of their ability.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.CUSTOM_DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO, Permission.PANEL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     DEVELOPER(12, "Developer", "Dev", "&a«DEV»\n \n" +
             "&fDevelopers create the content that\n" +
             "&fyou see on all our servers! They work\n" +
@@ -61,7 +61,7 @@ public enum Rank {
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
             "&fand help our design team plan upcoming\n" +
-            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     OWNER(9001, "Owner", "Owner", "&c«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +
