@@ -279,6 +279,33 @@ public class Disguise {
                 break;
             }
         }
+
+        UUID uuid = AuroraMCAPI.getDbManager().getUUID(name);
+        if (uuid != null) {
+            Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
+            if (rank != null) {
+                if (rank.getCategory() != Rank.RankCategory.PLAYER) {
+                    return randomDisguise(player);
+                }
+            }
+            if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
+                return randomDisguise(player);
+            }
+        }
+
+        if (AuroraMCAPI.getDbManager().isUsernameBanned(name)) {
+            return randomDisguise(player);
+        }
+        if (AuroraMCAPI.getFilter() == null) {
+            return randomDisguise(player);
+        }
+        if (!AuroraMCAPI.getFilter().filter(name).equals(name)) {
+            return randomDisguise(player);
+        }
+
+        if (AuroraMCAPI.getDbManager().isAlreadyDisguise(name)) {
+            return randomDisguise(player);
+        }
         String skin = AuroraMCAPI.getDbManager().getRandomSkin();
         Rank rank = Rank.getByID(random.nextInt(3));
         return new Disguise(player, name, skin, null, rank);
