@@ -21,7 +21,6 @@ import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -494,6 +493,16 @@ public class AuroraMCPlayer {
 
         activeDisguise = new Disguise(this, name, skin, rank);
         return activeDisguise.apply(true);
+    }
+
+    public Disguise randomDisguise() {
+        if (this.activeDisguise != null) {
+            activeDisguise.switchDisguise();
+        }
+
+        activeDisguise = Disguise.randomDisguise(this);
+        activeDisguise.apply(true);
+        return activeDisguise;
     }
 
     public boolean applyDisguise(boolean update) {
