@@ -51,6 +51,7 @@ public class Disguise {
         this.skin = skin;
         this.signature = signature;
         this.rank = rank;
+        this.skinName = null;
 
         for (Property property : ((CraftPlayer) player.getPlayer()).getProfile().getProperties().removeAll("textures")) {
             this.originalTexture = property;
@@ -64,7 +65,7 @@ public class Disguise {
         this.skin = skin;
         this.signature = signature;
         this.rank = rank;
-
+        this.skinName = null;
     }
 
     public void updateName(String name) {

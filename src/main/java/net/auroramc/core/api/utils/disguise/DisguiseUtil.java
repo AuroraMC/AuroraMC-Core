@@ -35,7 +35,11 @@ public class DisguiseUtil {
     public static boolean changeSkin(Player player, String skin, String signature, boolean update, AuroraMCPlayer amcPlayer, boolean undisguise) {
         GameProfile playerProfile = ((CraftPlayer) player).getHandle().getProfile();
         playerProfile.getProperties().removeAll("textures");
-        playerProfile.getProperties().put("textures", new Property("textures", skin, signature));
+        if (signature == null) {
+            playerProfile.getProperties().put("textures", new Property("textures", skin));
+        } else {
+            playerProfile.getProperties().put("textures", new Property("textures", skin, signature));
+        }
         if (amcPlayer.getActiveDisguise() != null) {
             amcPlayer.getActiveDisguise().updateSkin(new Skin(skin, signature));
         }
