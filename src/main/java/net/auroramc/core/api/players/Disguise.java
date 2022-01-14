@@ -11,6 +11,7 @@ import net.auroramc.core.api.utils.disguise.DisguiseUtil;
 import net.auroramc.core.api.utils.disguise.Skin;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
+import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
 
@@ -306,8 +307,25 @@ public class Disguise {
         if (AuroraMCAPI.getDbManager().isAlreadyDisguise(name)) {
             return randomDisguise(player);
         }
-        String skin = AuroraMCAPI.getDbManager().getRandomSkin();
+        String[] skin = AuroraMCAPI.getDbManager().getRandomSkin().split(";");
+
+        String skinTotal = "{\n" +
+                "  \"timestamp\" : " + System.currentTimeMillis() + ",\n" +
+                "  \"profileId\" : \"" + player.getPlayer().getUniqueId().toString().replace("-","") + "\",\n" +
+                "  \"profileName\" : \"" + name + "\",\n" +
+                "  \"textures\" : {\n" +
+                "    \"SKIN\" : {\n" +
+                "      \"url\" : \"" + skin[0] + "\"" +
+                ((skin.length > 1 && skin[1].equalsIgnoreCase("slim"))?
+                        ",\n" +
+                "      \"metadata\" : {\n" +
+                "        \"model\" : \"slim\"\n" +
+                "      }":"") + "\n" +
+                "    }\n" +
+                "  }\n" +
+                "}";
+
         Rank rank = Rank.getByID(random.nextInt(3));
-        return new Disguise(player, name, skin, null, rank);
+        return new Disguise(player, name, new String(Base64.getEncoder().encode(skinTotal.getBytes())), null, rank);
     }
 }
