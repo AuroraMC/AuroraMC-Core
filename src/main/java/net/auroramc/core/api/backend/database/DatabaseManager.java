@@ -119,7 +119,9 @@ public class DatabaseManager {
                 return;
             }
             pipeline.set(String.format("disguise.%s.skin", player.getPlayer().getUniqueId().toString()), disguise.getSkin());
-            pipeline.set(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()), disguise.getSignature());
+            if (disguise.getSignature() != null) {
+                pipeline.set(String.format("disguise.%s.signature", player.getPlayer().getUniqueId().toString()), disguise.getSignature());
+            }
             pipeline.set(String.format("disguise.%s.name", player.getPlayer().getUniqueId().toString()), disguise.getName());
             pipeline.set(String.format("disguise.%s.rank", player.getPlayer().getUniqueId().toString()), disguise.getRank().getId() + "");
             pipeline.set(String.format("disguisenames.%s", disguise.getName()), player.getPlayer().getUniqueId().toString());
