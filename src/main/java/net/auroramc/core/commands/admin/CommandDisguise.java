@@ -36,7 +36,9 @@ public class CommandDisguise extends Command {
                 case 1:
                     if (args.get(0).matches("[a-zA-Z0-9_]{3,16}")) {
                         if (args.get(0).equalsIgnoreCase("random")) {
-
+                            player.randomDisguise();
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You are now disguised as a random player."));
+                            return;
                         } else if (!player.hasPermission("disguise.custom")) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
                         }
