@@ -205,6 +205,11 @@ public class Disguise {
                     name1 = NAMES[random.nextInt(NAMES.length)];
                 }
 
+                while (amountAfter == 0 && amountBefore == 0) {
+                    amountBefore = random.nextInt(4);
+                    amountAfter = random.nextInt(4);
+                }
+
                 if (random.nextBoolean()) {
                     name1 = name1.replace("i", "1");
                 }
@@ -257,7 +262,11 @@ public class Disguise {
                     name1 = name1.replace("o", "0");
                 }
 
-                name = name1 + noun + number;
+                if (random.nextBoolean()) {
+                    name = noun + name1 + number;
+                } else {
+                    name = noun + name1;
+                }
 
                 if (name.length() > 16) {
                     name = name1 + noun;
