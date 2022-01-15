@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class Disguise {
 
-    private static final String[] ADJECTIVES = {"Elegant","Blue","Tidy","Forgetful","Awesome","Gentle","Kind","Flawless"};
+    private static final String[] ADJECTIVES = {"Elegant","Blue","Tidy","Forgetful","Awesome","Gentle","Kind","Flawless","Difficult","Amazing","Reliable","Sensible","Happy","Clever"};
     private static final String[] NOUNS = {"Wheat","Phone","Honey","Tractor","Apple","Bird","Bread","Cookie"};
     private static final String[] NAMES = {"Ethan","Brandon","Ellis","Paige","Ruth","Mary","Grace","Rob"};
     private static final String[] COLOURS = {"White","Black","Green","Blue","Purple","Pink","Orange","Yellow"};
