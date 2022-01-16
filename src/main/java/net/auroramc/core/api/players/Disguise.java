@@ -17,9 +17,9 @@ import java.util.UUID;
 
 public class Disguise {
 
-    private static final String[] ADJECTIVES = {"Elegant","Blue","Tidy","Forgetful","Awesome","Gentle","Kind","Flawless","Difficult","Amazing","Reliable","Sensible","Happy","Clever"};
-    private static final String[] NOUNS = {"Wheat","Phone","Honey","Tractor","Apple","Bird","Bread","Cookie"};
-    private static final String[] NAMES = {"Ethan","Brandon","Ellis","Paige","Ruth","Mary","Grace","Rob"};
+    private static final String[] ADJECTIVES = {"Elegant","Blue","Tidy","Forgetful","Awesome","Gentle","Kind","Flawless","Difficult","Amazing","Reliable","Sensible","Happy","Clever","Missing","Tiny","Little","Mighty","Cute","Feeble","Silly","Sweet","Horrible","Privilaged"};
+    private static final String[] NOUNS = {"Wheat","Phone","Honey","Tractor","Apple","Bird","Bread","Cookie","Mixer","Button","Donkey","Horse","Mouse","Candy","Avacado","Goose","Kitty","Cat","Dog","Doggy","Biscuit","Gravy","Potato","Console","Mole","Rabbit","Bun","Bunny","Hacker","Creator","Face","Cheddar","Highway","Clothes","Freedom","Bird","Extend","Data","Family","Speech","Sister","Bath","Chapter","Failure","Heart","News","Month","Lab","Salad","Library","Airport","Basis","Error","Null","Analyst","Basket","Sport","Law","Way"};
+    private static final String[] NAMES = {"Ethan","Brandon","Ellis","Paige","Ruth","Mary","Grace","Rob","Phil","Claire","Luke","Haley","Alex","Cam","Jay","Gloria","Mitchell","Amy","Jake","Rosa","Adrian","Raymond","Kevin","Amy","Jonah","Dina","Garrett","Mateo","Cheyenne","Glenn","Sandra","Bo","Sal","Carol","Myrtle","Emma","Adam","Marcus","Elias","Jeff","Justine","Isaac","Jerry","Janet","Kelly","Jerusha","Laurie","Earl","Sayid","Terry","Charles","Gina","Michael","Norm","Mlepnos","Doug","Sharon","Vivian","Teddy","Madeline","Maddy","Sophia","Lynn","Marcus","Geoffrey","Geoffrey","Jess","Jeff","Bob","Karen","Lily","Joe","Dylan","David","Fred","Rob","Barry","Andrea","Steve","Adam","Beatrice"};
     private static final String[] COLOURS = {"White","Black","Green","Blue","Purple","Pink","Orange","Yellow"};
 
     private final AuroraMCPlayer player;
