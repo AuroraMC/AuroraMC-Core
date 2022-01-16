@@ -38,6 +38,32 @@ public class CommandDisguise extends Command {
                         if (args.get(0).equalsIgnoreCase("random")) {
                             player.randomDisguise();
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You are now disguised as a random player."));
+
+                            switch (player.getRank().getId()) {
+                                case 6:
+                                case 5: {
+                                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928786853421809694/5KJn2zEdjECztUgLzUXNt38GRuLlcEOmcstENVTjv6reFUmHqRUmCWbIveFi8HZoy8FV");
+
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
+                                    try {
+                                        discordWebhook.execute();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                }
+                                default: {
+                                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
+
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
+                                    try {
+                                        discordWebhook.execute();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                }
+                            }
                             return;
                         } else if (!player.hasPermission("disguise.custom")) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "Invalid syntax. Correct syntax: **/disguise random**"));
