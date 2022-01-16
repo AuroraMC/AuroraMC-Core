@@ -12,7 +12,9 @@ import net.auroramc.core.api.players.PlayerReport;
 import net.auroramc.core.gui.report.ChatType;
 import net.auroramc.core.gui.report.Report;
 import net.auroramc.core.managers.ReportManager;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +36,11 @@ public class CommandReport extends Command {
                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "You cannot report yourself, silly!"));
                 return;
             }
-            AuroraMCPlayer target = AuroraMCAPI.getPlayer(name);
+
+            AuroraMCPlayer target = AuroraMCAPI.getDisguisedPlayer(name);
+            if (target == null) {
+                target = AuroraMCAPI.getPlayer(name);
+            }
             if (args.size() == 0) {
                 if (target != null) {
                     Report report = new Report(player, target.getId(), target.getPlayer().getName());
@@ -44,12 +50,16 @@ public class CommandReport extends Command {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            int id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
+                            int id;
+                            if (AuroraMCAPI.getDbManager().isAlreadyDisguise(name)) {
+                                id = AuroraMCAPI.getDbManager().getAuroraMCID(AuroraMCAPI.getDbManager().getUUIDFromDisguise(name));
+                            } else {
+                                id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
+                            }
                             if (id == -1) {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("No results found for **%s**. They have either never joined the network or recently changed their name!", name)));
                             } else {
-                                String plname  = AuroraMCAPI.getDbManager().getNameFromID(id);
-                                Report report = new Report(player, id, plname);
+                                Report report = new Report(player, id, name);
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
@@ -58,6 +68,7 @@ public class CommandReport extends Command {
                                     }
                                 }.runTask(AuroraMCAPI.getCore());
                             }
+
                         }
                     }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 }
@@ -68,6 +79,7 @@ public class CommandReport extends Command {
 
                     PlayerReport.ReportReason reason = PlayerReport.ReportReason.getByAlias(reasonString);
                     if (reason != null) {
+                        final AuroraMCPlayer finalTarget = target;
                         if (reason.getType() == PlayerReport.ReportType.CHAT) {
                             ChatType chatType = new ChatType(player, target.getId(), target.getPlayer().getName(), reason);
                             new BukkitRunnable(){
@@ -85,7 +97,7 @@ public class CommandReport extends Command {
                                     if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                         queueType = PlayerReport.QueueType.LEADERSHIP;
                                     }
-                                    ReportManager.newReport(target.getId(), target.getPlayer().getName(), player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
+                                    ReportManager.newReport(finalTarget.getId(), finalTarget.getPlayer().getName(), player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
                                 }
                             }.runTaskAsynchronously(AuroraMCAPI.getCore());
                         }
@@ -97,17 +109,21 @@ public class CommandReport extends Command {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            int id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
+                            int id;
+                            if (AuroraMCAPI.getDbManager().isAlreadyDisguise(name)) {
+                                id = AuroraMCAPI.getDbManager().getAuroraMCID(AuroraMCAPI.getDbManager().getUUIDFromDisguise(name));
+                            } else {
+                                id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
+                            }
                             if (id == -1) {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("No results found for **%s**. They have either never joined the network or recently changed their name!", args.get(0))));
                             } else {
-                                String plname  = AuroraMCAPI.getDbManager().getNameFromID(id);
                                 String reasonString = String.join(" ", args).toLowerCase();
 
                                 PlayerReport.ReportReason reason = PlayerReport.ReportReason.getByAlias(reasonString);
                                 if (reason != null) {
                                     if (reason.getType() == PlayerReport.ReportType.CHAT) {
-                                        ChatType chatType = new ChatType(player, id, plname, reason);
+                                        ChatType chatType = new ChatType(player, id, name, reason);
                                         new BukkitRunnable(){
                                             @Override
                                             public void run() {
@@ -120,7 +136,7 @@ public class CommandReport extends Command {
                                         if (reason.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME || player.hasPermission("moderation")) {
                                             queueType = PlayerReport.QueueType.LEADERSHIP;
                                         }
-                                        ReportManager.newReport(id, plname, player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
+                                        ReportManager.newReport(id, name, player, System.currentTimeMillis(), reason.getType(), null, reason, queueType);
                                     }
                                 } else {
                                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There is no report of that type. Please try again."));
