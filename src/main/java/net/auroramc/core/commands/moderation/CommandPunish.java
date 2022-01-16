@@ -27,40 +27,35 @@ public class CommandPunish extends Command {
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         if (args.size() > 1) {
-            if (args.get(0).matches("[a-zA-Z0-9_]{3,16}")) {
-                if (Bukkit.getPlayer(args.get(0)) != null) {
-                    if (Bukkit.getPlayer(args.get(0)).isOnline()) {
-                        AuroraMCPlayer target = AuroraMCAPI.getPlayer(Bukkit.getPlayer(args.get(0)));
-                        if (target != null) {
-                            args.remove(0);
-                            Punish punish = new Punish(player, target.getPlayer().getName(), target.getId(), String.join(" ", args));
-                            punish.open(player);
-                            AuroraMCAPI.openGUI(player, punish);
-                            return;
-                        }
-                    }
-                }
+            AuroraMCPlayer target = AuroraMCAPI.getDisguisedPlayer(args.get(0));
+            if (target == null) {
+                target = AuroraMCAPI.getPlayer(args.get(0));
+            }
 
-                for (AuroraMCPlayer target : AuroraMCAPI.getPlayers()) {
-                    if (target.getActiveDisguise() != null) {
-                        if (target.getName().equalsIgnoreCase(args.get(0))) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","That user is disguised. Please gather evidence and report to an admin. This punish usage has been logged."));
-                        }
-                    }
-                }
-
-                String name = args.remove(0);
-
+            if (target != null) {
+                args.remove(0);
+                Punish punish = new Punish(player, target.getName(), target.getId(), String.join(" ", args));
+                AuroraMCAPI.openGUI(player, punish);
+                punish.open(player);
+            } else {
                 //The user is definitely not online, get from the Database.
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        int id = AuroraMCAPI.getDbManager().getAuroraMCID(name);
+                        int id;
+                        if (AuroraMCAPI.getDbManager().isAlreadyDisguise(args.get(0))) {
+                            id = AuroraMCAPI.getDbManager().getAuroraMCID(AuroraMCAPI.getDbManager().getUUIDFromDisguise(args.get(0)));
+                        } else {
+                            id = AuroraMCAPI.getDbManager().getAuroraMCID(args.get(0));
+                        }
                         if (id < 1) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot be punished.", name)));
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("User [**%s**] has never joined the network, so cannot be punished.", args.get(0))));
                             return;
                         }
 
+                        String name = AuroraMCAPI.getDbManager().getNameFromID(id);
+
+                        args.remove(0);
                         Punish punish = new Punish(player, name, id, String.join(" ", args));
                         new BukkitRunnable(){
                             @Override
@@ -71,8 +66,6 @@ public class CommandPunish extends Command {
                         }.runTask(AuroraMCAPI.getCore());
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());
-            } else {
-                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","That is not a valid username."));
             }
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","Invalid syntax. Correct syntax: **/punish [user] [extra notes]**"));
