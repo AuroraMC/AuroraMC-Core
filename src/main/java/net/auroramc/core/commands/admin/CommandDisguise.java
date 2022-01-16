@@ -11,6 +11,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.players.Disguise;
 import net.auroramc.core.api.utils.DiscordWebhook;
 import net.auroramc.core.api.utils.UUIDUtil;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -36,7 +37,7 @@ public class CommandDisguise extends Command {
                 case 1:
                     if (args.get(0).matches("[a-zA-Z0-9_]{3,16}")) {
                         if (args.get(0).equalsIgnoreCase("random")) {
-                            player.randomDisguise();
+                            Disguise disguise = player.randomDisguise();
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Disguise", "You are now disguised as a random player."));
 
                             switch (player.getRank().getId()) {
@@ -44,7 +45,7 @@ public class CommandDisguise extends Command {
                                 case 5: {
                                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928786853421809694/5KJn2zEdjECztUgLzUXNt38GRuLlcEOmcstENVTjv6reFUmHqRUmCWbIveFi8HZoy8FV");
 
-                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), disguise.getName())).setColor(((player.getRank().getId() == 5)?new Color(255, 170, 0):new Color(170, 0, 170))));
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
@@ -55,7 +56,7 @@ public class CommandDisguise extends Command {
                                 default: {
                                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928785758599405680/gnzddoyMeiq9wMKxkKVRptVx3PX8EfGeRtFz9ZuXlpXGJV1G37l_g-KeJgLJIX5WNIUF");
 
-                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), args.get(0))).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
+                                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Disguise Log").setDescription(String.format("**%s** has been randomly disguised as **%s**.", player.getName(), disguise.getName())).setColor(((player.getRank().getId() >=11)?new Color(255, 85, 85):new Color(255, 170, 0))));
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
