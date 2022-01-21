@@ -4,6 +4,8 @@
 
 package net.auroramc.core.api.players;
 
+import java.util.List;
+
 public interface Team {
 
     int getId();
@@ -11,5 +13,7 @@ public interface Team {
     char getTeamColor();
 
     String getName();
+
+    List<AuroraMCPlayer> getPlayers();
 
 }
