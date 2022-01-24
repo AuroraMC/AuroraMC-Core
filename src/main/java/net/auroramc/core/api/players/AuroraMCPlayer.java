@@ -482,6 +482,10 @@ public class AuroraMCPlayer {
         return team;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     public String getName() {
         return name;
     }
