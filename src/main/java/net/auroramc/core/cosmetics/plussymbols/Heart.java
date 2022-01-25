@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Heart extends PlusSymbol {
 
     public Heart() {
-        super(207, "Heart", "&3&l❤ Heart", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.DIAMOND, (short)0, '❤');
+        super(207, "Heart", "&3&l❤ Heart", "I <3 U", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.DIAMOND, (short)0, '❤');
     }
 
 }

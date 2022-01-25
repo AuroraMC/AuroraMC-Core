@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Sunny extends PlusSymbol {
 
     public Sunny() {
-        super(219, "Sunny", "&3&l☀ Sunny", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.DOUBLE_PLANT, (short)0, '☀');
+        super(219, "Sunny", "&3&l☀ Sunny", "Bring me sunshine!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.DOUBLE_PLANT, (short)0, '☀');
     }
 }

@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Flower extends PlusSymbol {
 
     public Flower() {
-        super(212, "Flower", "&3&l✿ Flower", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.RED_ROSE, (short)0, '✿');
+        super(212, "Flower", "&3&l✿ Flower", "Flower Power", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.RED_ROSE, (short)0, '✿');
     }
 }
