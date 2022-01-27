@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -33,21 +34,23 @@ public class IncomingProtocolMessageThread extends Thread {
         try (ServerSocket socket = new ServerSocket(port)) {
             this.socket = socket;
             while (listening) {
-                Socket connection = socket.accept();
-                ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
-                ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
-                if (!message.getAuthenticationKey().equals(AuroraMCAPI.getServerInfo().getAuthKey())) {
-                    //Check if the auth keys match.
-                    return;
-                }
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        ProtocolMessageEvent event = new ProtocolMessageEvent(message);
-                        Bukkit.getPluginManager().callEvent(event);
+                try (Socket connection = socket.accept()) {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
+                    ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
+                    if (!message.getAuthenticationKey().equals(AuroraMCAPI.getServerInfo().getAuthKey())) {
+                        //Check if the auth keys match.
+                        return;
                     }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
-
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            ProtocolMessageEvent event = new ProtocolMessageEvent(message);
+                            Bukkit.getPluginManager().callEvent(event);
+                        }
+                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                } catch (StreamCorruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (SocketException e) {
             e.printStackTrace();
