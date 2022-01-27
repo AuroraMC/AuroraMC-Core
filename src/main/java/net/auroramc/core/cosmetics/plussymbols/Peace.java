@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Peace extends PlusSymbol {
 
     public Peace() {
-        super(209, "Peace", "&3&l✌ Peace", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.SLIME_BALL, (short)0, '✌');
+        super(209, "Peace", "&3&l✌ Peace", "It's all cool brooo", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.SLIME_BALL, (short)0, '✌');
     }
 }
