@@ -30,6 +30,6 @@ public class Germany extends Banner {
     }
 
     public Germany() {
-        super(4, "Germany", "&c&lGermany", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
+        super(4, "Germany", "&c&lGermany", "&c&lDeutschland", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
     }
 }
