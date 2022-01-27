@@ -51,7 +51,7 @@ public class CommunicationUtils {
                 return message.getUuid();
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
+                return sendMessage(message, 1);
             }
         }
         return null;
