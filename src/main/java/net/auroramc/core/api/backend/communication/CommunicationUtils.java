@@ -36,7 +36,7 @@ public class CommunicationUtils {
                 return message.getUuid();
             } catch (Exception e) {
                 e.printStackTrace();
-                return null;
+                return sendMessage(message, 1);
             }
         }
         ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination(), AuroraMCAPI.getServerInfo().getNetwork().name());
@@ -52,6 +52,45 @@ public class CommunicationUtils {
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
+            }
+        }
+        return null;
+    }
+
+    public static UUID sendMessage(ProtocolMessage message, int level) {
+        if (message.getDestination().equalsIgnoreCase("Mission Control")) {
+            message.setServer(AuroraMCAPI.getServerInfo().getName());
+            message.setAuthenticationKey(AuroraMCAPI.getServerInfo().getAuthKey());
+            message.setNetwork(AuroraMCAPI.getServerInfo().getNetwork().name());
+            try (Socket socket = new Socket("10.40.14.221", 35565)) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(message);
+                outputStream.flush();
+                return message.getUuid();
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (level > 4) {
+                    return null;
+                }
+                return sendMessage(message, level + 1);
+            }
+        }
+        ServerInfo info = AuroraMCAPI.getDbManager().getServerDetailsByName(message.getDestination(), AuroraMCAPI.getServerInfo().getNetwork().name());
+        if (info != null) {
+            message.setServer(info.getName());
+            message.setAuthenticationKey(info.getAuthKey());
+            message.setNetwork(info.getNetwork().name());
+            try (Socket socket = new Socket(info.getIp(), info.getProtocolPort())) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(message);
+                outputStream.flush();
+                return message.getUuid();
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (level > 4) {
+                    return null;
+                }
+                return sendMessage(message, level + 1);
             }
         }
         return null;
