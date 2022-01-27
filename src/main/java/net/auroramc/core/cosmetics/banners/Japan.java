@@ -25,7 +25,7 @@ public class Japan extends Banner {
     }
 
     public Japan() {
-        super(6, "Japan", "&f&lJa&c&lpan", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(6, "Japan", "&f&lJa&c&lpan", "&f&l日&c&l本", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true);
     }
 
 }
