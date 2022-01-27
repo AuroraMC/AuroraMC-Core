@@ -26,6 +26,6 @@ public class Denmark extends Banner {
     }
 
     public Denmark() {
-        super(7, "Denmark", "&c&lDen&f&lmark", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
+        super(7, "Denmark", "&c&lDen&f&lmark", "&c&lDan&f&lmark", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.RED, true);
     }
 }
