@@ -68,6 +68,7 @@ public class AuroraMCAPI {
         chatSilenceEnd = -2;
         silenceTask = null;
         rulesLoading = false;
+        shuttingDown = false;
     }
 
 
