@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GUIManager implements Listener {
 
@@ -57,7 +58,13 @@ public class GUIManager implements Listener {
                                 e.setCancelled(true);
 
                                 //Removes the item from their inventory in the event that they try to glitch the GUI.
-                                player.getInventory().remove(itemStack);
+                                ItemStack finalItem = itemStack;
+                                new BukkitRunnable(){
+                                    @Override
+                                    public void run() {
+                                        player.getInventory().remove(finalItem);
+                                    }
+                                }.runTaskLater(AuroraMCAPI.getCore(), 2);
                             }
                             int row = e.getSlot() / 9;
                             int column = e.getSlot() % 9;
