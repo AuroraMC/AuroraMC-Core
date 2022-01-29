@@ -124,6 +124,10 @@ public class CosmeticsListing extends GUI {
             }
         }
 
+        if (row == 0) {
+            return;
+        }
+
         //Get clicked cosmetic.
         Cosmetic cosmetic = cosmetics.get(((currentPage - 1) * 28) + ((row - 1) * 7) + (column - 1));
         if (cosmetic.hasUnlocked(player)) {
