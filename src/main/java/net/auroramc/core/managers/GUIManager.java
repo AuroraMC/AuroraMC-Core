@@ -52,6 +52,9 @@ public class GUIManager implements Listener {
                         if (e.getInventory().getType() != InventoryType.PLAYER && e.getInventory().getType() != InventoryType.CREATIVE) {
                             if (gui.cancelEvent()) {
                                 e.setCancelled(true);
+
+                                //Removes the item from their inventory in the event that they try to glitch the GUI.
+                                player.getInventory().remove(itemStack);
                             }
                             int row = e.getSlot() / 9;
                             int column = e.getSlot() % 9;
