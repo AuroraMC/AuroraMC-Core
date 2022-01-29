@@ -45,6 +45,7 @@ public class AuroraMCAPI {
     private static ChatFilter filter;
     private static final HashMap<Integer, Achievement> achievements;
 
+    private static boolean shuttingDown;
 
     private static ServerInfo serverInfo;
 
@@ -303,6 +304,14 @@ public class AuroraMCAPI {
 
     public static boolean isRulesLoading() {
         return rulesLoading;
+    }
+
+    public static boolean isShuttingDown() {
+        return shuttingDown;
+    }
+
+    public static void setShuttingDown(boolean shuttingDown) {
+        AuroraMCAPI.shuttingDown = shuttingDown;
     }
 }
 

@@ -307,8 +307,10 @@ public class AuroraMC extends JavaPlugin {
     @Override
     public void onDisable() {
         if (!CommunicationUtils.isShutdown()) {
-            ProtocolMessage message = new ProtocolMessage(Protocol.CONFIRM_SHUTDOWN, "Mission Control", "forced", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name());
-            CommunicationUtils.sendMessage(message);
+            if (!AuroraMCAPI.isShuttingDown()) {
+                ProtocolMessage message = new ProtocolMessage(Protocol.CONFIRM_SHUTDOWN, "Mission Control", "forced", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name());
+                CommunicationUtils.sendMessage(message);
+            }
             CommunicationUtils.shutdown();
         }
     }
