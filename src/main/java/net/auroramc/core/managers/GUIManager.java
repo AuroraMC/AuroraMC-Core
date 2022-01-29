@@ -63,7 +63,7 @@ public class GUIManager implements Listener {
                                     public void run() {
                                         player.updateInventory();
                                     }
-                                }.runTaskLater(AuroraMCAPI.getCore(), 5);
+                                }.runTaskLater(AuroraMCAPI.getCore(), 3);
                             }
                             int row = e.getSlot() / 9;
                             int column = e.getSlot() % 9;
