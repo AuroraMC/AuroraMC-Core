@@ -24,8 +24,10 @@ public class GUIManager implements Listener {
         if (e.getPlayer() instanceof Player) {
             Player pl = (Player) e.getPlayer();
             AuroraMCPlayer player = AuroraMCAPI.getPlayer(pl);
-            AuroraMCAPI.closeGUI(player);
-            player.getPlayer().closeInventory();
+            if (AuroraMCAPI.getGUI(player) != null) {
+                AuroraMCAPI.closeGUI(player);
+                player.getPlayer().closeInventory();
+            }
         }
     }
 
