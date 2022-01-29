@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -57,14 +58,12 @@ public class GUIManager implements Listener {
                             if (gui.cancelEvent()) {
                                 e.setCancelled(true);
 
-                                //Removes the item from their inventory in the event that they try to glitch the GUI.
-                                ItemStack finalItem = itemStack;
                                 new BukkitRunnable(){
                                     @Override
                                     public void run() {
-                                        player.getInventory().remove(finalItem);
+                                        player.updateInventory();
                                     }
-                                }.runTaskLater(AuroraMCAPI.getCore(), 2);
+                                }.runTaskLater(AuroraMCAPI.getCore(), 1);
                             }
                             int row = e.getSlot() / 9;
                             int column = e.getSlot() % 9;
