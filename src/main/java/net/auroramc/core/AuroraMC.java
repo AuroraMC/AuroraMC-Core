@@ -97,6 +97,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandPayments());
         AuroraMCAPI.registerCommand(new CommandAddRandomSkin());
         AuroraMCAPI.registerCommand(new CommandWhoIs());
+        AuroraMCAPI.registerCommand(new CommandBuildVersions());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
