@@ -10,6 +10,7 @@ import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -33,26 +34,30 @@ public class CommandBuildVersions extends Command {
         StringBuilder sb = new StringBuilder();
         String buildNumber = null;
         String gitCommit = null;
+
         try {
-            Enumeration<URL> resources = AuroraMCAPI.getCore().getClass().getClassLoader()
-                    .getResources("META-INF/MANIFEST.MF");
-            while (resources.hasMoreElements()) {
+
+            for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                Enumeration<URL> resources = plugin.getClass().getClassLoader()
+                        .getResources("META-INF/MANIFEST.MF");
+                while (resources.hasMoreElements()) {
                     Manifest manifest = new Manifest(resources.nextElement().openStream());
                     // check that this is your manifest and do what you need or get the next one
                     Attributes attributes = manifest.getMainAttributes();
 
-                buildNumber = attributes.getValue("Jenkins-Build-Number");
-                gitCommit = attributes.getValue("Git-Commit");
-                if (buildNumber != null && gitCommit != null) {
-                    sb.append("\n**");
-                    sb.append(attributes.getValue("Module-Name"));
-                    sb.append("**:\n" +
-                            "Build Number: **");
-                    sb.append(buildNumber);
-                    sb.append("**\n" +
-                            "Git Commit: **");
-                    sb.append(gitCommit);
-                    sb.append("**");
+                    buildNumber = attributes.getValue("Jenkins-Build-Number");
+                    gitCommit = attributes.getValue("Git-Commit");
+                    if (buildNumber != null && gitCommit != null) {
+                        sb.append("\n**");
+                        sb.append(attributes.getValue("Module-Name"));
+                        sb.append("**:\n" +
+                                "Build Number: **");
+                        sb.append(buildNumber);
+                        sb.append("**\n" +
+                                "Git Commit: **");
+                        sb.append(gitCommit);
+                        sb.append("**");
+                    }
                 }
             }
         } catch (IOException e) {
