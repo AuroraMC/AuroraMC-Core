@@ -52,6 +52,7 @@ public class GUIItem {
         ItemStack item = new ItemStack(material, amount, data);
         ItemMeta im = item.getItemMeta();
         im.spigot().setUnbreakable(true);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
         if (lore != null) {
             im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().highlight(lore)).split(";")));
