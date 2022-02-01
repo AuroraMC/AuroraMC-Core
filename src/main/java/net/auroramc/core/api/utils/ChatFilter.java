@@ -42,6 +42,11 @@ public class ChatFilter {
 
         pairs:
         for (String word : splitMessage) {
+            if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$") || word.matches("^trash$")) {
+                Random random = new Random();
+                int phrase = random.nextInt(toxicReplacements.size());
+                return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
+            }
             finalMessage.add(filterWord(word));
         }
 
@@ -76,12 +81,6 @@ public class ChatFilter {
                 //So as to skip the second part of the pair, add 1.
                 return "HONK!";
             }
-        }
-
-        if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$")) {
-            Random random = new Random();
-            int phrase = random.nextInt(toxicReplacements.size());
-            return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
         }
 
         return word;
