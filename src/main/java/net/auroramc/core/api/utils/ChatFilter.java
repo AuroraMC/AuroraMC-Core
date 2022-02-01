@@ -42,7 +42,7 @@ public class ChatFilter {
 
         pairs:
         for (String word : splitMessage) {
-            if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$") || word.matches("^trash$")) {
+            if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$") || word.equalsIgnoreCase("trash")) {
                 Random random = new Random();
                 int phrase = random.nextInt(toxicReplacements.size());
                 return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
