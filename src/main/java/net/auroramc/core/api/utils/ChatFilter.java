@@ -37,6 +37,11 @@ public class ChatFilter {
         List<String> finalMessage = new ArrayList<>();
 
         if (splitMessage.size() == 1) {
+            if (message.matches("^[eE][zZ]+$") || message.matches("^[lL]+$") || message.equalsIgnoreCase("trash")) {
+                Random random = new Random();
+                int phrase = random.nextInt(toxicReplacements.size());
+                return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
+            }
             return filterWord(message);
         }
 
