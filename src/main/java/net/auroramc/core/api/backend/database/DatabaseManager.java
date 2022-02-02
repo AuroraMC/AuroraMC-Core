@@ -2518,5 +2518,9 @@ public class DatabaseManager {
             connection.sadd("randomskins", skin.getValue() + ";" + skin.getSignature());
         }
     }
+
+    public Jedis getRedisConnection() {
+        return jedis.getResource();
+    }
 }
 
