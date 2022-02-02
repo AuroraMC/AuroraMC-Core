@@ -2519,6 +2519,18 @@ public class DatabaseManager {
         }
     }
 
+    public void addLobbyTime(UUID uuid, long ms) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("stats.%s.core", uuid.toString()), "lobbyTimeMs", ms);
+        }
+    }
+
+    public void addGameTime(UUID uuid, long ms) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("stats.%s.core", uuid.toString()), "gameTimeMs", ms);
+        }
+    }
+
     public Jedis getRedisConnection() {
         return jedis.getResource();
     }
