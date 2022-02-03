@@ -10,6 +10,7 @@ import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.database.DatabaseManager;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.cosmetics.Cosmetic;
+import net.auroramc.core.api.events.player.PlayerLeaveEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.ChatSlowLength;
 import net.auroramc.core.api.punishments.Rule;
@@ -107,6 +108,8 @@ public class AuroraMCAPI {
     }
 
     public static void playerLeave(Player player) {
+        PlayerLeaveEvent event = new PlayerLeaveEvent(players.get(player));
+        Bukkit.getPluginManager().callEvent(event);
         players.remove(player);
     }
 
