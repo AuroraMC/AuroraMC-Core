@@ -72,12 +72,15 @@ public class AuroraMCPlayer {
     private HashMap<Cosmetic.CosmeticType, Cosmetic> activeCosmetics;
     private HashMap<Cosmetic, BukkitTask> runningCosmeticTasks;
 
+    protected boolean dead;
+
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
 
 
     public AuroraMCPlayer(Player player) {
         loaded = false;
+        dead = false;
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
@@ -454,6 +457,7 @@ public class AuroraMCPlayer {
         runningCosmeticTasks = oldPlayer.runningCosmeticTasks;
         lastAdminMessaged = oldPlayer.lastAdminMessaged;
         loaded = oldPlayer.loaded;
+        dead = oldPlayer.dead;
     }
 
     public Rank getRank() {
@@ -998,5 +1002,9 @@ public class AuroraMCPlayer {
 
     public UUID getLastAdminMessaged() {
         return lastAdminMessaged;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }
