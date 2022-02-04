@@ -124,7 +124,7 @@ public class ChatListener implements Listener {
                         }
                     }
                 }
-                ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), false, ChatChannel.ALL);
+                ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), player.isDead(), ChatChannel.ALL);
                 break;
         }
 
