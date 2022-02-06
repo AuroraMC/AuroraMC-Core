@@ -97,11 +97,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onObjectCreation(PlayerObjectCreationEvent e) {
         e.getPlayer().setScoreboard();
-        if (!e.getPlayer().isVanished()) {
-            for (Player player2 : Bukkit.getOnlinePlayers()) {
-                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getPlayer().getName()));
-            }
-        } else {
+        if (e.getPlayer().isVanished()) {
             e.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
                     " \n" +
