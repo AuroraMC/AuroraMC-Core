@@ -31,11 +31,7 @@ public class LeaveListener implements Listener {
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
 
-        /* if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
-            for (Player player2 : Bukkit.getOnlinePlayers()) {
-                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Quit", e.getPlayer().getName()));
-            }
-        }*/
+        e.setQuitMessage(null);
     }
 
     @EventHandler
@@ -54,11 +50,7 @@ public class LeaveListener implements Listener {
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
 
-        /* if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
-            for (Player player2 : Bukkit.getOnlinePlayers()) {
-                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Quit", e.getPlayer().getName()));
-            }
-        }*/
+        e.setLeaveMessage(null);
     }
 
 }
