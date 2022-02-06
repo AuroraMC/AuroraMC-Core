@@ -36,6 +36,7 @@ import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
+import net.auroramc.core.cosmetics.joinmessages.Default;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
@@ -286,6 +287,9 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new ShulkerTwentyEight());
         AuroraMCAPI.registerCosmetic(new ShulkerTwentyNine());
         AuroraMCAPI.registerCosmetic(new ShulkerThirty());
+
+        //Join Messages
+        AuroraMCAPI.registerCosmetic(new Default());
 
 
         //Registering default Event Listeners
