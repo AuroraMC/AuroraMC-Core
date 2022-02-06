@@ -107,7 +107,11 @@ public class Cosmetics extends GUI {
                 type = Cosmetic.CosmeticType.GADGET;
                 break;
             case 4:
-                type = Cosmetic.CosmeticType.PET;
+                if (row == 3) {
+                    type = Cosmetic.CosmeticType.JOIN_MESSAGE;
+                } else {
+                    type = Cosmetic.CosmeticType.PET;
+                }
                 break;
             case 5:
                 type = Cosmetic.CosmeticType.PLUS_SYMBOL;
