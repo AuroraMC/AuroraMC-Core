@@ -163,6 +163,7 @@ public abstract class Cosmetic {
         WIN_EFFECT("Win Effect"),
         GADGET("Gadget"),
         FRIEND_STATUS("Friend Status"),
+        JOIN_MESSAGE("Join Message"),
         PLUS_SYMBOL("Plus Symbol");
 
         static {
