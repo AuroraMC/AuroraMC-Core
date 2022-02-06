@@ -9,6 +9,7 @@ import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
+import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.PunishmentLength;
@@ -91,13 +92,17 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         TabCompleteInjector.onJoin(e.getPlayer());
         e.setJoinMessage(null);
-        AuroraMCAPI.getPlayer(e.getPlayer()).setScoreboard();
-        if (!AuroraMCAPI.getPlayer(e.getPlayer()).isVanished()) {
+    }
+
+    @EventHandler
+    public void onObjectCreation(PlayerObjectCreationEvent e) {
+        e.getPlayer().setScoreboard();
+        if (!e.getPlayer().isVanished()) {
             for (Player player2 : Bukkit.getOnlinePlayers()) {
-                    player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getName()));
+                player2.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Join", e.getPlayer().getPlayer().getName()));
             }
         } else {
-            e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
+            e.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
                     " \n" +
                     "&b&lYou are currently vanished!\n" +
