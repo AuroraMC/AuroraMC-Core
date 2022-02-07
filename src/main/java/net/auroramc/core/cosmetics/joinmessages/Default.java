@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Default extends ServerMessage {
 
     public Default() {
-        super(400, "&3&lDefault", "&3&lDefault", "The default join message.", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", true, Material.NAME_TAG, (short)0);
+        super(400, "&bDefault", "&bDefault", "The default join message.", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", true, Material.NAME_TAG, (short)0);
     }
 
     @Override
