@@ -73,6 +73,7 @@ public class AuroraMCPlayer {
     private HashMap<Cosmetic, BukkitTask> runningCosmeticTasks;
 
     protected boolean dead;
+    protected boolean hidden;
 
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
@@ -81,6 +82,7 @@ public class AuroraMCPlayer {
     public AuroraMCPlayer(Player player) {
         loaded = false;
         dead = false;
+        hidden = false;
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
@@ -249,7 +251,9 @@ public class AuroraMCPlayer {
                                         if (player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()) != null) {
                                             player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()).unregister();
                                         }
-                                        bukkitPlayer.showPlayer(pl.getPlayer());
+                                        if (!hidden) {
+                                            bukkitPlayer.showPlayer(pl.getPlayer());
+                                        }
                                         org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                         team.addPlayer(pl.getPlayer());
                                         String s;
@@ -274,7 +278,10 @@ public class AuroraMCPlayer {
                                         }
 
                                         if (!player.isVanished() || player.getRank().getId() <= pl.getRank().getId()) {
-                                            pl.getPlayer().showPlayer(bukkitPlayer);
+                                            if (!hidden) {
+                                                pl.getPlayer().showPlayer(bukkitPlayer);
+                                            }
+
                                             if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
                                                 scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).unregister();
                                             }
@@ -338,7 +345,9 @@ public class AuroraMCPlayer {
                                 }
 
                                 if (pla.getRank().getId() >= pl.getRank().getId()) {
-                                    bukkitPlayer.showPlayer(pl.getPlayer());
+                                    if (!hidden) {
+                                        bukkitPlayer.showPlayer(pl.getPlayer());
+                                    }
                                     org.bukkit.scoreboard.Team team = pla.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
                                     team.addPlayer(pl.getPlayer());
                                     String s;
@@ -455,6 +464,7 @@ public class AuroraMCPlayer {
         lastAdminMessaged = oldPlayer.lastAdminMessaged;
         loaded = oldPlayer.loaded;
         dead = oldPlayer.dead;
+        hidden = oldPlayer.hidden;
     }
 
     public Rank getRank() {
