@@ -17,6 +17,14 @@ public abstract class WinEffect extends Cosmetic {
         super(id, CosmeticType.WIN_EFFECT, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
     }
 
+    @Override
+    public void onEquip(AuroraMCPlayer player) {
+    }
+
+    @Override
+    public void onUnequip(AuroraMCPlayer player) {
+    }
+
     public abstract void onWin(AuroraMCPlayer player);
 
 }

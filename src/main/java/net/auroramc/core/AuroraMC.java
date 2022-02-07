@@ -39,6 +39,7 @@ import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.joinmessages.Default;
 import net.auroramc.core.cosmetics.joinmessages.TakingABreakFromJava;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.wineffects.Firework;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -292,6 +293,8 @@ public class AuroraMC extends JavaPlugin {
         //Server Messages
         AuroraMCAPI.registerCosmetic(new Default());
         AuroraMCAPI.registerCosmetic(new TakingABreakFromJava());
+
+        AuroraMCAPI.registerCosmetic(new Firework());
 
 
         //Registering default Event Listeners
