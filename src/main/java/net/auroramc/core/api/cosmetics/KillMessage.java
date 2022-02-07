@@ -18,7 +18,7 @@ public abstract class KillMessage extends Cosmetic {
         super(id, CosmeticType.KILL_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
     }
 
-    abstract String onKill(AuroraMCPlayer killer, AuroraMCPlayer victim, KillReason reason);
+    public abstract String onKill(AuroraMCPlayer killer, AuroraMCPlayer victim, KillReason reason);
 
     public enum KillReason {
         MELEE,

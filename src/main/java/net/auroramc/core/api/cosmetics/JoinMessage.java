@@ -18,7 +18,7 @@ public abstract class JoinMessage extends Cosmetic {
         super(id, CosmeticType.JOIN_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
     }
 
-    protected abstract String onJoin(AuroraMCPlayer player);
+    public abstract String onJoin(AuroraMCPlayer player);
 
     @Override
     public void onEquip(AuroraMCPlayer player) {
