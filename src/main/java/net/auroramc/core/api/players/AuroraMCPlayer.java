@@ -11,6 +11,7 @@ import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.cosmetics.PlusSymbol;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
+import net.auroramc.core.api.events.player.PlayerShowEvent;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
@@ -251,6 +252,9 @@ public class AuroraMCPlayer {
                                         if (player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()) != null) {
                                             player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName()).unregister();
                                         }
+                                        PlayerShowEvent event = new PlayerShowEvent(pl);
+                                        Bukkit.getPluginManager().callEvent(event);
+                                        hidden = event.isHidden();
                                         if (!hidden) {
                                             bukkitPlayer.showPlayer(pl.getPlayer());
                                         }
@@ -278,9 +282,7 @@ public class AuroraMCPlayer {
                                         }
 
                                         if (!player.isVanished() || player.getRank().getId() <= pl.getRank().getId()) {
-                                            if (!hidden) {
-                                                pl.getPlayer().showPlayer(bukkitPlayer);
-                                            }
+                                            pl.getPlayer().showPlayer(bukkitPlayer);
 
                                             if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
                                                 scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).unregister();
@@ -345,6 +347,9 @@ public class AuroraMCPlayer {
                                 }
 
                                 if (pla.getRank().getId() >= pl.getRank().getId()) {
+                                    PlayerShowEvent e = new PlayerShowEvent(pl);
+                                    Bukkit.getPluginManager().callEvent(e);
+                                    hidden = e.isHidden();
                                     if (!hidden) {
                                         bukkitPlayer.showPlayer(pl.getPlayer());
                                     }
