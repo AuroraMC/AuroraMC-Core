@@ -32,7 +32,7 @@ public class Firework extends WinEffect {
                 if (i <= 18) {
                     org.bukkit.entity.Firework firework = player.getPlayer().getLocation().getWorld().spawn(player.getPlayer().getLocation(), org.bukkit.entity.Firework.class);
                     FireworkMeta meta = firework.getFireworkMeta();
-                    meta.setPower(1);
+                    meta.setPower(0);
                     meta.addEffect(FireworkEffect.builder().withColor(Color.fromRGB(random.nextInt(256),random.nextInt(256),random.nextInt(256))).trail(random.nextBoolean()).flicker(random.nextBoolean()).with(FireworkEffect.Type.values()[random.nextInt(FireworkEffect.Type.values().length)]).build());
                     firework.setFireworkMeta(meta);
                     i++;
