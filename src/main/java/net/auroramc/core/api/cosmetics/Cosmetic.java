@@ -92,7 +92,7 @@ public abstract class Cosmetic {
                     lore.add(AuroraMCAPI.getFormatter().convert("&cto purchase this cosmetic."));
                 }
             } else {
-                lore.add(AuroraMCAPI.getFormatter().convert("&9" + unlockMessage));
+                lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert("&9" + WordUtils.wrap(unlockMessage, 40, ";&r", false)).split(";")));
             }
         }
 
