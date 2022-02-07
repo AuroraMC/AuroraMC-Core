@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class TakingABreakFromJava extends ServerMessage {
     public TakingABreakFromJava() {
-        super(405, "&bTaking a break from &c&lJAVA", "&3&lTaking a break from &c&lJAVA", "Show off that you're taking a well deserved break.", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.NAME_TAG, (short)0);
+        super(405, "&bTaking a break from &c&lJAVA", "&3&lTaking a break", "Show off that you're taking a well deserved break.", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.NAME_TAG, (short)0);
     }
 
     @Override
