@@ -83,7 +83,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerLoginEvent e) {
-        AuroraMCAPI.newPlayer(new AuroraMCPlayer(e.getPlayer()));
+        new AuroraMCPlayer(e.getPlayer());
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "join", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
     }
