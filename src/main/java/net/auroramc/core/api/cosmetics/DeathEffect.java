@@ -17,5 +17,5 @@ public abstract class DeathEffect extends Cosmetic {
         super(id, CosmeticType.DEATH_EFFECT, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
     }
 
-    abstract void onDeath(AuroraMCPlayer player);
+    public abstract void onDeath(AuroraMCPlayer player);
 }

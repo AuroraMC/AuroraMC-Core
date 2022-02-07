@@ -20,7 +20,7 @@ public class Default extends JoinMessage {
     }
 
     @Override
-    protected String onJoin(AuroraMCPlayer player) {
+    public String onJoin(AuroraMCPlayer player) {
         return String.format("**%s** has joined the game.", player.getPlayer().getName());
     }
 }

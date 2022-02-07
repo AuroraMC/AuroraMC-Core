@@ -17,5 +17,5 @@ public abstract class Gadget extends Cosmetic {
         super(id, CosmeticType.GADGET, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
     }
 
-    abstract void onUse(AuroraMCPlayer player);
+    public abstract void onUse(AuroraMCPlayer player);
 }
