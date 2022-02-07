@@ -104,6 +104,9 @@ public class AuroraMCPlayer {
             player1.hidePlayer(player);
             player.hidePlayer(player1);
         }
+
+        AuroraMCAPI.newPlayer(this);
+
         new BukkitRunnable() {
             @Override
             public void run() {
