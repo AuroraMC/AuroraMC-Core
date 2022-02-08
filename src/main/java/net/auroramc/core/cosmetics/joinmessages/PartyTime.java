@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PartyTime extends ServerMessage {
     public PartyTime() {
-        super(401, "&bReady to party", "&3&lReady to party", "Are you ready to party? Show that off!", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.ELITE), "Purchase Elite at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0);
+        super(401, "&bParty Time", "&3&lParty Time", "Are you ready to party? Show that off!", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.ELITE), "Purchase Elite at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0);
     }
 
     @Override
