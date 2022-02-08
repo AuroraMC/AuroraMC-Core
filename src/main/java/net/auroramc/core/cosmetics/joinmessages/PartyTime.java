@@ -25,6 +25,6 @@ public class PartyTime extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.");
+        return String.format("**%s** has left the game.", player.getPlayer().getName());
     }
 }
