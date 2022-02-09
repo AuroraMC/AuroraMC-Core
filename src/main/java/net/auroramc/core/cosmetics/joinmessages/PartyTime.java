@@ -21,11 +21,11 @@ public class PartyTime extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** " + AuroraMCAPI.getFormatter().rainbow("is ready to PARTY!"), player.getPlayer().getName());
+        return String.format("**%s** is ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", player.getPlayer().getName());
     }
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+        return String.format("**%s** is no longer ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", player.getPlayer().getName());
     }
 }
