@@ -21,7 +21,7 @@ public class PartyTime extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return AuroraMCAPI.getFormatter().rainbowBold(String.format("%s is ready to PARTY!", player.getPlayer().getName())));
+        return AuroraMCAPI.getFormatter().rainbowBold(String.format("%s is ready to PARTY!", player.getPlayer().getName()));
     }
 
     @Override
