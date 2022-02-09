@@ -16,7 +16,7 @@ import java.util.List;
 
 public class PartyTime extends ServerMessage {
     public PartyTime() {
-        super(401, AuroraMCAPI.getFormatter().rainbowBold("Party Time"), AuroraMCAPI.getFormatter().rainbowBold("Party Time"), "Are you ready to party? Show that off!", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.ELITE), "Purchase Elite at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0);
+        super(401, AuroraMCAPI.getFormatter().rainbowBold("Party Time"), AuroraMCAPI.getFormatter().rainbowBold("Party Time"), "Are you ready to party? Show that off!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0);
     }
 
     @Override
