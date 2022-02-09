@@ -505,5 +505,32 @@ public class TextFormatter {
         }
         return finalMessage.toString();
     }
+    public String rainbowBold(String message) {
+        List<Character> codes = new ArrayList<>(Arrays.asList('4', 'c', '6', 'e', 'a', 'b', '3', '9', 'd'));
+        // Collections.shuffle(codes);
+        StringBuilder finalMessage = new StringBuilder();
+        int i = 0;
+        boolean forward = true;
+        for (char c : message.toCharArray()) {
+            if (c == ' ') {
+                finalMessage.append(c);
+                continue;
+            }
+            finalMessage.append("§").append(codes.get(i)).append("§l").append(c);
+            if (forward) {
+                i++;
+            } else {
+                i--;
+            }
+            if (i == codes.size()) {
+                forward = false;
+                i-=2;
+            } else if (i == -1) {
+                forward = true;
+                i+=2;
+            }
+        }
+        return finalMessage.toString();
+    }
 
 }
