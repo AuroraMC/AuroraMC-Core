@@ -37,7 +37,7 @@ import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
-import net.auroramc.core.cosmetics.joinmessages.*;
+import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.cosmetics.wineffects.Firework;
 import net.auroramc.core.listeners.*;
@@ -295,7 +295,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new TakingABreakFromJava());
         AuroraMCAPI.registerCosmetic(new PartyTime());
         AuroraMCAPI.registerCosmetic(new Hungry());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.joinmessages.Murderer());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.servermessages.Murderer());
         AuroraMCAPI.registerCosmetic(new PeterPan());
 
         AuroraMCAPI.registerCosmetic(new Firework());
