@@ -1838,6 +1838,18 @@ public class DatabaseManager {
         }
     }
 
+    public void ticketsAdded(UUID uuid, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("bank.%s", uuid.toString()), "tickets", amount);
+        }
+    }
+
+    public void crownsAdded(UUID uuid, long amount) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hincrBy(String.format("bank.%s", uuid.toString()), "crowns", amount);
+        }
+    }
+
     public Character getPlusColour(AuroraMCPlayer player) {
         try (Jedis connection = jedis.getResource()) {
             if (connection.hexists(String.format("plus.%s", player.getPlayer().getUniqueId()), "plusColour")) {
