@@ -303,7 +303,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Firework());
 
         //Kill Messages
-        AuroraMCAPI.registerCosmetic(new Default());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.killmessages.Default());
         AuroraMCAPI.registerCosmetic(new HalfWayThere());
 
 
