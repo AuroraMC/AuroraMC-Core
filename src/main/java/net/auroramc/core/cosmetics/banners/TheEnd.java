@@ -27,6 +27,5 @@ public class TheEnd extends Banner {
     }
 
     public TheEnd() {
-        super(12, "The End", "&5&lThe End", "&5He wants your blocks...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true);
-    }
+        super(12, "The End", "&5&lThe End", "&5He wants your blocks...", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.COMMON);    }
 }

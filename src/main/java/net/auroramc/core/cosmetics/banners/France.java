@@ -28,6 +28,6 @@ public class France extends Banner {
     }
 
     public France() {
-        super(3, "France", "&c&lFr&f&lan&9&lce", "&c&lFr&f&lanc&9&lais", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(3, "France", "&c&lFr&f&lan&9&lce", "&c&lFr&f&lanc&9&lais", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true, Rarity.COMMON);
     }
 }

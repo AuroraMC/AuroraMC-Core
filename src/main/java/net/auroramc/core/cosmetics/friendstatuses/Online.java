@@ -11,6 +11,6 @@ import java.util.Collections;
 public class Online extends FriendStatus {
 
     public Online() {
-        super(100, "Online", "Online", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Online", 'a', true);
+        super(100, "Online", "Online", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Online", 'a', true, Rarity.COMMON);
     }
 }
