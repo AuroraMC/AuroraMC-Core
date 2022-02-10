@@ -29,6 +29,6 @@ public class Poland extends Banner {
     }
 
     public Poland() {
-        super(2, "Poland", "&f&lPol&c&land", "&f&lPol&c&lska", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true);
+        super(2, "Poland", "&f&lPol&c&land", "&f&lPol&c&lska", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", patterns, DyeColor.WHITE, true, Rarity.COMMON);
     }
 }

@@ -27,6 +27,6 @@ public class UnitedKingdom extends Banner {
     }
 
     public UnitedKingdom() {
-        super(0, "United Kingdom Flag", "&c&lUnited Kingdom Flag", "&c&lRULE BRITANIA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLUE, true);
+        super(0, "United Kingdom Flag", "&c&lUnited Kingdom Flag", "&c&lRULE BRITANIA!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLUE, true, Rarity.COMMON);
     }
 }

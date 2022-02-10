@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Radioactive extends PlusSymbol {
 
     public Radioactive() {
-        super(208, "Radioactive", "&3&l☢ Radioactive", "DANGER! DANGER!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.LAVA_BUCKET, (short)0, '☢');
+        super(208, "Radioactive", "&3&l☢ Radioactive", "DANGER! DANGER!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.LAVA_BUCKET, (short)0, '☢', Rarity.COMMON);
     }
 }
