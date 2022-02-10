@@ -2,7 +2,7 @@
  * Copyright (c) 2022 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.cosmetics.joinmessages;
+package net.auroramc.core.cosmetics.servermessages;
 
 import net.auroramc.core.api.cosmetics.ServerMessage;
 import net.auroramc.core.api.permissions.Rank;
