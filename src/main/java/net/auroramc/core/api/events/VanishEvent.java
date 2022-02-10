@@ -50,4 +50,8 @@ public class VanishEvent extends Event implements Cancellable {
         isCancelled = cancelled;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
 }
