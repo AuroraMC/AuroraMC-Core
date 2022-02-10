@@ -298,7 +298,11 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.servermessages.Murderer());
         AuroraMCAPI.registerCosmetic(new PeterPan());
 
+        //Win Effects
         AuroraMCAPI.registerCosmetic(new Firework());
+
+        //Kill Messages
+        AuroraMCAPI.registerCosmetic(new Default());
 
 
         //Registering default Event Listeners
