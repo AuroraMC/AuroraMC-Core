@@ -19,7 +19,7 @@ public class HalfWayThere extends KillMessage {
 
 
     public HalfWayThere() {
-        super(501, "&cHalf Way There", "&cHalf Way There", "WOOOAAAAHHHH WE'RE HALF WAY THERE, WOOOOOOAAAAAAAHHHHHHH LIVING ON A PRAYER", UnlockMode.LEVEL, -1, Collections.emptyList(), Collections.emptyList(), "", false, Material.BOOK, (short)0, Rarity.EPIC);
+        super(501, "&cHalf Way There", "&c&lHalf Way There", "WOOOAAAAHHHH WE'RE HALF WAY THERE, WOOOOOOAAAAAAAHHHHHHH LIVING ON A PRAYER", UnlockMode.LEVEL, -1, Collections.emptyList(), Collections.emptyList(), "", false, Material.BOOK, (short)0, Rarity.EPIC);
     }
 
     @Override
