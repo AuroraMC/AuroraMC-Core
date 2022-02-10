@@ -14,8 +14,8 @@ import java.util.List;
 public abstract class ServerMessage extends Cosmetic {
 
 
-    public ServerMessage(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data) {
-        super(id, CosmeticType.SERVER_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
+    public ServerMessage(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data, Rarity rarity) {
+        super(id, CosmeticType.SERVER_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data, rarity);
     }
 
     public abstract String onJoin(AuroraMCPlayer player);

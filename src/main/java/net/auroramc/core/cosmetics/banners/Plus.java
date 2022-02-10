@@ -51,7 +51,7 @@ public class Plus extends Banner {
     }
 
     public Plus() {
-        super(21, "Plus", "&3&lPlus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), new ArrayList<>(), "Purchase Plus to unlock this banner!", patterns, DyeColor.WHITE, true);
+        super(21, "Plus", "&3&lPlus", "&3Show of your swaggy plus status. Changes based on your chosen plus colour", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), new ArrayList<>(), "Purchase Plus to unlock this banner!", patterns, DyeColor.WHITE, true, Rarity.COMMON);
     }
 
     @Override

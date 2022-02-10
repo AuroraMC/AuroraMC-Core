@@ -26,8 +26,8 @@ public abstract class Banner extends Cosmetic {
     private final List<Pattern> patterns;
     private final DyeColor base;
 
-    public Banner(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, List<Pattern> patterns, DyeColor base, boolean showIfNotUnlocked) {
-        super(id, CosmeticType.BANNER, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, Material.BANNER, (short) 1);
+    public Banner(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, List<Pattern> patterns, DyeColor base, boolean showIfNotUnlocked, Rarity rarity) {
+        super(id, CosmeticType.BANNER, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, Material.BANNER, (short) 1, rarity);
         this.patterns = patterns;
         this.base = base;
     }

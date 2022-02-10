@@ -11,6 +11,6 @@ import java.util.Collections;
 public class Idle extends FriendStatus {
 
     public Idle() {
-        super(103, "Idle", "Idle", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Idle", 'e', true);
+        super(103, "Idle", "Idle", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Idle", 'e', true, Rarity.COMMON);
     }
 }

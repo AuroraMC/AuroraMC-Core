@@ -25,8 +25,8 @@ public abstract class Hat extends Cosmetic {
 
     private ItemStack head;
 
-    public Hat(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, String headUrl, boolean showIfNotUnlocked) {
-        super(id, CosmeticType.HAT, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, Material.SKULL, (short)3);
+    public Hat(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, String headUrl, boolean showIfNotUnlocked, Rarity rarity) {
+        super(id, CosmeticType.HAT, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, Material.SKULL, (short)3, rarity);
 
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         profile.getProperties().put("textures", new Property("textures", Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", headUrl).getBytes())));

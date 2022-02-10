@@ -11,6 +11,6 @@ import java.util.Collections;
 public class Offline extends FriendStatus {
 
     public Offline() {
-        super(101, "Offline", "Online", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Offline", '7', true);
+        super(101, "Offline", "Online", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", "Offline", '7', true, Rarity.COMMON);
     }
 }
