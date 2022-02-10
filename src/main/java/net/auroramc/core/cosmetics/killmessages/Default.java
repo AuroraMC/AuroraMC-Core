@@ -19,7 +19,7 @@ public class Default extends KillMessage {
 
 
     public Default() {
-        super(500, "&3&lDefault", "&3&lDefault", "The default kill messages", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", true, Material.GOLD_SWORD, (short)0, Rarity.COMMON);
+        super(500, "&bDefault", "&3&lDefault", "The default kill messages", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "", true, Material.GOLD_SWORD, (short)0, Rarity.COMMON);
     }
 
     @Override
