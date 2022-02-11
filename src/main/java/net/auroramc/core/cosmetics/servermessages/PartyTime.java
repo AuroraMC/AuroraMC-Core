@@ -23,6 +23,6 @@ public class PartyTime extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** is no longer ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", player.getPlayer().getName());
+        return String.format("**%s** is continuing to &c&lP&e&lA&a&lR&b&lT&d&lY&r elsewhere.", player.getPlayer().getName());
     }
 }

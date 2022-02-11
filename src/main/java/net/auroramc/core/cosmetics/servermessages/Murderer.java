@@ -23,6 +23,6 @@ public class Murderer extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+        return String.format("**%s** has finished their &c&lRAMPAGE.", player.getPlayer().getName());
     }
 }
