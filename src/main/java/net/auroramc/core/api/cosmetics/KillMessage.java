@@ -35,7 +35,8 @@ public abstract class KillMessage extends Cosmetic {
         VOID,
         FALL,
         TNT,
-        ENTITY
+        ENTITY,
+        UNKNOWN
     }
 
 }
