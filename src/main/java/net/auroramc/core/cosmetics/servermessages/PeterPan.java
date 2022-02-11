@@ -22,6 +22,6 @@ public class PeterPan extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+        return String.format("**%s** has their feet back on the floor.", player.getPlayer().getName());
     }
 }

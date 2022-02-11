@@ -23,6 +23,6 @@ public class Hungry extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+        return String.format("**%s** is looking for &d&lVICTORY&r elsewhere.", player.getPlayer().getName());
     }
 }
