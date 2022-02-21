@@ -36,6 +36,9 @@ public abstract class KillMessage extends Cosmetic {
         FALL,
         TNT,
         ENTITY,
+        DROWNING,
+        LAVA,
+        FIRE,
         UNKNOWN
     }
 
