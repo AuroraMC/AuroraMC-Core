@@ -16,8 +16,8 @@ public abstract class PlusSymbol extends Cosmetic {
 
     private final char symbol;
 
-    public PlusSymbol(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data, char symbol) {
-        super(id, CosmeticType.PLUS_SYMBOL, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data);
+    public PlusSymbol(int id, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data, char symbol, Rarity rarity) {
+        super(id, CosmeticType.PLUS_SYMBOL, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data, rarity);
         this.symbol = symbol;
     }
 

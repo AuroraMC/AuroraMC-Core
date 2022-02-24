@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class PeterPan extends ServerMessage {
     public PeterPan() {
-        super(404, "&bPeter Pan", "&3&lPeter Pan", "Some description.", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates.", true, Material.NAME_TAG, (short)0);
+        super(404, "&bPeter Pan", "&3&lPeter Pan", "Some description.", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates.", true, Material.NAME_TAG, (short)0, Rarity.COMMON);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class PeterPan extends ServerMessage {
 
     @Override
     public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+        return String.format("**%s** has their feet back on the floor.", player.getPlayer().getName());
     }
 }

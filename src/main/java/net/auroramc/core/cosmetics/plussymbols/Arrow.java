@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Arrow extends PlusSymbol {
 
     public Arrow() {
-        super(215, "Arrow", "&3&l➹ Arrow", "This way!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.ARROW, (short)0, '➹');
+        super(215, "Arrow", "&3&l➹ Arrow", "This way!", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", true, Material.ARROW, (short)0, '➹', Rarity.COMMON);
     }
 }
