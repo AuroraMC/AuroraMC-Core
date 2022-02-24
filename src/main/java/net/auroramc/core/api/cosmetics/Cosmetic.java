@@ -34,8 +34,9 @@ public abstract class Cosmetic {
     private final boolean showIfNotUnlocked;
     private final Material material;
     private final short data;
+    private final Rarity rarity;
 
-    public Cosmetic(int id, CosmeticType type, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data) {
+    public Cosmetic(int id, CosmeticType type, String name, String displayName, String description, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, boolean showIfNotUnlocked, Material material, short data, Rarity rarity) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -49,6 +50,7 @@ public abstract class Cosmetic {
         this.showIfNotUnlocked = showIfNotUnlocked;
         this.material = material;
         this.data = data;
+        this.rarity = rarity;
     }
 
     public abstract void onEquip(AuroraMCPlayer player);
@@ -151,6 +153,10 @@ public abstract class Cosmetic {
         return showIfNotUnlocked;
     }
 
+    public Rarity getRarity() {
+        return rarity;
+    }
+
     public enum CosmeticType {
         PARTICLE("Particle Effect"),
         PET("Pet"),
@@ -198,6 +204,15 @@ public abstract class Cosmetic {
         ALL
     }
 
+    public enum Rarity {
+        COMMON,
+        UNCOMMON,
+        RARE,
+        EPIC,
+        LEGENDARY,
+        MYTHICAL
+    }
+
     public boolean hasUnlocked(AuroraMCPlayer player) {
         switch (unlockMode) {
             case ALL:
@@ -235,5 +250,7 @@ public abstract class Cosmetic {
             }
         }
     }
+
+
 
 }

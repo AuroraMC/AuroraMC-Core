@@ -13,6 +13,6 @@ import java.util.Collections;
 public class Copyright extends PlusSymbol {
 
     public Copyright() {
-        super(204, "Copyright", "&3&l© Copyright", "Coming Soon™", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.ADMIN), "", false, Material.DIAMOND_AXE, (short)0, '©');
+        super(204, "Copyright", "&3&l© Copyright", "Coming Soon™", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.ADMIN), "", false, Material.DIAMOND_AXE, (short)0, '©', Rarity.COMMON);
     }
 }

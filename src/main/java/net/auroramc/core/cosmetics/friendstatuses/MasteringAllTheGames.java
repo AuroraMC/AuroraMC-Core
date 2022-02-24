@@ -12,6 +12,6 @@ import java.util.Collections;
 public class MasteringAllTheGames extends FriendStatus {
 
     public MasteringAllTheGames() {
-        super(106, "Mastering all the games", "Mastering all the games", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.MASTER), "Purchase Master at store.auroramc.net to unlock this status.", "Mastering all the games", 'd', true);
+        super(106, "Mastering all the games", "Mastering all the games", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.MASTER), "Purchase Master at store.auroramc.net to unlock this status.", "Mastering all the games", 'd', true, Rarity.COMMON);
     }
 }

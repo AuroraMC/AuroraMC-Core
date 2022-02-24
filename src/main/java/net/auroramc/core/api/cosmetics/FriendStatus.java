@@ -16,8 +16,8 @@ public abstract class FriendStatus extends Cosmetic {
     private final String title;
     private final char colour;
 
-    public FriendStatus(int id, String name, String displayName, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, String title, char colour, boolean showInGUI) {
-        super(id, CosmeticType.FRIEND_STATUS, name, displayName, "", unlockMode, currency, permissions, ranks, unlockMessage, showInGUI, Material.PAPER, (short) 1);
+    public FriendStatus(int id, String name, String displayName, UnlockMode unlockMode, int currency, List<Permission> permissions, List<Rank> ranks, String unlockMessage, String title, char colour, boolean showInGUI, Rarity rarity) {
+        super(id, CosmeticType.FRIEND_STATUS, name, displayName, "", unlockMode, currency, permissions, ranks, unlockMessage, showInGUI, Material.PAPER, (short) 1, rarity);
         this.title = title;
         this.colour = colour;
     }
