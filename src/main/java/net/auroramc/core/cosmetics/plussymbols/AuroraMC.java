@@ -13,6 +13,6 @@ import java.util.Collections;
 public class AuroraMC extends PlusSymbol {
 
     public AuroraMC() {
-        super(203, "AuroraMC", "&3&lⒶ AuroraMC", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH!", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.JUNIOR_MODERATOR), "", false, Material.ANVIL, (short)0, 'Ⓐ');
+        super(203, "AuroraMC", "&3&lⒶ AuroraMC", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH!", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.JUNIOR_MODERATOR), "", false, Material.ANVIL, (short)0, 'Ⓐ', Rarity.COMMON);
     }
 }
