@@ -26,7 +26,11 @@ public class HalfWayThere extends KillMessage {
     public String onKill(AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason) {
         switch (reason) {
             case BOW: {
-                return String.format("**%s** was shot by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                if(killer != null) {
+                    return String.format("**%s** was shot by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    return String.format("**%s** was shot.", victim.getPlayer().getName());
+                }
             }
             case TNT: {
                 if (killer != null) {
@@ -57,7 +61,35 @@ public class HalfWayThere extends KillMessage {
                 }
             }
             case ENTITY:{
-                    return String.format("**%s** was a noob and was killed by **%s**.", victim.getPlayer().getName(), WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
+                    return String.format("**%s** was killed by **%s**.", victim.getPlayer().getName(), WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
+            }
+            case DROWNING: {
+                if (killer != null) {
+                    return String.format("**%s** drowned trying to escape from **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    return String.format("**%s** drowned.", victim.getPlayer().getName());
+                }
+            }
+            case LAVA: {
+                if (killer != null) {
+                    return String.format("**%s** fell in lava trying to escape **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    return String.format("**%s** fell in lava.", victim.getPlayer().getName());
+                }
+            }
+            case FIRE: {
+                if(killer != null) {
+                    return String.format("**%s** burned to death trying to escape **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    return String.format("**%s** burned to death.");
+                }
+            }
+            case UNKNOWN: {
+                if (killer != null ) {
+                    return String.format("**%s** was killed by **%s** using magic.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    return String.format("**%s was killed by magic.", victim.getPlayer().getName());
+                }
             }
         }
 
