@@ -37,6 +37,7 @@ import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
+import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
 import net.auroramc.core.cosmetics.killmessages.HalfWayThere;
 import net.auroramc.core.cosmetics.killmessages.Rainbow;
 import net.auroramc.core.cosmetics.servermessages.*;
@@ -294,7 +295,7 @@ public class AuroraMC extends JavaPlugin {
 
         //Server Messages
         AuroraMCAPI.registerCosmetic(new Default());
-        AuroraMCAPI.registerCosmetic(new TakingABreakFromJava());
+        AuroraMCAPI.registerCosmetic(new DeveloperPlayGames());
         AuroraMCAPI.registerCosmetic(new PartyTime());
         AuroraMCAPI.registerCosmetic(new Hungry());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.servermessages.Murderer());
@@ -307,6 +308,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.killmessages.Default());
         AuroraMCAPI.registerCosmetic(new HalfWayThere());
         AuroraMCAPI.registerCosmetic(new Rainbow());
+        AuroraMCAPI.registerCosmetic(new DeveloperKillPlayer());
 
 
         //Registering default Event Listeners
