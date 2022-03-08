@@ -27,7 +27,7 @@ public class DeveloperKillPlayer extends KillMessage {
         switch (reason) {
             case MELEE: {
                 if (killer != null) {
-                    return String.format("**%s**.kill(**%s**);", victim.getPlayer().getName());
+                    return String.format("**%s**.kill(**%s**);", killer.getPlayer().getName(), victim.getPlayer().getName());
                 } else {
                     return String.format("**%s**.setDeathBy(&cMelee&r);", victim.getPlayer().getName());
                 }
