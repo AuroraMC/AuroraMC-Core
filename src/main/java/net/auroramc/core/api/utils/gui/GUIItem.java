@@ -53,7 +53,9 @@ public class GUIItem {
         ItemMeta im = item.getItemMeta();
         im.spigot().setUnbreakable(true);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
+        if (name != null) {
+            im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
+        }
         if (lore != null) {
             im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().highlight(lore)).split(";")));
         }
