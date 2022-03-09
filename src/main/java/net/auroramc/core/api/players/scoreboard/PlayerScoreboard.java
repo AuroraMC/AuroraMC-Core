@@ -17,7 +17,7 @@ public class PlayerScoreboard {
 
     private final AuroraMCPlayer player;
     private final Scoreboard scoreboard;
-    private final Map<Integer, String> lines;
+    private final Map<Integer, ScoreboardLine> lines;
     private final Objective objective;
 
     public PlayerScoreboard(AuroraMCPlayer player, Scoreboard scoreboard) {
@@ -28,25 +28,26 @@ public class PlayerScoreboard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 
-    public String getLine(int i) {
+    public ScoreboardLine getLine(int i) {
         return lines.get(i);
     }
 
     public void setLine(int line, String message) {
         message = AuroraMCAPI.getFormatter().convert(message);
         if (lines.containsKey(line)) {
-            if (lines.get(line).equals(message)) {
-                return;
+            if (!lines.get(line).getText().equals(message)) {
+                lines.get(line).setText(message);
             }
-            scoreboard.resetScores(lines.get(line));
+            return;
         }
-        lines.put(line, message);
-        objective.getScore(message).setScore(line);
+        ScoreboardLine line1 = new ScoreboardLine(scoreboard, objective, line, message);
+        lines.put(line, line1);
+        line1.apply();
     }
 
     public void clear() {
-        for (String line : lines.values()) {
-            scoreboard.resetScores(line);
+        for (ScoreboardLine line : lines.values()) {
+            line.remove();
         }
         lines.clear();
     }
