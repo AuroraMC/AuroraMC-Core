@@ -31,6 +31,8 @@ public class ScoreboardLine {
                 suffix = suffix.substring(0, 16);
             }
             team.setSuffix(suffix);
+        } else {
+            team.setPrefix(this.text);
         }
         this.objective = objective;
     }
