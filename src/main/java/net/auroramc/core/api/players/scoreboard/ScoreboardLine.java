@@ -56,7 +56,7 @@ public class ScoreboardLine {
             team.setSuffix(suffix);
         } else {
             team.setPrefix(text);
-            team.setSuffix(null);
+            team.setSuffix("");
         }
     }
 
