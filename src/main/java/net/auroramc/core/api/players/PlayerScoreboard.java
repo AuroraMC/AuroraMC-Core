@@ -18,8 +18,6 @@ public class PlayerScoreboard {
     private final Scoreboard scoreboard;
     private final Map<Integer, String> lines;
     private final Objective objective;
-    private final Objective altObjective;
-    private boolean mainObjectiveActive;
 
     public PlayerScoreboard(AuroraMCPlayer player, Scoreboard scoreboard) {
         this.player = player;
@@ -27,10 +25,6 @@ public class PlayerScoreboard {
         this.lines = new HashMap<>();
         objective = scoreboard.registerNewObjective("scoreboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        mainObjectiveActive = true;
-
-        altObjective = scoreboard.registerNewObjective("alt_scoreboard", "dummy");
     }
 
     public String getLine(int i) {
@@ -43,19 +37,7 @@ public class PlayerScoreboard {
             scoreboard.resetScores(lines.get(line));
         }
         lines.put(line, message);
-        if (mainObjectiveActive) {
-            altObjective.getScore(message).setScore(line);
-            altObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            objective.setDisplaySlot(null);
-            objective.getScore(message).setScore(line);
-            mainObjectiveActive = false;
-        } else {
-            objective.getScore(message).setScore(line);
-            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            altObjective.setDisplaySlot(null);
-            altObjective.getScore(message).setScore(line);
-            mainObjectiveActive = true;
-        }
+        objective.getScore(message).setScore(line);
     }
 
     public void clear() {
@@ -75,6 +57,5 @@ public class PlayerScoreboard {
 
     public void setTitle(String title) {
         objective.setDisplayName(AuroraMCAPI.getFormatter().convert(title));
-        altObjective.setDisplayName(AuroraMCAPI.getFormatter().convert(title));
     }
 }
