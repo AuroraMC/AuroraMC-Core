@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2022 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.api.players;
+package net.auroramc.core.api.players.scoreboard;
 
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -16,7 +17,7 @@ public class PlayerScoreboard {
 
     private final AuroraMCPlayer player;
     private final Scoreboard scoreboard;
-    private final Map<Integer, String> lines;
+    private final Map<Integer, ScoreboardLine> lines;
     private final Objective objective;
 
     public PlayerScoreboard(AuroraMCPlayer player, Scoreboard scoreboard) {
@@ -27,22 +28,26 @@ public class PlayerScoreboard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 
-    public String getLine(int i) {
+    public ScoreboardLine getLine(int i) {
         return lines.get(i);
     }
 
     public void setLine(int line, String message) {
         message = AuroraMCAPI.getFormatter().convert(message);
         if (lines.containsKey(line)) {
-            scoreboard.resetScores(lines.get(line));
+            if (!lines.get(line).getText().equals(message)) {
+                lines.get(line).setText(message);
+            }
+            return;
         }
-        lines.put(line, message);
-        objective.getScore(message).setScore(line);
+        ScoreboardLine line1 = new ScoreboardLine(scoreboard, objective, line, message);
+        lines.put(line, line1);
+        line1.apply();
     }
 
     public void clear() {
-        for (String line : lines.values()) {
-            scoreboard.resetScores(line);
+        for (ScoreboardLine line : lines.values()) {
+            line.remove();
         }
         lines.clear();
     }
