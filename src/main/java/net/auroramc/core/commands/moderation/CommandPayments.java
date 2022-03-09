@@ -18,7 +18,7 @@ import java.util.*;
 public class CommandPayments extends Command {
 
     public CommandPayments() {
-        super("payments", Collections.emptyList(), Arrays.asList(Permission.DEBUG_ACTION, Permission.ADMIN, Permission.SUPPORT), false, null);
+        super("payments", Collections.singletonList("purchases"), Arrays.asList(Permission.DEBUG_ACTION, Permission.ADMIN, Permission.SUPPORT), false, null);
     }
 
     @Override
