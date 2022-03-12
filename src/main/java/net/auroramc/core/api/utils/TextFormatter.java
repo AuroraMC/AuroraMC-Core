@@ -430,7 +430,7 @@ public class TextFormatter {
 
         textComponent.addExtra(prefix);
 
-        textComponent.addExtra(convert(highlight(String.format("You have **%s** players ignored!\n\n", player.getIgnoredPlayers().size()))));
+        textComponent.addExtra(convert(highlight(String.format(" You have **%s** players ignored!\n\n", player.getIgnoredPlayers().size()))));
 
         if (player.getIgnoredPlayers().size() > 0) {
             for (int i = 0;i < 7;i++) {
