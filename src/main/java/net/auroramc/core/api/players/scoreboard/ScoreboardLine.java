@@ -42,6 +42,7 @@ public class ScoreboardLine {
 
     public void remove() {
         objective.getScoreboard().resetScores("§" + colours[line]);
+        team.unregister();
     }
 
     public void setText(String text) {
