@@ -46,6 +46,11 @@ public enum Rank {
             "&rMods answer any questions or\n" +
             "&fqueries players have, as well as\n" +
             "&fmoderate the network. ", null, '9', 'f', '9', 'f', false, Collections.singletonList(JUNIOR_MODERATOR), Arrays.asList(Permission.BYPASS_APPROVAL, Permission.DISGUISE), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
+    ROBOT(8001, "Robot", "Robot", "&c«ROBOT»\n \n" +
+            "&fThis account is a bot account which is\n" +
+            "&fused and managed by the AuroraMC\n" +
+            "&fManagement Team for miscellaneous\n" +
+            "&ftasks and duties.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Collections.singletonList(Permission.MODERATION), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
     ADMIN(11, "Administrator", "Admin", "&c«ADMIN»\n \n" +
             "&fAdmins monitor their specific teams,\n" +
             "&fmaking sure all of the staff inside those\n" +
