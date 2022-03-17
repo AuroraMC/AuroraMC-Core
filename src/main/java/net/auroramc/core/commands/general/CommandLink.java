@@ -43,10 +43,8 @@ public class CommandLink extends Command {
                             }
                             AuroraMCAPI.getDbManager().newCode(code, player);
                             player.codeGenerated();
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", String.format("Code generated: **%s**! In order to link your in-game account to your Discord, all you have to do is do **!link %s**. This code only lasts 60 seconds!", code, code)));
-
                             TextComponent component = new TextComponent("");
-                            component.addExtra(AuroraMCAPI.getFormatter().pluginMessage("Discord", "Code generated:"));
+                            component.addExtra(AuroraMCAPI.getFormatter().pluginMessage("Discord", "Code generated: "));
                             TextComponent codeComponent = new TextComponent(code);
                             codeComponent.setColor(ChatColor.AQUA);
                             codeComponent.setBold(true);
