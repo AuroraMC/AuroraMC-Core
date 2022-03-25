@@ -51,7 +51,7 @@ public class CommandLink extends Command {
                             codeComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, code));
                             codeComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new ComponentBuilder(AuroraMCAPI.getFormatter().convert("&aClick to copy to clipboard.")).create()));
                             component.addExtra(codeComponent);
-                            component.addExtra(AuroraMCAPI.getFormatter().convert(". In order to link your in-game account to your Discord, all you have to do is do **!link " + code + "**. This code only lasts 60 seconds!"));
+                            component.addExtra(AuroraMCAPI.getFormatter().convert(". In order to link your in-game account to your Discord, all you have to do is do &b!link " + code + "&r. This code only lasts 60 seconds!"));
                             player.getPlayer().spigot().sendMessage(component);
                         } else {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Discord", "You are already linked with a Discord account! In order to prevent abuse, you cannot unlink your Discord and in-game accounts yourself. Please contact our customer support who can help you further."));
