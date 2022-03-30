@@ -19,6 +19,7 @@ import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.TextFormatter;
 import net.auroramc.core.api.utils.gui.GUI;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -26,10 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class AuroraMCAPI {
 
@@ -56,6 +54,8 @@ public class AuroraMCAPI {
 
     private static boolean rulesLoading;
 
+    private static Map<Integer, EntityPlayer> fakePlayers;
+
     static {
         players = new HashMap<>();
         commands = new HashMap<>();
@@ -70,6 +70,8 @@ public class AuroraMCAPI {
         silenceTask = null;
         rulesLoading = false;
         shuttingDown = false;
+
+        fakePlayers = new HashMap<>();
     }
 
 
@@ -312,6 +314,14 @@ public class AuroraMCAPI {
 
     public static boolean isShuttingDown() {
         return shuttingDown;
+    }
+
+    public static void registerFakePlayer(EntityPlayer player) {
+        fakePlayers.put(player.getId(), player);
+    }
+
+    public static Map<Integer, EntityPlayer> getFakePlayers() {
+        return fakePlayers;
     }
 
     public static void setShuttingDown(boolean shuttingDown) {
