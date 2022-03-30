@@ -87,6 +87,18 @@ public class CommandHelp extends Command {
         textComponent.addExtra(component);
         textComponent.addExtra(arrow);
 
+        component = new TextComponent(" AuroraMC Discord\n");
+        component.setColor(ChatColor.AQUA);
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.auroramc.net/"));
+        componentHover = new ComponentBuilder(convert("&3&lAuroraMC Discord\n"
+                + "\n"
+                + WordUtils.wrap("The AuroraMC Discord is the main communication platform that is used by," +
+                " AuroraMC. If you want to interact with members of the community, don't hesitate to join the discord!", 40, "\n&r", false)
+                + "\n\n&aClick here to join our discord."));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
+        textComponent.addExtra(component);
+        textComponent.addExtra(arrow);
+
         component = new TextComponent(" Submit a Support Ticket\n");
         component.setColor(ChatColor.AQUA);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support-tickets/"));
