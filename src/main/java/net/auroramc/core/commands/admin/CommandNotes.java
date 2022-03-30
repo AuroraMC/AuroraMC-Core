@@ -9,14 +9,12 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.gui.punish.AdminNotes;
-import net.auroramc.core.gui.punish.PunishmentHistoryGUI;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class CommandNotes extends Command {
     public CommandNotes() {

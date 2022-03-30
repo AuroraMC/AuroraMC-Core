@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2022 AuroraMC Ltd. All Rights Reserved.
  */
 
 package net.auroramc.core.gui.punish;
@@ -9,7 +9,7 @@ import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
-import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
@@ -72,11 +72,11 @@ public class PunishmentHistoryGUI extends GUI {
                         reason = WordUtils.wrap(String.format("&b%s - %s", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
                 }
 
-                PunishmentLength length;
+                TimeLength length;
                 if (punishment.getExpire() == -1) {
-                    length = new PunishmentLength(-1);
+                    length = new TimeLength(-1);
                 } else {
-                    length = new PunishmentLength((punishment.getExpire() - punishment.getIssued()) / 3600000d);
+                    length = new TimeLength((punishment.getExpire() - punishment.getIssued()) / 3600000d);
                 }
 
                 String[] weights = new String[]{"Light", "Medium", "Heavy", "Severe", "Extreme"};
@@ -179,11 +179,11 @@ public class PunishmentHistoryGUI extends GUI {
                             reason = WordUtils.wrap(String.format("&b%s - %s", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
                     }
 
-                    PunishmentLength length;
+                    TimeLength length;
                     if (punishment.getExpire() == -1) {
-                        length = new PunishmentLength(-1);
+                        length = new TimeLength(-1);
                     } else {
-                        length = new PunishmentLength((punishment.getExpire() - punishment.getIssued()) / 3600000d);
+                        length = new TimeLength((punishment.getExpire() - punishment.getIssued()) / 3600000d);
                     }
 
                     String[] weights = new String[]{"Light", "Medium", "Heavy", "Severe", "Extreme"};

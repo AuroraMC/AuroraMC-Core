@@ -5,6 +5,7 @@
 package net.auroramc.core.api.punishments;
 
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.utils.TimeLength;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,11 +39,11 @@ public class PunishmentHistoryType {
         return weights.get(weight);
     }
 
-    public PunishmentLength generateLength(int weight) {
+    public TimeLength generateLength(int weight) {
         double base = (INITIAL_LENGTHS[weight - 1] * (Math.pow(2, weights.get(weight).getValidPunishments().size())));
         double finalLength = base;
         if (base < 0) {
-            return new PunishmentLength(-1);
+            return new TimeLength(-1);
         }
         switch (weight) {
             case 4:
@@ -55,6 +56,6 @@ public class PunishmentHistoryType {
                 //Add on 0.02^nL to the punishment length.
                 finalLength += (base * ((Math.pow(1.02, weights.get(1).getValidPunishments().size()))-1));
         }
-        return new PunishmentLength(finalLength);
+        return new TimeLength(finalLength);
     }
 }
