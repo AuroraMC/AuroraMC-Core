@@ -23,7 +23,7 @@ public class CommandAchievements extends Command {
     @Override
     public void execute(AuroraMCPlayer player, String aliasUsed, List<String> args) {
         if (player.getStats() != null) {
-            Achievements achievements = new Achievements(player);
+            Achievements achievements = new Achievements(player, player.getStats(), player.getName());
             achievements.open(player);
             AuroraMCAPI.openGUI(player, achievements);
         } else {

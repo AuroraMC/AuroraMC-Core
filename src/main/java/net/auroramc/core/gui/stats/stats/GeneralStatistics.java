@@ -7,7 +7,7 @@ package net.auroramc.core.gui.stats.stats;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.LevelUtils;
 import net.auroramc.core.api.utils.gui.GUI;
@@ -25,22 +25,24 @@ public class GeneralStatistics extends GUI {
     private final String name;
     private final PlayerStatistics stats;
     private final PlusSubscription subscription;
+    private final int playerId;
 
-    public GeneralStatistics(AuroraMCPlayer player, String targetName, PlayerStatistics targetStatistics, PlusSubscription subscription) {
+    public GeneralStatistics(AuroraMCPlayer player, String targetName, PlayerStatistics targetStatistics, PlusSubscription subscription, int playerId) {
         super(String.format("&3&l%s's General Statistics", targetName), 5, true);
 
         this.player = player;
         this.name = targetName;
         this.stats = targetStatistics;
         this.subscription = subscription;
+        this.playerId = playerId;
 
         border(String.format("&3&l%s's Statistics", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
-        PunishmentLength ingame = new PunishmentLength(stats.getGameTimeMs()/3600000d);
-        PunishmentLength lobby = new PunishmentLength(stats.getLobbyTimeMs()/3600000d);
-        PunishmentLength total = new PunishmentLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
+        TimeLength ingame = new TimeLength(stats.getGameTimeMs()/3600000d);
+        TimeLength lobby = new TimeLength(stats.getLobbyTimeMs()/3600000d);
+        TimeLength total = new TimeLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
         this.setItem(2, 2, new GUIItem(Material.WATCH, "&c&lIn-Game Time", 1, String.format("&rTime In-Game: **%s**;&rTime In Hub: **%s**;&rTotal Time: **%s**", ingame, lobby, total)));
 
         if (subscription != null) {
@@ -84,7 +86,7 @@ public class GeneralStatistics extends GUI {
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
         if (item.getType() == Material.ARROW) {
             AuroraMCAPI.closeGUI(player);
-            Stats stats = new Stats(player, name, this.stats, this.subscription);
+            Stats stats = new Stats(player, name, this.stats, this.subscription, playerId);
             stats.open(player);
             AuroraMCAPI.openGUI(player, stats);
         } else {

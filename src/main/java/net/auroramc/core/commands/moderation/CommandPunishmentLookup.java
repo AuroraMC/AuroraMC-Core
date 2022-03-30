@@ -9,7 +9,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
-import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.punishments.Rule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -54,7 +54,7 @@ public class CommandPunishmentLookup extends Command {
                                     "Issued at: **%s**\n" +
                                     "Length: **%s**\n" +
                                     "Issued By: **%s**\n" +
-                                    "Status: %s&r%s", code, name, ((punishment.getStatus() == 7)?"Warning":((rule.getType() == 1)?"Chat Offence":((rule.getType() == 2)?"Game Offence":"Misc Offence"))), rule.getRuleName() + " - " + punishment.getExtraNotes(), weights[rule.getWeight()-1], new Date(punishment.getIssued()), ((punishment.getExpire() == -1)?new PunishmentLength(-1):new PunishmentLength((punishment.getExpire() - punishment.getIssued()) / 3600000d)), punishment.getPunisherName(), statuses[punishment.getStatus()-1], ((punishment.getRemovalReason() == null)?"":String.format("\n \nRemoval Reason: **%s**\nRemoval Timestamp: **%s**\nRemoved By: **%s**", punishment.getRemovalReason(), new Date(punishment.getRemovalTimestamp()), punishment.getRemover())))));
+                                    "Status: %s&r%s", code, name, ((punishment.getStatus() == 7)?"Warning":((rule.getType() == 1)?"Chat Offence":((rule.getType() == 2)?"Game Offence":"Misc Offence"))), rule.getRuleName() + " - " + punishment.getExtraNotes(), weights[rule.getWeight()-1], new Date(punishment.getIssued()), ((punishment.getExpire() == -1)?new TimeLength(-1):new TimeLength((punishment.getExpire() - punishment.getIssued()) / 3600000d)), punishment.getPunisherName(), statuses[punishment.getStatus()-1], ((punishment.getRemovalReason() == null)?"":String.format("\n \nRemoval Reason: **%s**\nRemoval Timestamp: **%s**\nRemoved By: **%s**", punishment.getRemovalReason(), new Date(punishment.getRemovalTimestamp()), punishment.getRemover())))));
 
                             if (player.hasPermission("debug.info")) {
                                 TextComponent extra = new TextComponent("\n\n[Remove: Reprieve]");

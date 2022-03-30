@@ -12,11 +12,9 @@ import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Ban;
-import net.auroramc.core.api.punishments.PunishmentLength;
+import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.TabCompleteInjector;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -29,7 +27,7 @@ public class JoinListener implements Listener {
     public void onLogin(AsyncPlayerPreLoginEvent e) {
         Ban ban = AuroraMCAPI.getDbManager().getBan(e.getUniqueId().toString());
         if (ban != null) {
-            PunishmentLength length = new PunishmentLength((ban.getExpire() - System.currentTimeMillis())/3600000d);
+            TimeLength length = new TimeLength((ban.getExpire() - System.currentTimeMillis())/3600000d);
             Rule rule = AuroraMCAPI.getRules().getRule(ban.getRuleID());
 
             switch (ban.getStatus()) {

@@ -2,7 +2,7 @@
  * Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.gui.stats.achievements;
+package net.auroramc.core.gui.stats.achievements.game;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -11,6 +11,8 @@ import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.stats.TieredAcheivement;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
+import net.auroramc.core.gui.stats.achievements.Achievements;
+import net.auroramc.core.gui.stats.achievements.TieredAchievementListing;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,34 +26,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AchievementListing extends GUI {
+public class GameAchievementListing extends GUI {
 
     private final List<Achievement> displayOrder;
     private final AuroraMCPlayer player;
-    private final Achievement.AchievementCategory category;
     private int currentPage;
     private final PlayerStatistics targetStatistics;
     private final String target;
     private final ItemStack item;
+    private final String gameName;
 
-    public AchievementListing(AuroraMCPlayer player, PlayerStatistics targetStatistics, String target, Achievement.AchievementCategory category, ItemStack item) {
-        super("&3&l" + WordUtils.capitalizeFully(category.name().toLowerCase()) + " Achievements", 5, true);
+    public GameAchievementListing(AuroraMCPlayer player, PlayerStatistics targetStatistics, String target, ItemStack item, int gameId, String gameName) {
+        super("&3&l" + gameName + " Achievements", 5, true);
 
         this.player = player;
-        this.category = category;
         this.currentPage = 1;
         this.targetStatistics = targetStatistics;
         this.target = target;
         this.item = item;
+        this.gameName = gameName;
 
-        long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == category).filter((achievement -> !achievement.isVisible())).count();
+        long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == gameId).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == gameId).filter((achievement -> !achievement.isVisible())).count();
 
         border(String.format("&3&l%s's Achievements", target), "");
         this.setItem(0, 4, new GUIItem(item));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK"));
 
         //Get a list of this categories achievements and sort them by whether they have been gained or not.
-        Map<Boolean, List<Achievement>> achievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == category).collect(Collectors.partitioningBy(achievement -> targetStatistics.getAchievementsGained().containsKey(achievement)));
+        Map<Boolean, List<Achievement>> achievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == gameId).collect(Collectors.partitioningBy(achievement -> targetStatistics.getAchievementsGained().containsKey(achievement)));
 
         //Now sort through them and setup the display order.
         displayOrder = new ArrayList<>();
@@ -119,13 +121,12 @@ public class AchievementListing extends GUI {
     public void onClick(int row, int column, ItemStack item, ClickType clickType) {
         if (item.getType() == Material.ARROW) {
             if (column == 0) {
-               Achievements achievements = new Achievements(player, targetStatistics, target);
+                GameAchievements achievements = new GameAchievements(player, target, targetStatistics, this.item);
                 AuroraMCAPI.closeGUI(player);
                 achievements.open(player);
                 AuroraMCAPI.openGUI(player, achievements);
                 return;
             }
-
             //Go to next/previous page.
             if (column == 1) {
                 //Prev page.
@@ -193,7 +194,7 @@ public class AchievementListing extends GUI {
                 Achievement achievement = AuroraMCAPI.getAchievement(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
                 if (achievement != null) {
                     if (achievement instanceof TieredAcheivement) {
-                        TieredAchievementListing listing = new TieredAchievementListing(player, targetStatistics, target, achievement, item, this.item, null);
+                        TieredAchievementListing listing = new TieredAchievementListing(player, targetStatistics, target, achievement, item, this.item, gameName);
                         AuroraMCAPI.closeGUI(player);
                         listing.open(player);
                         AuroraMCAPI.openGUI(player, listing);
