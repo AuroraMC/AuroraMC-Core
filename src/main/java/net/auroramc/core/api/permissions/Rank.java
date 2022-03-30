@@ -50,7 +50,7 @@ public enum Rank {
             "&fThis account is a bot account which is\n" +
             "&fused and managed by the AuroraMC\n" +
             "&fManagement Team for miscellaneous\n" +
-            "&ftasks and duties.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Collections.singletonList(Permission.MODERATION), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
+            "&ftasks and duties.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.MODERATION, Permission.BUILD), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
     ADMIN(11, "Administrator", "Admin", "&c«ADMIN»\n \n" +
             "&fAdmins monitor their specific teams,\n" +
             "&fmaking sure all of the staff inside those\n" +
