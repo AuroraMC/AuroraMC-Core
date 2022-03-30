@@ -46,9 +46,9 @@ public class CrystalQuestStatistics extends GUI {
         this.setItem(2, 2, new GUIItem(Material.NETHER_STAR, "&b&lCrystal Statistics", 1, ";&rCrystals Collected: **" + targetStatistics.getStatistic(1, "crystalsCollected") + "**;&rCrystals Captured: **" + targetStatistics.getStatistic(1, "crystalsCaptured") + "**;&rCrystal Captures Failed: **" + (targetStatistics.getStatistic(1, "crystalsCollected") - targetStatistics.getStatistic(1, "crystalsCaptured")) + "**"));
         long losses = (targetStatistics.getStatistic(1, "gamesPlayed") - targetStatistics.getStatistic(1, "gamesWon"));
         double wlr = ((losses == 0)?targetStatistics.getStatistic(1, "gamesWon"):(double)targetStatistics.getStatistic(1, "gamesWon")/losses);
-        double finalWlr = (Math.round(wlr * 10))/10.0;
+        double finalWlr = (Math.round(wlr * 100))/100.0;
         double kdr = ((targetStatistics.getStatistic(1, "deaths") == 0)?targetStatistics.getStatistic(1, "kills"):(double)targetStatistics.getStatistic(1, "kills") / targetStatistics.getStatistic(1, "deaths"));
-        double finalKdr = (Math.round(kdr * 10))/10.0;
+        double finalKdr = (Math.round(kdr * 100))/100.0;
         this.setItem(2, 4, new GUIItem(Material.NETHER_STAR, "&b&lGame Statistics", 1, ";&rGames Played: **" + targetStatistics.getStatistic(1, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(1, "gamesWon") + "**;&rLosses: **" + losses + "**;&rWin/Loss Ratio: **" + finalWlr + "**;;&rCrowns Earned: **" + targetStatistics.getStatistic(1, "crownsEarned") + "**;&rTickets Earned: **" + targetStatistics.getStatistic(1, "ticketsEarned") + "**;&rExperience Earned: **" + targetStatistics.getStatistic(1, "xpEarned") + "**;;&rKills: **" + targetStatistics.getStatistic(1, "kills") + "**;&rDeaths: **" + targetStatistics.getStatistic(1, "deaths") + "**;&rKill/Death Ratio: **" + finalKdr + "**"));
         PlayerKitLevel minerLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 1, 0);
         PlayerKitLevel defenderLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 1, 1);
