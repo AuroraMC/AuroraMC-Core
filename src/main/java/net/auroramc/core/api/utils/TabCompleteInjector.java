@@ -7,9 +7,11 @@ package net.auroramc.core.api.utils;
 import io.netty.channel.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.events.FakePlayerInteractEvent;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
+import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import org.bukkit.Bukkit;
@@ -97,6 +99,26 @@ public class TabCompleteInjector {
                         }.runTaskAsynchronously(AuroraMCAPI.getCore());
                     }
                     return;
+                } else if (packet instanceof PacketPlayInUseEntity) {
+                    PacketPlayInUseEntity useEntity = (PacketPlayInUseEntity) packet;
+
+                    Field field = useEntity.getClass().getDeclaredField("a");
+                    field.setAccessible(true);
+
+                    int entityId = field.getInt(useEntity);
+                    if (AuroraMCAPI.getFakePlayers().containsKey(entityId)) {
+                        AuroraMCPlayer player = AuroraMCAPI.getPlayer(pl);
+                        if (player == null) {
+                            //Player has not yet loaded fully.
+                            return;
+                        }
+                        if (!player.isLoaded()) {
+                            //Player has not yet loaded fully.
+                            return;
+                        }
+                        FakePlayerInteractEvent event = new FakePlayerInteractEvent(player, AuroraMCAPI.getFakePlayers().get(entityId));
+                        Bukkit.getPluginManager().callEvent(event);
+                    }
                 }
 
                 super.channelRead(channelHandlerContext, packet);
