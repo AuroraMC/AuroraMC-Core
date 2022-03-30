@@ -38,7 +38,7 @@ public class Stats extends GUI {
         border(String.format("&3&l%s's Statistics", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
         TimeLength total = new TimeLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
-        this.setItem(0, 2, new GUIItem(Material.BOOK, "&a&lGeneral Statistics", 1, ";&rIn-Game Time: **" + total.getFormatted() + "**;&rLevel: **" + targetStatistics.getLevel() + "**;&rTotal Experience Earned: **" + targetStatistics.getTotalXpEarned() + "**;;&aClick here to view more!"));
+        this.setItem(0, 2, new GUIItem(Material.BOOK, "&a&lGeneral Statistics", 1, ";&rIn-Game Time: **" + total.getFormatted() + "**;&rLevel: **" + targetStatistics.getLevel() + "**;&rTotal Experience Earned: **" + String.format("%,d", stats.getTotalXpEarned()) + "**;;&aClick here to view more!"));
         long totalAchievements = AuroraMCAPI.getAchievements().values().stream().filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter((achievement -> !achievement.isVisible())).count();
         this.setItem(0, 6, new GUIItem(Material.FIREWORK, "&3&lView Achievements", 1, String.format(";&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", targetStatistics.getAchievementsGained().size(), totalAchievements)));
 
