@@ -7,6 +7,8 @@ package net.auroramc.core.api.players;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.events.player.PlayerPreferenceChangeEvent;
+import org.bukkit.Bukkit;
 
 public class PlayerPreferences {
 
@@ -159,6 +161,9 @@ public class PlayerPreferences {
     public void setApprovalNotifications(boolean approvalNotifications) {
         this.approvalNotifications = approvalNotifications;
 
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("ApprovalNotificationsChanged");
         out.writeUTF(player.getName());
@@ -168,6 +173,10 @@ public class PlayerPreferences {
 
     public void setApprovalProcessedNotifications(boolean approvalProcessedNotifications) {
         this.approvalProcessedNotifications = approvalProcessedNotifications;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("ApprovalProcessedNotificationsChanged");
         out.writeUTF(player.getName());
@@ -177,6 +186,10 @@ public class PlayerPreferences {
 
     public void setChatVisibility(boolean chatVisibility) {
         this.chatVisibility = chatVisibility;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("ChatVisibilityChanged");
         out.writeUTF(player.getName());
@@ -186,6 +199,10 @@ public class PlayerPreferences {
 
     public void setFriendRequests(boolean friendRequests) {
         this.friendRequests = friendRequests;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("FriendRequestsChanged");
         out.writeUTF(player.getName());
@@ -195,6 +212,11 @@ public class PlayerPreferences {
 
     public void setHideDisguiseName(boolean hideDisguiseName) {
         this.hideDisguiseName = hideDisguiseName;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HideDisguiseNameChanged");
         out.writeUTF(player.getName());
@@ -204,6 +226,11 @@ public class PlayerPreferences {
 
     public void setHubFlight(boolean hubFlight) {
         this.hubFlight = hubFlight;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HubFlightChanged");
         out.writeUTF(player.getName());
@@ -213,6 +240,11 @@ public class PlayerPreferences {
 
     public void setHubForcefield(boolean hubForcefield) {
         this.hubForcefield = hubForcefield;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HubForcefieldChanged");
         out.writeUTF(player.getName());
@@ -222,6 +254,11 @@ public class PlayerPreferences {
 
     public void setHubInvisibility(boolean hubInvisibility) {
         this.hubInvisibility = hubInvisibility;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HubInvisibilityChanged");
         out.writeUTF(player.getName());
@@ -231,6 +268,11 @@ public class PlayerPreferences {
 
     public void setHubSpeed(boolean hubSpeed) {
         this.hubSpeed = hubSpeed;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HubSpeedChanged");
         out.writeUTF(player.getName());
@@ -240,6 +282,11 @@ public class PlayerPreferences {
 
     public void setHubVisibility(boolean hubVisibility) {
         this.hubVisibility = hubVisibility;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("HubVisibilityChanged");
         out.writeUTF(player.getName());
@@ -249,6 +296,11 @@ public class PlayerPreferences {
 
     public void setIgnoreHubKnockback(boolean ignoreHubKnockback) {
         this.ignoreHubKnockback = ignoreHubKnockback;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("IgnoreHubKnockbackChanged");
         out.writeUTF(player.getName());
@@ -258,6 +310,11 @@ public class PlayerPreferences {
 
     public void setMuteInformMode(MuteInformMode muteInformMode) {
         this.muteInformMode = muteInformMode;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("MuteInformModeChanged");
         out.writeUTF(player.getName());
@@ -267,6 +324,11 @@ public class PlayerPreferences {
 
     public void setPartyRequests(boolean partyRequests) {
         this.partyRequests = partyRequests;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PartyRequestsChanged");
         out.writeUTF(player.getName());
@@ -276,6 +338,11 @@ public class PlayerPreferences {
 
     public void setPingOnPartyChat(boolean pingOnPartyChat) {
         this.pingOnPartyChat = pingOnPartyChat;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PingOnPartyChatChanged");
         out.writeUTF(player.getName());
@@ -285,6 +352,11 @@ public class PlayerPreferences {
 
     public void setPingOnPrivateMessage(boolean pingOnPrivateMessage) {
         this.pingOnPrivateMessage = pingOnPrivateMessage;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PingOnPrivateMessageChanged");
         out.writeUTF(player.getName());
@@ -294,6 +366,11 @@ public class PlayerPreferences {
 
     public void setPingOnChatMention(boolean pingOnChatMention) {
         this.pingOnChatMention = pingOnChatMention;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PingOnChatMentionChanged");
         out.writeUTF(player.getName());
@@ -303,6 +380,11 @@ public class PlayerPreferences {
 
     public void setPrivateMessageMode(PrivateMessageMode privateMessageMode) {
         this.privateMessageMode = privateMessageMode;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PrivateMessageModeChanged");
         out.writeUTF(player.getName());
@@ -312,6 +394,11 @@ public class PlayerPreferences {
 
     public void setReportNotifications(boolean reportNotifications) {
         this.reportNotifications = reportNotifications;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("ReportNotificationsChanged");
         out.writeUTF(player.getName());
@@ -321,6 +408,11 @@ public class PlayerPreferences {
 
     public void setSocialMediaNotifications(boolean socialMediaNotifications) {
         this.socialMediaNotifications = socialMediaNotifications;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("SocialMediaNotificationsChanged");
         out.writeUTF(player.getName());
@@ -330,6 +422,11 @@ public class PlayerPreferences {
 
     public void setStaffLoginNotifications(boolean staffLoginNotifications) {
         this.staffLoginNotifications = staffLoginNotifications;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("StaffLoginNotificationsChanged");
         out.writeUTF(player.getName());
