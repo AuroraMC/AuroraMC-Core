@@ -34,6 +34,9 @@ public class GameStatistics {
     }
 
     public long getStat(String key) {
+        if (!this.stats.containsKey(key)) {
+            return 0;
+        }
         return this.stats.get(key);
     }
 }

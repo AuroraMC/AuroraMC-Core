@@ -205,7 +205,7 @@ public class PlayerStatistics {
 
     public long getStatistic(int gameId, String key) {
         if (stats.get(gameId) == null) {
-            return -1;
+            return 0;
         }
 
         return stats.get(gameId).getStat(key);
