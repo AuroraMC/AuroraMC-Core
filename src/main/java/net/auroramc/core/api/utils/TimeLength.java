@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2022 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.api.punishments;
+package net.auroramc.core.api.utils;
 
-public class PunishmentLength {
+public class TimeLength {
 
     private final static String[] SUFFIXES = new String[]{"Hours", "Days"};
 
     private final double value;
     private final int suffix;
 
-    public PunishmentLength(double hours) {
+    public TimeLength(double hours) {
         if (hours < 0 || hours > 1440) {
             value = suffix = -1;
         } else {

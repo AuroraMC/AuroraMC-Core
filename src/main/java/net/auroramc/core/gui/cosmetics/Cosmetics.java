@@ -71,7 +71,7 @@ public class Cosmetics extends GUI {
         this.setItem(3, 7, new GUIItem(Material.REDSTONE, "&4&lParticle Effects", 1, String.format(";&rYou have unlocked **%s** out of **%s** particle effects.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PARTICLE).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.PARTICLE).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
         this.setItem(4, 7, new GUIItem(Material.MONSTER_EGG, "&a&lMorphs", 1, String.format(";&rYou have unlocked **%s** out of **%s** morphs.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.MORPH).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.MORPH).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count())));
 
-        this.setItem(5, 4, new GUIItem(Material.DOUBLE_PLANT, "&3&lTicket Balance", 1, String.format(";&rCurrent Ticket Balance: **%s**", player.getBank().getTickets())));
+        this.setItem(5, 4, new GUIItem(Material.DOUBLE_PLANT, "&3&lCurrency Balance", 1, String.format(";&rCurrent Ticket Balance: **%s**;&rCurrent Crown Balance: **%s**", player.getBank().getTickets(), player.getBank().getCrowns())));
     }
 
     @Override

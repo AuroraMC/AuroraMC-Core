@@ -15,6 +15,7 @@ public abstract class Achievement implements Comparable<Achievement> {
     private final boolean visible;
     private final boolean locked;
     private final AchievementCategory category;
+    private final int gameId;
 
     public Achievement(int achievementId, String name, String description, String rewards, boolean visible, boolean locked, AchievementCategory category) {
         this.achievementId = achievementId;
@@ -24,6 +25,18 @@ public abstract class Achievement implements Comparable<Achievement> {
         this.visible = visible;
         this.locked = locked;
         this.category = category;
+        this.gameId = -1;
+    }
+
+    public Achievement(int achievementId, String name, String description, String rewards, boolean visible, boolean locked, AchievementCategory category, int gameId) {
+        this.achievementId = achievementId;
+        this.name = name;
+        this.description = description;
+        this.rewards = rewards;
+        this.visible = visible;
+        this.locked = locked;
+        this.category = category;
+        this.gameId = gameId;
     }
 
     public String getName() {
@@ -52,6 +65,10 @@ public abstract class Achievement implements Comparable<Achievement> {
 
     public AchievementCategory getCategory() {
         return category;
+    }
+
+    public int getGameId() {
+        return gameId;
     }
 
     @Override

@@ -19,6 +19,12 @@ public abstract class TieredAcheivement extends Achievement {
         this.tiers = new HashMap<>();
     }
 
+    public TieredAcheivement(int achievementId, String name, String description, String rewards, boolean visible, boolean locked, AchievementCategory category, int gameId) {
+        super(achievementId, name, description, rewards, visible, locked, category, gameId);
+
+        this.tiers = new HashMap<>();
+    }
+
     public List<AchievementTier> getTiers() {
         return new ArrayList<>(tiers.values());
     }

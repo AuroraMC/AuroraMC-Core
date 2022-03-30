@@ -28,6 +28,7 @@ import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
+import net.auroramc.core.api.utils.PlayerKitLevel;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
 import net.auroramc.core.api.utils.disguise.Skin;
 import org.bukkit.Bukkit;
@@ -2540,6 +2541,18 @@ public class DatabaseManager {
     public void addGameTime(UUID uuid, long ms) {
         try (Jedis connection = jedis.getResource()) {
             connection.hincrBy(String.format("stats.%s.core", uuid.toString()), "gameTimeMs", ms);
+        }
+    }
+
+    public PlayerKitLevel getKitLevel(int player, int gameId, int kitId) {
+        try (Jedis connection = jedis.getResource()) {
+            String level = connection.hget("kitlevel." + player, gameId + "." + kitId);
+            if (level != null) {
+                String[] split = level.split(";");
+                return new PlayerKitLevel(player, gameId, kitId, Integer.parseInt(split[0]), Long.parseLong(split[1]), Long.parseLong(split[2]), Short.parseShort(split[3]));
+            } else {
+                return new PlayerKitLevel(player, gameId, kitId, 0, 0L, 0L, (short)0);
+            }
         }
     }
 

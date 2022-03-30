@@ -10,7 +10,6 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
-import net.auroramc.core.api.punishments.PunishmentLength;
 import net.auroramc.core.api.punishments.Rule;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
@@ -97,7 +96,7 @@ public class PunishUtils {
                     //This is a Trial Mod, send to SM for approval
 
                     //Generate a length
-                    PunishmentLength length = history.getType(type).generateLength(rule.getWeight());
+                    TimeLength length = history.getType(type).generateLength(rule.getWeight());
                     long expiry = Math.round(length.getMsValue());
                     if (history.getType(type).generateLength(rule.getWeight()).getMsValue() == -1) {
                         expiry = -1;
@@ -175,7 +174,7 @@ public class PunishUtils {
     }
 
     private static void issueNormalPunishment(String code, long issued, int player, String name, AuroraMCPlayer issuer, Rule rule, String extraDetails, PunishmentHistory history) {
-        PunishmentLength length = history.getType(rule.getType()).generateLength(rule.getWeight());
+        TimeLength length = history.getType(rule.getType()).generateLength(rule.getWeight());
         long expiry = Math.round(length.getMsValue());
         if (history.getType(rule.getType()).generateLength(rule.getWeight()).getMsValue() == -1) {
             expiry = -1;
