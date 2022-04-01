@@ -6,6 +6,7 @@ package net.auroramc.core;
 
 import net.auroramc.core.achievements.experience.*;
 import net.auroramc.core.achievements.friends.*;
+import net.auroramc.core.achievements.game.crystalquest.*;
 import net.auroramc.core.achievements.general.*;
 import net.auroramc.core.achievements.general.Murderer;
 import net.auroramc.core.achievements.loyalty.HappyBirthday;
@@ -166,6 +167,12 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new Unholy());
         AuroraMCAPI.registerAchievement(new Beast());
         AuroraMCAPI.registerAchievement(new God());
+
+        AuroraMCAPI.registerAchievement(new KillHungry());
+        AuroraMCAPI.registerAchievement(new CrystalCrazy());
+        AuroraMCAPI.registerAchievement(new Failure());
+        AuroraMCAPI.registerAchievement(new Unlucky());
+        AuroraMCAPI.registerAchievement(new YouDidIt());
 
         //Banners
         AuroraMCAPI.registerCosmetic(new AngryCraig());
