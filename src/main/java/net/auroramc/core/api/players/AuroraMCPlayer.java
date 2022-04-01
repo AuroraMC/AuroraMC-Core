@@ -167,15 +167,16 @@ public class AuroraMCPlayer {
 
                 //Load the friends list.
                 friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
+
+                linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
+
+                statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+
                 if (friendsList.getFriends().values().stream().anyMatch(friend -> friend.getType() == Friend.FriendType.NORMAL || friend.getType() == Friend.FriendType.FAVOURITE)) {
                     if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
                         statistics.achievementGained(AuroraMCAPI.getAchievement(30), 1, true);
                     }
                 }
-
-                linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
-
-                statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
 
                 if (statistics.getLevel() >= 200) {
                     if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(60))) {
