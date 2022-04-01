@@ -257,8 +257,8 @@ public class AuroraMCPlayer {
                         statistics.achievementGained(AuroraMCAPI.getAchievement(10), 1, true);
                     }
                     if (reports.size() >= 100) {
-                        if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(10))) {
-                            statistics.achievementGained(AuroraMCAPI.getAchievement(10), 1, true);
+                        if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(18))) {
+                            statistics.achievementGained(AuroraMCAPI.getAchievement(18), 1, true);
                         }
                     }
                 }
