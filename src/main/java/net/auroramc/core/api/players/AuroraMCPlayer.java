@@ -15,12 +15,14 @@ import net.auroramc.core.api.events.player.PlayerShowEvent;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
+import net.auroramc.core.api.players.friends.Friend;
 import net.auroramc.core.api.players.friends.FriendsList;
 import net.auroramc.core.api.players.scoreboard.PlayerScoreboard;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
+import net.auroramc.core.gui.report.Report;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class AuroraMCPlayer {
 
@@ -164,10 +167,66 @@ public class AuroraMCPlayer {
 
                 //Load the friends list.
                 friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
+                if (friendsList.getFriends().values().stream().anyMatch(friend -> friend.getType() == Friend.FriendType.NORMAL || friend.getType() == Friend.FriendType.FAVOURITE)) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(30), 1, true);
+                    }
+                }
 
                 linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
                 statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+
+                if (statistics.getLevel() >= 200) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(60))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(60), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 150) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(59))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(59), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 125) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(58))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(58), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 100) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(57))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(57), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 80) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(56))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(56), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 60) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(55))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(55), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 40) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(54))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(54), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 25) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(53))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(53), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 10) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(52))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(52), 1, true);
+                    }
+                }
+                if (statistics.getLevel() >= 1) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(51))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(51), 1, true);
+                    }
+                }
 
                 bank = AuroraMCAPI.getDbManager().getBank(pl);
 
@@ -190,6 +249,17 @@ public class AuroraMCPlayer {
                 if (preferences.isReportNotificationsEnabled()) {
                     if (offlineReports > 0) {
                         player.sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("While you were offline, **%s** of your reports were handled by our Staff Team. Use /viewreports to see the individual outcomes of each report.", offlineReports)));
+                    }
+                }
+                List<PlayerReport> reports = AuroraMCAPI.getDbManager().getSubmittedReports(id).stream().filter(report -> report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED).collect(Collectors.toList());
+                if (reports.size() > 0) {
+                    if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(10))) {
+                        statistics.achievementGained(AuroraMCAPI.getAchievement(10), 1, true);
+                    }
+                    if (reports.size() >= 100) {
+                        if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(10))) {
+                            statistics.achievementGained(AuroraMCAPI.getAchievement(10), 1, true);
+                        }
                     }
                 }
 

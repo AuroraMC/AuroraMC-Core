@@ -102,55 +102,57 @@ public class PlayerStatistics {
             if (xpIntoLevel >= LevelUtils.xpForLevel(level + 1)) {
                 do {
                     level++;
-                    switch (level) {
-                        case 200: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(60))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(60), 1, true);
+                    if (player != null) {
+                        switch (level) {
+                            case 200: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(60))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(60), 1, true);
+                                }
                             }
-                        }
-                        case 150: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(59))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(59), 1, true);
+                            case 150: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(59))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(59), 1, true);
+                                }
                             }
-                        }
-                        case 125: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(58))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(58), 1, true);
+                            case 125: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(58))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(58), 1, true);
+                                }
                             }
-                        }
-                        case 100: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(57))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(57), 1, true);
+                            case 100: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(57))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(57), 1, true);
+                                }
                             }
-                        }
-                        case 80: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(56))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(56), 1, true);
+                            case 80: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(56))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(56), 1, true);
+                                }
                             }
-                        }
-                        case 60: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(55))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(55), 1, true);
+                            case 60: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(55))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(55), 1, true);
+                                }
                             }
-                        }
-                        case 40: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(54))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(54), 1, true);
+                            case 40: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(54))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(54), 1, true);
+                                }
                             }
-                        }
-                        case 25: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(53))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(53), 1, true);
+                            case 25: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(53))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(53), 1, true);
+                                }
                             }
-                        }
-                        case 10: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(52))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(52), 1, true);
+                            case 10: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(52))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(52), 1, true);
+                                }
                             }
-                        }
-                        case 1: {
-                            if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(51))) {
-                                player.getStats().achievementGained(AuroraMCAPI.getAchievement(51), 1, true);
+                            case 1: {
+                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(51))) {
+                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(51), 1, true);
+                                }
                             }
                         }
                     }
