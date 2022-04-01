@@ -87,7 +87,7 @@ public class ChatListener implements Listener {
                     return;
                 }
                 player.getStats().addProgress(AuroraMCAPI.getAchievement(6), 1, player.getStats().getAchievementsGained().getOrDefault(AuroraMCAPI.getAchievement(6), 0), true);
-                e.setMessage(AuroraMCAPI.getFilter().filter(e.getMessage()));
+                e.setMessage(AuroraMCAPI.getFilter().filter(player, e.getMessage()));
                 if (e.getMessage().contains("mod")) {
                     if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(14))) {
                         player.getStats().achievementGained(AuroraMCAPI.getAchievement(14), 1, true);
