@@ -87,6 +87,11 @@ public class ChatListener implements Listener {
                     return;
                 }
                 player.getStats().addProgress(AuroraMCAPI.getAchievement(6), 1, player.getStats().getAchievementsGained().getOrDefault(AuroraMCAPI.getAchievement(6), 0), true);
+                if (e.getMessage().contains("hacks") || e.getMessage().contains("hax") || e.getMessage().contains("hacker") || e.getMessage().contains("haxxer") || e.getMessage().contains("haxer")) {
+                    if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(29))) {
+                        player.getStats().achievementGained(AuroraMCAPI.getAchievement(29), 1, true);
+                    }
+                }
                 e.setMessage(AuroraMCAPI.getFilter().filter(player, e.getMessage()));
                 if (e.getMessage().contains("mod")) {
                     if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(14))) {
