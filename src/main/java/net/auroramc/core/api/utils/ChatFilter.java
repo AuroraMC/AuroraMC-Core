@@ -33,11 +33,20 @@ public class ChatFilter {
     }
 
     public String filter(String message) {
+        return filter(null, message);
+    }
+
+    public String filter(AuroraMCPlayer player, String message) {
         List<String> splitMessage = new ArrayList<>(Arrays.asList(message.split(" ")));
         List<String> finalMessage = new ArrayList<>();
 
         if (splitMessage.size() == 1) {
             if (message.matches("^[eE][zZ]+$") || message.matches("^[lL]+$") || message.equalsIgnoreCase("trash")) {
+                if (player != null) {
+                    if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(12))) {
+                        player.getStats().achievementGained(AuroraMCAPI.getAchievement(12), 1, true);
+                    }
+                }
                 Random random = new Random();
                 int phrase = random.nextInt(toxicReplacements.size());
                 return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
@@ -48,6 +57,11 @@ public class ChatFilter {
         pairs:
         for (String word : splitMessage) {
             if (word.matches("^[eE][zZ]+$") || word.matches("^[lL]+$") || word.equalsIgnoreCase("trash")) {
+                if (player != null) {
+                    if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(12))) {
+                        player.getStats().achievementGained(AuroraMCAPI.getAchievement(12), 1, true);
+                    }
+                }
                 Random random = new Random();
                 int phrase = random.nextInt(toxicReplacements.size());
                 return toxicReplacements.get(phrase).replace("&#39;","'").replace("&#38;","&").replace("&#34;", "\"");
