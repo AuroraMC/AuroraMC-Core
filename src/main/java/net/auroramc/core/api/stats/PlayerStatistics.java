@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class PlayerStatistics {
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private final long firstJoinTimestamp;
     private long totalXpEarned;
     private long xpIntoLevel;
@@ -49,6 +49,10 @@ public class PlayerStatistics {
         this.gamesLost = gamesLost;
         this.ticketsEarned = ticketsEarned;
         this.crownsEarned = crownsEarned;
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public long getGameTimeMs() {

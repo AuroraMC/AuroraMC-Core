@@ -22,7 +22,7 @@ public class Disguise {
     private static final String[] NAMES = {"Ethan","Brandon","Ellis","Paige","Ruth","Mary","Grace","Rob","Phil","Claire","Luke","Haley","Alex","Cam","Jay","Gloria","Mitchell","Amy","Jake","Rosa","Adrian","Raymond","Kevin","Amy","Jonah","Dina","Garrett","Mateo","Cheyenne","Glenn","Sandra","Bo","Sal","Carol","Myrtle","Emma","Adam","Marcus","Elias","Jeff","Justine","Isaac","Jerry","Janet","Kelly","Jerusha","Laurie","Earl","Sayid","Terry","Charles","Gina","Michael","Norm","Mlepnos","Doug","Sharon","Vivian","Teddy","Madeline","Maddy","Sophia","Lynn","Marcus","Geoffrey","Mark","Jess","Jeff","Bob","Karen","Lily","Joe","Dylan","David","Fred","Rob","Barry","Andrea","Steve","Adam","Beatrice","Catherine"};
     private static final String[] COLOURS = {"White","Black","Green","Blue","Purple","Pink","Orange","Yellow","Turquoise","Violet","Amber","Red","Bronze","Silver","Gold","Magenta","Teal","Sapphire"};
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private String name;
     private UUID uuid;
     private String skinName;
@@ -321,5 +321,9 @@ public class Disguise {
 
         Rank rank = Rank.getByID(random.nextInt(3));
         return new Disguise(player, name, skin[0], skin[1], rank);
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 }

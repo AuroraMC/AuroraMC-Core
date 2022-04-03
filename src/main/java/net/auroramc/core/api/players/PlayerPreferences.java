@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 
 public class PlayerPreferences {
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
 
     //Social Prefs
     private boolean friendRequests;
@@ -72,6 +72,10 @@ public class PlayerPreferences {
         this.approvalProcessedNotifications = approvalProcessedNotifications;
         this.hubForcefield = hubForcefield;
         this.hideDisguiseName = hideDisguiseName;
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public AuroraMCPlayer getPlayer() {

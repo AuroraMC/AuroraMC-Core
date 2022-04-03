@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public final class PlusSubscription {
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private static final String hoverText = "&%s&l+ Plus\n" +
             "\n" +
             "&fPlus is a subscription based\n" +
@@ -66,6 +66,10 @@ public final class PlusSubscription {
         this.daysSubscribed = AuroraMCAPI.getDbManager().getDaysSubscribed(uuid);
         this.streakStartTimestamp = AuroraMCAPI.getDbManager().getStreakStartTimestamp(uuid);
         this.subscriptionStreak = AuroraMCAPI.getDbManager().getStreak(uuid);
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public AuroraMCPlayer getPlayer() {

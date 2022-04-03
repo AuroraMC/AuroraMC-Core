@@ -18,7 +18,7 @@ public class FriendsList {
 
     public enum VisibilityMode {ALL, FAVOURITE_FRIENDS_ONLY, NOBODY}
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private final Map<UUID, Friend> friends;
     private final Map<UUID, Friend> pendingFriendRequests;
     private VisibilityMode visibilityMode;
@@ -36,6 +36,10 @@ public class FriendsList {
         }
         this.visibilityMode = visibilityMode;
         this.currentStatus = status;
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public void newFriendRequest(UUID uuid, String name, int amcId, boolean outgoing) {
