@@ -254,8 +254,8 @@ public class TextFormatter {
 
     public BaseComponent undisguisedFormatTeamChat(AuroraMCPlayer sender, String message) {
         TextComponent textComponent = new TextComponent("");
-        TextComponent prefix = new TextComponent(convert("&2&l«TEAM»"));
-        ComponentBuilder prefixHover = new ComponentBuilder(convert("&6&l«TEAM CHAT»\n" +
+        TextComponent prefix = new TextComponent(convert("&5&l«TEAM»"));
+        ComponentBuilder prefixHover = new ComponentBuilder(convert("&5&l«TEAM CHAT»\n" +
                 "\n" +
                 "You can use this chat to communicate\n" +
                 "with people in your team!"));
@@ -270,8 +270,8 @@ public class TextFormatter {
 
     public BaseComponent formatTeamChat(AuroraMCPlayer sender, String message) {
         TextComponent textComponent = new TextComponent("");
-        TextComponent prefix = new TextComponent(convert("&2&l«TEAM»"));
-        ComponentBuilder prefixHover = new ComponentBuilder(convert("&6&l«TEAM CHAT»\n" +
+        TextComponent prefix = new TextComponent(convert("&5&l«TEAM»"));
+        ComponentBuilder prefixHover = new ComponentBuilder(convert("&5&l«TEAM CHAT»\n" +
                 "\n" +
                 "You can use this chat to communicate\n" +
                 "with people in your team!"));
