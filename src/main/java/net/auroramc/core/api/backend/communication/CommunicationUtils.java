@@ -57,7 +57,7 @@ public class CommunicationUtils {
         return null;
     }
 
-    public static UUID sendMessage(ProtocolMessage message, int level) {
+    private static UUID sendMessage(ProtocolMessage message, int level) {
         if (message.getDestination().equalsIgnoreCase("Mission Control")) {
             message.setServer(AuroraMCAPI.getServerInfo().getName());
             message.setAuthenticationKey(AuroraMCAPI.getServerInfo().getAuthKey());
