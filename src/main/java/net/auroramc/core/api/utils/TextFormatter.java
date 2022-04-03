@@ -34,6 +34,8 @@ public class TextFormatter {
     private final String chatStaffMessageFormatAll = " &r&%s%s %s &4➜&r &r&%s%s %s &l»&r ";
     private final String chatPrivateMessageFormat = "&b&l%s&r &3➜&r &b&l%s&r &3&l»&r %s";
 
+    private final String chatTeamMessageFormat = " &r&%s%s &l»&r ";
+
     private final char normalColor = 'r';
     private final char highlightColor = 'b';
 
@@ -248,6 +250,41 @@ public class TextFormatter {
 
         //Returns the final result.
         return chatMessage;
+    }
+
+    public BaseComponent undisguisedFormatTeamChat(AuroraMCPlayer sender, String message) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent(convert("&2&l«TEAM»"));
+        ComponentBuilder prefixHover = new ComponentBuilder(convert("&6&l«TEAM CHAT»\n" +
+                "\n" +
+                "You can use this chat to communicate\n" +
+                "with people in your team!"));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, prefixHover.create()));
+
+        textComponent.addExtra(prefix);
+
+        Rank rank = sender.getRank();
+        textComponent.addExtra(convert(String.format(chatTeamMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), sender.getName())) + message);
+        return textComponent;
+    }
+
+    public BaseComponent formatTeamChat(AuroraMCPlayer sender, String message) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent(convert("&2&l«TEAM»"));
+        ComponentBuilder prefixHover = new ComponentBuilder(convert("&6&l«TEAM CHAT»\n" +
+                "\n" +
+                "You can use this chat to communicate\n" +
+                "with people in your team!"));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, prefixHover.create()));
+
+        textComponent.addExtra(prefix);
+
+        Rank rank = sender.getRank();
+        if (sender.isDisguised()) {
+            rank = sender.getActiveDisguise().getRank();
+        }
+        textComponent.addExtra(convert(String.format(chatTeamMessageFormat, ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), ((sender.isDisguised())?sender.getActiveDisguise().getName():sender.getName()))) + message);
+        return textComponent;
     }
 
     public String privateMessage(String from, AuroraMCPlayer to, String message) {

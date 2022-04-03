@@ -54,6 +54,78 @@ public class ChatListener implements Listener {
                 }
                 break;
             }
+            case TEAM: {
+                AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+                if (player.getTeam() != null) {
+                    if (!player.getPreferences().isChatVisibilityEnabled()) {
+                        e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "You currently have chat disabled! Please enable chat in order to send messages again."));
+                        return;
+                    }
+                    if (AuroraMCAPI.getChatSilenceEnd() != -2) {
+                        if (!(player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info"))) {
+                            if (AuroraMCAPI.getChatSilenceEnd() != -1) {
+                                ChatSlowLength length = new ChatSlowLength((AuroraMCAPI.getChatSilenceEnd() - System.currentTimeMillis())/1000d);
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", String.format("Chat is currently silenced. You may talk again in **%s**.", length.getFormatted())));
+                            } else {
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Silence", "Chat is currently silenced."));
+                            }
+                            return;
+                        }
+                    }
+                    if (AuroraMCAPI.getChatSlow() != -1) {
+                        if (player.getLastMessageSent() != -1 && !(player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info"))) {
+                            if (System.currentTimeMillis() - player.getLastMessageSent() < AuroraMCAPI.getChatSlow() * 1000) {
+                                ChatSlowLength length = new ChatSlowLength(((AuroraMCAPI.getChatSlow() * 1000) - (System.currentTimeMillis() - player.getLastMessageSent())) / 1000d);
+                                e.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", String.format("There is currently a chat slow active in this server. You may chat again in **%s**.", length.getFormatted())));
+                                return;
+                            }
+                        }
+                    }
+                    player.messageSent();
+                    if (AuroraMCAPI.getFilter() == null) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Message", "Our chat filter is currently being updated. Please try again in a few seconds!"));
+                        return;
+                    }
+                    player.getStats().addProgress(AuroraMCAPI.getAchievement(6), 1, player.getStats().getAchievementsGained().getOrDefault(AuroraMCAPI.getAchievement(6), 0), true);
+                    if (e.getMessage().contains("hacks") || e.getMessage().contains("hax") || e.getMessage().contains("hacker") || e.getMessage().contains("haxxer") || e.getMessage().contains("haxer")) {
+                        if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(28))) {
+                            player.getStats().achievementGained(AuroraMCAPI.getAchievement(28), 1, true);
+                        }
+                    }
+                    e.setMessage(AuroraMCAPI.getFilter().filter(player, e.getMessage()));
+                    if (player.isDisguised()) {
+                        if (player.getPreferences().isHideDisguiseNameEnabled()) {
+                            player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().undisguisedFormatTeamChat(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                        } else {
+                            player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatTeamChat(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                        }
+                    } else {
+                        player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatTeamChat(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
+                    }
+                    for (AuroraMCPlayer recipient : player.getTeam().getPlayers()) {
+                        if (recipient.getPreferences().isChatVisibilityEnabled()) {
+                            if (!recipient.isIgnored(player.getId()) || recipient.hasPermission("moderation")) {
+                                if (!recipient.equals(player)) {
+                                    String mentionedMessage = AuroraMCAPI.getFilter().processMentions(player, recipient, e.getMessage());
+                                    recipient.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatTeamChat(player, mentionedMessage));
+                                    if (!e.getMessage().equals(mentionedMessage)) {
+                                        if (recipient.getActiveMutes().size() > 0 && recipient.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
+                                            String msg = AuroraMCAPI.getFormatter().privateMessage(recipient.getPlayer().getName(), player, "Hey! I'm currently muted and cannot message you right now.");
+                                            recipient.getPlayer().sendMessage(msg);
+                                            player.getPlayer().sendMessage(msg);
+                                        }
+                                        if (recipient.getPreferences().isPingOnChatMentionEnabled()) {
+                                            recipient.getPlayer().playSound(recipient.getPlayer().getLocation(), Sound.NOTE_PLING, 100, 2);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
             case ALL:
             case PARTY:
                 AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
