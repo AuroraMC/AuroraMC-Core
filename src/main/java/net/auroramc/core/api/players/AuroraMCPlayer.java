@@ -519,9 +519,13 @@ public class AuroraMCPlayer {
         rank = oldPlayer.getRank();
         subranks = oldPlayer.getSubranks();
         activeDisguise = oldPlayer.getActiveDisguise();
-        activeDisguise.setPlayer(this);
+        if (activeDisguise != null) {
+            activeDisguise.setPlayer(this);
+        }
         activeSubscription = oldPlayer.getActiveSubscription();
-        activeSubscription.setPlayer(this);
+        if (activeSubscription != null) {
+            activeSubscription.setPlayer(this);
+        }
         team = oldPlayer.getTeam();
         linkedDiscord = oldPlayer.getLinkedDiscord();
         discordCodeGenerated = oldPlayer.discordCodeGenerated;
