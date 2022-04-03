@@ -29,7 +29,7 @@ public class RecruitmentLookup extends GUI {
         border(String.format("&3&l%s's Lookup Information", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Lookup Information", name), 1, "", (short) 3, false, name));
 
-        this.setItem(1, 2, new GUIItem(Material.WATCH, "&3&lIn-Game Time", 1, String.format(";&rRequirement met? %s;&rTotal In-game Time: **%s**", ((statistics.getLobbyTimeMs() + statistics.getGameTimeMs() >= 36000000)?"&a✔":"&c✘"), (new TimeLength(statistics.getLobbyTimeMs() + statistics.getGameTimeMs() / 3600000d)).toString())));
+        this.setItem(1, 2, new GUIItem(Material.WATCH, "&3&lIn-Game Time", 1, String.format(";&rRequirement met? %s;&rTotal In-game Time: **%s**", ((statistics.getLobbyTimeMs() + statistics.getGameTimeMs() >= 36000000)?"&a✔":"&c✘"), (new TimeLength(statistics.getLobbyTimeMs() + statistics.getGameTimeMs() / 3600000d, false)).toString())));
         long light = -1, medium = -1, heavy = -1, severe = -1, extreme = -1;
         boolean lightActive = false, mediumActive = false, heavyActive = false, severeActive = false, extremeActive = false;
         for (Punishment punishment : history.getPunishments()) {

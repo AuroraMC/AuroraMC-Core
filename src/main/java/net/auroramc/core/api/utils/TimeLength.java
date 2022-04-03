@@ -12,7 +12,11 @@ public class TimeLength {
     private final int suffix;
 
     public TimeLength(double hours) {
-        if (hours < 0 || hours > 1440) {
+        this(hours, true);
+    }
+
+    public TimeLength(double hours, boolean punishment) {
+        if (hours < 0 || (punishment && hours > 1440)) {
             value = suffix = -1;
         } else {
             if (hours >= 24) {
