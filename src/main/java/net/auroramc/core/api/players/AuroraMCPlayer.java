@@ -519,7 +519,9 @@ public class AuroraMCPlayer {
         rank = oldPlayer.getRank();
         subranks = oldPlayer.getSubranks();
         activeDisguise = oldPlayer.getActiveDisguise();
+        activeDisguise.setPlayer(this);
         activeSubscription = oldPlayer.getActiveSubscription();
+        activeSubscription.setPlayer(this);
         team = oldPlayer.getTeam();
         linkedDiscord = oldPlayer.getLinkedDiscord();
         discordCodeGenerated = oldPlayer.discordCodeGenerated;
@@ -527,17 +529,27 @@ public class AuroraMCPlayer {
         activeMutes = oldPlayer.getActiveMutes();
         expiryTasks = oldPlayer.expiryTasks;
         scoreboard = oldPlayer.scoreboard;
+        scoreboard.setPlayer(this);
         vanished = oldPlayer.vanished;
         statistics = oldPlayer.statistics;
+        statistics.setPlayer(this);
         bank = oldPlayer.bank;
+        bank.setPlayer(this);
         friendsList = oldPlayer.friendsList;
+        friendsList.setPlayer(this);
         channel = oldPlayer.channel;
         partyUUID = oldPlayer.partyUUID;
         preferences = oldPlayer.preferences;
+        preferences.setPlayer(this);
         activeReport = oldPlayer.activeReport;
+        if (activeReport != null) {
+            oldPlayer.activeReportTask.cancel();
+            activeReportTask = createReportTask();
+        } else {
+            activeReportTask = null;
+        }
         ignoredPlayers = oldPlayer.ignoredPlayers;
         lastMessageSent = oldPlayer.lastMessageSent;
-        activeReportTask = oldPlayer.activeReportTask;
         unlockedCosmetics = oldPlayer.unlockedCosmetics;
         activeCosmetics = oldPlayer.activeCosmetics;
         runningCosmeticTasks = oldPlayer.runningCosmeticTasks;
@@ -943,14 +955,7 @@ public class AuroraMCPlayer {
             this.activeReport = null;
         } else {
             this.activeReport = activeReport;
-            this.activeReportTask = new BukkitRunnable(){
-                @Override
-                public void run() {
-                    if (activeReport != null) {
-                        player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
-                    }
-                }
-            }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+            this.activeReportTask = createReportTask();
         }
 
     }
@@ -1093,5 +1098,16 @@ public class AuroraMCPlayer {
 
     public boolean isDead() {
         return dead;
+    }
+
+    private BukkitTask createReportTask() {
+        return new BukkitRunnable(){
+            @Override
+            public void run() {
+                if (activeReport != null) {
+                    player.spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(getActiveReport()));
+                }
+            }
+        }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
     }
 }

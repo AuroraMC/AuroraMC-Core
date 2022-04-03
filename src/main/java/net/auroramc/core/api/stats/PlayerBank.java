@@ -11,7 +11,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 
 public class PlayerBank {
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private long tickets;
     private long crowns;
 
@@ -19,6 +19,10 @@ public class PlayerBank {
         this.player = player;
         this.tickets = tickets;
         this.crowns = crowns;
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public AuroraMCPlayer getPlayer() {

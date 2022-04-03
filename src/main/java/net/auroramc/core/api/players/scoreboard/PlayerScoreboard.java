@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class PlayerScoreboard {
 
-    private final AuroraMCPlayer player;
+    private AuroraMCPlayer player;
     private final Scoreboard scoreboard;
     private final Map<Integer, ScoreboardLine> lines;
     private final Objective objective;
@@ -30,6 +30,10 @@ public class PlayerScoreboard {
 
     public ScoreboardLine getLine(int i) {
         return lines.get(i);
+    }
+
+    public void setPlayer(AuroraMCPlayer player) {
+        this.player = player;
     }
 
     public void setLine(int line, String message) {
