@@ -40,9 +40,9 @@ public class GeneralStatistics extends GUI {
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
-        TimeLength ingame = new TimeLength(stats.getGameTimeMs()/3600000d);
-        TimeLength lobby = new TimeLength(stats.getLobbyTimeMs()/3600000d);
-        TimeLength total = new TimeLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d);
+        TimeLength ingame = new TimeLength(stats.getGameTimeMs()/3600000d, false);
+        TimeLength lobby = new TimeLength(stats.getLobbyTimeMs()/3600000d, false);
+        TimeLength total = new TimeLength((stats.getGameTimeMs() + stats.getLobbyTimeMs())/3600000d, false);
         this.setItem(2, 2, new GUIItem(Material.WATCH, "&c&lIn-Game Time", 1, String.format("&rTime In-Game: **%s**;&rTime In Hub: **%s**;&rTotal Time: **%s**", ingame, lobby, total)));
 
         if (subscription != null) {
