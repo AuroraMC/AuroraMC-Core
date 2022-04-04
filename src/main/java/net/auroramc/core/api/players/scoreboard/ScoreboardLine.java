@@ -49,7 +49,11 @@ public class ScoreboardLine {
         this.text = text;
         if (this.text.length() > 16) {
             team.setPrefix(this.text.substring(0, 16));
-            String suffix = ChatColor.getLastColors(team.getPrefix()) + this.text.substring(16);
+            String lastColor = ChatColor.getLastColors(team.getPrefix());
+            if (lastColor.equals("")) {
+                lastColor = "§r";
+            }
+            String suffix = lastColor + this.text.substring(16);
             if (suffix.length() > 16) {
                 suffix = suffix.substring(0, 16);
             }
