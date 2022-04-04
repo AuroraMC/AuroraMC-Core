@@ -18,7 +18,7 @@ public class Hungry extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is hungry for &d&lVICTORY!", player.getPlayer().getName());
+        return String.format("**%s** is hungry for &d&lVICTORY!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override

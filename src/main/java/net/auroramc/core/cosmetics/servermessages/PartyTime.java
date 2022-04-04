@@ -18,7 +18,7 @@ public class PartyTime extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", player.getPlayer().getName());
+        return String.format("**%s** is ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override

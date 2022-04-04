@@ -18,7 +18,7 @@ public class DeveloperPlayGames extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s**.playGames(&atrue&r);", player.getPlayer().getName());
+        return String.format("**%s**.playGames(&atrue&r);", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override

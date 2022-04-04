@@ -18,7 +18,7 @@ public class Default extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** has joined the game.", player.getPlayer().getName());
+        return String.format("**%s** has joined the game.", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override

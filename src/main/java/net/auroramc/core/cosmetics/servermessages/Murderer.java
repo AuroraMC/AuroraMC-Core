@@ -18,7 +18,7 @@ public class Murderer extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** wants to &c&lKILL!", player.getPlayer().getName());
+        return String.format("**%s** wants to &c&lKILL!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override
