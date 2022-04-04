@@ -17,7 +17,7 @@ public class PeterPan extends ServerMessage {
 
     @Override
     public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is ready to &e&lTAKE FLIGHT!", player.getPlayer().getName());
+        return String.format("**%s** is ready to &e&lTAKE FLIGHT!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
     }
 
     @Override
