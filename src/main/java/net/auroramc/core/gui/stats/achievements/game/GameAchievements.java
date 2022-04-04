@@ -73,6 +73,20 @@ public class GameAchievements extends GUI {
                 AuroraMCAPI.openGUI(player, stats);
                 break;
             }
+            case IRON_AXE: {
+                AuroraMCAPI.closeGUI(player);
+                GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 102, "FFA");
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
+            case IRON_SPADE: {
+                AuroraMCAPI.closeGUI(player);
+                GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 100, "Spleef");
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
             default: {
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
             }
