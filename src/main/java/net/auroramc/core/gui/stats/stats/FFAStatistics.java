@@ -62,7 +62,7 @@ public class FFAStatistics extends GUI {
             stats.open(player);
             AuroraMCAPI.openGUI(player, stats);
         } else if (item.getType() == Material.BOOK) {
-            GameAchievementListing gameAchievementListing = new GameAchievementListing(player, stats, name, item, 102, "Spleef");
+            GameAchievementListing gameAchievementListing = new GameAchievementListing(player, stats, name, item, 102, "FFA");
             AuroraMCAPI.closeGUI(player);
             gameAchievementListing.open(player);
             AuroraMCAPI.openGUI(player, gameAchievementListing);
