@@ -80,7 +80,7 @@ public class Stats extends GUI {
                 AuroraMCAPI.openGUI(player, stats);
                 break;
             }
-            case SNOW_BALL: {
+            case IRON_SPADE: {
                 AuroraMCAPI.closeGUI(player);
                 SpleefStatistics stats = new SpleefStatistics(player, name, this.stats, this.subscription, playerId);
                 stats.open(player);

@@ -39,17 +39,17 @@ public class SpleefStatistics extends GUI {
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&b&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
-        this.setItem(2, 2, new GUIItem(Material.SNOW_BALL, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(101, "blocksBroken") + "**"));
-        long losses = (targetStatistics.getStatistic(101, "gamesPlayed") - targetStatistics.getStatistic(101, "gamesWon"));
-        double wlr = ((losses == 0)?targetStatistics.getStatistic(101, "gamesWon"):(double)targetStatistics.getStatistic(101, "gamesWon")/losses);
+        this.setItem(2, 2, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(101, "blocksBroken") + "**"));
+        long losses = (targetStatistics.getStatistic(100, "gamesPlayed") - targetStatistics.getStatistic(100, "gamesWon"));
+        double wlr = ((losses == 0)?targetStatistics.getStatistic(100, "gamesWon"):(double)targetStatistics.getStatistic(100, "gamesWon")/losses);
         double finalWlr = (Math.round(wlr * 100))/100.0;
-        this.setItem(2, 4, new GUIItem(Material.SNOW_BALL, "&b&lGame Statistics", 1, ";&rGames Played: **" + targetStatistics.getStatistic(101, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(101, "gamesWon") + "**;&rLosses: **" + losses + "**;&rWin/Loss Ratio: **" + finalWlr + "**;;&rCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(101, "crownsEarned"))  + "**;&rTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(1, "ticketsEarned")) + "**;&rExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(101, "xpEarned")) + "**"));
-        PlayerKitLevel spleefLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 101, 0);
-        this.setItem(2, 6, new GUIItem(Material.SNOW_BALL, "&b&lKit Statistics", 1, ";&3&lSpleef Kit;&rLevel: **" + spleefLevel.getLevel() + "**;&rTotal XP: **" + String.format("%,d", spleefLevel.getTotalXpEarned()) + "**;&rCurrent Upgrade: **" + spleefLevel.getLatestUpgrade() + "**"));
+        this.setItem(2, 4, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rGames Played: **" + targetStatistics.getStatistic(100, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(100, "gamesWon") + "**;&rLosses: **" + losses + "**;&rWin/Loss Ratio: **" + finalWlr + "**;;&rCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "crownsEarned"))  + "**;&rTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(1, "ticketsEarned")) + "**;&rExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "xpEarned")) + "**"));
+        PlayerKitLevel spleefLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 100, 0);
+        this.setItem(2, 6, new GUIItem(Material.IRON_SPADE, "&b&lKit Statistics", 1, ";&3&lSpleef Kit;&rLevel: **" + spleefLevel.getLevel() + "**;&rTotal XP: **" + String.format("%,d", spleefLevel.getTotalXpEarned()) + "**;&rCurrent Upgrade: **" + spleefLevel.getLatestUpgrade() + "**"));
 
-        long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101 && !achievement.isVisible()).count();
+        long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100 && !achievement.isVisible()).count();
 
-        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bCrystal Quest Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101).count(), totalGameAchievements)));
+        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bSpleef Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).count(), totalGameAchievements)));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SpleefStatistics extends GUI {
             stats.open(player);
             AuroraMCAPI.openGUI(player, stats);
         } else if (item.getType() == Material.BOOK) {
-            GameAchievementListing gameAchievementListing = new GameAchievementListing(player, stats, name, item, 101, "Spleef");
+            GameAchievementListing gameAchievementListing = new GameAchievementListing(player, stats, name, item, 100, "Spleef");
             AuroraMCAPI.closeGUI(player);
             gameAchievementListing.open(player);
             AuroraMCAPI.openGUI(player, gameAchievementListing);
