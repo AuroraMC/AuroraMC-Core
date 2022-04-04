@@ -39,7 +39,7 @@ public class SpleefStatistics extends GUI {
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&b&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
-        this.setItem(2, 2, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(100, "blocksBroken") + "**"));
+        this.setItem(2, 2, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(100, "blocksBroken") + "**;&rSnowballs Thrown: **" + targetStatistics.getStatistic(100, "snowballsThrown") + "**"));
         long losses = (targetStatistics.getStatistic(100, "gamesPlayed") - targetStatistics.getStatistic(100, "gamesWon"));
         double wlr = ((losses == 0)?targetStatistics.getStatistic(100, "gamesWon"):(double)targetStatistics.getStatistic(100, "gamesWon")/losses);
         double finalWlr = (Math.round(wlr * 100))/100.0;
