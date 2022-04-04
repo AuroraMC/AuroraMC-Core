@@ -49,6 +49,13 @@ public class PlayerScoreboard {
         line1.apply();
     }
 
+    public void clearLine(int line) {
+        if (lines.containsKey(line)) {
+            ScoreboardLine sbLine = lines.remove(line);
+            sbLine.remove();
+        }
+    }
+
     public void clear() {
         for (ScoreboardLine line : lines.values()) {
             line.remove();
