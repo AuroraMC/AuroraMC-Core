@@ -316,7 +316,7 @@ public class AuroraMCPlayer {
                                     team.setPrefix(s);
                                     //Check for a valid subscription and give suffix if they have one enabled.
                                     if (pl.getActiveSubscription() != null) {
-                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                        if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                 team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
@@ -362,7 +362,7 @@ public class AuroraMCPlayer {
                                         team.setPrefix(s);
 
                                         if (pl.getActiveSubscription() != null) {
-                                            if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                            if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                 if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                     PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                     team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
@@ -394,7 +394,7 @@ public class AuroraMCPlayer {
                                             team.setPrefix(s);
 
                                             if (player.getActiveSubscription() != null) {
-                                                if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                                if (player.isLoaded() && player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                     if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                         PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                         team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
@@ -429,7 +429,7 @@ public class AuroraMCPlayer {
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     if (pl.getActiveSubscription() != null) {
-                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                        if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                 team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
@@ -474,7 +474,7 @@ public class AuroraMCPlayer {
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     if (pl.getActiveSubscription() != null) {
-                                        if (pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                        if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                 team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
@@ -507,7 +507,7 @@ public class AuroraMCPlayer {
                                     s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     if (pla.getActiveSubscription() != null) {
-                                        if (pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
+                                        if (pla.isLoaded() && pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
                                                 team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
