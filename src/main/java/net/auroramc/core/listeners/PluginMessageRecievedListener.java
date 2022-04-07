@@ -347,6 +347,9 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                 case "FriendServerUpdated": {
                     AuroraMCPlayer player = AuroraMCAPI.getPlayer(in.readUTF());
                     assert player != null;
+                    if (!player.isLoaded()) {
+                        return;
+                    }
                     UUID uuid = UUID.fromString(in.readUTF());
                     String server = in.readUTF();
                     if (server.equals("null")) {
