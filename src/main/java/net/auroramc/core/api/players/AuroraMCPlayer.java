@@ -294,7 +294,14 @@ public class AuroraMCPlayer {
                         for (Player bukkitPlayer : Bukkit.getOnlinePlayers()) {
                             if (!pl.isVanished()) {
                                 if (player == bukkitPlayer) {
-                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().getTeam(pl.getPlayer().getName());
+                                    if (team == null) {
+                                        try {
+                                            team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                        } catch (IllegalArgumentException ignored) {
+                                            team = scoreboard.getScoreboard().getTeam(pl.getPlayer().getName());
+                                        }
+                                    }
                                     team.addPlayer(player);
                                     String s;
                                     if (pl.getActiveDisguise() != null && !pl.getPreferences().isHideDisguiseNameEnabled()) {
@@ -333,7 +340,14 @@ public class AuroraMCPlayer {
                                         if (!hidden) {
                                             bukkitPlayer.showPlayer(pl.getPlayer());
                                         }
-                                        org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                        org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName());
+                                        if (team == null) {
+                                            try {
+                                                team = player.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                            } catch (IllegalArgumentException ignored) {
+                                                team = player.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName());
+                                            }
+                                        }
                                         team.addPlayer(pl.getPlayer());
                                         String s;
                                         if (pl.getActiveDisguise() != null) {
@@ -359,10 +373,14 @@ public class AuroraMCPlayer {
                                         if (!player.isVanished() || player.getRank().getId() <= pl.getRank().getId()) {
                                             pl.getPlayer().showPlayer(bukkitPlayer);
 
-                                            if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
-                                                scoreboard.getScoreboard().getTeam(player.getPlayer().getName()).unregister();
+                                            team = scoreboard.getScoreboard().getTeam(player.getPlayer().getName());
+                                            if (team == null) {
+                                                try {
+                                                    team = scoreboard.getScoreboard().registerNewTeam(player.getPlayer().getName());
+                                                } catch (IllegalArgumentException e) {
+                                                    team = scoreboard.getScoreboard().getTeam(player.getPlayer().getName());
+                                                }
                                             }
-                                            team = scoreboard.getScoreboard().registerNewTeam(player.getPlayer().getName());
                                             team.addPlayer(player.getPlayer());
                                             if (player.getActiveDisguise() != null) {
                                                 s = AuroraMCAPI.getFormatter().rankFormat(player.getActiveDisguise().getRank(), player.getActiveSubscription());
@@ -390,7 +408,14 @@ public class AuroraMCPlayer {
                                 }
                             } else {
                                 if (player == bukkitPlayer) {
-                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().getTeam(pl.getPlayer().getName());
+                                    if (team == null) {
+                                        try {
+                                            team = scoreboard.getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                        } catch (IllegalArgumentException e) {
+                                            team = scoreboard.getScoreboard().getTeam(pl.getPlayer().getName());
+                                        }
+                                    }
                                     team.addPlayer(player);
                                     String s;
                                     if (pl.getActiveDisguise() != null) {
@@ -428,7 +453,14 @@ public class AuroraMCPlayer {
                                     if (!hidden) {
                                         bukkitPlayer.showPlayer(pl.getPlayer());
                                     }
-                                    org.bukkit.scoreboard.Team team = pla.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                    org.bukkit.scoreboard.Team team = pla.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName());
+                                    if (team == null) {
+                                        try {
+                                            team = pla.getScoreboard().getScoreboard().registerNewTeam(pl.getPlayer().getName());
+                                        } catch (IllegalArgumentException ignored) {
+                                            team = pla.getScoreboard().getScoreboard().getTeam(pl.getPlayer().getName());
+                                        }
+                                    }
                                     team.addPlayer(pl.getPlayer());
                                     String s;
                                     if (pl.getActiveDisguise() != null) {
@@ -454,7 +486,14 @@ public class AuroraMCPlayer {
                                 }
                                 if (pla.getRank().getId() <= pl.getRank().getId()) {
                                     pl.getPlayer().showPlayer(bukkitPlayer);
-                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().registerNewTeam(pla.getPlayer().getName());
+                                    org.bukkit.scoreboard.Team team = scoreboard.getScoreboard().getTeam(pla.getPlayer().getName());
+                                    if (team == null) {
+                                        try {
+                                            team = scoreboard.getScoreboard().registerNewTeam(pla.getPlayer().getName());
+                                        } catch (IllegalArgumentException ignored) {
+                                            team = scoreboard.getScoreboard().getTeam(pla.getPlayer().getName());
+                                        }
+                                    }
                                     team.addPlayer(pla.getPlayer());
                                     String s;
                                     if (pla.getActiveDisguise() != null) {
