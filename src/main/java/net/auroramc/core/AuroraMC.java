@@ -217,7 +217,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new NopeCantDoThat());
         AuroraMCAPI.registerAchievement(new OuchThatsHot());
         AuroraMCAPI.registerAchievement(new ReturnToSender());
-        AuroraMCAPI.registerAchievement(new SafteyIsKey());
+        AuroraMCAPI.registerAchievement(new SafetyIsKey());
         AuroraMCAPI.registerAchievement(new Smokin());
         AuroraMCAPI.registerAchievement(new ThatsNotNice());
         AuroraMCAPI.registerAchievement(new TheLuckWasNotOnMySide());
