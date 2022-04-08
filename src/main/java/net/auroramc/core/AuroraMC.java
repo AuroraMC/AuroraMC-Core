@@ -7,6 +7,8 @@ package net.auroramc.core;
 import net.auroramc.core.achievements.experience.*;
 import net.auroramc.core.achievements.friends.*;
 import net.auroramc.core.achievements.game.crystalquest.*;
+import net.auroramc.core.achievements.game.ffa.*;
+import net.auroramc.core.achievements.game.hotpotato.*;
 import net.auroramc.core.achievements.game.spleef.*;
 import net.auroramc.core.achievements.general.*;
 import net.auroramc.core.achievements.general.Murderer;
@@ -176,6 +178,17 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new Failure());
         AuroraMCAPI.registerAchievement(new Unlucky());
         AuroraMCAPI.registerAchievement(new YouDidIt());
+        AuroraMCAPI.registerAchievement(new AhItsGoodToBeHome());
+        AuroraMCAPI.registerAchievement(new Assistant());
+        AuroraMCAPI.registerAchievement(new CookieMonsterLovesCookies());
+        AuroraMCAPI.registerAchievement(new HeyStopThatsYourFriend());
+        AuroraMCAPI.registerAchievement(new Hoarder());
+        AuroraMCAPI.registerAchievement(new MaximumEfficiency());
+        AuroraMCAPI.registerAchievement(new MissleStrike());
+        AuroraMCAPI.registerAchievement(new Sniper());
+        AuroraMCAPI.registerAchievement(new TeamworkMakesTheDreamWork());
+        AuroraMCAPI.registerAchievement(new YouCantSeeMe());
+
 
         //Spleef Achievements
         AuroraMCAPI.registerAchievement(new AnArmLikeSnowbodyElse());
@@ -185,6 +198,31 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new StraightUpBallin());
         AuroraMCAPI.registerAchievement(new TisTheSeason());
         AuroraMCAPI.registerAchievement(new WaitIsThisPrisons());
+
+        //FFA Achievements
+        AuroraMCAPI.registerAchievement(new CliffJumper());
+        AuroraMCAPI.registerAchievement(new GetBackToWork());
+        AuroraMCAPI.registerAchievement(new GetOutOfMyWay());
+        AuroraMCAPI.registerAchievement(new HolyDamage());
+        AuroraMCAPI.registerAchievement(new LeapFrog());
+        AuroraMCAPI.registerAchievement(new OneAMasterOfDeath());
+        AuroraMCAPI.registerAchievement(new Rampage());
+        AuroraMCAPI.registerAchievement(new TheUselessUpgrade());
+        AuroraMCAPI.registerAchievement(new TtttttripleKill());
+        AuroraMCAPI.registerAchievement(new YoureAbsolutelyGodTier());
+
+        //Hot Potato Achievements
+        AuroraMCAPI.registerAchievement(new DamnThatWasClose());
+        AuroraMCAPI.registerAchievement(new DamnYouveGotMoves());
+        AuroraMCAPI.registerAchievement(new NopeCantDoThat());
+        AuroraMCAPI.registerAchievement(new OuchThatsHot());
+        AuroraMCAPI.registerAchievement(new ReturnToSender());
+        AuroraMCAPI.registerAchievement(new SafteyIsKey());
+        AuroraMCAPI.registerAchievement(new Smokin());
+        AuroraMCAPI.registerAchievement(new ThatsNotNice());
+        AuroraMCAPI.registerAchievement(new TheLuckWasNotOnMySide());
+        AuroraMCAPI.registerAchievement(new WhoLeftTheOvenOn());
+        AuroraMCAPI.registerAchievement(new WhyMe());
 
         //Banners
         AuroraMCAPI.registerCosmetic(new AngryCraig());
