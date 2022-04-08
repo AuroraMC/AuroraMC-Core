@@ -6,8 +6,8 @@ package net.auroramc.core.achievements.game.hotpotato;
 
 import net.auroramc.core.api.stats.Achievement;
 
-public class SafteyIsKey extends Achievement {
-    public SafteyIsKey() {
+public class SafetyIsKey extends Achievement {
+    public SafetyIsKey() {
         super(162, "Safety is key...", "Survive a round without receiving a Hot Potato.", "None", true, false, AchievementCategory.GAME, 101);
     }
 }
