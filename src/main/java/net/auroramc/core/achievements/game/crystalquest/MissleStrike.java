@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class MissleStrike extends Achievement {
     public MissleStrike() {
-        super(75, "Missle Strike", "Die from a Crystal Explosion.", "None", true, false, AchievementCategory.GAME, 1);
+        super(75, "Missle Strike", "Die from a Crystal Explosion.", "None", true, true, AchievementCategory.GAME, 1);
     }
 }

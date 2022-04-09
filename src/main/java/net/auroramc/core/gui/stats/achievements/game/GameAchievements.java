@@ -87,6 +87,13 @@ public class GameAchievements extends GUI {
                 AuroraMCAPI.openGUI(player, stats);
                 break;
             }
+            case POTATO_ITEM: {
+                AuroraMCAPI.closeGUI(player);
+                GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 101, "Hot Potato");
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
             default: {
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
             }
