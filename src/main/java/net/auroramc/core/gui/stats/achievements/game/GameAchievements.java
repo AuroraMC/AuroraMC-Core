@@ -87,7 +87,7 @@ public class GameAchievements extends GUI {
                 AuroraMCAPI.openGUI(player, stats);
                 break;
             }
-            case POTATO_ITEM: {
+            case BAKED_POTATO: {
                 AuroraMCAPI.closeGUI(player);
                 GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 101, "Hot Potato");
                 stats.open(player);
