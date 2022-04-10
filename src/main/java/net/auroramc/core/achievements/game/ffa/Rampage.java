@@ -15,6 +15,6 @@ public class Rampage extends TieredAcheivement {
         this.setTier(3, new AchievementTier(this, 3, 100));
         this.setTier(4, new AchievementTier(this, 4, 200));
         this.setTier(5, new AchievementTier(this, 5, 500));
-        this.setTier(6, new AchievementTier(this, 5, 1000));
+        this.setTier(6, new AchievementTier(this, 6, 1000));
     }
 }
