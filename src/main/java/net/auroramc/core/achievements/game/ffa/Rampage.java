@@ -9,7 +9,7 @@ import net.auroramc.core.api.stats.TieredAcheivement;
 
 public class Rampage extends TieredAcheivement {
     public Rampage() {
-        super(145, "Rampage", "Kill %s amount of players in FFA.", "None", true, false, AchievementCategory.GAME, 102);
+        super(145, "Rampage", "Kill %s players in FFA.", "None", true, false, AchievementCategory.GAME, 102);
         this.setTier(1, new AchievementTier(this, 1, 10));
         this.setTier(2, new AchievementTier(this, 2, 50));
         this.setTier(3, new AchievementTier(this, 3, 100));
