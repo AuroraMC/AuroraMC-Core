@@ -1308,6 +1308,12 @@ public class DatabaseManager {
         }
     }
 
+    public boolean isVanished(UUID player) {
+        try (Jedis con = jedis.getResource()) {
+            return con.sismember("vanish", player.toString());
+        }
+    }
+
     public void vanish(AuroraMCPlayer player) {
         try (Jedis con = jedis.getResource()) {
             con.sadd("vanish", player.getPlayer().getUniqueId().toString());
