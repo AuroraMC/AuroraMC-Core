@@ -39,8 +39,8 @@ public class GameAchievements extends GUI {
         long totalSpleefAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).filter((achievement -> !achievement.isVisible())).count();
         long totalHotPotatoAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101).filter((achievement -> !achievement.isVisible())).count();
         long totalFFAAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 102).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 102).filter((achievement -> !achievement.isVisible())).count();
-        long totalHITWAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).filter((achievement -> !achievement.isVisible())).count();
-        long totalBlockPartyAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).filter((achievement -> !achievement.isVisible())).count();
+        long totalTagAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).filter((achievement -> !achievement.isVisible())).count();
+        long totalRunAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).filter((achievement -> !achievement.isVisible())).count();
 
         this.setItem(2, 2, new GUIItem(Material.NETHER_STAR, "&b&lCrystal Quest", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 1).count(), totalCrystalAchievements)));
         this.setItem(2, 3, new GUIItem(Material.IRON_SWORD, "&c&lBackstab", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 2).count(), totalBackstabAchievements)));
@@ -48,8 +48,8 @@ public class GameAchievements extends GUI {
         this.setItem(2, 5, new GUIItem(Material.IRON_SPADE, "&b&lSpleef", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).count(), totalSpleefAchievements)));
         this.setItem(2, 6, new GUIItem(Material.BAKED_POTATO, "&c&lHotPotato", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 101).count(), totalHotPotatoAchievements)));
         this.setItem(3, 3, new GUIItem(Material.IRON_AXE, "&c&lFFA", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 102).count(), totalFFAAchievements)));
-        this.setItem(3, 4, new GUIItem(Material.COBBLE_WALL, "&c&lHole In The Wall", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).count(), totalHITWAchievements)));
-        this.setItem(3, 5, new GUIItem(Material.NOTE_BLOCK, AuroraMCAPI.getFormatter().rainbowBold("Block Party"), 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).count(), totalBlockPartyAchievements)));
+        this.setItem(3, 4, new GUIItem(Material.LEASH, "&c&lTag", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).count(), totalTagAchievements)));
+        this.setItem(3, 5, new GUIItem(Material.STAINED_CLAY, "&e&lRun", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).count(), totalRunAchievements), (short)14));
     }
 
     @Override
@@ -90,6 +90,20 @@ public class GameAchievements extends GUI {
             case BAKED_POTATO: {
                 AuroraMCAPI.closeGUI(player);
                 GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 101, "Hot Potato");
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
+            case LEASH: {
+                AuroraMCAPI.closeGUI(player);
+                GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 103, "Tag");
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
+            case STAINED_CLAY: {
+                AuroraMCAPI.closeGUI(player);
+                GameAchievementListing stats = new GameAchievementListing(player, this.stats, name, item, 104, "Run");
                 stats.open(player);
                 AuroraMCAPI.openGUI(player, stats);
                 break;
