@@ -41,6 +41,8 @@ public class Achievements extends GUI {
         long totalLoyaltyAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOYALTY).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOYALTY).filter((achievement -> !achievement.isVisible())).count();
         long totalExperienceAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.EXPERIENCE).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.EXPERIENCE).filter((achievement -> !achievement.isVisible())).count();
         long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME).filter((achievement -> !achievement.isVisible())).count();
+        long totalLobbyAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOBBY).filter((Achievement::isVisible)).count() + targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOBBY).filter((achievement -> !achievement.isVisible())).count();
+
         this.setItem(2, 2, new GUIItem(Material.SIGN, "&3&lGeneral Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GENERAL).count(), totalGeneralAchievements)));
         this.setItem(2, 3, new GUIItem(Material.SKULL_ITEM, "&d&lFriends Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.FRIENDS).count(), totalFriendsAchievements)));
         this.setItem(2, 4, new GUIItem(Material.FIREWORK, "&6&lParty Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.PARTY).count(), totalPartyAchievements)));
@@ -48,7 +50,7 @@ public class Achievements extends GUI {
         this.setItem(2, 6, new GUIItem(Material.RED_ROSE, "&a&lLoyalty Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOYALTY).count(), totalLoyaltyAchievements)));
         this.setItem(3, 3, new GUIItem(Material.EXP_BOTTLE, "&b&lExperience Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.EXPERIENCE).count(), totalExperienceAchievements)));
         this.setItem(3, 4, new GUIItem(Material.MINECART, "&e&lGame Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME).count(), totalGameAchievements)));
-        this.setItem(3, 5, new GUIItem(Material.BEACON, "&4&lComing Soon...", 1, "&rThis category of achievements is coming soon..."));
+        this.setItem(3, 5, new GUIItem(Material.BEACON, "&4&lLobby Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**", targetStatistics.getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.LOBBY).count(), totalLobbyAchievements)));
     }
 
     @Override
@@ -76,6 +78,9 @@ public class Achievements extends GUI {
                 break;
             case EXP_BOTTLE:
                 category = Achievement.AchievementCategory.EXPERIENCE;
+                break;
+            case BEACON:
+                category = Achievement.AchievementCategory.LOBBY;
                 break;
             case MINECART:
                 GameAchievements listing = new GameAchievements(player, target, targetStatistics, item);

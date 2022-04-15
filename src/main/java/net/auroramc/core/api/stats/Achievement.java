@@ -6,7 +6,7 @@ package net.auroramc.core.api.stats;
 
 public abstract class Achievement implements Comparable<Achievement> {
 
-    public enum AchievementCategory {GENERAL, FRIENDS, PARTY, TIME, LOYALTY, EXPERIENCE, GAME, NA}
+    public enum AchievementCategory {GENERAL, FRIENDS, PARTY, TIME, LOYALTY, EXPERIENCE, GAME, LOBBY, NA}
 
     private final int achievementId;
     private final String name;
