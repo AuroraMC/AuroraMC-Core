@@ -26,7 +26,7 @@ public class CommandBuildVersions extends Command {
 
 
     public CommandBuildVersions() {
-        super("bversions", Collections.singletonList("buildversions"), Arrays.asList(Permission.ALL, Permission.DEBUG_INFO), false, null);
+        super("bversions", Arrays.asList("buildversions", "bv"), Arrays.asList(Permission.ALL, Permission.DEBUG_INFO), false, null);
     }
 
     @Override
