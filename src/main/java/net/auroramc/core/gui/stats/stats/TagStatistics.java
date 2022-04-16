@@ -27,7 +27,7 @@ public class TagStatistics extends GUI {
     private final int playerId;
 
     public TagStatistics(AuroraMCPlayer player, String targetName, PlayerStatistics targetStatistics, PlusSubscription subscription, int playerId) {
-        super(String.format("&b&l%s's Run Statistics", targetName), 5, true);
+        super(String.format("&b&l%s's Tag Statistics", targetName), 5, true);
 
         this.player = player;
         this.name = targetName;
@@ -52,7 +52,7 @@ public class TagStatistics extends GUI {
 
         long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103 && !achievement.isVisible()).count();
 
-        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bHot Potato Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).count(), totalGameAchievements)));
+        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bTag Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 103).count(), totalGameAchievements)));
     }
 
     @Override
