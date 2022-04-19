@@ -44,6 +44,9 @@ import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
 import net.auroramc.core.cosmetics.killmessages.HalfWayThere;
 import net.auroramc.core.cosmetics.killmessages.Rainbow;
+import net.auroramc.core.cosmetics.plussymbols.kitrewards.Castle;
+import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
+import net.auroramc.core.cosmetics.plussymbols.kitrewards.Sword;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.cosmetics.wineffects.Firework;
@@ -301,6 +304,9 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Smile());
         AuroraMCAPI.registerCosmetic(new Sunny());
         AuroraMCAPI.registerCosmetic(new Hazard());
+        AuroraMCAPI.registerCosmetic(new Castle());
+        AuroraMCAPI.registerCosmetic(new Pickaxe());
+        AuroraMCAPI.registerCosmetic(new Sword());
 
         //Hats
         AuroraMCAPI.registerCosmetic(new Astronaut());
