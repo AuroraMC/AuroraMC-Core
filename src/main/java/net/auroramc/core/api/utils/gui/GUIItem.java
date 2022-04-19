@@ -76,7 +76,9 @@ public class GUIItem {
     public GUIItem(Material material, String name, int amount, String lore, short data, boolean glowing, Color color) {
         ItemStack item = new ItemStack(material, amount, data);
         ItemMeta im = item.getItemMeta();
-        im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
+        if (name != null) {
+            im.setDisplayName(AuroraMCAPI.getFormatter().convert(name));
+        }
         if (lore != null) {
             im.setLore(Arrays.asList(AuroraMCAPI.getFormatter().convert(AuroraMCAPI.getFormatter().highlight(lore)).split(";")));
         }
