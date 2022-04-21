@@ -115,6 +115,13 @@ public class Stats extends GUI {
                 AuroraMCAPI.openGUI(player, stats);
                 break;
             }
+            case SNOW_BALL: {
+                AuroraMCAPI.closeGUI(player);
+                PaintballStatistics stats = new PaintballStatistics(player, name, this.stats, this.subscription, playerId);
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
             default: {
                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
             }
