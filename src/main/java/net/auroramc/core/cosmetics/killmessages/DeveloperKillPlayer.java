@@ -85,6 +85,20 @@ public class DeveloperKillPlayer extends KillMessage {
                     return String.format("**%s**.setDeathBy(&cFire&r);", victim.getPlayer().getName());
                 }
             }
+            case PAINTBALL: {
+                if (entity != null) {
+                    return String.format("**%s**.setPaintballedByTurret(**%s**;.", killer.getPlayer().getName(), victim.getPlayer().getName());
+                } else {
+                    if (killer != null) {
+                        return String.format("**%s**.setPaintballed(**%s**);", killer.getPlayer().getName(), victim.getPlayer().getName());
+                    } else {
+                        return String.format("**%s**.setPaintballedSomehow(&atrue&r);", victim.getPlayer().getName());
+                    }
+                }
+            }
+            case TAG: {
+                return String.format("**%s**.setTagged(**%s**);", killer.getPlayer().getName(), victim.getPlayer().getName());
+            }
             case UNKNOWN: {
                 if (killer != null) {
                     return String.format("**%s**.killByMagic(**%s**);", killer.getPlayer().getName(), victim.getPlayer().getName());
