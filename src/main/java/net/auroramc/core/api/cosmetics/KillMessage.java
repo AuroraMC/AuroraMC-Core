@@ -39,6 +39,8 @@ public abstract class KillMessage extends Cosmetic {
         DROWNING,
         LAVA,
         FIRE,
+        PAINTBALL,
+        TAG,
         UNKNOWN
     }
 
