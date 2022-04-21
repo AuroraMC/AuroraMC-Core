@@ -17,12 +17,24 @@ public class DeveloperPlayGames extends ServerMessage {
     }
 
     @Override
-    public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s**.playGames(&atrue&r);", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
+    public String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s**.playGames(&atrue&r);", name);
     }
 
     @Override
-    public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s**.playGames(&cfalse&r);", player.getPlayer().getName());
+    public String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s**.playGames(&cfalse&r);", name);
     }
 }

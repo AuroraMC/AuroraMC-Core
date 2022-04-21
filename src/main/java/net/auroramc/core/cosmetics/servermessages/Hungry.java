@@ -17,12 +17,24 @@ public class Hungry extends ServerMessage {
     }
 
     @Override
-    public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is hungry for &d&lVICTORY!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
+    public String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** is hungry for &d&lVICTORY!", name);
     }
 
     @Override
-    public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** is looking for &d&lVICTORY&r elsewhere.", player.getPlayer().getName());
+    public String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** is looking for &d&lVICTORY&r elsewhere.", name);
     }
 }

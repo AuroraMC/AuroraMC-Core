@@ -17,12 +17,24 @@ public class PartyTime extends ServerMessage {
     }
 
     @Override
-    public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
+    public String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** is ready to &c&lP&e&lA&a&lR&b&lT&d&lY&6&l!", name);
     }
 
     @Override
-    public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** is continuing to &c&lP&e&lA&a&lR&b&lT&d&lY&r elsewhere.", player.getPlayer().getName());
+    public String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** is continuing to &c&lP&e&lA&a&lR&b&lT&d&lY&r elsewhere.", name);
     }
 }

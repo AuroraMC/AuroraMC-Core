@@ -17,12 +17,24 @@ public class Default extends ServerMessage {
     }
 
     @Override
-    public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** has joined the game.", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
+    public String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** has joined the game.", name);
     }
 
     @Override
-    public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has left the game.", player.getPlayer().getName());
+    public String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** has left the game.", name);
     }
 }

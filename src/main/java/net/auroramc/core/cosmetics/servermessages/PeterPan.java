@@ -16,12 +16,24 @@ public class PeterPan extends ServerMessage {
     }
 
     @Override
-    public String onJoin(AuroraMCPlayer player) {
-        return String.format("**%s** is ready to &e&lTAKE FLIGHT!", ((player.isDisguised())?player.getActiveDisguise().getName():player.getName()));
+    public String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** is ready to &e&lTAKE FLIGHT!", name);
     }
 
     @Override
-    public String onLeave(AuroraMCPlayer player) {
-        return String.format("**%s** has their feet back on the floor.", player.getPlayer().getName());
+    public String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player) {
+        String name = player.getPlayer().getName();
+        if (recipient.equals(player)) {
+            if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                name = player.getName();
+            }
+        }
+        return String.format("**%s** has their feet back on the floor.", name);
     }
 }
