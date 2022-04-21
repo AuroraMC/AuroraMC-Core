@@ -23,86 +23,98 @@ public class HalfWayThere extends KillMessage {
     }
 
     @Override
-    public String onKill(AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason) {
+    public String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason) {
+        String victimName = victim.getPlayer().getName();
+        if (receiver.equals(victim)) {
+            if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
+                victimName = receiver.getName();
+            }
+        }
+        String killerName = ((killer == null)?null:killer.getPlayer().getName());
+        if (receiver.equals(killer)) {
+            if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
+                killerName = receiver.getName();
+            }
+        }
         switch (reason) {
             case BOW: {
                 if(killer != null) {
-                    return String.format("**%s** was shot by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was shot by **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** was shot.", victim.getPlayer().getName());
+                    return String.format("**%s** was shot.", victimName);
                 }
             }
             case TNT: {
                 if (killer != null) {
-                    return String.format("**%s** was blown up by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was blown up by **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** was blown up.", victim.getPlayer().getName());
+                    return String.format("**%s** was blown up.", victimName);
                 }
             }
             case FALL: {
                 if (killer != null) {
-                    return String.format("**%s** was thrown off a cliff by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was thrown off a cliff by **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** fell off a cliff.", victim.getPlayer().getName());
+                    return String.format("**%s** fell off a cliff.", victimName);
                 }
             }
             case VOID: {
                 if (killer != null) {
-                    return String.format("**%s** was thrown into the void by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was thrown into the void by **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** fell into the void.", victim.getPlayer().getName());
+                    return String.format("**%s** fell into the void.", victimName);
                 }
             }
             case MELEE: {
                 if (killer != null) {
-                    return String.format("**%s** was killed by **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was killed by **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** was killed.", victim.getPlayer().getName());
+                    return String.format("**%s** was killed.", victimName);
                 }
             }
             case ENTITY:{
-                    return String.format("**%s** was killed by **%s**.", victim.getPlayer().getName(), WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
+                    return String.format("**%s** was killed by **%s**.", victimName, WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
             }
             case DROWNING: {
                 if (killer != null) {
-                    return String.format("**%s** drowned trying to escape from **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** drowned trying to escape from **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** drowned.", victim.getPlayer().getName());
+                    return String.format("**%s** drowned.", victimName);
                 }
             }
             case LAVA: {
                 if (killer != null) {
-                    return String.format("**%s** fell in lava trying to escape **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** fell in lava trying to escape **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** fell in lava.", victim.getPlayer().getName());
+                    return String.format("**%s** fell in lava.", victimName);
                 }
             }
             case FIRE: {
                 if(killer != null) {
-                    return String.format("**%s** burned to death trying to escape **%s**", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** burned to death trying to escape **%s**", victimName, killerName);
                 } else {
                     return String.format("**%s** burned to death.");
                 }
             }
             case PAINTBALL: {
                 if (entity != null) {
-                    return String.format("**%s** was paintballed by **%s**'s Turret.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was paintballed by **%s**'s Turret.", victimName, killerName);
                 } else {
                     if (killer != null) {
-                        return String.format("**%s** was paintballed by **%s**.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                        return String.format("**%s** was paintballed by **%s**.", victimName, killerName);
                     } else {
-                        return String.format("**%s** was paintballed by the game. Somehow.", victim.getPlayer().getName());
+                        return String.format("**%s** was paintballed by the game. Somehow.", victimName);
                     }
                 }
             }
             case TAG: {
-                return String.format("**%s** was tagged by **%s**.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                return String.format("**%s** was tagged by **%s**.", victimName, killerName);
             }
             case UNKNOWN: {
                 if (killer != null ) {
-                    return String.format("**%s** was killed by **%s** using magic.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    return String.format("**%s** was killed by **%s** using magic.", victimName, killerName);
                 } else {
-                    return String.format("**%s was killed by magic.", victim.getPlayer().getName());
+                    return String.format("**%s was killed by magic.", victimName);
                 }
             }
         }
