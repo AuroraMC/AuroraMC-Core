@@ -99,7 +99,7 @@ public class DeveloperKillPlayer extends KillMessage {
             }
             case PAINTBALL: {
                 if (entity != null) {
-                    return String.format("**%s**.setPaintballedByTurret(**%s**;.", killerName, victimName);
+                    return String.format("**%s**.setPaintballedByTurret(**%s**);", killerName, victimName);
                 } else {
                     if (killer != null) {
                         return String.format("**%s**.setPaintballed(**%s**);", killerName, victimName);
