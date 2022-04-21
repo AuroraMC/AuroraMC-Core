@@ -18,9 +18,9 @@ public abstract class ServerMessage extends Cosmetic {
         super(id, CosmeticType.SERVER_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data, rarity);
     }
 
-    public abstract String onJoin(AuroraMCPlayer player);
+    public abstract String onJoin(AuroraMCPlayer recipient, AuroraMCPlayer player);
 
-    public abstract String onLeave(AuroraMCPlayer player);
+    public abstract String onLeave(AuroraMCPlayer recipient, AuroraMCPlayer player);
 
     @Override
     public void onEquip(AuroraMCPlayer player) {
