@@ -109,7 +109,7 @@ public class Rainbow extends KillMessage {
                 }
             }
             case TAG: {
-                return AuroraMCAPI.getFormatter().rainbow(String.format("**%s** was tagged by **%s**.", victimName, killerName));
+                return AuroraMCAPI.getFormatter().rainbow(String.format("%s was tagged by %s.", victimName, killerName));
             }
             case UNKNOWN: {
                 if (killer != null) {
