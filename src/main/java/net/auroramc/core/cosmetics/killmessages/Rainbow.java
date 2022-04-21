@@ -85,6 +85,20 @@ public class Rainbow extends KillMessage {
                     return AuroraMCAPI.getFormatter().rainbow(String.format("%s burnt to death.", victim.getPlayer().getName()));
                 }
             }
+            case PAINTBALL: {
+                if (entity != null) {
+                    return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by %s's Turret.", victim.getPlayer().getName(), killer.getPlayer().getName()));
+                } else {
+                    if (killer != null) {
+                        return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by %s.", victim.getPlayer().getName(), killer.getPlayer().getName()));
+                    } else {
+                        return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by the game. Somehow.", victim.getPlayer().getName()));
+                    }
+                }
+            }
+            case TAG: {
+                return AuroraMCAPI.getFormatter().rainbow(String.format("**%s** was tagged by **%s**.", victim.getPlayer().getName(), killer.getPlayer().getName()));
+            }
             case UNKNOWN: {
                 if (killer != null) {
                     return AuroraMCAPI.getFormatter().rainbow(String.format("%s was killed by %s using magic", victim.getPlayer().getName(), killer.getPlayer().getName()));

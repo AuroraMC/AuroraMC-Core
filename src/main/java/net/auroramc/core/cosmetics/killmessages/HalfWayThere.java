@@ -84,6 +84,20 @@ public class HalfWayThere extends KillMessage {
                     return String.format("**%s** burned to death.");
                 }
             }
+            case PAINTBALL: {
+                if (entity != null) {
+                    return String.format("**%s** was paintballed by **%s**'s Turret.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                } else {
+                    if (killer != null) {
+                        return String.format("**%s** was paintballed by **%s**.", victim.getPlayer().getName(), killer.getPlayer().getName());
+                    } else {
+                        return String.format("**%s** was paintballed by the game. Somehow.", victim.getPlayer().getName());
+                    }
+                }
+            }
+            case TAG: {
+                return String.format("**%s** was tagged by **%s**.", victim.getPlayer().getName(), killer.getPlayer().getName());
+            }
             case UNKNOWN: {
                 if (killer != null ) {
                     return String.format("**%s** was killed by **%s** using magic.", victim.getPlayer().getName(), killer.getPlayer().getName());
