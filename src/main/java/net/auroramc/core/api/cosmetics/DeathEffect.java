@@ -18,4 +18,12 @@ public abstract class DeathEffect extends Cosmetic {
     }
 
     public abstract void onDeath(AuroraMCPlayer player);
+
+    @Override
+    public void onEquip(AuroraMCPlayer player) {
+    }
+
+    @Override
+    public void onUnequip(AuroraMCPlayer player) {
+    }
 }

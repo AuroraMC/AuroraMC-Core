@@ -6,6 +6,7 @@ package net.auroramc.core.api.cosmetics;
 
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
 
@@ -18,4 +19,12 @@ public abstract class ProjectileTrail extends Cosmetic {
     }
 
     public abstract void onShoot(Projectile projectile);
+
+    @Override
+    public void onEquip(AuroraMCPlayer player) {
+    }
+
+    @Override
+    public void onUnequip(AuroraMCPlayer player) {
+    }
 }
