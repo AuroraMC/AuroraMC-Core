@@ -16,10 +16,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Collections;
 import java.util.Random;
 
-public class Firework extends WinEffect {
+public class Fireworks extends WinEffect {
 
-    public Firework() {
-        super(600, AuroraMCAPI.getFormatter().rainbow("Firework"), AuroraMCAPI.getFormatter().rainbow("Firework"), "Some description", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Win Effect!", true, Material.FIREWORK, (short)0, Rarity.COMMON);
+    public Fireworks() {
+        super(600, AuroraMCAPI.getFormatter().rainbow("Fireworks"), AuroraMCAPI.getFormatter().rainbow("Fireworks"), "Some description", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Win Effect!", true, Material.FIREWORK, (short)0, Rarity.COMMON);
     }
 
     @Override

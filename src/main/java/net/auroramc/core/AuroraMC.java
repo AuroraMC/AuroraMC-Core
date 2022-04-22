@@ -38,18 +38,22 @@ import net.auroramc.core.cosmetics.banners.Germany;
 import net.auroramc.core.cosmetics.banners.Japan;
 import net.auroramc.core.cosmetics.banners.Poland;
 import net.auroramc.core.cosmetics.banners.UnitedStates;
+import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.friendstatuses.*;
+import net.auroramc.core.cosmetics.gadgets.FireworkGadget;
 import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
 import net.auroramc.core.cosmetics.killmessages.HalfWayThere;
 import net.auroramc.core.cosmetics.killmessages.Rainbow;
+import net.auroramc.core.cosmetics.particleeffects.BloodSwirl;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Castle;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Sword;
+import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
-import net.auroramc.core.cosmetics.wineffects.Firework;
+import net.auroramc.core.cosmetics.wineffects.Fireworks;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -364,7 +368,19 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new PeterPan());
 
         //Win Effects
+        AuroraMCAPI.registerCosmetic(new Fireworks());
+
+        //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());
+
+        //Gadgets
+        AuroraMCAPI.registerCosmetic(new FireworkGadget());
+
+        //Particle Effects
+        AuroraMCAPI.registerCosmetic(new BloodSwirl());
+
+        //Projectile Trails
+        AuroraMCAPI.registerCosmetic(new FireworkTrail());
 
         //Kill Messages
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.killmessages.Default());

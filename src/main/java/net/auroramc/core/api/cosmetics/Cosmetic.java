@@ -159,10 +159,8 @@ public abstract class Cosmetic {
 
     public enum CosmeticType {
         PARTICLE("Particle Effect"),
-        PET("Pet"),
         HAT("Hat"),
         BANNER("Banner"),
-        MORPH("Morph"),
         KILL_MESSAGE("Kill Message"),
         PROJECTILE_TRAIL("Projectile Trail"),
         DEATH_EFFECT("Death Effect"),
