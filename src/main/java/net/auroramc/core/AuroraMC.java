@@ -46,6 +46,7 @@ import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
 import net.auroramc.core.cosmetics.killmessages.HalfWayThere;
 import net.auroramc.core.cosmetics.killmessages.Rainbow;
+import net.auroramc.core.cosmetics.killmessages.levelrewards.Flex;
 import net.auroramc.core.cosmetics.particleeffects.BloodSwirl;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Castle;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
@@ -387,6 +388,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new HalfWayThere());
         AuroraMCAPI.registerCosmetic(new Rainbow());
         AuroraMCAPI.registerCosmetic(new DeveloperKillPlayer());
+        AuroraMCAPI.registerCosmetic(new Flex());
 
 
         //Registering default Event Listeners
