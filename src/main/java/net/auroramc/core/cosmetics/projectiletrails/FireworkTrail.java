@@ -37,9 +37,10 @@ public class FireworkTrail extends ProjectileTrail {
                 }
                 Location location = projectile.getLocation();
                 org.bukkit.entity.Firework firework = location.getWorld().spawn(location, org.bukkit.entity.Firework.class);
+                firework.setVelocity(projectile.getVelocity());
                 FireworkMeta meta = firework.getFireworkMeta();
                 meta.setPower(0);
-                meta.addEffect(FireworkEffect.builder().withColor(Color.fromRGB(random.nextInt(256),random.nextInt(256),random.nextInt(256))).trail(random.nextBoolean()).flicker(random.nextBoolean()).with(FireworkEffect.Type.BALL).build());
+                meta.addEffect(FireworkEffect.builder().withColor(Color.fromRGB(random.nextInt(256),random.nextInt(256),random.nextInt(256))).trail(random.nextBoolean()).flicker(random.nextBoolean()).with(FireworkEffect.Type.BURST).build());
                 firework.setFireworkMeta(meta);
                 new BukkitRunnable(){
                     @Override
@@ -48,6 +49,6 @@ public class FireworkTrail extends ProjectileTrail {
                     }
                 }.runTaskLater(AuroraMCAPI.getCore(), 2);
             }
-        }.runTaskTimer(AuroraMCAPI.getCore(), 5, 5);
+        }.runTaskTimer(AuroraMCAPI.getCore(), 0, 2);
     }
 }
