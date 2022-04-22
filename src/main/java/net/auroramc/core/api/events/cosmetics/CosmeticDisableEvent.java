@@ -49,4 +49,6 @@ public class CosmeticDisableEvent extends Event implements Cancellable {
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
+
+    public static HandlerList getHandlerList() {return handlers;}
 }
