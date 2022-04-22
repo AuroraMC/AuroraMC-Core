@@ -120,6 +120,7 @@ public class Cosmetics extends GUI {
                         break;
                     case 4: {
                         type = Cosmetic.CosmeticType.GADGET;
+                        break;
                     }
                     default:
                         player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
