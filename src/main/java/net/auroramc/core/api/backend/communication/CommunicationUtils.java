@@ -29,7 +29,7 @@ public class CommunicationUtils {
             message.setServer(AuroraMCAPI.getServerInfo().getName());
             message.setAuthenticationKey(AuroraMCAPI.getServerInfo().getAuthKey());
             message.setNetwork(AuroraMCAPI.getServerInfo().getNetwork().name());
-            try (Socket socket = new Socket("10.40.14.221", 35565)) {
+            try (Socket socket = new Socket("mc.supersecretsettings.dev", 35565)) {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(message);
                 outputStream.flush();
