@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class FireworkGadget extends Gadget {
     public FireworkGadget() {
-        super(600, AuroraMCAPI.getFormatter().rainbow("Firework Gadget"), AuroraMCAPI.getFormatter().rainbow("Firework Gadget"), "&oYou're actually giving us permission to do this? &7That is correct, Longbottom. &oTo blow it up? Boom? &7BOOM!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Gadget!", true, Material.FIREWORK, (short)0, Rarity.COMMON, 5);
+        super(800, AuroraMCAPI.getFormatter().rainbow("Firework Gadget"), AuroraMCAPI.getFormatter().rainbow("Firework Gadget"), "&oYou're actually giving us permission to do this? &7That is correct, Longbottom. &oTo blow it up? Boom? &7BOOM!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Gadget!", true, Material.FIREWORK, (short)0, Rarity.COMMON, 5);
     }
 
     final Random random = new Random();
