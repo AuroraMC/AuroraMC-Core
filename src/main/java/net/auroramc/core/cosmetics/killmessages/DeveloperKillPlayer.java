@@ -19,7 +19,7 @@ import java.util.List;
 public class DeveloperKillPlayer extends KillMessage {
 
     public DeveloperKillPlayer() {
-        super(503, "&3&ldeveloper#killPlayer", "&3&ldeveloper#killPlayer", "Some Description", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.GOLD_SWORD, (short)0, Rarity.LEGENDARY);
+        super(503, "&3&ldeveloper#killPlayer", "&3&ldeveloper#killPlayer", "", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.GOLD_SWORD, (short)0, Rarity.LEGENDARY);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Firework extends DeathEffect {
     final Random random = new Random();
 
     public Firework() {
-        super(700, AuroraMCAPI.getFormatter().rainbow("Firework"), AuroraMCAPI.getFormatter().rainbow("Firework"), "Some description.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Death Effect!", true, Material.FIREWORK, (short)0, Rarity.COMMON);
+        super(700, AuroraMCAPI.getFormatter().rainbow("Firework"), AuroraMCAPI.getFormatter().rainbow("Firework"), "", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Death Effect!", true, Material.FIREWORK, (short)0, Rarity.COMMON);
     }
 
     @Override
