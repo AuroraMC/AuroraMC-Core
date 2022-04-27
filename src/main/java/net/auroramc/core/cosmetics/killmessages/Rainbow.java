@@ -19,7 +19,7 @@ import java.util.List;
 public class Rainbow extends KillMessage {
 
     public Rainbow() {
-        super(502, AuroraMCAPI.getFormatter().rainbowBold("Rainbow"), AuroraMCAPI.getFormatter().rainbowBold("Rainbow"), "Some Description", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock these Kill Messages!", true, Material.FIREWORK, (short)0, Rarity.MYTHICAL);
+        super(502, AuroraMCAPI.getFormatter().rainbowBold("Rainbow"), AuroraMCAPI.getFormatter().rainbowBold("Rainbow"), "", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock these Kill Messages!", true, Material.FIREWORK, (short)0, Rarity.MYTHICAL);
     }
 
     @Override
