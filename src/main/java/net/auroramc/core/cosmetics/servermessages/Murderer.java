@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class Murderer extends ServerMessage {
     public Murderer() {
-        super(403, "&bMurderer", "&3&lMurderer", "", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), Collections.emptyList(), "Subscribe to Plus at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0, Rarity.COMMON);
+        super(403, "&bMurderer", "&3&lMurderer", "", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.PLUS), Collections.emptyList(), "Subscribe to Plus at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0, Rarity.EPIC);
     }
 
     @Override
