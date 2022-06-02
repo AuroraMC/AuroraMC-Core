@@ -37,8 +37,8 @@ public class SocialPreferences extends GUI {
         this.setItem(3, 3, new GUIItem(Material.BARRIER, "&3Inform When Muted", 1, ";&rAutomatically notify players that you;&rare muted upon being messaged.;;&bThis preference only works while muted.")) ;
         this.setItem(4, 3, new GUIItem(Material.INK_SACK, "&3Inform When Muted", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS)?"&aMentions & Private Messages":((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_ONLY)?"&6Private Messages Only":"&cDisabled")), ((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS)?"&6Private Messages Only":((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_ONLY)?"&cDisabled":"&aMentions & Private Messages"))), ((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS)?(short)10:((player.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_ONLY)?(short)14:(short)8))));
 
-        this.setItem(3, 3, new GUIItem(Material.BARRIER, "&3Preferred Pronouns", 1, ";&rDisplay your preferred pronouns;&rin tab and in chat."));
-        this.setItem(4, 3, new GUIItem(Material.INK_SACK, "&3Preferred Pronouns", 1, String.format(";&rCurrent: &b%s;&rClick to change to: &b%s", player.getPreferences().getPreferredPronouns().getDisplay(), Pronoun.values()[(player.getPreferences().getPreferredPronouns().ordinal()+1) % Pronoun.values().length].getDisplay()), (short)10));
+        this.setItem(3, 5, new GUIItem(Material.BOOK, "&3Preferred Pronouns", 1, ";&rDisplay your preferred pronouns;&rin tab and in chat."));
+        this.setItem(4, 5, new GUIItem(Material.INK_SACK, "&3Preferred Pronouns", 1, String.format(";&rCurrent: &b%s;&rClick to change to: &b%s", player.getPreferences().getPreferredPronouns().getDisplay(), Pronoun.values()[(player.getPreferences().getPreferredPronouns().ordinal()+1) % Pronoun.values().length].getDisplay()), (short)10));
     }
 
     @Override
