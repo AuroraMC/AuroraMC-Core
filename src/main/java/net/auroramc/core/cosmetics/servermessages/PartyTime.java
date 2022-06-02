@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class PartyTime extends ServerMessage {
     public PartyTime() {
-        super(401, AuroraMCAPI.getFormatter().rainbowBold("Party Time"), AuroraMCAPI.getFormatter().rainbowBold("Party Time"), "Are you ready to party? Show that off!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0, Rarity.MYTHICAL);
+        super(401, AuroraMCAPI.getFormatter().rainbowBold("Party Time"), AuroraMCAPI.getFormatter().rainbowBold("Party Time"), "Are you ready to party? Show that off!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock these Server Messages!", true, Material.NAME_TAG, (short)0, Rarity.LEGENDARY);
     }
 
     @Override

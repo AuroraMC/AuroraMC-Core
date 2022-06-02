@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class DeveloperPlayGames extends ServerMessage {
     public DeveloperPlayGames() {
-        super(405, "&3&ldeveloper#PlayGames", "&3&ldeveloper#playGames", "Show off that you're taking a well deserved break.", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.NAME_TAG, (short)0, Rarity.COMMON);
+        super(405, "&3&ldeveloper#PlayGames", "&3&ldeveloper#playGames", "Show off that you're taking a well deserved break.", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.DEBUG_INFO), Collections.emptyList(), "", false, Material.NAME_TAG, (short)0, Rarity.MYTHICAL);
     }
 
     @Override

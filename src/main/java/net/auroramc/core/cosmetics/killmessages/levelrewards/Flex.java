@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Flex extends KillMessage {
     public Flex() {
-        super(507, "&4&lFlex", "&4&lFlex", "Flex your insane achievements on AuroraMC!", UnlockMode.LEVEL, -1, Collections.emptyList(), Collections.emptyList(), "Reach AuroraMC Level 100 to unlock these Kill Messages!", true, Material.GOLDEN_APPLE, (short)0, Rarity.MYTHICAL);
+        super(507, "&4&lFlex", "&4&lFlex", "Flex your insane achievements on AuroraMC!", UnlockMode.LEVEL, -1, Collections.emptyList(), Collections.emptyList(), "Reach AuroraMC Level 100 to unlock these Kill Messages!", true, Material.GOLDEN_APPLE, (short)0, Rarity.LEGENDARY);
     }
 
     @Override
