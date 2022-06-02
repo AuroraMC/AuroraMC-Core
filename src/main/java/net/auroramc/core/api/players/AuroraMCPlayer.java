@@ -22,6 +22,7 @@ import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
+import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.gui.report.Report;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -314,16 +315,24 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    String suffix = "";
+                                    if (pl.isLoaded()) {
+                                        if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                            suffix = " &7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                        }
+                                    }
                                     //Check for a valid subscription and give suffix if they have one enabled.
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+
                                             }
                                         }
                                     }
 
+                                    team.setSuffix(suffix);
                                     continue;
                                 }
                                 AuroraMCPlayer player = AuroraMCAPI.getPlayer(bukkitPlayer);
@@ -361,14 +370,22 @@ public class AuroraMCPlayer {
                                         s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
+                                        String suffix = "";
+                                        if (pl.isLoaded()) {
+                                            if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                                suffix = " &7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                            }
+                                        }
                                         if (pl.getActiveSubscription() != null) {
                                             if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                 if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                     PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                    suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                                 }
                                             }
                                         }
+
+                                        team.setSuffix(suffix);
 
                                         if (!player.isVanished() || player.getRank().getId() <= pl.getRank().getId()) {
                                             pl.getPlayer().showPlayer(bukkitPlayer);
@@ -393,14 +410,23 @@ public class AuroraMCPlayer {
                                             s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
                                             team.setPrefix(s);
 
+                                            suffix = "";
+                                            if (player.isLoaded()) {
+                                                if (player.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                                    suffix = " &7" + player.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                                }
+                                            }
+
                                             if (player.getActiveSubscription() != null) {
                                                 if (player.isLoaded() && player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                     if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                         PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                        team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                        suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                                     }
                                                 }
                                             }
+
+                                            team.setSuffix(suffix);
                                         } else {
                                             pl.getPlayer().hidePlayer(bukkitPlayer);
                                         }
@@ -428,14 +454,21 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    String suffix = "";
+                                    if (pl.isLoaded()) {
+                                        if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                            suffix = " &7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                        }
+                                    }
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             }
                                         }
                                     }
+                                    team.setSuffix(suffix);
                                     continue;
                                 }
                                 if (scoreboard.getScoreboard().getTeam(player.getPlayer().getName()) != null) {
@@ -473,14 +506,22 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    String suffix = "";
+                                    if (pl.isLoaded()) {
+                                        if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                            suffix = " &7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                        }
+                                    }
+
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             }
                                         }
                                     }
+                                    team.setSuffix(suffix);
                                 } else {
                                     bukkitPlayer.hidePlayer(pl.getPlayer());
                                 }
@@ -506,14 +547,21 @@ public class AuroraMCPlayer {
                                     }
                                     s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
+                                    String suffix = "";
+                                    if (pla.isLoaded()) {
+                                        if (pla.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                                            suffix = " &7" + pla.preferences.getPreferredPronouns().getDisplay() + suffix;
+                                        }
+                                    }
                                     if (pla.getActiveSubscription() != null) {
                                         if (pla.isLoaded() && pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             }
                                         }
                                     }
+                                    team.setSuffix(suffix);
                                 } else {
                                     pl.getPlayer().hidePlayer(bukkitPlayer);
                                 }
@@ -851,21 +899,20 @@ public class AuroraMCPlayer {
         s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
 
         team.setPrefix(s);
+        String suffix = "";
+        if (player.preferences.getPreferredPronouns() != Pronoun.NONE) {
+                suffix = " &7" + player.preferences.getPreferredPronouns().getDisplay() + suffix;
+        }
         if (player.getActiveSubscription() != null) {
             if (player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
 
-                    team.setSuffix(AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol())));
-                } else {
-                    team.setSuffix("");
+                    suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                 }
-            } else {
-                team.setSuffix("");
             }
-        } else {
-            team.setSuffix("");
         }
+        team.setSuffix(suffix);
         if ((player.getActiveDisguise() != null && player != this) || (player == this && !player.getPreferences().isHideDisguiseNameEnabled())) {
             if (!team.hasEntry(player.getPlayer().getName())) {
                 for (String old : team.getEntries()) {
