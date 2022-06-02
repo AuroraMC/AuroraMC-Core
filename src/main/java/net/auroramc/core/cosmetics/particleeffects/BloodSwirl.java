@@ -26,7 +26,7 @@ public class BloodSwirl extends ParticleEffect {
     private Map<AuroraMCPlayer, BukkitTask> tasks;
 
     public BloodSwirl() {
-        super(900, "Blood Swirl", "&c&lBlood Swirl", "A blood swirl.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Particle Effect!", true, Material.REDSTONE, (short)0, Rarity.COMMON);
+        super(900, "Blood Swirl", "&c&lBlood Swirl", "A blood swirl.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Particle Effect!", true, Material.REDSTONE, (short)0, Rarity.LEGENDARY);
         tasks = new HashMap<>();
     }
 
