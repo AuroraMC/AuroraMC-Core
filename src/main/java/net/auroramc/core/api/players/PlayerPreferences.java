@@ -8,6 +8,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.events.player.PlayerPreferenceChangeEvent;
+import net.auroramc.core.api.utils.Pronoun;
 import org.bukkit.Bukkit;
 
 public class PlayerPreferences {
@@ -18,6 +19,7 @@ public class PlayerPreferences {
     private boolean friendRequests;
     private boolean partyRequests;
     private MuteInformMode muteInformMode;
+    private Pronoun preferredPronouns;
 
     //Chat Prefs
     private boolean chatVisibility;
@@ -48,7 +50,7 @@ public class PlayerPreferences {
     private boolean hubForcefield;
     private boolean hideDisguiseName;
 
-    public PlayerPreferences(AuroraMCPlayer player, boolean friendRequests, boolean partyRequests, MuteInformMode muteInformMode, boolean chatVisibility, PrivateMessageMode privateMessageMode, boolean pingOnPrivateMessage, boolean pingOnPartyChat, boolean hubVisibility, boolean hubSpeed, boolean hubFlight, boolean reportNotifications, boolean hubInvisibility, boolean ignoreHubKnockback, boolean socialMediaNotifications, boolean staffLoginNotifications, boolean approvalNotifications, boolean approvalProcessedNotifications, boolean hubForcefield, boolean hideDisguiseName, boolean pingOnChatMention) {
+    public PlayerPreferences(AuroraMCPlayer player, boolean friendRequests, boolean partyRequests, MuteInformMode muteInformMode, boolean chatVisibility, PrivateMessageMode privateMessageMode, boolean pingOnPrivateMessage, boolean pingOnPartyChat, boolean hubVisibility, boolean hubSpeed, boolean hubFlight, boolean reportNotifications, boolean hubInvisibility, boolean ignoreHubKnockback, boolean socialMediaNotifications, boolean staffLoginNotifications, boolean approvalNotifications, boolean approvalProcessedNotifications, boolean hubForcefield, boolean hideDisguiseName, boolean pingOnChatMention, Pronoun preferredPronouns) {
         this.player = player;
         this.friendRequests = friendRequests;
         this.partyRequests = partyRequests;
@@ -72,6 +74,7 @@ public class PlayerPreferences {
         this.approvalProcessedNotifications = approvalProcessedNotifications;
         this.hubForcefield = hubForcefield;
         this.hideDisguiseName = hideDisguiseName;
+        this.preferredPronouns = preferredPronouns;
     }
 
     public void setPlayer(AuroraMCPlayer player) {
@@ -160,6 +163,23 @@ public class PlayerPreferences {
 
     public PrivateMessageMode getPrivateMessageMode() {
         return privateMessageMode;
+    }
+
+    public Pronoun getPreferredPronouns() {
+        return preferredPronouns;
+    }
+
+    public void setPreferredPronouns(Pronoun preferredPronouns) {
+        this.preferredPronouns = preferredPronouns;
+
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent(player);
+        Bukkit.getPluginManager().callEvent(e);
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("PreferredPronounsChanged");
+        out.writeUTF(player.getName());
+        out.writeUTF(preferredPronouns.name());
+        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
     }
 
     public void setApprovalNotifications(boolean approvalNotifications) {
