@@ -74,6 +74,7 @@ public abstract class Cosmetic {
         List<String> lore = new ArrayList<>();
         lore.add("");
         lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r" + WordUtils.wrap(description, 40, ";&r", false))).split(";")));
+        lore.add(AuroraMCAPI.getFormatter().convert("&rRarity: " + rarity.getDisplayName()));
         lore.add("");
         if (hasUnlocked) {
             if (player.getActiveCosmetics().get(type) != null) {
@@ -203,12 +204,21 @@ public abstract class Cosmetic {
     }
 
     public enum Rarity {
-        COMMON,
-        UNCOMMON,
-        RARE,
-        EPIC,
-        LEGENDARY,
-        MYTHICAL
+        COMMON("&7Common"),
+        UNCOMMON("&aUncommon"),
+        RARE("&dRare"),
+        EPIC("&bEpic"),
+        LEGENDARY("&6Legendary"),
+        MYTHICAL("&cMythical");
+
+        private final String displayName;
+        Rarity(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
     public boolean hasUnlocked(AuroraMCPlayer player) {
