@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class PeterPan extends ServerMessage {
     public PeterPan() {
-        super(404, "&bPeter Pan", "&3&lPeter Pan", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates.", true, Material.NAME_TAG, (short)0, Rarity.COMMON);
+        super(404, "&bPeter Pan", "&3&lPeter Pan", "", UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates.", true, Material.NAME_TAG, (short)0, Rarity.UNCOMMON);
     }
 
     @Override
