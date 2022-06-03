@@ -9,9 +9,12 @@ import net.auroramc.core.api.cosmetics.ParticleEffect;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -43,7 +46,13 @@ public class BloodSwirl extends ParticleEffect {
                 double x = (2 * Math.cos(t)) + location.getX();
                 double z = (location.getZ() + 2 * Math.sin(t));
 
-                location.getWorld().playEffect(new Location(location.getWorld(), x, y, z), Effect.COLOURED_DUST, (short)0);
+                //location.getWorld().playEffect(new Location(location.getWorld(), x, y, z), Effect.COLOURED_DUST, (short)0);
+                PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, false, (float)x, (float)y, (float)z, 0, 0, 0, 0, 1);
+                for (AuroraMCPlayer pl : AuroraMCAPI.getPlayers()) {
+                    if (pl.getPlayer().getWorld().equals(player.getPlayer().getWorld())) {
+                        ((CraftPlayer)pl.getPlayer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                    }
+                }
 
                 t += 0.05;
                 if (up) {
