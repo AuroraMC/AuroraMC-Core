@@ -39,7 +39,7 @@ public class PaintballStatistics extends GUI {
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&b&l%s's Statistics", name), 1, "", (short) 3, false, name));
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
 
-        this.setItem(2, 2, new GUIItem(Material.SNOW_BALL, "&b&lGame Statistics", 1, "&7Your top items brought!;;&rExtra Lives: **" + targetStatistics.getStatistic(3, "extraLives") + "**;&rMore Ammo!: **" + targetStatistics.getStatistic(3, "moreAmmo") + "**;&rFlashbang: **" + targetStatistics.getStatistic(3, "flashbang")  + "**;&rTurret: **" + targetStatistics.getStatistic(3, "turret")  + "**"));
+        this.setItem(2, 2, new GUIItem(Material.SNOW_BALL, "&b&lGame Statistics", 1, "&7Your top items brought!;;&rExtra Lives: **" + targetStatistics.getStatistic(3, "extraLives") + "**;&rMore Ammo!: **" + targetStatistics.getStatistic(3, "extraAmmo") + "**;&rFlashbang: **" + targetStatistics.getStatistic(3, "flashbang")  + "**;&rTurret: **" + targetStatistics.getStatistic(3, "turret")  + "**"));
 
         long losses = (targetStatistics.getStatistic(3, "gamesPlayed") - targetStatistics.getStatistic(3, "gamesWon"));
         double wlr = ((losses == 0)?targetStatistics.getStatistic(1, "gamesWon"):(double)targetStatistics.getStatistic(1, "gamesWon")/losses);

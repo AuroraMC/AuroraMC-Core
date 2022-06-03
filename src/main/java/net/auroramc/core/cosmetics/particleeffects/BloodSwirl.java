@@ -11,6 +11,7 @@ import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import org.bukkit.Color;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,6 +27,8 @@ import java.util.Map;
 
 public class BloodSwirl extends ParticleEffect {
 
+    private final static int SWIRLS = 4;
+
     private Map<AuroraMCPlayer, BukkitTask> tasks;
 
     public BloodSwirl() {
@@ -37,39 +40,29 @@ public class BloodSwirl extends ParticleEffect {
     public void onEquip(AuroraMCPlayer player) {
         tasks.put(player, new BukkitRunnable(){
 
-            int t = 0;
-            int y = 0;
-            boolean up = true;
+            double t = 0;
             @Override
             public void run() {
                 Location location = player.getPlayer().getLocation();
-                double x = (2 * Math.cos(t)) + location.getX();
-                double z = (location.getZ() + 2 * Math.sin(t));
+                for (int i = 0;i < SWIRLS;i++) {
+                    double x = (Math.cos(t + (((2.0 / SWIRLS)*Math.PI) * i))) + location.getX();
+                    double y = (Math.cos(t) ) + location.getY() + 1;
+                    double z = (location.getZ() + Math.sin(t + (((2.0 / SWIRLS)*Math.PI) * i)));
 
-                //location.getWorld().playEffect(new Location(location.getWorld(), x, y, z), Effect.COLOURED_DUST, (short)0);
-                PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, false, (float)x, (float)y, (float)z, 0, 0, 0, 0, 1);
-                for (AuroraMCPlayer pl : AuroraMCAPI.getPlayers()) {
-                    if (pl.getPlayer().getWorld().equals(player.getPlayer().getWorld())) {
-                        ((CraftPlayer)pl.getPlayer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                    PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.REDSTONE, false, (float)x, (float)y, (float)z, 1, 0, 0, 1, 0);
+                    for (AuroraMCPlayer pl : AuroraMCAPI.getPlayers()) {
+                        if (pl.getPlayer().getWorld().equals(player.getPlayer().getWorld())) {
+                            ((CraftPlayer)pl.getPlayer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                        }
                     }
                 }
 
                 t += 0.05;
-                if (up) {
-                    y += 0.05;
-                } else {
-                    y -= 0.05;
-                }
                 if (t > 4*Math.PI) {
                     t = 0;
                 }
-                if (y > 2) {
-                    up = false;
-                } else if (y < 0) {
-                    up = true;
-                }
             }
-        }.runTaskTimer(AuroraMCAPI.getCore(), 5, 5));
+        }.runTaskTimer(AuroraMCAPI.getCore(), 1, 1));
     }
 
     @Override
