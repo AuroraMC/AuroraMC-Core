@@ -151,6 +151,10 @@ public class CosmeticsListing extends GUI {
                     }.runTaskAsynchronously(AuroraMCAPI.getCore());
                 } else {
                     //enable and disable old one.
+                    if (!AuroraMCAPI.isCosmeticsEnabled()) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "Cosmetics are currently disabled!"));
+                        return;
+                    }
                     CosmeticSwitchEvent cosmeticSwitchEvent = new CosmeticSwitchEvent(player, cosmetic);
                     Bukkit.getPluginManager().callEvent(cosmeticSwitchEvent);
                     if (cosmeticSwitchEvent.isCancelled()) {
@@ -173,6 +177,10 @@ public class CosmeticsListing extends GUI {
                 }
             } else {
                 //enable
+                if (!AuroraMCAPI.isCosmeticsEnabled()) {
+                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "Cosmetics are currently disabled!"));
+                    return;
+                }
                 CosmeticEnableEvent cosmeticEnableEvent = new CosmeticEnableEvent(player, cosmetic);
                 Bukkit.getPluginManager().callEvent(cosmeticEnableEvent);
                 if (cosmeticEnableEvent.isCancelled()) {
