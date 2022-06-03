@@ -12,6 +12,6 @@ import java.util.Collections;
 public class CreatingNewMaps extends FriendStatus {
 
     public CreatingNewMaps() {
-        super(109, "Creating new maps", "Creating new maps", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.BUILDER), "", "Creating new maps", 'a', false, Rarity.COMMON);
+        super(109, "Creating new maps", "Creating new maps", UnlockMode.RANK, -1, Collections.emptyList(), Collections.singletonList(Rank.BUILDER), "", "Creating new maps", 'a', false, Rarity.MYTHICAL);
     }
 }
