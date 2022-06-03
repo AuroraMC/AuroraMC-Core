@@ -73,7 +73,7 @@ public class Flex extends KillMessage {
                 }
             }
             case ENTITY: {
-                return String.format("**%s** has died **#%s** time to entities, this time at the hands of **%s**.", victimName, victim.getStats().getStatistic(gameId, "deaths." + reason.name()) + 1, WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
+                return String.format("**%s** has died **#%s** times to entities, this time at the hands of **%s**.", victimName, victim.getStats().getStatistic(gameId, "deaths." + reason.name()) + 1, WordUtils.capitalizeFully(WordUtils.capitalizeFully(entity.getType().name().replace("_", " "))));
             }
             case DROWNING: {
                 if (killer != null) {
