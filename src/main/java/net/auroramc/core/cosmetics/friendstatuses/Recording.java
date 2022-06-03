@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Recording extends FriendStatus {
 
     public Recording() {
-        super(107, "Recording a video", "Recording a video", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.SOCIAL), Collections.emptyList(), "", "Recording a video", '6', false, Rarity.COMMON);
+        super(107, "Recording a video", "Recording a video", UnlockMode.PERMISSION, -1, Collections.singletonList(Permission.SOCIAL), Collections.emptyList(), "", "Recording a video", '6', false, Rarity.MYTHICAL);
     }
 }
