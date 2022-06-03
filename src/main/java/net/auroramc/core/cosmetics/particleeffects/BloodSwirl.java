@@ -20,16 +20,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BloodSwirl extends ParticleEffect {
 
     private final static int SWIRLS = 4;
 
-    private Map<AuroraMCPlayer, BukkitTask> tasks;
+    private Map<UUID, BukkitTask> tasks;
 
     public BloodSwirl() {
         super(900, "Blood Swirl", "&c&lBlood Swirl", "A blood swirl.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Particle Effect!", true, Material.REDSTONE, (short)0, Rarity.LEGENDARY);
@@ -38,7 +35,7 @@ public class BloodSwirl extends ParticleEffect {
 
     @Override
     public void onEquip(AuroraMCPlayer player) {
-        tasks.put(player, new BukkitRunnable(){
+        tasks.put(player.getPlayer().getUniqueId(), new BukkitRunnable(){
 
             double t = 0;
             @Override
@@ -67,9 +64,9 @@ public class BloodSwirl extends ParticleEffect {
 
     @Override
     public void onUnequip(AuroraMCPlayer player) {
-        if (tasks.containsKey(player)) {
-            tasks.get(player).cancel();
-            tasks.remove(player);
+        if (tasks.containsKey(player.getPlayer().getUniqueId())) {
+            tasks.get(player.getPlayer().getUniqueId()).cancel();
+            tasks.remove(player.getPlayer().getUniqueId());
         }
     }
 }
