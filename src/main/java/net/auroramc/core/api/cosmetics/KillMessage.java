@@ -19,7 +19,7 @@ public abstract class KillMessage extends Cosmetic {
         super(id, CosmeticType.KILL_MESSAGE, name, displayName, description, unlockMode, currency, permissions, ranks, unlockMessage, showIfNotUnlocked, material, data, rarity);
     }
 
-    public abstract String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason);
+    public abstract String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason, int gameId);
 
     @Override
     public void onEquip(AuroraMCPlayer player) {

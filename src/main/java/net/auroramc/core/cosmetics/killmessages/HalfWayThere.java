@@ -23,7 +23,7 @@ public class HalfWayThere extends KillMessage {
     }
 
     @Override
-    public String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason) {
+    public String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, Entity entity, KillReason reason, int gameId) {
         String victimName = victim.getPlayer().getName();
         if (receiver.equals(victim)) {
             if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
