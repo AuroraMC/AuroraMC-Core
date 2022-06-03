@@ -70,7 +70,7 @@ public class SocialPreferences extends GUI {
                     for (AuroraMCPlayer player1 : AuroraMCAPI.getPlayers()) {
                         player1.updateNametag(player);
                     }
-                    this.updateItem(4, 5, new GUIItem(Material.INK_SACK, "&3Preferred Pronouns", 1, String.format(";&rCurrent: &b%s;&rClick to change to: &b%s", player.getPreferences().getPreferredPronouns().getDisplay(), Pronoun.values()[player.getPreferences().getPreferredPronouns().ordinal()+1 % Pronoun.values().length].getDisplay()), (short)10));
+                    this.updateItem(4, 5, new GUIItem(Material.INK_SACK, "&3Preferred Pronouns", 1, String.format(";&rCurrent: &b%s;&rClick to change to: &b%s", player.getPreferences().getPreferredPronouns().getDisplay(), Pronoun.values()[(player.getPreferences().getPreferredPronouns().ordinal()+1) % Pronoun.values().length].getDisplay()), (short)10));
                 }
                 break;
             case ARROW:
