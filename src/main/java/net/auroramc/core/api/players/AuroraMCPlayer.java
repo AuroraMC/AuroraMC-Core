@@ -576,13 +576,15 @@ public class AuroraMCPlayer {
                         }
                     }
                 }.runTask(AuroraMCAPI.getCore());
-                for (Cosmetic cosmetic : activeCosmetics.values()) {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            cosmetic.onEquip(pl);
-                        }
-                    }.runTask(AuroraMCAPI.getCore());
+                if (AuroraMCAPI.isCosmeticsEnabled()) {
+                    for (Cosmetic cosmetic : activeCosmetics.values()) {
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                cosmetic.onEquip(pl);
+                            }
+                        }.runTask(AuroraMCAPI.getCore());
+                    }
                 }
 
                 if (disguise != null && preferences.isHideDisguiseNameEnabled()) {
