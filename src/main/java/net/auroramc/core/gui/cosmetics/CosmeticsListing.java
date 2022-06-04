@@ -133,6 +133,10 @@ public class CosmeticsListing extends GUI {
         if (cosmetic.hasUnlocked(player)) {
             if (player.getActiveCosmetics().get(type) != null) {
                 if (player.getActiveCosmetics().get(type).equals(cosmetic)) {
+                    if (!AuroraMCAPI.isCosmeticsEnabled()) {
+                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", "Cosmetics are currently disabled!"));
+                        return;
+                    }
                     //disable
                     CosmeticDisableEvent cosmeticDisableEvent = new CosmeticDisableEvent(player, cosmetic);
                     Bukkit.getPluginManager().callEvent(cosmeticDisableEvent);
