@@ -90,11 +90,28 @@ public class TwerkApocalypse extends WinEffect {
             public void run() {
                 if (i <= 18) {
                     List<PacketPlayOutEntityMetadata> packets = new ArrayList<>();
-                    for (int i = 0; i < 20; i++) {
-                        EntityPlayer pl = players.get(i);
-                        DataWatcher dw = pl.getDataWatcher();
-                        dw.watch(0, (byte) 2);
-                        packets.add(new PacketPlayOutEntityMetadata(pl.getId(), dw, false));
+                    if (i % 2 == 0) {
+                        for (int i = 0; i < 20; i++) {
+                            EntityPlayer pl = players.get(i);
+                            DataWatcher dw = pl.getDataWatcher();
+                            if (i < 10) {
+                                dw.watch(0, (byte) 0);
+                            } else {
+                                dw.watch(0, (byte) 2);
+                            }
+                            packets.add(new PacketPlayOutEntityMetadata(pl.getId(), dw, false));
+                        }
+                    } else {
+                        for (int i = 0; i < 20; i++) {
+                            EntityPlayer pl = players.get(i);
+                            DataWatcher dw = pl.getDataWatcher();
+                            if (i < 10) {
+                                dw.watch(0, (byte) 2);
+                            } else {
+                                dw.watch(0, (byte) 0);
+                            }
+                            packets.add(new PacketPlayOutEntityMetadata(pl.getId(), dw, false));
+                        }
                     }
                     for (Player pl : Bukkit.getOnlinePlayers()) {
                         for (PacketPlayOutEntityMetadata packet : packets) {
