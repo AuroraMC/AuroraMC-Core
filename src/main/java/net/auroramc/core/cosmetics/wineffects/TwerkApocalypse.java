@@ -43,8 +43,8 @@ public class TwerkApocalypse extends WinEffect {
         for (int i = 0; i < 20; i++) {
             GameProfile profile;
             UUID uuid = UUID.randomUUID();
-            profile = new GameProfile(uuid, uuid.toString());
-            team.addEntry(uuid.toString());
+            profile = new GameProfile(uuid, uuid.toString().substring(0, 16));
+            team.addEntry(uuid.toString().substring(0, 16));
 
             profile.getProperties().put("textures", new ArrayList<>(((CraftPlayer) player.getPlayer()).getHandle().getProfile().getProperties().get("textures")).get(0));
             EntityPlayer pl = new EntityPlayer(((CraftServer) Bukkit.getServer()).getServer(), ((CraftWorld) Bukkit.getWorld("world")).getHandle(), profile, new PlayerInteractManager(((CraftWorld) Bukkit.getWorld("world")).getHandle()));
@@ -104,6 +104,7 @@ public class TwerkApocalypse extends WinEffect {
                     i++;
                 } else {
                     this.cancel();
+                    team.unregister();
                 }
             }
         }.runTaskTimer(AuroraMCAPI.getCore(), 0, 10);
