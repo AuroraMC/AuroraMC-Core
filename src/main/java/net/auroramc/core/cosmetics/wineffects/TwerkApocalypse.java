@@ -34,8 +34,12 @@ public class TwerkApocalypse extends WinEffect {
 
     @Override
     public void onWin(AuroraMCPlayer player) {
-        Team team = player.getScoreboard().getScoreboard().registerNewTeam("twerk");
-        team.setNameTagVisibility(NameTagVisibility.NEVER);
+        List<Team> teams = new ArrayList<>();
+        for (AuroraMCPlayer player1 : AuroraMCAPI.getPlayers()) {
+            Team team = player1.getScoreboard().getScoreboard().registerNewTeam("twerk");
+            team.setNameTagVisibility(NameTagVisibility.NEVER);
+            teams.add(team);
+        }
 
         List<EntityPlayer> players = new ArrayList<>();
         final Random random = new Random();
@@ -44,7 +48,9 @@ public class TwerkApocalypse extends WinEffect {
             GameProfile profile;
             UUID uuid = UUID.randomUUID();
             profile = new GameProfile(uuid, uuid.toString().substring(0, 16));
-            team.addEntry(uuid.toString().substring(0, 16));
+            for (Team team : teams) {
+                team.addEntry(uuid.toString().substring(0, 16));
+            }
 
             profile.getProperties().put("textures", new ArrayList<>(((CraftPlayer) player.getPlayer()).getHandle().getProfile().getProperties().get("textures")).get(0));
             EntityPlayer pl = new EntityPlayer(((CraftServer) Bukkit.getServer()).getServer(), ((CraftWorld) Bukkit.getWorld("world")).getHandle(), profile, new PlayerInteractManager(((CraftWorld) Bukkit.getWorld("world")).getHandle()));
@@ -120,8 +126,10 @@ public class TwerkApocalypse extends WinEffect {
                     }
                     i++;
                 } else {
+                    for (Team team : teams) {
+                        team.unregister();
+                    }
                     this.cancel();
-                    team.unregister();
                 }
             }
         }.runTaskTimer(AuroraMCAPI.getCore(), 0, 10);
