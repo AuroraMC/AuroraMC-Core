@@ -45,13 +45,16 @@ public class GlobalAccountSuspension extends GUI {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    AuroraMCAPI.getDbManager().issuePunishment(code, id, 22, extraDetails, -1, System.currentTimeMillis(), -1, 1, AuroraMCAPI.getDbManager().getUUIDFromName(name).toString());
-                    AuroraMCAPI.getDbManager().globalAccountSuspend(code, id, player.getId(), System.currentTimeMillis(), extraDetails);
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("GlobalAccountSuspend");
-                    out.writeUTF(code);
-                    out.writeUTF(extraDetails);
-                    player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    if (!AuroraMCAPI.isTestServer()) {
+                        AuroraMCAPI.getDbManager().issuePunishment(code, id, 22, extraDetails, -1, System.currentTimeMillis(), -1, 1, AuroraMCAPI.getDbManager().getUUIDFromName(name).toString());
+                        AuroraMCAPI.getDbManager().globalAccountSuspend(code, id, player.getId(), System.currentTimeMillis(), extraDetails);
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("GlobalAccountSuspend");
+                        out.writeUTF(code);
+                        out.writeUTF(extraDetails);
+                        player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                    }
+
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punishments", "Successfully applied Global Account Suspension."));
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());

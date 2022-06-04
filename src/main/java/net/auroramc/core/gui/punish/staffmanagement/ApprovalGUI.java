@@ -113,12 +113,14 @@ public class ApprovalGUI extends GUI {
                         pl.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has approved punishment **%s** for user **%s** issued by **%s**.", player.getName(), clickedPunishment.getPunishmentCode(), clickedPunishment.getPunishedName(), clickedPunishment.getPunisherName())));
                     }
                 }
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        AuroraMCAPI.getDbManager().approvePunishment(clickedPunishment);
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                if (!AuroraMCAPI.isTestServer()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            AuroraMCAPI.getDbManager().approvePunishment(clickedPunishment);
+                        }
+                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }
                 if (AuroraMCAPI.getRules().getRule(clickedPunishment.getRuleID()).getType() == 1) {
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("SMApproval");
@@ -135,12 +137,14 @@ public class ApprovalGUI extends GUI {
                         pl.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish",String.format("**%s** has denied punishment **%s** for user **%s** issued by **%s**.", player.getName(), clickedPunishment.getPunishmentCode(), clickedPunishment.getPunishedName(), clickedPunishment.getPunisherName())));
                     }
                 }
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        AuroraMCAPI.getDbManager().denyPunishment(clickedPunishment);
-                    }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                if (!AuroraMCAPI.isTestServer()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            AuroraMCAPI.getDbManager().denyPunishment(clickedPunishment);
+                        }
+                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }
                 if (AuroraMCAPI.getRules().getRule(clickedPunishment.getRuleID()).getType() == 1) {
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("SMDenial");
