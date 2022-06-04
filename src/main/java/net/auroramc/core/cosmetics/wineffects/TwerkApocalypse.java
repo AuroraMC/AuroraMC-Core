@@ -63,7 +63,7 @@ public class TwerkApocalypse extends WinEffect {
                     continue outer;
                 }
             }
-            pl.setLocation(x, location.getY(), z, (random.nextInt(360) - 180), 0f);
+            pl.setLocation(x, location.getY() + 1, z, (random.nextInt(360) - 180), 0f);
             if (i < 10) {
                 DataWatcher dw = pl.getDataWatcher();
                 dw.watch(0, (byte) 2);
