@@ -54,8 +54,8 @@ public class TwerkApocalypse extends WinEffect {
 
             profile.getProperties().put("textures", new ArrayList<>(((CraftPlayer) player.getPlayer()).getHandle().getProfile().getProperties().get("textures")).get(0));
             EntityPlayer pl = new EntityPlayer(((CraftServer) Bukkit.getServer()).getServer(), ((CraftWorld) Bukkit.getWorld("world")).getHandle(), profile, new PlayerInteractManager(((CraftWorld) Bukkit.getWorld("world")).getHandle()));
-            double x = (player.getPlayer().getLocation().getX() + (random.nextInt(20) - 10));
-            double z = (player.getPlayer().getLocation().getZ() + (random.nextInt(20) - 10));
+            double x = (player.getPlayer().getLocation().getX() + (random.nextInt(40) - 20));
+            double z = (player.getPlayer().getLocation().getZ() + (random.nextInt(40) - 20));
             Location location = new Location(player.getPlayer().getWorld(), x, 256, z);
             while (location.getBlock().getType() == Material.AIR) {
                 location.setY(location.getY() - 1);
