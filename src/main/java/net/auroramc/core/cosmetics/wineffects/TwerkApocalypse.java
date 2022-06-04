@@ -64,10 +64,6 @@ public class TwerkApocalypse extends WinEffect {
                 }
             }
             pl.setLocation(x, location.getY() + 1, z, (random.nextInt(360) - 180), 0f);
-            if (i < 10) {
-                DataWatcher dw = pl.getDataWatcher();
-                dw.watch(0, (byte) 2);
-            }
             players.add(pl);
         }
 
@@ -97,10 +93,10 @@ public class TwerkApocalypse extends WinEffect {
                 if (i <= 18) {
                     List<PacketPlayOutEntityMetadata> packets = new ArrayList<>();
                     if (i % 2 == 0) {
-                        for (int i = 0; i < 20; i++) {
-                            EntityPlayer pl = players.get(i);
+                        for (int x = 0; x < players.size(); x++) {
+                            EntityPlayer pl = players.get(x);
                             DataWatcher dw = pl.getDataWatcher();
-                            if (i < 10) {
+                            if (x < players.size() / 2) {
                                 dw.watch(0, (byte) 0);
                             } else {
                                 dw.watch(0, (byte) 2);
@@ -108,10 +104,10 @@ public class TwerkApocalypse extends WinEffect {
                             packets.add(new PacketPlayOutEntityMetadata(pl.getId(), dw, false));
                         }
                     } else {
-                        for (int i = 0; i < 20; i++) {
-                            EntityPlayer pl = players.get(i);
+                        for (int x = 0; x < players.size(); x++) {
+                            EntityPlayer pl = players.get(x);
                             DataWatcher dw = pl.getDataWatcher();
-                            if (i < 10) {
+                            if (x < players.size() / 2) {
                                 dw.watch(0, (byte) 2);
                             } else {
                                 dw.watch(0, (byte) 0);
