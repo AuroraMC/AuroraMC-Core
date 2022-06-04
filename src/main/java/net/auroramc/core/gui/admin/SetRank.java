@@ -219,36 +219,38 @@ public class SetRank extends GUI {
         out.writeInt(rankId);
         this.player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().setRank(id, rank, currentRank);
-                if (variation == SetRankVariation.STM) {
-                    if (rank.hasPermission("moderation")) {
-                        AuroraMCAPI.getDbManager().addMentee(setter.getId(), id);
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().setRank(id, rank, currentRank);
+                    if (variation == SetRankVariation.STM) {
+                        if (rank.hasPermission("moderation")) {
+                            AuroraMCAPI.getDbManager().addMentee(setter.getId(), id);
+                        }
+                    }
+                    if (currentRank.getId() == 9) {
+                        AuroraMCAPI.getDbManager().removeMentee(id);
+                    }
+                    if (rank.getCategory() == Rank.RankCategory.PLAYER) {
+                        Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(uuid.toString());
+                        if (disguise != null) {
+                            AuroraMCAPI.getDbManager().undisguise(uuid.toString(), disguise.getName());
+                            AuroraMCAPI.getDbManager().unvanish(uuid.toString());
+                        }
+
+                    }
+
+                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+
+                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Rank Set").setDescription(String.format("**%s** has set **%s's** rank as **%s**.", player.getName(), name, rank.name())).setColor(new Color(rank.getColor().asRGB())));
+                    try {
+                        discordWebhook.execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-                if (currentRank.getId() == 9) {
-                    AuroraMCAPI.getDbManager().removeMentee(id);
-                }
-                if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                    Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(uuid.toString());
-                    if (disguise != null) {
-                        AuroraMCAPI.getDbManager().undisguise(uuid.toString(), disguise.getName());
-                        AuroraMCAPI.getDbManager().unvanish(uuid.toString());
-                    }
-
-                }
-
-                DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
-
-                discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Rank Set").setDescription(String.format("**%s** has set **%s's** rank as **%s**.", player.getName(), name, rank.name())).setColor(new Color(rank.getColor().asRGB())));
-                try {
-                    discordWebhook.execute();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 }

@@ -39,7 +39,9 @@ public class CommandAppeal extends Command {
                                 UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromID(punishment.getPunished());
                                 List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(punishment.getPunished());
                                 if (args.get(0).equalsIgnoreCase("Reprieve")) {
-                                    AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
+                                    if (!AuroraMCAPI.isTestServer()) {
+                                        AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Reprieve", punishment, uuid, punishments);
+                                    }
                                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
                                     discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **Reprieve**.", player.getName(), code)).setColor(new Color(85, 255, 85)));
                                     try {
@@ -55,7 +57,9 @@ public class CommandAppeal extends Command {
                                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                                     }
                                 } else if (args.get(0).equalsIgnoreCase("False")) {
-                                    AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
+                                    if (!AuroraMCAPI.isTestServer()) {
+                                        AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "False", punishment, uuid, punishments);
+                                    }
                                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
                                     discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **False**.", player.getName(), code)).setColor(new Color(255, 85, 85)));
                                     try {
@@ -71,7 +75,9 @@ public class CommandAppeal extends Command {
                                         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
                                     }
                                 } else if (args.get(0).equalsIgnoreCase("Compromised")) {
-                                    AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Compromised Account Recovered", punishment, uuid, punishments);
+                                    if (!AuroraMCAPI.isTestServer()) {
+                                        AuroraMCAPI.getDbManager().removePunishment("AuroraMCAppeals", System.currentTimeMillis(), "Compromised Account Recovered", punishment, uuid, punishments);
+                                    }
                                     DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/928788070864654366/cpRwZiETmkD6XC-Ik1VC3FDuOUwbJwswzX-m_U0V9bVrgvRPS9aSiwGUNIoxj3qg4lXU");
                                     discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Appeal Log").setDescription(String.format("**%s** accepted an appeal for punishment **%s** for reason: **Compromised**.", player.getName(), code)).setColor(new Color(255, 170, 0)));
                                     try {

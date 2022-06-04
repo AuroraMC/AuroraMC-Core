@@ -78,7 +78,9 @@ public class AdminNotes extends GUI {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        AuroraMCAPI.getDbManager().addNewNote(id, player.getId(), System.currentTimeMillis(), extraDetails);
+                        if (!AuroraMCAPI.isTestServer()) {
+                            AuroraMCAPI.getDbManager().addNewNote(id, player.getId(), System.currentTimeMillis(), extraDetails);
+                        }
                         player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Notes", "Admin note added."));
                     }
                 }.runTaskAsynchronously(AuroraMCAPI.getCore());

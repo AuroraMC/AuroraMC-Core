@@ -80,20 +80,22 @@ public class SetSubRank extends GUI {
             item.removeEnchantment(Enchantment.DURABILITY);
 
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().revokeSubrank(id, rank);
-                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+            if (!AuroraMCAPI.isTestServer()) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        AuroraMCAPI.getDbManager().revokeSubrank(id, rank);
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
 
-                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Added").setDescription(String.format("**%s** has removed SubRank **%s** from player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
-                    try {
-                        discordWebhook.execute();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Added").setDescription(String.format("**%s** has removed SubRank **%s** from player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
+                        try {
+                            discordWebhook.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+            }
         } else {
             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("SetRank", String.format("You have given the **%s** SubRank to **%s**.", rank.getName(), name)));
 
@@ -109,20 +111,22 @@ public class SetSubRank extends GUI {
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
             item.setItemMeta(meta);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    AuroraMCAPI.getDbManager().giveSubrank(id, rank);
-                    DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
+            if (!AuroraMCAPI.isTestServer()) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        AuroraMCAPI.getDbManager().giveSubrank(id, rank);
+                        DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929016334912733205/bFwMdYwk1mI2adr1aubBW3aUDEHcWViNUsfOa_5GrD9KVT2ijI3N5NHKesknQuJNW1H1");
 
-                    discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Removed").setDescription(String.format("**%s** has added SubRank **%s** to player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
-                    try {
-                        discordWebhook.execute();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("SubRank Removed").setDescription(String.format("**%s** has added SubRank **%s** to player **%s**.", player.getName(), rank.name(), name)).setColor(new Color(rank.getColor().asRGB())));
+                        try {
+                            discordWebhook.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+            }
         }
     }
 }
