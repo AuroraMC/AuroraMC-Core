@@ -74,6 +74,8 @@ public class AuroraMCAPI {
         rulesLoading = false;
         shuttingDown = false;
 
+        cosmeticsEnabled = true;
+
         fakePlayers = new HashMap<>();
     }
 
