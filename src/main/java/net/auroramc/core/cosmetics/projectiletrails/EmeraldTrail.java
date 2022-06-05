@@ -43,6 +43,6 @@ public class EmeraldTrail extends ProjectileTrail {
                     }
                 }
             }
-        }.runTaskTimer(AuroraMCAPI.getCore(), 0, 2);
+        }.runTaskTimer(AuroraMCAPI.getCore(), 0, 1);
     }
 }
