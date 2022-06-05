@@ -25,7 +25,7 @@ public class EmeraldSwirl extends ParticleEffect {
     private Map<UUID, BukkitTask> tasks;
 
     public EmeraldSwirl() {
-        super(901, "Emerald Swirl", "&a&lEmerald Swirl", "An Emerald swirl.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Particle Effect!", true, Material.EMERALD, (short)0, Rarity.MYTHICAL);
+        super(901, "Emerald Swirl", "&a&lEmerald Swirl", "An emerald swirl.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Particle Effect!", true, Material.EMERALD, (short)0, Rarity.EPIC);
         tasks = new HashMap<>();
     }
 
