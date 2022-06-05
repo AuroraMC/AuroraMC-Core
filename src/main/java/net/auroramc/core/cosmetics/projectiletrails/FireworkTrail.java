@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class FireworkTrail extends ProjectileTrail {
     public FireworkTrail() {
-        super(1000, AuroraMCAPI.getFormatter().rainbow("Firework Trail"), AuroraMCAPI.getFormatter().rainbow("Firework Trail"), "A trail of fireworks. This one is loud. Sorry.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Death Effect!", true, Material.FIREWORK, (short)0, Rarity.LEGENDARY);
+        super(1000, AuroraMCAPI.getFormatter().rainbow("Firework Trail"), AuroraMCAPI.getFormatter().rainbow("Firework Trail"), "A trail of fireworks. This one is loud. Sorry.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the Grand Celebration Bundle at store.auroramc.net to unlock this Projectile Trail!", true, Material.FIREWORK, (short)0, Rarity.LEGENDARY);
     }
     final Random random = new Random();
 
