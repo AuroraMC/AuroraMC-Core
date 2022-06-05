@@ -8,6 +8,8 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
+import net.auroramc.core.api.cosmetics.Cosmetic;
+import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.TabCompleteInjector;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,14 +26,18 @@ public class LeaveListener implements Listener {
         if (AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask() != null) {
             AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask().cancel();
         }
-
-        AuroraMCAPI.getPlayer(e.getPlayer()).clearScoreboard();
+        AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+        player.clearScoreboard();
+        for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
+            cosmetic.onUnequip(player);
+        }
         AuroraMCAPI.playerLeave(e.getPlayer());
         TabCompleteInjector.removePlayer(e.getPlayer());
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
 
         e.setQuitMessage(null);
+
     }
 
     @EventHandler
@@ -43,7 +49,11 @@ public class LeaveListener implements Listener {
             AuroraMCAPI.getPlayer(e.getPlayer()).getActiveReportTask().cancel();
         }
 
-        AuroraMCAPI.getPlayer(e.getPlayer()).clearScoreboard();
+        AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+        player.clearScoreboard();
+        for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
+            cosmetic.onUnequip(player);
+        }
         AuroraMCAPI.playerLeave(e.getPlayer());
         TabCompleteInjector.removePlayer(e.getPlayer());
 
