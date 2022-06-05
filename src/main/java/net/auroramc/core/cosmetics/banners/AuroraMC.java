@@ -26,6 +26,6 @@ public class AuroraMC extends Banner {
     }
 
     public AuroraMC() {
-        super(8, "AuroraMC?", "&3&lAuroraMC?", "&3It's the best we could do, okay?", UnlockMode.STORE_PURCHASE, -1, new ArrayList<>(), new ArrayList<>(), "Purchase the AuroraMC Starter Pack at;&cstore.auroramc.net to unlock this banner!", patterns, DyeColor.WHITE, true, Rarity.EPIC);
+        super(8, "AuroraMC?", "&3&lAuroraMC?", "&3It's the best we could do, okay?", UnlockMode.STORE_PURCHASE, -1, new ArrayList<>(), new ArrayList<>(), "Purchase the AuroraMC Starter Pack at;store.auroramc.net to unlock this banner!", patterns, DyeColor.WHITE, true, Rarity.EPIC);
     }
 }
