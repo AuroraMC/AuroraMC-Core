@@ -54,7 +54,9 @@ public class CommandCosmeticRemove extends Command {
                         return;
                     }
 
-                    AuroraMCAPI.getDbManager().removeCosmetic(uuid, cosmetic);
+                    if (!AuroraMCAPI.isTestServer()) {
+                        AuroraMCAPI.getDbManager().removeCosmetic(uuid, cosmetic);
+                    }
                     player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Cosmetics", String.format("Cosmetic **%s %s** removed to player **%s**.", cosmetic.getName(), cosmetic.getType().getName(), args.get(0))));
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("CosmeticRemove");

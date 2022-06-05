@@ -31,6 +31,9 @@ import java.util.*;
 
 public class AuroraMCAPI {
 
+    private static boolean cosmeticsEnabled;
+    private static boolean testServer;
+
     private static DatabaseManager dbManager;
     private static AuroraMC core;
     private static final TextFormatter formatter;
@@ -71,6 +74,8 @@ public class AuroraMCAPI {
         rulesLoading = false;
         shuttingDown = false;
 
+        cosmeticsEnabled = true;
+
         fakePlayers = new HashMap<>();
     }
 
@@ -82,11 +87,14 @@ public class AuroraMCAPI {
 
             //Identify what server it is on the bungeecord. Grab the details from mysql.
             serverInfo = dbManager.getServerDetailsByName(auroraMCCore.getConfig().getString("name"), auroraMCCore.getConfig().getString("network"));
+
             if (serverInfo != null) {
                 Bukkit.getLogger().info("Server registered as " + serverInfo.getName());
                 CommunicationUtils.init();
+                testServer = serverInfo.getNetwork() == ServerInfo.Network.TEST;
             } else {
                 Bukkit.getLogger().info("I dont know what server I am!");
+                testServer = false;
             }
         } else {
             throw new UnsupportedOperationException("You cannot initialise the API twice.");
@@ -326,6 +334,22 @@ public class AuroraMCAPI {
 
     public static void setShuttingDown(boolean shuttingDown) {
         AuroraMCAPI.shuttingDown = shuttingDown;
+    }
+
+    public static boolean isCosmeticsEnabled() {
+        return cosmeticsEnabled;
+    }
+
+    public static boolean isTestServer() {
+        return testServer;
+    }
+
+    public static void setCosmeticsEnabled(boolean cosmeticsEnabled) {
+        AuroraMCAPI.cosmeticsEnabled = cosmeticsEnabled;
+    }
+
+    public static void setTestServer(boolean testServer) {
+        AuroraMCAPI.testServer = testServer;
     }
 }
 
