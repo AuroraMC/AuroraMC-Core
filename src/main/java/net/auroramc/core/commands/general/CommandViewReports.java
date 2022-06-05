@@ -14,12 +14,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class CommandViewReports extends Command {
     public CommandViewReports() {
-        super("viewreports", Collections.singletonList("vr"),Collections.singletonList(Permission.PLAYER), false, null);
+        super("viewreports", Arrays.asList("vr", "myreports"),Collections.singletonList(Permission.PLAYER), false, null);
     }
 
     @Override
