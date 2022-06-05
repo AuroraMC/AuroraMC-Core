@@ -359,12 +359,14 @@ public class PlayerStatistics {
             out.writeLong(amount);
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
         }
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().crownsEarned(player, -amount);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().crownsEarned(player, -amount);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 
     public long getGamesLost() {
@@ -417,12 +419,14 @@ public class PlayerStatistics {
             out.writeLong(amount);
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
         }
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().ticketsEarned(player, -amount);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().ticketsEarned(player, -amount);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 
     public void addGameTime(long ms, boolean sendToServer) {
@@ -434,12 +438,14 @@ public class PlayerStatistics {
             out.writeLong(ms);
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
         }
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().addGameTime(player.getPlayer().getUniqueId(), ms);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().addGameTime(player.getPlayer().getUniqueId(), ms);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 
     public void addLobbyTime(long ms, boolean sendToServer) {
@@ -451,12 +457,14 @@ public class PlayerStatistics {
             out.writeLong(ms);
             player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(),"BungeeCord", out.toByteArray());
         }
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().addLobbyTime(player.getPlayer().getUniqueId(), ms);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().addLobbyTime(player.getPlayer().getUniqueId(), ms);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 }
 

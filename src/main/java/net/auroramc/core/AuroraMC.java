@@ -55,6 +55,7 @@ import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.cosmetics.wineffects.Fireworks;
+import net.auroramc.core.cosmetics.wineffects.TwerkApocalypse;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
@@ -116,6 +117,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandWhoIs());
         AuroraMCAPI.registerCommand(new CommandBuildVersions());
         AuroraMCAPI.registerCommand(new CommandRestart());
+        AuroraMCAPI.registerCommand(new CommandToggleCosmetics());
+        AuroraMCAPI.registerCommand(new CommandTestMode());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
@@ -370,6 +373,7 @@ public class AuroraMC extends JavaPlugin {
 
         //Win Effects
         AuroraMCAPI.registerCosmetic(new Fireworks());
+        AuroraMCAPI.registerCosmetic(new TwerkApocalypse());
 
         //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());

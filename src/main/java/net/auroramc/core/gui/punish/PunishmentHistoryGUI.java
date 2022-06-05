@@ -266,12 +266,14 @@ public class PunishmentHistoryGUI extends GUI {
                     if (((punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) && (punishment.getExpire() > System.currentTimeMillis() || punishment.getExpire() == -1))) {
                         if (this.reason != null) {
                             long timestamp = System.currentTimeMillis();
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    AuroraMCAPI.getDbManager().removePunishment(player, timestamp, reason, punishment, uuid, punishments);
-                                }
-                            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                            if (!AuroraMCAPI.isTestServer()) {
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        AuroraMCAPI.getDbManager().removePunishment(player, timestamp, reason, punishment, uuid, punishments);
+                                    }
+                                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                            }
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish","Punishment removed."));
 
                             ByteArrayDataOutput out = ByteStreams.newDataOutput();

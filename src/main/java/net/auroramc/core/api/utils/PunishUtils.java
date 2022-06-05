@@ -50,12 +50,13 @@ public class PunishUtils {
                     //Anything that has a warning issued does not need checking by SM.
                     if (history.getType(type).getWeight(rule.getWeight()).issueWarning(rule)) {
                         //Issue a warning then return.
-                        AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, -1, 7, null);
-
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Warning");
-                        out.writeUTF(code);
-                        issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        if (!AuroraMCAPI.isTestServer()) {
+                            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, -1, 7, null);
+                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                            out.writeUTF("Warning");
+                            out.writeUTF(code);
+                            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        }
 
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have issued a warning to **%s**.\n" +
                                 "Reason: **%s - %s**\n" +
@@ -105,7 +106,14 @@ public class PunishUtils {
                     }
 
                     if (type == 1) {
-                        AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, null);
+                        if (!AuroraMCAPI.isTestServer()) {
+                            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, null);
+                            //Send mute to the bungee to enforce it.
+                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                            out.writeUTF("Mute");
+                            out.writeUTF(code);
+                            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        }
                         //Mute
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have muted **%s** for **%s**.\n" +
                                 "Reason: **%s - %s [Awaiting Approval]**\n" +
@@ -119,12 +127,6 @@ public class PunishUtils {
                             }
                         }
 
-                        //Send mute to the bungee to enforce it.
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Mute");
-                        out.writeUTF(code);
-                        issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
-
                         DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
                         discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s [Awaiting Approval]**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
@@ -136,11 +138,13 @@ public class PunishUtils {
 
                     } else {
                         //Ban
-                        AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, uuid.toString());
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Ban");
-                        out.writeUTF(code);
-                        issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        if (!AuroraMCAPI.isTestServer()) {
+                            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 2, uuid.toString());
+                            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                            out.writeUTF("Ban");
+                            out.writeUTF(code);
+                            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+                        }
 
                         issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have banned **%s** for **%s**.\n" +
                                 "Reason: **%s - %s [Awaiting Approval]**\n" +
@@ -155,7 +159,7 @@ public class PunishUtils {
                         }
 
                         //Send mute to the bungee to enforce it.
-                        out = ByteStreams.newDataOutput();
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("ApprovalBan");
                         issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
@@ -184,7 +188,14 @@ public class PunishUtils {
 
 
         if (rule.getType() == 1) {
-            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, null);
+            if (!AuroraMCAPI.isTestServer()) {
+                AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, null);
+                //Send mute to the bungee to enforce it.
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("Mute");
+                out.writeUTF(code);
+                issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            }
             //Mute
             issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have muted **%s** for **%s**.\n" +
                     "Reason: **%s - %s**\n" +
@@ -197,12 +208,6 @@ public class PunishUtils {
                     }
                 }
             }
-
-            //Send mute to the bungee to enforce it.
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Mute");
-            out.writeUTF(code);
-            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
             DiscordWebhook discordWebhook = new DiscordWebhook("https://discord.com/api/webhooks/929781450469957724/pMl2uPh1ovkzJ-uxvamzpwjJxtKXrcJcJNXUJWfoWThRaoI-vGkZpGWm54OWpqXrkwCk");
 
             discordWebhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("Punishment Log").setDescription(String.format("**%s** has muted **%s** for reason **%s - %s**.", issuer.getName(), name, rule.getRuleName(), extraDetails)).setColor(new Color(issuer.getRank().getColor().asRGB())));
@@ -214,12 +219,13 @@ public class PunishUtils {
         } else {
             //Ban
             String uuid = AuroraMCAPI.getDbManager().getUUIDFromID(player).toString();
-            AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, uuid);
-
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Ban");
-            out.writeUTF(code);
-            issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            if (!AuroraMCAPI.isTestServer()) {
+                AuroraMCAPI.getDbManager().issuePunishment(code, player, rule.getRuleID(), extraDetails, issuer.getId(), issued, expiry, 1, uuid);
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("Ban");
+                out.writeUTF(code);
+                issuer.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
+            }
 
             issuer.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Punish", String.format("You have banned **%s** for **%s**.\n" +
                     "Reason: **%s - %s**\n" +

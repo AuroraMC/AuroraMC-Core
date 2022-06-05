@@ -576,13 +576,15 @@ public class AuroraMCPlayer {
                         }
                     }
                 }.runTask(AuroraMCAPI.getCore());
-                for (Cosmetic cosmetic : activeCosmetics.values()) {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            cosmetic.onEquip(pl);
-                        }
-                    }.runTask(AuroraMCAPI.getCore());
+                if (AuroraMCAPI.isCosmeticsEnabled()) {
+                    for (Cosmetic cosmetic : activeCosmetics.values()) {
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                cosmetic.onEquip(pl);
+                            }
+                        }.runTask(AuroraMCAPI.getCore());
+                    }
                 }
 
                 if (disguise != null && preferences.isHideDisguiseNameEnabled()) {
@@ -1115,12 +1117,14 @@ public class AuroraMCPlayer {
         out.writeUTF(user.getName());
         player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 
     public void removeIgnored(IgnoredPlayer user) {
@@ -1133,12 +1137,14 @@ public class AuroraMCPlayer {
         player.sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
 
 
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
-            }
-        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        if (!AuroraMCAPI.isTestServer()) {
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    AuroraMCAPI.getDbManager().setIgnoredPlayers(id, ignoredPlayers);
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
+        }
     }
 
     public long getLastMessageSent() {
