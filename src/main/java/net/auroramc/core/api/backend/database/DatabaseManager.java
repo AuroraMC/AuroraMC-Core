@@ -2127,11 +2127,38 @@ public class DatabaseManager {
     }
 
     public PlayerReport assignReport(int handler, PlayerReport.QueueType queue, PlayerReport.ReportType type) {
+        if (type == null) {
+            return assignReport(handler, queue);
+        }
         try (Connection connection = mysql.getConnection()) {
             CallableStatement statement = connection.prepareCall("{CALL handle_report(?,?,?)}");
             statement.setInt(1, handler);
             statement.setString(2, queue.name());
             statement.setString(3, type.name());
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                PreparedStatement statement2 = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement2.setInt(1, set.getInt(13));
+                ResultSet nameSet = statement2.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+                return new PlayerReport(set.getInt(1), set.getInt(13), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), set.getString(12), PlayerReport.ReportOutcome.valueOf(set.getString(8)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
+            } else {
+                return null;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PlayerReport assignReport(int handler, PlayerReport.QueueType queue) {
+        try (Connection connection = mysql.getConnection()) {
+            CallableStatement statement = connection.prepareCall("{CALL handle_any_report(?,?)}");
+            statement.setInt(1, handler);
+            statement.setString(2, queue.name());
 
             ResultSet set = statement.executeQuery();
             if (set.next()) {
