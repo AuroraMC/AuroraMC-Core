@@ -73,6 +73,9 @@ public class TwerkApocalypse extends WinEffect {
             PacketPlayOutNamedEntitySpawn p2 = new PacketPlayOutNamedEntitySpawn(pl);
             PacketPlayOutEntityHeadRotation p3 = new PacketPlayOutEntityHeadRotation(pl, (byte) ((pl.yaw * 256.0F) / 360.0F));
             for (Player player1 : Bukkit.getOnlinePlayers()) {
+                if (!player1.getWorld().equals(player.getPlayer().getWorld())) {
+                    continue;
+                }
                 PlayerConnection con = ((CraftPlayer) player1.getPlayer()).getHandle().playerConnection;
                 con.sendPacket(p1);
                 con.sendPacket(p2);
@@ -116,6 +119,9 @@ public class TwerkApocalypse extends WinEffect {
                         }
                     }
                     for (Player pl : Bukkit.getOnlinePlayers()) {
+                        if (!pl.getWorld().equals(player.getPlayer().getWorld())) {
+                            continue;
+                        }
                         for (PacketPlayOutEntityMetadata packet : packets) {
                             ((CraftPlayer)pl).getHandle().playerConnection.sendPacket(packet);
                         }
