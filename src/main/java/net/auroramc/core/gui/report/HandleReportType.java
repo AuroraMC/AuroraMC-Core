@@ -36,6 +36,7 @@ public class HandleReportType extends GUI {
 
         this.setItem(1, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Report", 1, ";&rClick here to handle a chat report."));
         this.setItem(1, column + 2, new GUIItem(Material.SIGN, "&3&lMisc Report", 1, ";&rClick here to handle a misc report."));
+        this.setItem(2, 4, new GUIItem(Material.PAPER, "&3&lAny Report", 1, ";&rClick here to handle any open report."));
         GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lHacking Report", 1, ";&rClick here to handle a hacking report.");
         ItemStack itemStack = guiItem.getItem();
         ItemMeta meta = itemStack.getItemMeta();
@@ -62,6 +63,10 @@ public class HandleReportType extends GUI {
             case NAME_TAG:
                 type = PlayerReport.ReportType.INAPPROPRIATE_NAME;
                 break;
+            case PAPER:{
+                type = null;
+                break;
+            }
         }
 
         PlayerReport.ReportType finalType = type;
