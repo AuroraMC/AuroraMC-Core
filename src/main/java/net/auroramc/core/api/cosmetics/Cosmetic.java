@@ -207,7 +207,7 @@ public abstract class Cosmetic {
     }
 
     public enum Rarity {
-        COMMON("&7Common"),
+        COMMON("&fCommon"),
         UNCOMMON("&aUncommon"),
         RARE("&9Rare"),
         EPIC("&5Epic"),
