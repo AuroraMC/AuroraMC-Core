@@ -27,6 +27,6 @@ public class Honk extends Banner {
     }
 
     public Honk() {
-        super(11, "Honk", "&6&lHonk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.COMMON);
+        super(11, "Honk", "&6&lHonk", "&6Honk.", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.EPIC);
     }
 }
