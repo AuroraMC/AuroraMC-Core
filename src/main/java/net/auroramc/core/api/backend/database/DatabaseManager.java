@@ -8,6 +8,7 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.backend.store.Payment;
 import net.auroramc.core.api.cosmetics.Cosmetic;
+import net.auroramc.core.api.cosmetics.Crate;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.permissions.SubRank;
@@ -32,6 +33,10 @@ import net.auroramc.core.api.utils.PlayerKitLevel;
 import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
 import net.auroramc.core.api.utils.disguise.Skin;
+import net.auroramc.core.cosmetics.crates.CommonCrate;
+import net.auroramc.core.cosmetics.crates.EpicCrate;
+import net.auroramc.core.cosmetics.crates.LegendaryCrate;
+import net.auroramc.core.cosmetics.crates.PlusCrate;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -2588,6 +2593,107 @@ public class DatabaseManager {
             } else {
                 return new PlayerKitLevel(player, gameId, kitId, 0, 0L, 0L, (short)0);
             }
+        }
+    }
+
+    public List<Crate> getCrates(int amcId) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM crates WHERE amc_id = ?");
+            statement.setInt(1, amcId);
+
+            ResultSet set = statement.executeQuery();
+
+            List<Crate> crates = new ArrayList<>();
+            while (set.next()) {
+                Crate.CrateReward reward = null;
+                if (set.getString(4) != null) {
+                    String[] args = set.getString(4).split(":");
+                    switch (args[0]) {
+                        case "cosmetic": {
+                            reward = new Crate.CrateReward(AuroraMCAPI.getCosmetics().get(Integer.parseInt(args[1])), null, 0);
+                            break;
+                        }
+                        case "rank": {
+                            reward = new Crate.CrateReward(null, Rank.getByID(Integer.parseInt(args[1])), 0);
+                            break;
+                        }
+                        case "plus": {
+                            reward = new Crate.CrateReward(null, null, Integer.parseInt(args[1]));
+                            break;
+                        }
+                    }
+                }
+                switch (set.getString(2)) {
+                    case "COMMON": {
+                        crates.add(new CommonCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        break;
+                    }
+                    case "EPIC": {
+                        crates.add(new EpicCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        break;
+                    }
+                    case "LEGENDARY": {
+                        crates.add(new LegendaryCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        break;
+                    }
+                    case "PLUS": {
+                        crates.add(new PlusCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        break;
+                    }
+                }
+            }
+            return crates;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public Crate getCrate(UUID uuid) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM crates WHERE uuid = ?");
+            statement.setString(1, uuid.toString());
+
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                Crate.CrateReward reward = null;
+                if (set.getString(4) != null) {
+                    String[] args = set.getString(4).split(":");
+                    switch (args[0]) {
+                        case "cosmetic": {
+                            reward = new Crate.CrateReward(AuroraMCAPI.getCosmetics().get(Integer.parseInt(args[1])), null, 0);
+                            break;
+                        }
+                        case "rank": {
+                            reward = new Crate.CrateReward(null, Rank.getByID(Integer.parseInt(args[1])), 0);
+                            break;
+                        }
+                        case "plus": {
+                            reward = new Crate.CrateReward(null, null, Integer.parseInt(args[1]));
+                            break;
+                        }
+                    }
+                }
+                switch (set.getString(2)) {
+                    case "COMMON": {
+                        return new CommonCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    }
+                    case "EPIC": {
+                        return new EpicCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    }
+                    case "LEGENDARY": {
+                        return new LegendaryCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    }
+                    case "PLUS": {
+                        return new PlusCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    }
+                }
+            }
+            return null;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
         }
     }
 

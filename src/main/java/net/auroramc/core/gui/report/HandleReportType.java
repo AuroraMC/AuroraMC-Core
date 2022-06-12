@@ -91,7 +91,11 @@ public class HandleReportType extends GUI {
                             report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
                         }
                         if (report == null) {
-                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports in either report queue.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                            if (finalType == null) {
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no reports in either report queue."));
+                            } else {
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports in either report queue.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                            }
                             if (autoHandled > 0) {
                                 player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
                             }
@@ -109,7 +113,11 @@ public class HandleReportType extends GUI {
                         report = AuroraMCAPI.getDbManager().assignReport(player.getId(), PlayerReport.QueueType.NORMAL, finalType);
                     }
                     if (report == null) {
-                        player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports to handle.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                        if (finalType == null) {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", "There are currently no reports to handle."));
+                        } else {
+                            player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("There are currently no %s reports to handle.", WordUtils.capitalizeFully(finalType.name().replace("_", " ")))));
+                        }
                         if (autoHandled > 0) {
                             player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Reports", String.format("**%s** reports were automatically handled by the system.", autoHandled)));
                         }

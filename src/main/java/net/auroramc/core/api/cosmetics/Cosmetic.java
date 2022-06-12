@@ -198,7 +198,10 @@ public abstract class Cosmetic {
         RANK,
         TICKETS,
         STORE_PURCHASE,
+        //Adds to automatic loot pool of certain crates.
         CRATE,
+        //Does not add to automatic loot pool of certain crates.
+        SPECIAL_CRATE,
         LEVEL,
         ALL
     }
