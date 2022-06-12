@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class EpicCrate extends Crate {
+public class GoldCrate extends Crate {
 
-    public EpicCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
-        super("EPIC", uuid, owner, loot, generated, opened);
+    public GoldCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
+        super("GOLD", uuid, owner, loot, generated, opened);
     }
 
     @Override
