@@ -27,6 +27,6 @@ public class Wreath extends Banner {
     }
 
     public Wreath() {
-        super(15, "Wreath", "&2&lWreath", "&2♫ It's beginning to look a lot like &2Christmas! ♫", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.COMMON);
+        super(15, "Wreath", "&2&lWreath", "&2♫ It's beginning to look a lot like &2Christmas! ♫", UnlockMode.SPECIAL_CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.RARE);
     }
 }
