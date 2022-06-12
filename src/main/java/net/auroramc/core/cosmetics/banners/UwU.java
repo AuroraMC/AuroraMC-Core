@@ -27,6 +27,6 @@ public class UwU extends Banner {
     }
 
     public UwU() {
-        super(22, "UwU", "&d&lUwU", "&dI wuv wou", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.COMMON);
+        super(22, "UwU", "&d&lUwU", "&dI wuv wou", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.EPIC);
     }
 }

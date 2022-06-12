@@ -22,6 +22,6 @@ public class Pirate extends Banner {
     }
 
     public Pirate() {
-        super(25, "Pirate", "&f&lPirate Banner", "&fShiver me timbers!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.COMMON);
+        super(25, "Pirate", "&f&lPirate Banner", "&fShiver me timbers!", UnlockMode.CRATE, -1, new ArrayList<>(), new ArrayList<>(), "Found in Crates", patterns, DyeColor.BLACK, true, Rarity.UNCOMMON);
     }
 }
