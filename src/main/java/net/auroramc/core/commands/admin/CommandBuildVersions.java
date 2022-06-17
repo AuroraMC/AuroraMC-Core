@@ -48,7 +48,7 @@ public class CommandBuildVersions extends Command {
                     buildNumber = attributes.getValue("Jenkins-Build-Number");
                     gitCommit = attributes.getValue("Git-Commit");
                     if (buildNumber != null && gitCommit != null) {
-                        sb.append("\n**");
+                        sb.append("\n\n**&l&n");
                         sb.append(attributes.getValue("Module-Name"));
                         sb.append("**:\n" +
                                 "Build Number: **");
