@@ -2623,19 +2623,19 @@ public class DatabaseManager {
                 }
                 switch (set.getString(2)) {
                     case "IRON": {
-                        crates.add(new IronCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        crates.add(new IronCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
                     case "GOLD": {
-                        crates.add(new GoldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        crates.add(new GoldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
                     case "DIAMOND": {
-                        crates.add(new DiamondCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        crates.add(new DiamondCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
                     case "EMERALD": {
-                        crates.add(new EmeraldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                        crates.add(new EmeraldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
                 }
