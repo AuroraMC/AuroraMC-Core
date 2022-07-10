@@ -158,6 +158,14 @@ public abstract class Cosmetic {
         return rarity;
     }
 
+    public Material getMaterial() {
+        return material;
+    }
+
+    public short getData() {
+        return data;
+    }
+
     public enum CosmeticType {
         PARTICLE("Particle Effect"),
         HAT("Hat"),
