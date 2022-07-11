@@ -40,7 +40,7 @@ public class CommandPayments extends Command {
                         return;
                     }
 
-                    PaymentHistory paymentHistory = new PaymentHistory(uuid, args.get(0), payments);
+                    PaymentHistory paymentHistory = new PaymentHistory(player, uuid, args.get(0), payments);
                     new BukkitRunnable(){
                         @Override
                         public void run() {

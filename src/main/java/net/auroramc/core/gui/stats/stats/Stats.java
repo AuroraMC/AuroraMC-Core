@@ -43,7 +43,7 @@ public class Stats extends GUI {
         this.setItem(0, 6, new GUIItem(Material.FIREWORK, "&3&lView Achievements", 1, String.format(";&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", targetStatistics.getAchievementsGained().size(), totalAchievements)));
 
         this.setItem(2, 2, new GUIItem(Material.NETHER_STAR, "&b&lCrystal Quest", 1, ";&rGames Played: **" + targetStatistics.getStatistic(1, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(1, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(1, "gamesPlayed") - targetStatistics.getStatistic(1, "gamesWon")) + "**;;&aClick to view more!"));
-        this.setItem(2, 3, new GUIItem(Material.IRON_SWORD, "&c&lBackstab", 1, ";&rGames Played: **" + targetStatistics.getStatistic(2, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(2, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(2, "gamesPlayed") - targetStatistics.getStatistic(2, "gamesWon")) + "**;;&aClick to view more!"));
+        this.setItem(2, 3, new GUIItem(Material.IRON_SWORD, "&c&lDuels", 1, ";&rGames Played: **" + targetStatistics.getStatistic(4, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(4, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(4, "gamesPlayed") - targetStatistics.getStatistic(4, "gamesWon")) + "**;;&aClick to view more!"));
         this.setItem(2, 4, new GUIItem(Material.SNOW_BALL, "&a&lPaintball", 1, ";&rGames Played: **" + targetStatistics.getStatistic(3, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(3, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(3, "gamesPlayed") - targetStatistics.getStatistic(3, "gamesWon")) + "**;;&aClick to view more!"));
         this.setItem(2, 5, new GUIItem(Material.IRON_SPADE, "&b&lSpleef", 1, ";&rGames Played: **" + targetStatistics.getStatistic(100, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(100, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(100, "gamesPlayed") - targetStatistics.getStatistic(100, "gamesWon")) + "**;;&aClick to view more!"));
         this.setItem(2, 6, new GUIItem(Material.BAKED_POTATO, "&c&lHotPotato", 1, ";&rGames Played: **" + targetStatistics.getStatistic(101, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(101, "gamesWon") + "**;&rLosses: **" + (targetStatistics.getStatistic(101, "gamesPlayed") - targetStatistics.getStatistic(101, "gamesWon")) + "**;;&aClick to view more!"));
@@ -118,6 +118,13 @@ public class Stats extends GUI {
             case SNOW_BALL: {
                 AuroraMCAPI.closeGUI(player);
                 PaintballStatistics stats = new PaintballStatistics(player, name, this.stats, this.subscription, playerId);
+                stats.open(player);
+                AuroraMCAPI.openGUI(player, stats);
+                break;
+            }
+            case IRON_SWORD: {
+                AuroraMCAPI.closeGUI(player);
+                DuelsStatistics stats = new DuelsStatistics(player, name, this.stats, this.subscription, playerId);
                 stats.open(player);
                 AuroraMCAPI.openGUI(player, stats);
                 break;

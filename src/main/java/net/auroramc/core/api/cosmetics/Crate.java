@@ -4,8 +4,10 @@
 
 package net.auroramc.core.api.cosmetics;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 import java.util.UUID;
@@ -55,6 +57,18 @@ public abstract class Crate {
         return opened;
     }
 
+    public void opened(CrateReward reward) {
+        this.opened = System.currentTimeMillis();
+        this.loot = reward;
+        Crate crate = this;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setOpened(crate);
+            }
+        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+    }
+
     //Generate a reward.
     public abstract CrateReward open(AuroraMCPlayer player);
 
@@ -85,6 +99,27 @@ public abstract class Crate {
 
         public Rank getRank() {
             return rank;
+        }
+
+        @Override
+        public String toString() {
+            if (cosmetic != null) {
+                return "cosmetic:" + cosmetic.getId();
+            } else if (rank != null) {
+                return "rank:" + rank.getId();
+            } else {
+                return "plus:" + plusDays;
+            }
+        }
+
+        public String getRewardTitle() {
+            if (cosmetic != null) {
+                return cosmetic.getName() + "&b Cosmetic";
+            } else if (rank != null) {
+                return rank.getName() + "&b Rank";
+            } else {
+                return plusDays + " Plus Days";
+            }
         }
     }
 
