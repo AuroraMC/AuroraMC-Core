@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CommonCrate extends Crate {
+public class IronCrate extends Crate {
 
-    public CommonCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
-        super("COMMON", uuid, owner, loot, generated, opened);
+    public IronCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
+        super("IRON", uuid, owner, loot, generated, opened);
     }
 
     @Override

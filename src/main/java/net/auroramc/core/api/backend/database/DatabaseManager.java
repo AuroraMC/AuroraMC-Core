@@ -15,8 +15,6 @@ import net.auroramc.core.api.permissions.SubRank;
 import net.auroramc.core.api.players.*;
 import net.auroramc.core.api.players.friends.Friend;
 import net.auroramc.core.api.players.friends.FriendsList;
-import net.auroramc.core.api.players.lookup.IPLookup;
-import net.auroramc.core.api.players.lookup.LookupUser;
 import net.auroramc.core.api.punishments.AdminNote;
 import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.punishments.Punishment;
@@ -33,10 +31,10 @@ import net.auroramc.core.api.utils.PlayerKitLevel;
 import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
 import net.auroramc.core.api.utils.disguise.Skin;
-import net.auroramc.core.cosmetics.crates.CommonCrate;
-import net.auroramc.core.cosmetics.crates.EpicCrate;
-import net.auroramc.core.cosmetics.crates.LegendaryCrate;
-import net.auroramc.core.cosmetics.crates.PlusCrate;
+import net.auroramc.core.cosmetics.crates.IronCrate;
+import net.auroramc.core.cosmetics.crates.GoldCrate;
+import net.auroramc.core.cosmetics.crates.DiamondCrate;
+import net.auroramc.core.cosmetics.crates.EmeraldCrate;
 import org.bukkit.Bukkit;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -2624,20 +2622,20 @@ public class DatabaseManager {
                     }
                 }
                 switch (set.getString(2)) {
-                    case "COMMON": {
-                        crates.add(new CommonCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                    case "IRON": {
+                        crates.add(new IronCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
-                    case "EPIC": {
-                        crates.add(new EpicCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                    case "GOLD": {
+                        crates.add(new GoldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
-                    case "LEGENDARY": {
-                        crates.add(new LegendaryCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                    case "DIAMOND": {
+                        crates.add(new DiamondCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
-                    case "PLUS": {
-                        crates.add(new PlusCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime()));
+                    case "EMERALD": {
+                        crates.add(new EmeraldCrate(UUID.fromString(set.getString(1)), amcId, reward, set.getTimestamp(5).getTime(), ((set.getTimestamp(6) == null)?-1:set.getTimestamp(6).getTime())));
                         break;
                     }
                 }
@@ -2676,17 +2674,17 @@ public class DatabaseManager {
                     }
                 }
                 switch (set.getString(2)) {
-                    case "COMMON": {
-                        return new CommonCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    case "IRON": {
+                        return new IronCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
                     }
-                    case "EPIC": {
-                        return new EpicCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    case "GOLD": {
+                        return new GoldCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
                     }
-                    case "LEGENDARY": {
-                        return new LegendaryCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    case "DIAMOND": {
+                        return new DiamondCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
                     }
-                    case "PLUS": {
-                        return new PlusCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
+                    case "EMERALD": {
+                        return new EmeraldCrate(UUID.fromString(set.getString(1)), set.getInt(3), reward, set.getTimestamp(5).getTime(), set.getTimestamp(6).getTime());
                     }
                 }
             }
@@ -2694,6 +2692,19 @@ public class DatabaseManager {
         } catch (SQLException e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void setOpened(Crate crate) {
+        try (Connection connection = AuroraMCAPI.getDbManager().getMySQLConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE crates SET opened = ?, reward = ? WHERE uuid = ? AND amc_id = ?");
+            statement.setTimestamp(1, new Timestamp(crate.getOpened()));
+            statement.setString(2, crate.getLoot().toString());
+            statement.setString(3, crate.getUuid().toString());
+            statement.setInt(4, crate.getOwner());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
