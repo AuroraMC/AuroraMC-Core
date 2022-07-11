@@ -2695,6 +2695,19 @@ public class DatabaseManager {
         }
     }
 
+    public void setOpened(Crate crate) {
+        try (Connection connection = AuroraMCAPI.getDbManager().getMySQLConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE crates SET opened = ?, reward = ? WHERE uuid = ? AND amc_id = ?");
+            statement.setTimestamp(1, new Timestamp(crate.getOpened()));
+            statement.setString(2, crate.getLoot().toString());
+            statement.setString(3, crate.getUuid().toString());
+            statement.setInt(4, crate.getOwner());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Jedis getRedisConnection() {
         return jedis.getResource();
     }
