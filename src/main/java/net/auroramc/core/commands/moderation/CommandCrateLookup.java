@@ -47,7 +47,7 @@ public class CommandCrateLookup extends Command {
                             "Owner: **" + name + "**\n" +
                             "Type: **" + crate.getType() + "**\n" +
                             "Generated: **" + new Date(crate.getGenerated()) + "**\n" +
-                            "Opened: **" + ((crate.getOpened() != -1)?new Date(crate.getGenerated()):"N/A") + "**\n" +
+                            "Opened: **" + ((crate.getOpened() != -1)?new Date(crate.getOpened()):"N/A") + "**\n" +
                             "Reward: **" + ((crate.getLoot() != null)?crate.getLoot().getRewardTitle():"N/A") + "**"));
 
                 }
