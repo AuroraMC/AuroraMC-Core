@@ -35,7 +35,9 @@ public class PaymentCrates extends GUI {
         this.uuid = uuid;
         this.payments = payments;
         this.name = name;
-        this.setItem(0, 0, new GUIItem(Material.ARROW, "&a&lGo Back"));
+        if (payments != null) {
+            this.setItem(0, 0, new GUIItem(Material.ARROW, "&a&lGo Back"));
+        }
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Payment History", name), 1, "", (short)3, false, name));
 
         int column = 1;
