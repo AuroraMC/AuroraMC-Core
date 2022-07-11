@@ -111,6 +111,16 @@ public abstract class Crate {
                 return "plus:" + plusDays;
             }
         }
+
+        public String getRewardTitle() {
+            if (cosmetic != null) {
+                return cosmetic.getName() + "&r Cosmetic";
+            } else if (rank != null) {
+                return rank.getName() + "&r Rank";
+            } else {
+                return plusDays + " Plus Days";
+            }
+        }
     }
 
 }
