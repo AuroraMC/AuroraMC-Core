@@ -114,9 +114,9 @@ public abstract class Crate {
 
         public String getRewardTitle() {
             if (cosmetic != null) {
-                return cosmetic.getName() + "&r Cosmetic";
+                return cosmetic.getName() + "&b Cosmetic";
             } else if (rank != null) {
-                return rank.getName() + "&r Rank";
+                return rank.getName() + "&b Rank";
             } else {
                 return plusDays + " Plus Days";
             }
