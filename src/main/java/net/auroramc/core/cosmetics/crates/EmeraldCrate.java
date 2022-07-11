@@ -7,18 +7,16 @@ package net.auroramc.core.cosmetics.crates;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.Crate;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class PlusCrate extends Crate {
+public class EmeraldCrate extends Crate {
 
-    public PlusCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
-        super("PLUS", uuid, owner, loot, generated, opened);
+    public EmeraldCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
+        super("EMERALD", uuid, owner, loot, generated, opened);
     }
 
     @Override

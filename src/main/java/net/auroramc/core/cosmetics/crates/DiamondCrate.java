@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class LegendaryCrate extends Crate {
+public class DiamondCrate extends Crate {
 
-    public LegendaryCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
-        super("LEGENDARY", uuid, owner, loot, generated, opened);
+    public DiamondCrate(UUID uuid, int owner, CrateReward loot, long generated, long opened) {
+        super("DIAMOND", uuid, owner, loot, generated, opened);
     }
 
     @Override
