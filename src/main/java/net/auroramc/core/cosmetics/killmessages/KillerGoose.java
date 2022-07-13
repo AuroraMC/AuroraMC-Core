@@ -16,7 +16,7 @@ public class KillerGoose extends KillMessage {
 
 
     public KillerGoose() {
-        super(508, "Killer Goose", "&7&lKiller Goose", "Peace was never an option.", UnlockMode.ALL, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Kill Message!", true, Material.EGG, (short)0, Rarity.EPIC);
+        super(508, "Killer Goose", "&7&lKiller Goose", "Peace was never an option.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Kill Message!", true, Material.EGG, (short)0, Rarity.EPIC);
     }
 
     @Override
