@@ -10,6 +10,7 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Egg;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,14 +31,15 @@ public class Eggsplosion extends WinEffect {
             int i = 0;
             @Override
             public void run() {
-                if (i <= 36) {
-                    Egg egg = player.getPlayer().getLocation().getWorld().spawn(player.getPlayer().getLocation(), Egg.class);
+                if (i <= 90) {
+                    Egg egg = player.getPlayer().getLocation().getWorld().spawn(player.getPlayer().getLocation().add(0, 2, 0), Egg.class);
                     egg.setVelocity(new Vector(0, 4, 0).normalize());
+                    egg.getLocation().getWorld().playSound(egg.getLocation(), Sound.CHICKEN_EGG_POP, 100, 0);
                     i++;
                 } else {
                     this.cancel();
                 }
             }
-        }.runTaskTimer(AuroraMCAPI.getCore(), 0, 5);
+        }.runTaskTimer(AuroraMCAPI.getCore(), 0, 2);
     }
 }
