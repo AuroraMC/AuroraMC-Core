@@ -21,7 +21,7 @@ import java.util.Random;
 public class Eggsplosion extends WinEffect {
 
     public Eggsplosion() {
-        super(602, "EGGsplosion", "EGGsplosion", "What an EGGcelent end to a game!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Win Effect!", true, Material.FIREWORK, (short)0, Rarity.LEGENDARY);
+        super(602, "EGGsplosion", "&7EGGsplosion", "What an EGGcelent end to a game!", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(),"Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Win Effect!", true, Material.EGG, (short)0, Rarity.LEGENDARY);
     }
 
     @Override
