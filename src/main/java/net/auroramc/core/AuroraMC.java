@@ -56,12 +56,14 @@ import net.auroramc.core.cosmetics.projectiletrails.EmeraldTrail;
 import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.wineffects.Eggsplosion;
 import net.auroramc.core.cosmetics.wineffects.Fireworks;
 import net.auroramc.core.cosmetics.wineffects.TwerkApocalypse;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Egg;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -366,6 +368,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new ShulkerTwentyEight());
         AuroraMCAPI.registerCosmetic(new ShulkerTwentyNine());
         AuroraMCAPI.registerCosmetic(new ShulkerThirty());
+        AuroraMCAPI.registerCosmetic(new Goose());
 
         //Server Messages
         AuroraMCAPI.registerCosmetic(new Default());
@@ -378,6 +381,7 @@ public class AuroraMC extends JavaPlugin {
         //Win Effects
         AuroraMCAPI.registerCosmetic(new Fireworks());
         AuroraMCAPI.registerCosmetic(new TwerkApocalypse());
+        AuroraMCAPI.registerCosmetic(new Eggsplosion());
 
         //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());
