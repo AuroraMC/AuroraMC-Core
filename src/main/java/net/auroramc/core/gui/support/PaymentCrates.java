@@ -28,8 +28,8 @@ public class PaymentCrates extends GUI {
     private final List<Payment> payments;
 
     public PaymentCrates(AuroraMCPlayer player, UUID uuid, String name, List<Payment> payments, List<Crate> crates) {
-        super("&3&lPayment History", 5, true);
-        border("&3&lPayment History", "");
+        super(((payments == null)?"&3&lView Your Crates":"&3&lPayment History"), 5, true);
+        border(((payments == null)?"&3&lView Your Crates":"&3&lPayment History"), "");
 
         this.player = player;
         this.uuid = uuid;
