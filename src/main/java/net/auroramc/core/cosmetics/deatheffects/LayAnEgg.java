@@ -30,8 +30,7 @@ public class LayAnEgg extends DeathEffect {
 
     @Override
     public void onDeath(AuroraMCPlayer player) {
-        Item firework = player.getPlayer().getLocation().getWorld().spawn(player.getPlayer().getLocation(), Item.class);
-        firework.setItemStack(new ItemStack(Material.EGG));
+        Item firework = player.getPlayer().getLocation().getWorld().dropItemNaturally(player.getPlayer().getLocation(), new ItemStack(Material.EGG));
         firework.setPickupDelay(10000);
         player.getPlayer().getLocation().getWorld().playSound(player.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 100, 0);
         new BukkitRunnable(){
