@@ -93,7 +93,7 @@ public class Default extends KillMessage {
                 if(killer != null) {
                     return String.format("**%s** burned to death trying to escape **%s**", victimName, killerName);
                 } else {
-                    return String.format("**%s** burned to death.");
+                    return String.format("**%s** burned to death.", victimName);
                 }
             }
             case PAINTBALL: {
@@ -114,7 +114,7 @@ public class Default extends KillMessage {
                 if (killer != null ) {
                     return String.format("**%s** was killed by **%s** using magic.", victimName, killerName);
                 } else {
-                    return String.format("**%s was killed by magic.", victimName);
+                    return String.format("**%s** was killed by magic.", victimName);
                 }
             }
         }
