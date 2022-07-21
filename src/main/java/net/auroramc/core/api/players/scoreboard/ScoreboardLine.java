@@ -19,24 +19,34 @@ public class ScoreboardLine {
     private final Team team;
 
     public ScoreboardLine(Scoreboard scoreboard, Objective objective, int line, String text) {
+        Team team1;
         this.line = line;
-        this.team = scoreboard.registerNewTeam("line" + line);
-        team.addEntry("§" + colours[line]);
-        this.text = text;
-        if (this.text.length() > 16) {
-            team.setPrefix(this.text.substring(0, 16));
-            String lastColor = ChatColor.getLastColors(team.getPrefix());
-            if (lastColor.equals("")) {
-                lastColor = "§r";
-            }
-            String suffix = lastColor + this.text.substring(16);
-            if (suffix.length() > 16) {
-                suffix = suffix.substring(0, 16);
-            }
-            team.setSuffix(suffix);
-        } else {
-            team.setPrefix(this.text);
+        if (scoreboard.getTeam("line" + line) != null) {
+            scoreboard.getTeam("line" + line).unregister();
         }
+        team1 = scoreboard.registerNewTeam("line" + line);
+        try {
+            team1.addEntry("§" + colours[line]);
+            this.text = text;
+            if (this.text.length() > 16) {
+                team1.setPrefix(this.text.substring(0, 16));
+                String lastColor = ChatColor.getLastColors(team1.getPrefix());
+                if (lastColor.equals("")) {
+                    lastColor = "§r";
+                }
+                String suffix = lastColor + this.text.substring(16);
+                if (suffix.length() > 16) {
+                    suffix = suffix.substring(0, 16);
+                }
+                team1.setSuffix(suffix);
+            } else {
+                team1.setPrefix(this.text);
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            team1 = scoreboard.registerNewTeam("line" + line);
+        }
+        this.team = team1;
         this.objective = objective;
     }
 
