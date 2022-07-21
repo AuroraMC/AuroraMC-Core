@@ -76,7 +76,10 @@ public class Payment {
         PLUS180(5, Material.GOLD_INGOT, "&e&lPlus Subscription (180 days)"),
         PLUS365(6, Material.GOLD_INGOT, "&e&lPlus Subscription (365 days)"),
         CELEBRATION(7, Material.ENDER_CHEST, "&c&lGrand Celebration Bundle"),
-        STARTER(8, Material.ENDER_CHEST, "&b&lAuroraMC Starter Pack");
+        STARTER(8, Material.ENDER_CHEST, "&b&lAuroraMC Starter Pack"),
+        IRON5(9, Material.IRON_INGOT, "&7&l5x Iron Crates"),
+        GOLD5(10, Material.GOLD_INGOT, "&6&l5x Gold Crates"),
+        DIAMOND5(11, Material.DIAMOND, "&b&l5x Diamond Crates");
 
         private final int id;
         private final Material material;
