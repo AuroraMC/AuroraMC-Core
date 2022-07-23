@@ -106,7 +106,7 @@ public class PlayerStatistics {
             if (xpIntoLevel >= LevelUtils.xpForLevel(level + 1)) {
                 do {
                     level++;
-                    if (player != null) {
+                    if (player != null && !AuroraMCAPI.isTestServer()) {
                         switch (level) {
                             case 200: {
                                 if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(60))) {
@@ -166,7 +166,7 @@ public class PlayerStatistics {
             }
         }
 
-        if (sendToBungee) {
+        if (sendToBungee && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("XPAdd");
             out.writeUTF(player.getName());
