@@ -197,7 +197,7 @@ public class PlayerStatistics {
             stats.put(gameId, new GameStatistics(gameId, map));
         }
 
-        if (sendToBungee) {
+        if (sendToBungee && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("StatisticIncrement");
             out.writeUTF(player.getName());
@@ -224,7 +224,7 @@ public class PlayerStatistics {
     public void achievementGained(Achievement achievement, int tier, boolean sendToBungee) {
         achievementsGained.put(achievement, tier);
 
-        if (sendToBungee) {
+        if (sendToBungee && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("AchievementGained");
             out.writeUTF(player.getName());
@@ -261,7 +261,7 @@ public class PlayerStatistics {
                     }
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
 
-                    if (sendToBungee) {
+                    if (sendToBungee && !AuroraMCAPI.isTestServer()) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("AchievementProgressTierGained");
                         out.writeUTF(player.getName());
@@ -274,7 +274,7 @@ public class PlayerStatistics {
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, achievementProgress.get(achievement) + amount);
-                    if (sendToBungee) {
+                    if (sendToBungee && !AuroraMCAPI.isTestServer()) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("AchievementProgress");
                         out.writeUTF(player.getName());
@@ -292,7 +292,7 @@ public class PlayerStatistics {
                     }
                     achievementProgress.put(achievement, amount);
 
-                    if (sendToBungee) {
+                    if (sendToBungee && !AuroraMCAPI.isTestServer()) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("AchievementProgressTierGained");
                         out.writeUTF(player.getName());
@@ -306,7 +306,7 @@ public class PlayerStatistics {
                 } else {
                     //This is just progress, no tier has been achieved
                     achievementProgress.put(achievement, amount);
-                    if (sendToBungee) {
+                    if (sendToBungee && !AuroraMCAPI.isTestServer()) {
                         ByteArrayDataOutput out = ByteStreams.newDataOutput();
                         out.writeUTF("AchievementProgress");
                         out.writeUTF(player.getName());
@@ -319,7 +319,7 @@ public class PlayerStatistics {
             }
         } else {
             achievementProgress.put(achievement, amount + ((achievementProgress.containsKey(achievement))?achievementProgress.get(achievement):0));
-            if (sendToBungee) {
+            if (sendToBungee && !AuroraMCAPI.isTestServer()) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("AchievementProgress");
                 out.writeUTF(player.getName());
@@ -341,7 +341,7 @@ public class PlayerStatistics {
 
     public void addCrownsEarned(long amount, boolean sendToServer) {
         this.crownsEarned += amount;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("CrownsEarned");
             out.writeUTF(player.getName());
@@ -352,7 +352,7 @@ public class PlayerStatistics {
 
     public void removeCrownsEarned(long amount, boolean sendToServer) {
         this.crownsEarned -= amount;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("CrownsRemoved");
             out.writeUTF(player.getName());
@@ -383,6 +383,9 @@ public class PlayerStatistics {
             out.writeUTF("GameLost");
             gamesLost++;
         }
+        if (AuroraMCAPI.isTestServer()) {
+            return;
+        }
         out.writeUTF(player.getName());
         player.getPlayer().sendPluginMessage(AuroraMCAPI.getCore(), "BungeeCord", out.toByteArray());
     }
@@ -401,7 +404,7 @@ public class PlayerStatistics {
 
     public void addTicketsEarned(long amount, boolean sendToServer) {
         this.ticketsEarned += amount;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("TicketsEarned");
             out.writeUTF(player.getName());
@@ -412,7 +415,7 @@ public class PlayerStatistics {
 
     public void removeTicketsEarned(long amount, boolean sendToServer) {
         this.ticketsEarned -= amount;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("TicketsRemoved");
             out.writeUTF(player.getName());
@@ -431,7 +434,7 @@ public class PlayerStatistics {
 
     public void addGameTime(long ms, boolean sendToServer) {
         this.gameTimeMs += ms;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("GameTimeAdded");
             out.writeUTF(player.getName());
@@ -450,7 +453,7 @@ public class PlayerStatistics {
 
     public void addLobbyTime(long ms, boolean sendToServer) {
         this.lobbyTimeMs += ms;
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("LobbyTimeAdded");
             out.writeUTF(player.getName());
