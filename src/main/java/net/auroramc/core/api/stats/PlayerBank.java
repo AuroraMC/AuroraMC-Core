@@ -43,7 +43,7 @@ public class PlayerBank {
             player.getStats().addTicketsEarned(amount, false);
         }
 
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             if (player != null) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("TicketsAdded");
@@ -61,7 +61,7 @@ public class PlayerBank {
             player.getStats().addCrownsEarned(amount, false);
         }
 
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("CrownsAdded");
             out.writeUTF(player.getName());
@@ -80,7 +80,7 @@ public class PlayerBank {
             player.getStats().removeCrownsEarned(amount, false);
         }
 
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             if (player != null) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("WithdrawCrowns");
@@ -102,7 +102,7 @@ public class PlayerBank {
             player.getStats().removeTicketsEarned(amount, false);
         }
 
-        if (sendToServer) {
+        if (sendToServer && !AuroraMCAPI.isTestServer()) {
             if (player != null) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("WithdrawTickets");
