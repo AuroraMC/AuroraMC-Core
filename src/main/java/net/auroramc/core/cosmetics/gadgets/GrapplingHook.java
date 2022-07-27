@@ -26,7 +26,7 @@ public class GrapplingHook extends Gadget implements Listener {
     /*private static*/
 
     public GrapplingHook() {
-        super(801, "Grappling Hook", "&c&lGrappling Hook", "Spiderman, Spiderman, does whatever a Spiderman does.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Gadget!", true, Material.FISHING_ROD, (short)0, Rarity.EPIC, 10);
+        super(801, "Grappling Hook", "&c&lGrappling Hook", "Spiderman, Spiderman, does whatever a Spiderman does.", UnlockMode.STORE_PURCHASE, -1, Collections.emptyList(), Collections.emptyList(), "Purchase the AuroraMC Starter Pack at store.auroramc.net to unlock this Gadget!", true, Material.FISHING_ROD, (short)0, Rarity.EPIC, 0);
         Bukkit.getPluginManager().registerEvents(this, AuroraMCAPI.getCore());
     }
 
@@ -37,13 +37,14 @@ public class GrapplingHook extends Gadget implements Listener {
 
     @Override
     public void onUse(AuroraMCPlayer player, Location location) {
+
     }
 
     @EventHandler
     public void onFish(PlayerFishEvent e) {
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
         if (this.equals(player.getActiveCosmetics().get(CosmeticType.GADGET)) && e.getState() != PlayerFishEvent.State.FISHING) {
-            Vector vector = e.getHook().getLocation().toVector().subtract(player.getPlayer().getLocation().toVector()).normalize();
+            Vector vector = e.getHook().getLocation().toVector().subtract(player.getPlayer().getLocation().toVector());
             player.getPlayer().setVelocity(vector);
         }
     }
