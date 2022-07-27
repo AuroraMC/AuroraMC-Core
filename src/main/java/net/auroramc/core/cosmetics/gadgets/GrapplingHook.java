@@ -42,7 +42,7 @@ public class GrapplingHook extends Gadget implements Listener {
     @EventHandler
     public void onFish(PlayerFishEvent e) {
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
-        if (this.equals(player.getActiveCosmetics().get(CosmeticType.GADGET))) {
+        if (this.equals(player.getActiveCosmetics().get(CosmeticType.GADGET)) && e.getState() != PlayerFishEvent.State.FISHING) {
             Vector vector = e.getHook().getLocation().toVector().subtract(player.getPlayer().getLocation().toVector()).normalize();
             player.getPlayer().setVelocity(vector);
         }
