@@ -991,8 +991,8 @@ public class DatabaseManager {
 
     public String getServer(UUID uuid) {
         try (Jedis connection = jedis.getResource()) {
-            if (connection.exists(String.format("server.%s", uuid.toString()))) {
-                return connection.get(String.format("server.%s", uuid.toString()));
+            if (connection.exists(String.format("server.%s.%s", AuroraMCAPI.getServerInfo().getNetwork().name(), uuid.toString()))) {
+                return connection.get(String.format("server.%s.%s", AuroraMCAPI.getServerInfo().getNetwork().name(), uuid.toString()));
             }
         }
 
@@ -2409,7 +2409,7 @@ public class DatabaseManager {
 
     public boolean hasActiveSession(UUID uuid) {
         try (Jedis connection = jedis.getResource()) {
-            return connection.exists(String.format("server.%s", uuid)) && connection.exists(String.format("proxy.%s", uuid));
+            return connection.exists(String.format("server.%s.%s", AuroraMCAPI.getServerInfo().getNetwork().name(), uuid)) && connection.exists(String.format("proxy.%s.%s", AuroraMCAPI.getServerInfo().getNetwork().name(), uuid));
         }
     }
 
