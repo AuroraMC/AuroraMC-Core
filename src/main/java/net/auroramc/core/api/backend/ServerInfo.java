@@ -47,6 +47,9 @@ public class ServerInfo {
     }
 
     public String getIp() {
+        if (this.equals(AuroraMCAPI.getServerInfo())) {
+            return ip;
+        }
         if (AuroraMCAPI.getServerInfo().getIp().equalsIgnoreCase(ip)) {
             return "172.18.0.1";
         }
