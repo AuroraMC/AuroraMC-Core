@@ -42,6 +42,7 @@ import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.deatheffects.LayAnEgg;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.gadgets.FireworkGadget;
+import net.auroramc.core.cosmetics.gadgets.GrapplingHook;
 import net.auroramc.core.cosmetics.hats.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
@@ -391,6 +392,7 @@ public class AuroraMC extends JavaPlugin {
 
         //Gadgets
         AuroraMCAPI.registerCosmetic(new FireworkGadget());
+        AuroraMCAPI.registerCosmetic(new GrapplingHook());
 
         //Particle Effects
         AuroraMCAPI.registerCosmetic(new BloodSwirl());
