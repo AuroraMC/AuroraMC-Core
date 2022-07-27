@@ -9,6 +9,7 @@ import net.auroramc.core.api.cosmetics.Gadget;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ public class GrapplingHook extends Gadget implements Listener {
 
     @Override
     public void onEquip(AuroraMCPlayer player) {
+        player.getPlayer().getInventory().setItem(3, new GUIItem(Material.FISHING_ROD, AuroraMCAPI.getFormatter().convert("&c&lGrappling Hook"), 1).getItem());
     }
 
     @Override
