@@ -160,10 +160,10 @@ public class CommandStaffMessage extends Command {
                                         }
                                     }
                                 } else {
-                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Staff Message", String.format("No match found for [**%s**]2", args.get(0))));
+                                    player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Staff Message", String.format("No match found for [**%s**]", args.get(0))));
                                 }
                             } else {
-                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Staff Message", String.format("No match found for [**%s**]1", args.get(0))));
+                                player.getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Staff Message", String.format("No match found for [**%s**]", args.get(0))));
                             }
                         }
                     }.runTaskAsynchronously(AuroraMCAPI.getCore());
