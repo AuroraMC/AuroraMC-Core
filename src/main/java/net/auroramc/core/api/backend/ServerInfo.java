@@ -47,10 +47,7 @@ public class ServerInfo {
     }
 
     public String getIp() {
-        if (this.equals(AuroraMCAPI.getServerInfo())) {
-            return ip;
-        }
-        if (AuroraMCAPI.getServerInfo().getIp().equalsIgnoreCase(ip)) {
+        if (AuroraMCAPI.getServerInfo().getRawIP().equalsIgnoreCase(ip) && !AuroraMCAPI.getServerInfo().getName().equals(name)) {
             return "172.18.0.1";
         }
         return ip;
@@ -86,6 +83,10 @@ public class ServerInfo {
 
     public Network getNetwork() {
         return network;
+    }
+
+    public String getRawIP() {
+        return ip;
     }
 
     public void setBuildBuildNumber(int buildBuildNumber) {
