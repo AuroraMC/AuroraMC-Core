@@ -28,11 +28,15 @@ public class LeaveListener implements Listener {
         }
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
         player.clearScoreboard();
-        for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
-            cosmetic.onUnequip(player);
-        }
         AuroraMCAPI.playerLeave(e.getPlayer());
-        TabCompleteInjector.removePlayer(e.getPlayer());
+        try {
+            for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
+                cosmetic.onUnequip(player);
+            }
+            TabCompleteInjector.removePlayer(e.getPlayer());
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
 
@@ -51,11 +55,15 @@ public class LeaveListener implements Listener {
 
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
         player.clearScoreboard();
-        for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
-            cosmetic.onUnequip(player);
-        }
         AuroraMCAPI.playerLeave(e.getPlayer());
-        TabCompleteInjector.removePlayer(e.getPlayer());
+        try {
+            for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {
+                cosmetic.onUnequip(player);
+            }
+            TabCompleteInjector.removePlayer(e.getPlayer());
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
 
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getServerInfo().getName(), AuroraMCAPI.getServerInfo().getNetwork().name() + "\n" + AuroraMCAPI.getServerInfo().getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
