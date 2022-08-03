@@ -34,6 +34,7 @@ public class CommandBuildVersions extends Command {
         StringBuilder sb = new StringBuilder();
         String buildNumber = null;
         String gitCommit = null;
+        String branch = null;
 
         try {
 
@@ -47,7 +48,8 @@ public class CommandBuildVersions extends Command {
 
                     buildNumber = attributes.getValue("Jenkins-Build-Number");
                     gitCommit = attributes.getValue("Git-Commit");
-                    if (buildNumber != null && gitCommit != null) {
+                    branch = attributes.getValue("Branch");
+                    if (buildNumber != null && gitCommit != null && branch != null) {
                         sb.append("\n \n&3&l");
                         sb.append(attributes.getValue("Module-Name"));
                         sb.append("&r:\n" +
@@ -56,6 +58,9 @@ public class CommandBuildVersions extends Command {
                         sb.append("**\n" +
                                 "Git Commit: **");
                         sb.append(gitCommit);
+                        sb.append("**\n" +
+                                "Branch: **");
+                        sb.append(branch);
                         sb.append("**");
                     }
                 }
