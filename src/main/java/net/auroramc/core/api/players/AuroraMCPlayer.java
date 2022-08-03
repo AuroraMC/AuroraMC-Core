@@ -600,7 +600,9 @@ public class AuroraMCPlayer {
                 Bukkit.getPluginManager().callEvent(creationEvent);
                 AuroraMCAPI.newPlayer(creationEvent.getPlayer());
                 creationEvent.getPlayer().loaded = true;
-                creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "&c&lThis server is now in test mode. While test mode is enabled, stats and other core features will not be saved."));
+                if (AuroraMCAPI.isTestServer()) {
+                    creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "&c&lThis server is now in test mode. While test mode is enabled, stats and other core features will not be saved."));
+                }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
