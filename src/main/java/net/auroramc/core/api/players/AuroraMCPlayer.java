@@ -596,8 +596,14 @@ public class AuroraMCPlayer {
                     }.runTask(AuroraMCAPI.getCore());
                 }
                 //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
+                if (!player.isOnline()) {
+                    return;
+                }
                 PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(pl);
                 Bukkit.getPluginManager().callEvent(creationEvent);
+                if (!player.isOnline()) {
+                    return;
+                }
                 AuroraMCAPI.newPlayer(creationEvent.getPlayer());
                 creationEvent.getPlayer().loaded = true;
                 if (AuroraMCAPI.isTestServer()) {
