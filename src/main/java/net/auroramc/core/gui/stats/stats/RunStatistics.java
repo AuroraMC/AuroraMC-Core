@@ -37,23 +37,23 @@ public class RunStatistics extends GUI {
 
         border(String.format("&b&l%s's Statistics", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&b&l%s's Statistics", name), 1, "", (short) 3, false, name));
-        this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
+        this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&r&fReturn to the statistics menu"));
 
         //double kdr = targetStatistics.getStatistic(104, "tags") / (double)((targetStatistics.getStatistic(104, "tagged") == 0)?1:targetStatistics.getStatistic(104, "tagged"));
         //        double finalKdr = (Math.round(kdr * 100))/100.0;
-        //        this.setItem(2, 2, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&rPeople Tagged: **" + targetStatistics.getStatistic(104, "tags") + "**;&rGot Tagged: **" + targetStatistics.getStatistic(104, "tagged") + "**;&rTag/Tagged Ratio: **" + finalKdr + "**", (short)14));
-        this.setItem(2, 2, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(104, "blocksBroken") + "**", (short)14));
+        //        this.setItem(2, 2, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&r&fPeople Tagged: **" + targetStatistics.getStatistic(104, "tags") + "**;&r&fGot Tagged: **" + targetStatistics.getStatistic(104, "tagged") + "**;&r&fTag/Tagged Ratio: **" + finalKdr + "**", (short)14));
+        this.setItem(2, 2, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&r&fBlocks Broken: **" + targetStatistics.getStatistic(104, "blocksBroken") + "**", (short)14));
 
         long losses = (targetStatistics.getStatistic(104, "gamesPlayed") - targetStatistics.getStatistic(104, "gamesWon"));
         double wlr = ((losses == 0)?targetStatistics.getStatistic(104, "gamesWon"):(double)targetStatistics.getStatistic(104, "gamesWon")/losses);
         double finalWlr = (Math.round(wlr * 100))/100.0;
-        this.setItem(2, 4, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&rGames Played: **" + targetStatistics.getStatistic(104, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(104, "gamesWon") + "**;&rLosses: **" + losses + "**;&rWin/Loss Ratio: **" + finalWlr + "**;;&rCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "crownsEarned"))  + "**;&rTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "ticketsEarned")) + "**;&rExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "xpEarned")) + "**", (short)14));
+        this.setItem(2, 4, new GUIItem(Material.STAINED_CLAY, "&b&lGame Statistics", 1, ";&r&fGames Played: **" + targetStatistics.getStatistic(104, "gamesPlayed") + "**;&r&fWins: **" + targetStatistics.getStatistic(104, "gamesWon") + "**;&r&fLosses: **" + losses + "**;&r&fWin/Loss Ratio: **" + finalWlr + "**;;&r&fCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "crownsEarned"))  + "**;&r&fTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "ticketsEarned")) + "**;&r&fExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(104, "xpEarned")) + "**", (short)14));
         PlayerKitLevel hotPotatoLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 104, 0);
-        this.setItem(2, 6, new GUIItem(Material.STAINED_CLAY, "&b&lKit Statistics", 1, ";&3&lBerserker;&rLevel: **" + hotPotatoLevel.getLevel() + "**;&rTotal XP: **" + String.format("%,d", hotPotatoLevel.getTotalXpEarned()) + "**;&rCurrent Upgrade: **" + hotPotatoLevel.getLatestUpgrade() + "**", (short)14));
+        this.setItem(2, 6, new GUIItem(Material.STAINED_CLAY, "&b&lKit Statistics", 1, ";&3&lBerserker;&r&fLevel: **" + hotPotatoLevel.getLevel() + "**;&r&fTotal XP: **" + String.format("%,d", hotPotatoLevel.getTotalXpEarned()) + "**;&r&fCurrent Upgrade: **" + hotPotatoLevel.getLatestUpgrade() + "**", (short)14));
 
         long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104 && !achievement.isVisible()).count();
 
-        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bRun Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).count(), totalGameAchievements)));
+        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bRun Achievements", 1, String.format("&r&fAchieved: **%s**;&r&fTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 104).count(), totalGameAchievements)));
     }
 
     @Override

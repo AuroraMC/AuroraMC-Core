@@ -24,14 +24,14 @@ public class StaffManagementPreferences extends GUI {
         border("&3&lStaff Management Preferences", "");
         this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBack"));
 
-        this.setItem(1, 2, new GUIItem(Material.REDSTONE_TORCH_ON, "&3Staff Login Notifications", 1, ";&rGives you a notifications if a Junior Moderator;&ror Moderator joins or leaves the network."));
-        this.setItem(2, 2, new GUIItem(Material.INK_SACK, "&3Staff Login Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isStaffLoginNotificationsEnabled())?(short)10:(short)8)));
+        this.setItem(1, 2, new GUIItem(Material.REDSTONE_TORCH_ON, "&3Staff Login Notifications", 1, ";&r&fGives you a notifications if a Junior Moderator;&r&for Moderator joins or leaves the network."));
+        this.setItem(2, 2, new GUIItem(Material.INK_SACK, "&3Staff Login Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isStaffLoginNotificationsEnabled())?(short)10:(short)8)));
 
-        this.setItem(1, 4, new GUIItem(Material.ANVIL, "&3Approval Notifications", 1, ";&rGives you a notification when there;&ris a new punishment to be approved."));
-        this.setItem(2, 4, new GUIItem(Material.INK_SACK, "&3Approval Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isApprovalNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalNotificationsEnabled())?(short)10:(short)8)));
+        this.setItem(1, 4, new GUIItem(Material.ANVIL, "&3Approval Notifications", 1, ";&r&fGives you a notification when there;&r&fis a new punishment to be approved."));
+        this.setItem(2, 4, new GUIItem(Material.INK_SACK, "&3Approval Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isApprovalNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalNotificationsEnabled())?(short)10:(short)8)));
 
-        this.setItem(1, 6, new GUIItem(Material.PAPER, "&3Approval Processed Notifications", 1, ";&rGives you a notification in chat when another;&ruser processes an approval punishment.")) ;
-        this.setItem(2, 6, new GUIItem(Material.INK_SACK, "&3Approval Processed Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?(short)10:(short)8)));
+        this.setItem(1, 6, new GUIItem(Material.PAPER, "&3Approval Processed Notifications", 1, ";&r&fGives you a notification in chat when another;&r&fuser processes an approval punishment.")) ;
+        this.setItem(2, 6, new GUIItem(Material.INK_SACK, "&3Approval Processed Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?(short)10:(short)8)));
     }
 
     @Override
@@ -40,13 +40,13 @@ public class StaffManagementPreferences extends GUI {
             case INK_SACK:
                 if (column == 2) {
                     player.getPreferences().setStaffLoginNotifications(!player.getPreferences().isStaffLoginNotificationsEnabled());
-                    this.updateItem(2, 2, new GUIItem(Material.INK_SACK, "&3Staff Login Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isStaffLoginNotificationsEnabled())?(short)10:(short)8)));
+                    this.updateItem(2, 2, new GUIItem(Material.INK_SACK, "&3Staff Login Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isStaffLoginNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isStaffLoginNotificationsEnabled())?(short)10:(short)8)));
                 } else if (column == 4) {
                     player.getPreferences().setApprovalNotifications(!player.getPreferences().isApprovalNotificationsEnabled());
-                    this.updateItem(2, 4, new GUIItem(Material.INK_SACK, "&3Approval Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isApprovalNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalNotificationsEnabled())?(short)10:(short)8)));
+                    this.updateItem(2, 4, new GUIItem(Material.INK_SACK, "&3Approval Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isApprovalNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalNotificationsEnabled())?(short)10:(short)8)));
                 } else {
                     player.getPreferences().setApprovalProcessedNotifications(!player.getPreferences().isApprovalProcessedNotificationsEnabled());
-                    this.updateItem(2, 6, new GUIItem(Material.INK_SACK, "&3Approval Processed Notifications", 1, String.format(";&rMode: %s;&rClick to change to: %s", ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?(short)10:(short)8)));
+                    this.updateItem(2, 6, new GUIItem(Material.INK_SACK, "&3Approval Processed Notifications", 1, String.format(";&r&fMode: %s;&r&fClick to change to: %s", ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&aEnabled":"&cDisabled"), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?"&cDisabled":"&aEnabled")), ((player.getPreferences().isApprovalProcessedNotificationsEnabled())?(short)10:(short)8)));
                 }
                 break;
             case ARROW:

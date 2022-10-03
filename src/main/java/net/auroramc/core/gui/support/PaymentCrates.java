@@ -62,7 +62,7 @@ public class PaymentCrates extends GUI {
                     break;
                 }
             }
-            this.setItem(row, column, new GUIItem(material, "&3&l" + WordUtils.capitalizeFully(crate.getType()) + " Crate", 1, String.format(";&rUUID: **%s**;&rGenerated: **%s**;&rOpened: **%s**;&rReward: **%s**;", crate.getUuid().toString(), new Date(crate.getGenerated()).toString(), ((crate.getOpened() != -1)?new Date(crate.getOpened()):"N/A"), ((crate.getLoot() != null)?crate.getLoot().getRewardTitle():"N/A"))));
+            this.setItem(row, column, new GUIItem(material, "&3&l" + WordUtils.capitalizeFully(crate.getType()) + " Crate", 1, String.format(";&r&fUUID: **%s**;&r&fGenerated: **%s**;&r&fOpened: **%s**;&r&fReward: **%s**;", crate.getUuid().toString(), new Date(crate.getGenerated()).toString(), ((crate.getOpened() != -1)?new Date(crate.getOpened()):"N/A"), ((crate.getLoot() != null)?crate.getLoot().getRewardTitle():"N/A"))));
             column++;
             if (column == 8) {
                 row++;
