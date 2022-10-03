@@ -44,14 +44,14 @@ public class Friends extends GUI {
 
         border("&3&lYour Friends", "");
 
-        this.setItem(0, 1, new GUIItem(Material.NETHER_STAR, "&3&lFavourite Friends", 1, ";&rClick here to change the;&rview to **Favourite Friends**;&ronly.", (short) 0, true));
-        this.setItem(0, 3, new GUIItem(Material.BOOK, "&3&lAll Friends", 1, ";&rClick here to change the;&rview to **All Friends**.", (short) 0, false));
-        this.setItem(0, 5, new GUIItem(Material.PAPER, "&3&lFriend Requests", 1, ";&rClick here to change the;&rview to **Friend Requests**.", (short) 0, false));
-        this.setItem(0, 7, new GUIItem(Material.BARRIER, "&3&lDelete Friends", 1, ";&c&lWARNING:&r Clicking a player head in;&rthis menu will &cunfriend&r a player.", (short) 0, false));
+        this.setItem(0, 1, new GUIItem(Material.NETHER_STAR, "&3&lFavourite Friends", 1, ";&r&fClick here to change the;&r&fview to **Favourite Friends**;&r&fonly.", (short) 0, true));
+        this.setItem(0, 3, new GUIItem(Material.BOOK, "&3&lAll Friends", 1, ";&r&fClick here to change the;&r&fview to **All Friends**.", (short) 0, false));
+        this.setItem(0, 5, new GUIItem(Material.PAPER, "&3&lFriend Requests", 1, ";&r&fClick here to change the;&r&fview to **Friend Requests**.", (short) 0, false));
+        this.setItem(0, 7, new GUIItem(Material.BARRIER, "&3&lDelete Friends", 1, ";&c&lWARNING:&r&f Clicking a player head in;&r&fthis menu will &cunfriend&r&f a player.", (short) 0, false));
 
-        this.setItem(5, 3, new GUIItem(Material.NAME_TAG, "&3&lChange Status", 1, String.format(";&rCurrent Status: &%s%s;;&r&eClick to open the status menu.", friendsList.getCurrentStatus().getColour(), friendsList.getCurrentStatus().getName())));
+        this.setItem(5, 3, new GUIItem(Material.NAME_TAG, "&3&lChange Status", 1, String.format(";&r&fCurrent Status: &%s%s;;&r&eClick to open the status menu.", friendsList.getCurrentStatus().getColour(), friendsList.getCurrentStatus().getName())));
 
-        this.setItem(5, 5, new GUIItem(Material.INK_SACK, "&3&lServer Visibility", 1, String.format(";&rCurrent Server Visibility: %s;;&rClick to change to: %s", ((friendsList.getVisibilityMode() == ALL) ? "&aAll" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&6Favourite Friends Only" : "&cNobody")), ((friendsList.getVisibilityMode() == ALL) ? "&6Favourite Friends Only" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&cNobody" : "&aAll"))), ((friendsList.getVisibilityMode() == ALL) ? (short) 10 : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? (short) 14 : (short) 8))));
+        this.setItem(5, 5, new GUIItem(Material.INK_SACK, "&3&lServer Visibility", 1, String.format(";&r&fCurrent Server Visibility: %s;;&r&fClick to change to: %s", ((friendsList.getVisibilityMode() == ALL) ? "&aAll" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&6Favourite Friends Only" : "&cNobody")), ((friendsList.getVisibilityMode() == ALL) ? "&6Favourite Friends Only" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&cNobody" : "&aAll"))), ((friendsList.getVisibilityMode() == ALL) ? (short) 10 : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? (short) 14 : (short) 8))));
 
         this.displayOrder = new ArrayList<>();
         this.player = player;
@@ -71,7 +71,7 @@ public class Friends extends GUI {
         int row = 1;
 
         for (Friend friend : displayOrder) {
-            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&f&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
             column++;
             if (column == 8) {
                 row++;
@@ -171,7 +171,7 @@ public class Friends extends GUI {
                                 friendsList.setVisibilityMode(FAVOURITE_FRIENDS_ONLY, true);
                                 break;
                         }
-                        this.updateItem(5, 5, new GUIItem(Material.INK_SACK, "&3&lServer Visibility", 1, String.format(";&rCurrent Server Visibility: %s;;&rClick to change to: %s", ((friendsList.getVisibilityMode() == ALL) ? "&aAll" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&6Favourite Friends Only" : "&cNobody")), ((friendsList.getVisibilityMode() == ALL) ? "&6Favourite Friends Only" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&cNobody" : "&aAll"))), ((friendsList.getVisibilityMode() == ALL) ? (short) 10 : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? (short) 14 : (short) 8))));
+                        this.updateItem(5, 5, new GUIItem(Material.INK_SACK, "&3&lServer Visibility", 1, String.format(";&r&fCurrent Server Visibility: %s;;&r&fClick to change to: %s", ((friendsList.getVisibilityMode() == ALL) ? "&aAll" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&6Favourite Friends Only" : "&cNobody")), ((friendsList.getVisibilityMode() == ALL) ? "&6Favourite Friends Only" : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? "&cNobody" : "&aAll"))), ((friendsList.getVisibilityMode() == ALL) ? (short) 10 : ((friendsList.getVisibilityMode() == FAVOURITE_FRIENDS_ONLY) ? (short) 14 : (short) 8))));
                         break;
                     case NAME_TAG:
                         view = FriendsView.STATUS;
@@ -199,7 +199,7 @@ public class Friends extends GUI {
                             continue;
                         }
                         FriendStatus status = (FriendStatus) statuses.get(pi);
-                        this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&rClick here to display your;&rstatus as &%s%s&r.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus().equals(status))));
+                        this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&r&fClick here to display your;&r&fstatus as &%s%s&r&f.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus().equals(status))));
                     } else {
                         if (displayOrder.size() <= pi) {
                             this.updateItem(row, column, null);
@@ -215,12 +215,12 @@ public class Friends extends GUI {
                         }
                         Friend friend = displayOrder.get(pi);
                         if (view == FriendsView.REQUESTS) {
-                            this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                            this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&r&fIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&r&fOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
                         } else {
                             if (view == FriendsView.DELETE) {
-                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                             } else {
-                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&f&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                             }
                         }
                     }
@@ -250,7 +250,7 @@ public class Friends extends GUI {
                             continue;
                         }
                         FriendStatus status = (FriendStatus) statuses.get(pi);
-                        this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&rClick here to display your;&rstatus as &%s%s&r.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus() == status)));
+                        this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&r&fClick here to display your;&r&fstatus as &%s%s&r&f.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus() == status)));
                         column++;
                         if (column == 8) {
                             row++;
@@ -260,7 +260,7 @@ public class Friends extends GUI {
                             }
                         }
                     }
-                    this.updateItem(5, 3, new GUIItem(Material.NAME_TAG, "&3&lChange Status", 1, String.format(";&rCurrent Status: &%s%s;;&r&eClick to open the status menu.", friendsList.getCurrentStatus().getColour(), friendsList.getCurrentStatus().getName())));
+                    this.updateItem(5, 3, new GUIItem(Material.NAME_TAG, "&3&lChange Status", 1, String.format(";&r&fCurrent Status: &%s%s;;&r&eClick to open the status menu.", friendsList.getCurrentStatus().getColour(), friendsList.getCurrentStatus().getName())));
 
                 } else {
                     Friend friend = displayOrder.get(((currentPage - 1) * 28) + ((row - 1) * 7) + (column - 1));
@@ -274,7 +274,7 @@ public class Friends extends GUI {
                                     friend.favourited(true);
                                 }
                                 player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.NOTE_PLING, 1, 100);
-                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&f&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                             } else {
                                 if (friend.getServer() != null) {
                                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -315,7 +315,7 @@ public class Friends extends GUI {
                                     continue;
                                 }
                                 friend = displayOrder.get(pi);
-                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s", friend.getName()), 1, String.format(";&rStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                                this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s", friend.getName()), 1, String.format(";&r&fStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                                 column++;
                                 if (column == 8) {
                                     row++;
@@ -371,7 +371,7 @@ public class Friends extends GUI {
                                             continue;
                                         }
                                         friend = displayOrder.get(pi);
-                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&r&fIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&r&fOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
                                         column++;
                                         if (column == 8) {
                                             row++;
@@ -409,7 +409,7 @@ public class Friends extends GUI {
                                             continue;
                                         }
                                         friend = displayOrder.get(pi);
-                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&r&fIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&r&fOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
                                         column++;
                                         if (column == 8) {
                                             row++;
@@ -451,7 +451,7 @@ public class Friends extends GUI {
                                             continue;
                                         }
                                         friend = displayOrder.get(pi);
-                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                                        this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&r&fIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&r&fOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
                                         column++;
                                         if (column == 8) {
                                             row++;
@@ -531,7 +531,7 @@ public class Friends extends GUI {
                     continue;
                 }
                 FriendStatus status = (FriendStatus) statuses.get(pi);
-                this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&rClick here to display your;&rstatus as &%s%s&r.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus() == status)));
+                this.updateItem(row, column, new GUIItem(Material.PAPER, String.format("&%s&l%s", status.getColour(), status.getTitle()), 1, String.format(";&r&fClick here to display your;&r&fstatus as &%s%s&r&f.%s", status.getColour(), status.getName(), ((!status.hasUnlocked(player)) ?  ((status.getUnlockMessage() != null) ? ";;&r&c" + status.getUnlockMessage() : ";;&r&cYou do not have permission to set this status."): "")), (short) 0, (friendsList.getCurrentStatus() == status)));
             } else {
                 if (displayOrder.size() <= pi) {
                     this.updateItem(row, column, null);
@@ -547,12 +547,12 @@ public class Friends extends GUI {
                 }
                 Friend friend = displayOrder.get(pi);
                 if (view == FriendsView.REQUESTS) {
-                    this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&rIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&rOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
+                    this.updateItem(row, column, new GUIItem(((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? Material.ENDER_PEARL : Material.EYE_OF_ENDER), String.format("&3&l%s", friend.getName()), 1, ((friend.getType() == Friend.FriendType.PENDING_INCOMING) ? String.format("&r&fIncoming request from **%s**.;;&r&aLeft-Click to accept.;&r&cRight-Click to deny.", friend.getName()) : String.format("&r&fOutgoing request to **%s**;;&r&cShift-Right-Click to revoke.", friend.getName()))));
                 } else {
                     if (view == FriendsView.DELETE) {
-                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&cLeft-Click to remove them as a friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : "")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                     } else {
-                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&rStatus: &%s%s%s;;&r&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&rServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
+                        this.updateItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s&r&b%s", friend.getName(), ((friend.getType() == Friend.FriendType.FAVOURITE) ? " ✰" : "")), 1, String.format(";&r&fStatus: &%s%s%s;;&r&f&%sShift-Left-Click to %s them as a favourite friend.", friend.getStatus().getColour(), friend.getStatus().getName(), ((friend.getServer() != null) ? String.format(";&r&fServer: **%s**", friend.getServer()) : ""), ((friend.getType() == Friend.FriendType.FAVOURITE) ? 'c' : 'a'), ((friend.getType() == Friend.FriendType.FAVOURITE) ? "remove" : "add")), ((!friend.getStatus().equals(AuroraMCAPI.getCosmetics().get(101))) ? (short) 3 : (short) 0), false, friend.getName()));
                     }
                 }
             }

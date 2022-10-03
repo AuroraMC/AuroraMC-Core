@@ -24,12 +24,12 @@ public class CloseNameReport extends GUI {
 
         this.player = player;
 
-        fill("&r ", "");
+        fill("&r&f ", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lUsername Report", 1, String.format(";&rReported Username: **%s**.", player.getActiveReport().getSuspectName()), (short)3, false, player.getActiveReport().getSuspectName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lUsername Report", 1, String.format(";&r&fReported Username: **%s**.", player.getActiveReport().getSuspectName()), (short)3, false, player.getActiveReport().getSuspectName()));
 
-        this.setItem(1, 2, new GUIItem(Material.STAINED_CLAY, "&c&lInappropriate", 1, ";&rClick here to mark this;&rusername as &cInappropriate&r.", (short)14));
-        this.setItem(1, 6, new GUIItem(Material.STAINED_CLAY, "&a&lAppropriate", 1, ";&rClick here to mark this;&rusername as &aAppropriate&r.", (short)13));
+        this.setItem(1, 2, new GUIItem(Material.STAINED_CLAY, "&c&lInappropriate", 1, ";&r&fClick here to mark this;&r&fusername as &cInappropriate&r&f.", (short)14));
+        this.setItem(1, 6, new GUIItem(Material.STAINED_CLAY, "&a&lAppropriate", 1, ";&r&fClick here to mark this;&r&fusername as &aAppropriate&r&f.", (short)13));
     }
 
     @Override

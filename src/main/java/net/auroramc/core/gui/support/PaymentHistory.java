@@ -42,7 +42,7 @@ public class PaymentHistory extends GUI {
         int row = 1;
         for (Payment payment : payments) {
             for (Payment.Package apackage : payment.getPackages()) {
-                this.setItem(row, column, new GUIItem(apackage.getMaterial(), apackage.getName(), 1, String.format(";&rPayment ID: **%s**;&rTransaction ID: **%s**;&rAmount Paid: **%s GBP**;&rProcessed at: **%s**;&rStatus: %s%s", payment.getPaymentId(), payment.getTransactionId(), payment.getAmountPaid(), new Date(payment.getTimestamp()), ((payment.getStatus() == Payment.PaymentStatus.CHARGEDBACK)?"&c&lChargedBack":((payment.getStatus() == Payment.PaymentStatus.REFUNDED)?"&6&lRefunded":"&a&lProcessed")), ((payment.getCrateUUIDs().size() > 0)?";;&aClick to view attached Crates!":""))));
+                this.setItem(row, column, new GUIItem(apackage.getMaterial(), apackage.getName(), 1, String.format(";&r&fPayment ID: **%s**;&r&fTransaction ID: **%s**;&r&fAmount Paid: **%s GBP**;&r&fProcessed at: **%s**;&r&fStatus: %s%s", payment.getPaymentId(), payment.getTransactionId(), payment.getAmountPaid(), new Date(payment.getTimestamp()), ((payment.getStatus() == Payment.PaymentStatus.CHARGEDBACK)?"&c&lChargedBack":((payment.getStatus() == Payment.PaymentStatus.REFUNDED)?"&6&lRefunded":"&a&lProcessed")), ((payment.getCrateUUIDs().size() > 0)?";;&aClick to view attached Crates!":""))));
                 column++;
                 if (column == 8) {
                     row++;

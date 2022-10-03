@@ -34,7 +34,7 @@ public class GlobalAccountSuspension extends GUI {
         this.id = id;
         this.player = player;
 
-        this.setItem(1, 4, new GUIItem(Material.REDSTONE_BLOCK, "&4&lAre you sure?", 1, "&rClicking on this block will;&rtaken as confirmation that you;&rwish to suspend this user."));
+        this.setItem(1, 4, new GUIItem(Material.REDSTONE_BLOCK, "&4&lAre you sure?", 1, "&r&fClicking on this block will;&r&ftaken as confirmation that you;&r&fwish to suspend this user."));
     }
 
     @Override

@@ -50,7 +50,7 @@ public class PunishmentHistoryGUI extends GUI {
         this.punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id).stream().filter(punishment -> punishment.getStatus() != 4).collect(Collectors.toList());
 
         border(String.format("&3&l%s's Punishment History", name), "");
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Punishment History", name), 1, "&rPunishment History", (short) 3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Punishment History", name), 1, "&r&fPunishment History", (short) 3, false, name));
         if (punishments.size() > 28) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));
         }
@@ -66,7 +66,7 @@ public class PunishmentHistoryGUI extends GUI {
                         break;
                     case 6:
                     case 3:
-                        reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
+                        reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r&f", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
                         break;
                     default:
                         reason = WordUtils.wrap(String.format("&b%s - %s", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
@@ -80,11 +80,11 @@ public class PunishmentHistoryGUI extends GUI {
                 }
 
                 String[] weights = new String[]{"Light", "Medium", "Heavy", "Severe", "Extreme"};
-                String lore = String.format("&rPunishment Code: **%s**;&rReason:;**%s**;&rWeight: **%s**;&rIssued at: **%s**;&rLength: **%s**" + ((player.hasPermission("moderation"))?";&rIssued by: **%s**":""), punishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(punishment.getIssued())).toString(), length.getFormatted(), punishment.getPunisherName());
+                String lore = String.format("&r&fPunishment Code: **%s**;&r&fReason:;**%s**;&r&fWeight: **%s**;&r&fIssued at: **%s**;&r&fLength: **%s**" + ((player.hasPermission("moderation"))?";&r&fIssued by: **%s**":""), punishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(punishment.getIssued())).toString(), length.getFormatted(), punishment.getPunisherName());
 
                 if (punishment.getRemover() != null) {
                     String removalReason = WordUtils.wrap(punishment.getRemovalReason(), 40, ";&b", false);
-                    lore += String.format(";;&rRemoval Reason:;&b%s&r;&rRemoval Timestamp: **%s**" + ((player.hasPermission("moderation"))?";&rRemoved by: **%s**":""), removalReason, (new Date(punishment.getRemovalTimestamp())).toString(), punishment.getRemover());                }
+                    lore += String.format(";;&r&fRemoval Reason:;&b%s&r&f;&r&fRemoval Timestamp: **%s**" + ((player.hasPermission("moderation"))?";&r&fRemoved by: **%s**":""), removalReason, (new Date(punishment.getRemovalTimestamp())).toString(), punishment.getRemover());                }
 
                 if (punishment.getStatus() == 7) {
                     //This is a warning.
@@ -173,7 +173,7 @@ public class PunishmentHistoryGUI extends GUI {
                             break;
                         case 6:
                         case 3:
-                            reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
+                            reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r&f", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
                             break;
                         default:
                             reason = WordUtils.wrap(String.format("&b%s - %s", rule.getRuleName(), punishment.getExtraNotes()), 43, ";&b", false);
@@ -187,11 +187,11 @@ public class PunishmentHistoryGUI extends GUI {
                     }
 
                     String[] weights = new String[]{"Light", "Medium", "Heavy", "Severe", "Extreme"};
-                    String lore = String.format("&rPunishment Code: **%s**;&rReason:;**%s**;&rWeight: **%s**;&rIssued at: **%s**;&rLength: **%s**" + ((player.hasPermission("moderation"))?";&rIssued by: **%s**":""), punishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(punishment.getIssued())).toString(), length.getFormatted(), punishment.getPunisherName());
+                    String lore = String.format("&r&fPunishment Code: **%s**;&r&fReason:;**%s**;&r&fWeight: **%s**;&r&fIssued at: **%s**;&r&fLength: **%s**" + ((player.hasPermission("moderation"))?";&r&fIssued by: **%s**":""), punishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(punishment.getIssued())).toString(), length.getFormatted(), punishment.getPunisherName());
 
                     if (punishment.getRemover() != null) {
                         String removalReason = WordUtils.wrap(punishment.getRemovalReason(), 40, ";&b", false);
-                        lore += String.format(";;&rRemoval Reason:;&b%s&r;&rRemoval Timestamp: **%s**" + ((player.hasPermission("moderation"))?";&rRemoved by: **%s**":""), removalReason, (new Date(punishment.getRemovalTimestamp())).toString(), punishment.getRemover());
+                        lore += String.format(";;&r&fRemoval Reason:;&b%s&r&f;&r&fRemoval Timestamp: **%s**" + ((player.hasPermission("moderation"))?";&r&fRemoved by: **%s**":""), removalReason, (new Date(punishment.getRemovalTimestamp())).toString(), punishment.getRemover());
                     }
 
                     if (punishment.getStatus() == 7) {
