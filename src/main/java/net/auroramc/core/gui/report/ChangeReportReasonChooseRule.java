@@ -27,12 +27,12 @@ public class ChangeReportReasonChooseRule extends GUI {
         this.player = player;
         this.reason = reason;
 
-        fill("&r ", "");
+        fill("&r&f ", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s Report", WordUtils.capitalizeFully(player.getActiveReport().getType().name())), 1, String.format(";&rUser reported: **%s**;&rReason: **%s**", player.getActiveReport().getSuspectName(), player.getActiveReport().getReason().getName()), (short)3, false, player.getActiveReport().getSuspectName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s Report", WordUtils.capitalizeFully(player.getActiveReport().getType().name())), 1, String.format(";&r&fUser reported: **%s**;&r&fReason: **%s**", player.getActiveReport().getSuspectName(), player.getActiveReport().getReason().getName()), (short)3, false, player.getActiveReport().getSuspectName()));
 
-        this.setItem(1, 2, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(reason.getDefaultRule()).getRuleName()), 1, ";&rClick here to &aaccept&r this report!" ,(short)13));
-        this.setItem(1, 6, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(reason.getAltRule()).getRuleName()), 1, ";&rClick here to &aaccept&r this report!" ,(short)13));
+        this.setItem(1, 2, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(reason.getDefaultRule()).getRuleName()), 1, ";&r&fClick here to &aaccept&r&f this report!" ,(short)13));
+        this.setItem(1, 6, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(reason.getAltRule()).getRuleName()), 1, ";&r&fClick here to &aaccept&r&f this report!" ,(short)13));
     }
 
     @Override

@@ -41,7 +41,7 @@ public class ReportReasonListing extends GUI {
 
         border(String.format("&3&lReport %s", name), "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&rPlease choose a reason.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&r&fPlease choose a reason.", (short)3, false, name));
 
         this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == type).collect(Collectors.toList());
         if (reportReasons.size() > 10) {
@@ -58,7 +58,7 @@ public class ReportReasonListing extends GUI {
                 break;
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
-            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to report this;&r&fplayer for **%s**", reason.getName()));
             ItemStack itemStack = guiItem.getItem();
             ItemMeta meta = itemStack.getItemMeta();
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -110,7 +110,7 @@ public class ReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:Material.IRON_SWORD), "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to report this;&r&fplayer for **%s**", reason.getName()));
                 ItemStack itemStack = guiItem.getItem();
                 ItemMeta meta = itemStack.getItemMeta();
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

@@ -40,9 +40,9 @@ public class AdminNotes extends GUI {
 
         border(String.format("&3&l%s's Admin Notes", name), "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Admin Notes", name), 1, "&rAdmin Notes", (short) 3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Admin Notes", name), 1, "&r&fAdmin Notes", (short) 3, false, name));
         if (extraDetails != null) {
-            this.setItem(5, 4, new GUIItem(Material.WOOL, "&a&lAdd Note", 1, "&rAdd your current reason as;&ra note!", (short) 5));
+            this.setItem(5, 4, new GUIItem(Material.WOOL, "&a&lAdd Note", 1, "&r&fAdd your current reason as;&r&fa note!", (short) 5));
         }
 
         if (notes.size() > 28) {
@@ -54,10 +54,10 @@ public class AdminNotes extends GUI {
 
         for (AdminNote note : notes) {
             String reason = WordUtils.wrap(note.getNote(), 40, ";&b", false);
-            String lore = String.format("&rNote:;" +
+            String lore = String.format("&r&fNote:;" +
                     "**%s**;" +
-                    "&rIssued at: **%s**;" +
-                    "&rIssued by: **%s**", reason, (new Date(note.getTimestamp())).toString(), note.getAddedBy());
+                    "&r&fIssued at: **%s**;" +
+                    "&r&fIssued by: **%s**", reason, (new Date(note.getTimestamp())).toString(), note.getAddedBy());
             this.setItem(row, column, new GUIItem(Material.BOOK, "&7&lAdmin Note", 1, lore));
             column++;
             if (column == 8) {
@@ -127,10 +127,10 @@ public class AdminNotes extends GUI {
 
                 AdminNote note = notes.get(pi);
                 String reason = WordUtils.wrap(note.getNote(), 40, ";&b", false);
-                String lore = String.format("&rNote:;" +
+                String lore = String.format("&r&fNote:;" +
                         "**%s**;" +
-                        "&rIssued at: **%s**;" +
-                        "&rIssued by: **%s**", reason, (new Date(note.getTimestamp())).toString(), note.getAddedBy());
+                        "&r&fIssued at: **%s**;" +
+                        "&r&fIssued by: **%s**", reason, (new Date(note.getTimestamp())).toString(), note.getAddedBy());
                 this.updateItem(row, column, new GUIItem(Material.BOOK, "&7&lAdmin Note", 1, lore));
                 column++;
                 if (column == 8) {

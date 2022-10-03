@@ -33,11 +33,11 @@ public class ChatType extends GUI {
 
         border(String.format("&3&lReport %s", name), "");
 
-        this.setItem(0, 4, new GUIItem(Material.BOOK_AND_QUILL, String.format("&3&lReport %s", name), 1, "&rPlease choose a type of report."));
+        this.setItem(0, 4, new GUIItem(Material.BOOK_AND_QUILL, String.format("&3&lReport %s", name), 1, "&r&fPlease choose a type of report."));
 
-        this.setItem(1, 2, new GUIItem(Material.PAPER, "&3Public Chat", 1, ";&rClick here to report a chat offence;&rthat happened in &bPublic Chat&r."));
-        this.setItem(1, 4, new GUIItem(Material.EMPTY_MAP, "&3Private Messages", 1, ";&rClick here to report a chat offence;&rthat happened in &bPrivate Messages&r."));
-        this.setItem(1, 6, new GUIItem(Material.FIREWORK, "&3Party Chat", 1, ";&rClick here to report a chat offence;&rthat happened in &bParty Chat&r."));
+        this.setItem(1, 2, new GUIItem(Material.PAPER, "&3Public Chat", 1, ";&r&fClick here to report a chat offence;&r&fthat happened in &bPublic Chat&r&f."));
+        this.setItem(1, 4, new GUIItem(Material.EMPTY_MAP, "&3Private Messages", 1, ";&r&fClick here to report a chat offence;&r&fthat happened in &bPrivate Messages&r&f."));
+        this.setItem(1, 6, new GUIItem(Material.FIREWORK, "&3Party Chat", 1, ";&r&fClick here to report a chat offence;&r&fthat happened in &bParty Chat&r&f."));
     }
 
     public ChatType(AuroraMCPlayer player, int id, String name, PlayerReport.ReportReason reason) {

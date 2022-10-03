@@ -34,17 +34,17 @@ public class Report extends GUI {
 
         border(String.format("&3&lReport %s", name), "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&rPlease choose a type of report.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&r&fPlease choose a type of report.", (short)3, false, name));
 
-        this.setItem(1, 1, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Report", 1, ";&rClick here to view a list;&rof possible Chat offences."));
-        this.setItem(1, 3, new GUIItem(Material.SIGN, "&3&lMisc Report", 1, ";&rClick here to view a list;&rof possible Misc offences."));
-        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lHacking Report", 1, ";&rClick here to view a list;&rof possible Hacking offences.");
+        this.setItem(1, 1, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Report", 1, ";&r&fClick here to view a list;&r&fof possible Chat offences."));
+        this.setItem(1, 3, new GUIItem(Material.SIGN, "&3&lMisc Report", 1, ";&r&fClick here to view a list;&r&fof possible Misc offences."));
+        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lHacking Report", 1, ";&r&fClick here to view a list;&r&fof possible Hacking offences.");
         ItemStack itemStack = guiItem.getItem();
         ItemMeta meta = itemStack.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemStack.setItemMeta(meta);
         this.setItem(1, 5, new GUIItem(itemStack));
-        this.setItem(1, 7, new GUIItem(Material.NAME_TAG, "&3&lInappropriate Name Report", 1, ";&rClick here to report this username;&rfor reviewal by our Leadership team."));
+        this.setItem(1, 7, new GUIItem(Material.NAME_TAG, "&3&lInappropriate Name Report", 1, ";&r&fClick here to report this username;&r&ffor reviewal by our Leadership team."));
     }
 
     @Override

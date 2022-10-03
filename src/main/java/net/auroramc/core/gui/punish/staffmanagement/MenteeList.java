@@ -38,7 +38,7 @@ public class MenteeList extends GUI {
         int row = 0;
         for (Mentee mentee : clickedMentor.getMentees()) {
             List<Punishment> punishments = AuroraMCAPI.getDbManager().getUnprocessedPunishments(mentee.getAmcId());
-            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Pending Punishments", mentee.getName()), 1, String.format("&rLook at %s's pending punishments.", mentee.getName()), (short)3, punishments.size() > 0, mentee.getName()));
+            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Pending Punishments", mentee.getName()), 1, String.format("&r&fLook at %s's pending punishments.", mentee.getName()), (short)3, punishments.size() > 0, mentee.getName()));
             column++;
             if (column == 9) {
                 column = 0;

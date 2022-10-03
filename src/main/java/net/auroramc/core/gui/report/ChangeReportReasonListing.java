@@ -36,7 +36,7 @@ public class ChangeReportReasonListing extends GUI {
 
         border("&3&lChange Report Reason", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lChange Report Reason", 1, "&rPlease choose a reason.", (short)3, false, player.getActiveReport().getSuspectName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lChange Report Reason", 1, "&r&fPlease choose a reason.", (short)3, false, player.getActiveReport().getSuspectName()));
 
         this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == type).collect(Collectors.toList());
         if (reportReasons.size() > 10) {
@@ -54,7 +54,7 @@ public class ChangeReportReasonListing extends GUI {
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
 
-            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to accept this;&rreport as **%s**", reason.getName()));
+            GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to accept this;&r&freport as **%s**", reason.getName()));
             ItemStack itemStack = guiItem.getItem();
             ItemMeta meta = itemStack.getItemMeta();
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -106,7 +106,7 @@ public class ChangeReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName()));
+                GUIItem guiItem = new GUIItem(((type == PlayerReport.ReportType.MISC)?Material.SIGN:((type == PlayerReport.ReportType.CHAT)?Material.BOOK_AND_QUILL:Material.IRON_SWORD)), "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to report this;&r&fplayer for **%s**", reason.getName()));
                 ItemStack itemStack = guiItem.getItem();
                 ItemMeta meta = itemStack.getItemMeta();
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
