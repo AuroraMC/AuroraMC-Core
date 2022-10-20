@@ -31,32 +31,31 @@ public class IncomingProtocolMessageThread extends Thread {
 
     @Override
     public void run() {
-        try (ServerSocket socket = new ServerSocket(port)) {
-            this.socket = socket;
-            while (listening) {
-                try (Socket connection = socket.accept()) {
-                    ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
-                    ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
-                    if (!message.getAuthenticationKey().equals(AuroraMCAPI.getServerInfo().getAuthKey())) {
-                        //Check if the auth keys match.
-                        return;
-                    }
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            ProtocolMessageEvent event = new ProtocolMessageEvent(message);
-                            Bukkit.getPluginManager().callEvent(event);
+        while (listening) {
+            try (ServerSocket socket = new ServerSocket(port)) {
+                this.socket = socket;
+                while (listening) {
+                    try (Socket connection = socket.accept()) {
+                        ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
+                        ProtocolMessage message = (ProtocolMessage) objectInputStream.readObject();
+                        if (!message.getAuthenticationKey().equals(AuroraMCAPI.getServerInfo().getAuthKey())) {
+                            //Check if the auth keys match.
+                            return;
                         }
-                    }.runTaskAsynchronously(AuroraMCAPI.getCore());
-                } catch (StreamCorruptedException e) {
-                    e.printStackTrace();
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                ProtocolMessageEvent event = new ProtocolMessageEvent(message);
+                                Bukkit.getPluginManager().callEvent(event);
+                            }
+                        }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                    } catch (StreamCorruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
-            listening = false;
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
