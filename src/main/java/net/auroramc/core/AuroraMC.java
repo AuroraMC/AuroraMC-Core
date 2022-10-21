@@ -419,6 +419,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProtocolMessageReceivedListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

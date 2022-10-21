@@ -19,6 +19,7 @@ import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.TextFormatter;
 import net.auroramc.core.api.utils.gui.GUI;
+import net.auroramc.core.api.utils.holograms.Hologram;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
@@ -58,6 +59,7 @@ public class AuroraMCAPI {
     private static boolean rulesLoading;
 
     private static Map<Integer, EntityPlayer> fakePlayers;
+    private static List<Hologram> holograms;
 
     static {
         players = new HashMap<>();
@@ -352,6 +354,10 @@ public class AuroraMCAPI {
 
     public static void setTestServer(boolean testServer) {
         AuroraMCAPI.testServer = testServer;
+    }
+
+    public static List<Hologram> getHolograms() {
+        return holograms;
     }
 }
 
