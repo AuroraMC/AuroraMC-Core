@@ -80,6 +80,7 @@ public class AuroraMCPlayer {
 
     protected boolean dead;
     protected boolean hidden;
+    protected boolean moved;
 
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
@@ -89,6 +90,7 @@ public class AuroraMCPlayer {
         loaded = false;
         dead = false;
         hidden = false;
+        moved = false;
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
@@ -1224,5 +1226,13 @@ public class AuroraMCPlayer {
                 }
             }
         }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+    }
+
+    public boolean hasMoved() {
+        return moved;
+    }
+
+    public void moved() {
+        moved = true;
     }
 }
