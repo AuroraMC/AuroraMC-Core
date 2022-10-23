@@ -106,7 +106,7 @@ public class JoinListener implements Listener {
                     " \n" +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
         }
-        for (Hologram hologram : AuroraMCAPI.getHolograms()) {
+        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
             hologram.onJoin(e.getPlayer());
         }
     }

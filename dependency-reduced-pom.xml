@@ -41,6 +41,7 @@
                 <transformer>
                   <manifestEntries>
                     <Jenkins-Build-Number>${BUILD_NUMBER}</Jenkins-Build-Number>
+                    <Branch>${BRANCH_NAME}</Branch>
                     <Jenkins-Build-Url>${BUILD_URL}</Jenkins-Build-Url>
                     <Git-Commit>${GIT_COMMIT}</Git-Commit>
                     <Implementation-Version>${project.version}.${GIT_COMMIT}.${BUILD_NUMBER}</Implementation-Version>
