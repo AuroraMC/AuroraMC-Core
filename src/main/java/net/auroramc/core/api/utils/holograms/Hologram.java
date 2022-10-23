@@ -4,7 +4,11 @@
 
 package net.auroramc.core.api.utils.holograms;
 
+import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.utils.holograms.personal.HologramClickHandler;
+import net.auroramc.core.api.utils.holograms.personal.PersonalHologramLine;
+import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -16,11 +20,15 @@ public class Hologram {
     private final Map<Integer, HologramLine> lines;
     private Location location;
     private boolean spawned;
+    private final AuroraMCPlayer player;
+    private final HologramClickHandler clickHandler;
 
-    public Hologram(Location location) {
+    public Hologram(AuroraMCPlayer player, Location location, HologramClickHandler clickHandler) {
         this.location = location;
         spawned = false;
         lines = new HashMap<>();
+        this.player = player;
+        this.clickHandler = clickHandler;
     }
 
     public void move(Location location) {
@@ -32,7 +40,7 @@ public class Hologram {
         }
     }
 
-    public void addLine(int line, String text, HologramClickHandler handler) {
+    public void addLine(int line, String text) {
         if (line < 1) {
             throw new IllegalArgumentException("A line number below 1 was used.");
         }
@@ -49,7 +57,12 @@ public class Hologram {
             }
         }
 
-        HologramLine hl = new HologramLine(this, text, line, handler);
+        HologramLine hl;
+        if (player != null) {
+            hl = new PersonalHologramLine(this, text, line);
+        } else {
+            hl = new UniversalHologramLine(this, text, line);
+        }
         lines.put(line, hl);
     }
 
@@ -71,6 +84,9 @@ public class Hologram {
     }
 
     public void setLines(List<HologramLine> lines) {
+        if (player != null) {
+            AuroraMCAPI.deregisterHologram(this);
+        }
         for (HologramLine line : this.lines.values()) {
             if (spawned) line.despawn();
         }
@@ -81,6 +97,9 @@ public class Hologram {
             line.setHologram(this);
             if (spawned) line.spawn();
         }
+        if (spawned && player != null) {
+            AuroraMCAPI.registerHologram(this);
+        }
     }
 
     public void spawn() {
@@ -89,6 +108,9 @@ public class Hologram {
             line.spawn();
         }
         spawned = true;
+        if (player != null) {
+            AuroraMCAPI.registerHologram(this);
+        }
     }
 
     public void despawn() {
@@ -97,30 +119,50 @@ public class Hologram {
             line.despawn();
         }
         spawned = false;
+        if (player != null) {
+            AuroraMCAPI.deregisterHologram(this);
+        }
     }
 
     public void update() {
+        if (!spawned) return;
+        if (player != null) {
+            AuroraMCAPI.deregisterHologram(this);
+        }
         for (HologramLine line : lines.values()) {
             line.update();
+        }
+        if (player != null) {
+            AuroraMCAPI.registerHologram(this);
         }
     }
 
     public void onJoin(AuroraMCPlayer player) {
-        if (!spawned) return;
+        if (!spawned || (this.player != null && !player.equals(this.player))) return;
         for (HologramLine line : lines.values()) {
             line.onJoin(player);
         }
     }
 
+    public void onClick() {
+        if (player != null && clickHandler != null) {
+            clickHandler.onClick(player);
+        }
+    }
+
+    public AuroraMCPlayer getPlayer() {
+        return player;
+    }
+
     public void onLeave(AuroraMCPlayer player) {
-        if (!spawned) return;
+        if (!spawned || (this.player != null && !player.equals(this.player))) return;
         for (HologramLine line : lines.values()) {
             line.onLeave(player);
         }
     }
 
     public void moveCheck(AuroraMCPlayer player) {
-        if (!spawned) return;
+        if (!spawned || (this.player != null && !player.equals(this.player))) return;
         for (HologramLine line : lines.values()) {
             line.moveCheck(player);
         }
@@ -132,5 +174,9 @@ public class Hologram {
 
     public Map<Integer, HologramLine> getLines() {
         return lines;
+    }
+
+    public boolean isPersonal() {
+        return player != null;
     }
 }

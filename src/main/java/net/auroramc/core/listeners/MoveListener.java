@@ -7,10 +7,9 @@ package net.auroramc.core.listeners;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.holograms.Hologram;
+import net.auroramc.core.api.utils.holograms.HologramLine;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -22,7 +21,7 @@ public class MoveListener implements Listener {
     public void onMove(PlayerMoveEvent e) {
         if (AuroraMCAPI.getPlayer(e.getPlayer()) != null && !e.getFrom().equals(e.getTo())) {
             AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
-            for (Hologram hologram : AuroraMCAPI.getHolograms()) {
+            for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
                 hologram.moveCheck(player);
             }
             if (!player.hasMoved()) {
