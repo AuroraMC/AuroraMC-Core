@@ -42,7 +42,7 @@ public class CommandPlugins extends Command {
                 "and services to allow our network to operate. As you seem to be a curious person, we thought we'd tell you the plugin we've built" +
                 "and what they do! To view more information on each of these, hover over the names below.\n\n"));
 
-        TextComponent arrow = new TextComponent(" ➤");
+        TextComponent arrow = new TextComponent(" ➤ ");
         arrow.setColor(ChatColor.DARK_AQUA);
 
         textComponent.addExtra(arrow);
