@@ -125,7 +125,7 @@ public class CommandPlugins extends Command {
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
 
-        component = new TextComponent("\nTo view more information on how the network functions, click here to visit our \"How AuroraMC Works\" thread!\n");
+        component = new TextComponent("\nTo view more information on how the network functions, click here to visit our \"How AuroraMC Works\" thread!");
         component.setColor(ChatColor.WHITE);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
         textComponent.addExtra(component);
