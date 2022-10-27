@@ -33,7 +33,7 @@ public class MentorList extends GUI {
         int column = 0;
         int row = 0;
         for (Mentor mentor : mentors) {
-            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Mentees", mentor.getName()), 1, String.format("&rLook at %s's mentees.", mentor.getName()), (short)3, false, mentor.getName()));
+            this.setItem(row, column, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s's Mentees", mentor.getName()), 1, String.format("&r&fLook at %s's mentees.", mentor.getName()), (short)3, false, mentor.getName()));
             column++;
             if (column == 9) {
                 column = 0;

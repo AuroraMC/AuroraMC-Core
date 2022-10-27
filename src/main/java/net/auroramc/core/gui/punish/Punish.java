@@ -33,20 +33,20 @@ public class Punish extends GUI {
         this.id = id;
         this.player = player;
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lPunish %s", name), 1, "&rPlease choose a punishment type.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lPunish %s", name), 1, "&r&fPlease choose a punishment type.", (short)3, false, name));
 
-        this.setItem(1, 2, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Rules", 1, String.format("&rPunish %s for a chat rule", name)));
-        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lGame Rules", 1, String.format("&rPunish %s for a game rule", name));
+        this.setItem(1, 2, new GUIItem(Material.BOOK_AND_QUILL, "&3&lChat Rules", 1, String.format("&r&fPunish %s for a chat rule", name)));
+        GUIItem guiItem = new GUIItem(Material.IRON_SWORD, "&3&lGame Rules", 1, String.format("&r&fPunish %s for a game rule", name));
         ItemStack itemStack = guiItem.getItem();
         ItemMeta meta = itemStack.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         itemStack.setItemMeta(meta);
         this.setItem(1, 4, new GUIItem(itemStack));
-        this.setItem(1, 6, new GUIItem(Material.SIGN, "&3&lMisc Rules", 1, String.format("&rPunish %s for a miscellaneous rule", name)));
+        this.setItem(1, 6, new GUIItem(Material.SIGN, "&3&lMisc Rules", 1, String.format("&r&fPunish %s for a miscellaneous rule", name)));
 
         if (player.getRank().hasPermission("admin")) {
-            this.setItem(2, 3, new GUIItem(Material.REDSTONE_BLOCK, "&4&lGlobal Account Suspension", 1, String.format("&rGlobally suspend %s's access to AuroraMC Services", name)));
-            this.setItem(2, 5, new GUIItem(Material.PAPER, "&7&lAdmin Notes", 1, String.format("&rView %s's notes", name)));
+            this.setItem(2, 3, new GUIItem(Material.REDSTONE_BLOCK, "&4&lGlobal Account Suspension", 1, String.format("&r&fGlobally suspend %s's access to AuroraMC Services", name)));
+            this.setItem(2, 5, new GUIItem(Material.PAPER, "&7&lAdmin Notes", 1, String.format("&r&fView %s's notes", name)));
         }
     }
 

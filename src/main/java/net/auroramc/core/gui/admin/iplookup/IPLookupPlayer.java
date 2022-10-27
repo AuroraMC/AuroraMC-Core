@@ -20,11 +20,11 @@ public class IPLookupPlayer extends GUI {
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lIP Lookup for %s", playerProfile.getPlayerName()), 1, "", (short)3, false, playerProfile.getPlayerName()));
 
-        this.setItem(1, 2, new GUIItem(Material.BOOKSHELF, "&3&lIP Profiles", 1, String.format("&rThis user has **%s** IP Profiles.;;&rMost recent profiles:;**IP Profile #%s**", playerProfile.getNumberOfProfiles(), String.join("**;**IP Profile #", playerProfile.getProfiles()))));
-        this.setItem(1, 4, new GUIItem(Material.BOOK, "&3&lLatest Information", 1, String.format("&rLatest IP Profile: **%s**;;&rThe last person to join on this IP was:;**%s**", playerProfile.getLatestProfile(), playerProfile.getLastUsedBy())));
-        this.setItem(1, 6, new GUIItem(Material.BOOK_AND_QUILL, "&3&lAlternate Accounts", 1, String.format(";&rTheir IP Profiles are;&rshared with **%s** other accounts.;;&rMost recent alts:;**%s**", playerProfile.getSharedAccounts(), String.join("**;**", playerProfile.getMostRecentAlts()))));
-        this.setItem(2, 3, new GUIItem(Material.EMERALD_BLOCK, "&3&lPunishment Information", 1, String.format(";&rOf all known alts:;**%s** are currently muted.;**%s** are currently banned.", playerProfile.getMutes(), playerProfile.getBans())));
-        this.setItem(2, 5, new GUIItem(Material.REDSTONE_BLOCK, "&3&lGlobal Account Suspension Status", 1, String.format(";&rStatus: %s%s", ((playerProfile.isGlobalAccountSuspended())?"&cSuspended":"&aNot Suspended"), ((playerProfile.isGlobalAccountSuspended())?";&rReason: **" + playerProfile.getGlobalAccountSuspensionReason() + "**":""))));
+        this.setItem(1, 2, new GUIItem(Material.BOOKSHELF, "&3&lIP Profiles", 1, String.format("&r&fThis user has **%s** IP Profiles.;;&r&fMost recent profiles:;**IP Profile #%s**", playerProfile.getNumberOfProfiles(), String.join("**;**IP Profile #", playerProfile.getProfiles()))));
+        this.setItem(1, 4, new GUIItem(Material.BOOK, "&3&lLatest Information", 1, String.format("&r&fLatest IP Profile: **%s**;;&r&fThe last person to join on this IP was:;**%s**", playerProfile.getLatestProfile(), playerProfile.getLastUsedBy())));
+        this.setItem(1, 6, new GUIItem(Material.BOOK_AND_QUILL, "&3&lAlternate Accounts", 1, String.format(";&r&fTheir IP Profiles are;&r&fshared with **%s** other accounts.;;&r&fMost recent alts:;**%s**", playerProfile.getSharedAccounts(), String.join("**;**", playerProfile.getMostRecentAlts()))));
+        this.setItem(2, 3, new GUIItem(Material.EMERALD_BLOCK, "&3&lPunishment Information", 1, String.format(";&r&fOf all known alts:;**%s** are currently muted.;**%s** are currently banned.", playerProfile.getMutes(), playerProfile.getBans())));
+        this.setItem(2, 5, new GUIItem(Material.REDSTONE_BLOCK, "&3&lGlobal Account Suspension Status", 1, String.format(";&r&fStatus: %s%s", ((playerProfile.isGlobalAccountSuspended())?"&cSuspended":"&aNot Suspended"), ((playerProfile.isGlobalAccountSuspended())?";&r&fReason: **" + playerProfile.getGlobalAccountSuspensionReason() + "**":""))));
     }
 
     @Override

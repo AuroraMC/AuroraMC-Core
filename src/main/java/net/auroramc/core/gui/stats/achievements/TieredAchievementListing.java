@@ -55,12 +55,12 @@ public class TieredAchievementListing extends GUI {
             if (targetStatistics.getAchievementsGained().containsKey(achievement)) {
                 int achievedTier = targetStatistics.getAchievementsGained().get(achievement);
                 if (tier.getTier() <= achievedTier) {
-                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()) + ";;&r&aAchieved!", 40, ";&r", false), (short)10));
+                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r&f" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()) + ";;&r&aAchieved!", 40, ";&r&f", false), (short)10));
                 } else {
-                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((targetStatistics.getAchievementProgress().containsKey(achievement))?targetStatistics.getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
+                    this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r&f" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r&f", false) + String.format(";;&r&f&r&fProgress: **%s/%s**", ((targetStatistics.getAchievementProgress().containsKey(achievement))?targetStatistics.getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
                 }
             } else {
-                this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r", false) + String.format(";;&r&rProgress: **%s/%s**", ((targetStatistics.getAchievementProgress().containsKey(achievement))?targetStatistics.getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
+                this.setItem(1, column, new GUIItem(Material.INK_SACK, "&3&lTier " + tier.getTier(), 1, "&r&f" + WordUtils.wrap(String.format(achievement.getDescription(), tier.getRequirement()), 40, ";&r&f", false) + String.format(";;&r&f&r&fProgress: **%s/%s**", ((targetStatistics.getAchievementProgress().containsKey(achievement))?targetStatistics.getAchievementProgress().get(achievement):0), tier.getRequirement()), (short)8));
             }
             column++;
         }

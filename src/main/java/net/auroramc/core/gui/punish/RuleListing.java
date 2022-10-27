@@ -38,7 +38,7 @@ public class RuleListing extends GUI {
         this.extraDetails = extraDetails;
         this.history = new PunishmentHistory(id);
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lPunish %s", name), 1, "&rPlease choose a rule.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lPunish %s", name), 1, "&r&fPlease choose a rule.", (short)3, false, name));
 
         for (Punishment punishment : punishmentHistory) {
             history.registerPunishment(punishment);
@@ -51,10 +51,10 @@ public class RuleListing extends GUI {
             //For each weight
             row = 2;
             column = (i-1)*2;
-            this.setItem(1, (i-1)*2, new GUIItem(Material.WOOL, Weight.WEIGHTS[i-1], 1, "&rPunishment Length: &b" + history.getType(type).generateLength(i).getFormatted(), Weight.WEIGHT_ICON_DATA[i-1]));
+            this.setItem(1, (i-1)*2, new GUIItem(Material.WOOL, Weight.WEIGHTS[i-1], 1, "&r&fPunishment Length: &b" + history.getType(type).generateLength(i).getFormatted(), Weight.WEIGHT_ICON_DATA[i-1]));
             for (Rule rule : AuroraMCAPI.getRules().getType(type).getWeight(i).getRules()) {
                 if (rule.isActive()) {
-                    this.setItem(row, column, new GUIItem(Material.BOOK, String.format("&3&l%s", rule.getRuleName()), 1, String.format("&r%s;;&rID: &b%s", WordUtils.wrap(rule.getRuleDescription(), 40, ";&r", false), rule.getRuleID())));
+                    this.setItem(row, column, new GUIItem(Material.BOOK, String.format("&3&l%s", rule.getRuleName()), 1, String.format("&r&f%s;;&r&fID: &b%s", WordUtils.wrap(rule.getRuleDescription(), 40, ";&r&f", false), rule.getRuleID())));
                     row++;
                     if (row > 5) {
                         column++;

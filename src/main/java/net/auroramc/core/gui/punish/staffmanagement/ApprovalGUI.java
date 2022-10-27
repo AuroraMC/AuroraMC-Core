@@ -46,8 +46,8 @@ public class ApprovalGUI extends GUI {
         this.clickedPunishment = clickedPunishment;
         this.punishments = punishments;
 
-        this.setItem(1, 1, new GUIItem(Material.STAINED_CLAY, "&a&lApprove this punishment", 1, "&rShift-Click this to approve the punishment.", (short) 5));
-        this.setItem(1, 7, new GUIItem(Material.STAINED_CLAY, "&c&lDeny this punishment", 1, "&rShift-Click this to deny the punishment;&rand remove it from the user's punishment history.", (short) 14));
+        this.setItem(1, 1, new GUIItem(Material.STAINED_CLAY, "&a&lApprove this punishment", 1, "&r&fShift-Click this to approve the punishment.", (short) 5));
+        this.setItem(1, 7, new GUIItem(Material.STAINED_CLAY, "&c&lDeny this punishment", 1, "&r&fShift-Click this to deny the punishment;&r&fand remove it from the user's punishment history.", (short) 14));
 
         Rule rule = AuroraMCAPI.getRules().getRule(clickedPunishment.getRuleID());
         String reason;
@@ -57,7 +57,7 @@ public class ApprovalGUI extends GUI {
                 break;
             case 6:
             case 3:
-                reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r", rule.getRuleName(), clickedPunishment.getExtraNotes()), 43, ";&b", false);
+                reason = WordUtils.wrap(String.format("%s - %s [SM Approved]&r&f", rule.getRuleName(), clickedPunishment.getExtraNotes()), 43, ";&b", false);
                 break;
             default:
                 reason = WordUtils.wrap(String.format("&b%s - %s", rule.getRuleName(), clickedPunishment.getExtraNotes()), 43, ";&b", false);
@@ -71,7 +71,7 @@ public class ApprovalGUI extends GUI {
         }
 
         String[] weights = new String[]{"Light", "Medium", "Heavy", "Severe", "Extreme"};
-        String lore = String.format("&rPunished: **%s**;&rPunishment Code: **%s**;&rReason:;**%s**;&rWeight: **%s**;&rIssued at: **%s**;&rLength: **%s**" + ((clickedMentee == null) ? ";&rIssued by: **%s**" : ""), clickedPunishment.getPunishedName(), clickedPunishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(clickedPunishment.getIssued())).toString(), length.getFormatted(), clickedPunishment.getPunisherName());
+        String lore = String.format("&r&fPunished: **%s**;&r&fPunishment Code: **%s**;&r&fReason:;**%s**;&r&fWeight: **%s**;&r&fIssued at: **%s**;&r&fLength: **%s**" + ((clickedMentee == null) ? ";&r&fIssued by: **%s**" : ""), clickedPunishment.getPunishedName(), clickedPunishment.getPunishmentCode(), reason, weights[rule.getWeight() - 1], (new Date(clickedPunishment.getIssued())).toString(), length.getFormatted(), clickedPunishment.getPunisherName());
 
         switch (rule.getType()) {
             case 1:
