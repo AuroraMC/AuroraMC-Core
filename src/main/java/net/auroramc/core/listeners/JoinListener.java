@@ -15,6 +15,7 @@ import net.auroramc.core.api.punishments.Ban;
 import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.punishments.Rule;
 import net.auroramc.core.api.utils.TabCompleteInjector;
+import net.auroramc.core.api.utils.holograms.Hologram;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -104,6 +105,9 @@ public class JoinListener implements Listener {
                     "&fTo unvanish, simply use /vanish.\n" +
                     " \n" +
                     "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
+        }
+        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+            hologram.onJoin(e.getPlayer());
         }
     }
 

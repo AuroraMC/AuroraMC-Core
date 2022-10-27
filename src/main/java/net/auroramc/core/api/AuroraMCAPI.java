@@ -19,10 +19,11 @@ import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.utils.ChatFilter;
 import net.auroramc.core.api.utils.TextFormatter;
 import net.auroramc.core.api.utils.gui.GUI;
+import net.auroramc.core.api.utils.holograms.Hologram;
+import net.auroramc.core.api.utils.holograms.HologramLine;
+import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -58,6 +59,7 @@ public class AuroraMCAPI {
     private static boolean rulesLoading;
 
     private static Map<Integer, EntityPlayer> fakePlayers;
+    private static Map<Integer, Hologram> holograms;
 
     static {
         players = new HashMap<>();
@@ -77,6 +79,7 @@ public class AuroraMCAPI {
         cosmeticsEnabled = true;
 
         fakePlayers = new HashMap<>();
+        holograms = new HashMap<>();
     }
 
 
@@ -352,6 +355,22 @@ public class AuroraMCAPI {
 
     public static void setTestServer(boolean testServer) {
         AuroraMCAPI.testServer = testServer;
+    }
+
+    public static Map<Integer, Hologram> getHolograms() {
+        return holograms;
+    }
+
+    public static void registerHologram(Hologram hologram) {
+        for (HologramLine value : hologram.getLines().values()) {
+            holograms.put(value.getArmorStand().getId(), hologram);
+        }
+    }
+
+    public static void deregisterHologram(Hologram hologram) {
+        for (HologramLine value : hologram.getLines().values()) {
+            holograms.remove(value.getArmorStand().getId());
+        }
     }
 }
 

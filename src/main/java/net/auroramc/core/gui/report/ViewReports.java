@@ -32,7 +32,7 @@ public class ViewReports extends GUI {
 
         border("&3&lYour Reports", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Reports", 1, ";&rView all reports you have submitted.", (short)3, false, player.getName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Reports", 1, ";&r&fView all reports you have submitted.", (short)3, false, player.getName()));
 
         if (reports.size() > 28) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));
@@ -59,13 +59,13 @@ public class ViewReports extends GUI {
 
             String lore;
             if (report.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME) {
-                lore = String.format("&rPlayer Reported: **%s**;&rDate: **%s**;&r ;&rOutcome: %s", report.getSuspectName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
+                lore = String.format("&r&fPlayer Reported: **%s**;&r&fDate: **%s**;&r&f ;&r&fOutcome: %s", report.getSuspectName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
             } else {
-                lore = String.format("&rPlayer Reported: **%s**;&rReason: **%s**;&rDate: **%s**;&r ;&rOutcome: %s", report.getSuspectName(), report.getReason().getName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
+                lore = String.format("&r&fPlayer Reported: **%s**;&r&fReason: **%s**;&r&fDate: **%s**;&r&f ;&r&fOutcome: %s", report.getSuspectName(), report.getReason().getName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
             }
 
             if (report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED && report.getType() != PlayerReport.ReportType.INAPPROPRIATE_NAME && report.getReason() != report.getReasonAccepted()) {
-                lore = String.format("%s;&rReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
+                lore = String.format("%s;&r&fReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
             }
 
             GUIItem guiItem = new GUIItem(item, name, 1, lore);
@@ -148,13 +148,13 @@ public class ViewReports extends GUI {
 
                 String lore;
                 if (report.getType() == PlayerReport.ReportType.INAPPROPRIATE_NAME) {
-                    lore = String.format("&rPlayer Reported: **%s**;&rDate: **%s**;&r ;&rOutcome: %s", report.getSuspectName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
+                    lore = String.format("&r&fPlayer Reported: **%s**;&r&fDate: **%s**;&r&f ;&r&fOutcome: %s", report.getSuspectName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
                 } else {
-                    lore = String.format("&rPlayer Reported: **%s**;&rReason: **%s**;&rDate: **%s**;&r ;&rOutcome: %s", report.getSuspectName(), report.getReason().getName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
+                    lore = String.format("&r&fPlayer Reported: **%s**;&r&fReason: **%s**;&r&fDate: **%s**;&r&f ;&r&fOutcome: %s", report.getSuspectName(), report.getReason().getName(), new Date(report.getTimestamp()), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
                 }
 
                 if (report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED && report.getType() != PlayerReport.ReportType.INAPPROPRIATE_NAME && report.getReason() != report.getReasonAccepted()) {
-                    lore = String.format("%s;&rReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
+                    lore = String.format("%s;&r&fReason Accepted: **%s**", lore, report.getReasonAccepted().getName());
                 }
 
                 GUIItem guiItem = new GUIItem(guiitem, name, 1, lore);

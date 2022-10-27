@@ -48,7 +48,7 @@ public class SetRank extends GUI {
         this.currentRank = currentRank;
         this.variation = variation;
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lSet %s's Rank", name), 1, String.format("&rCurrent Rank: &b%s", currentRank.getName()), (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lSet %s's Rank", name), 1, String.format("&r&fCurrent Rank: &b%s", currentRank.getName()), (short)3, false, name));
 
         int playerCat = 2, socialCat = 2, contentCat = 2, moderationCat = 2, leadershipCat = 2;
         this.setItem(1, 0, new GUIItem(Material.WOOL, "&f&lPlayer Ranks", 1, "&r&7Player/Premium Ranks.", (short)0));
@@ -69,28 +69,28 @@ public class SetRank extends GUI {
                 for (Rank rank : ranks) {
                     switch (rank.getCategory()) {
                         case PLAYER:
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                             break;
                         case SOCIAL_MEDIA:
-                            this.setItem(socialCat, 2, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(socialCat, 2, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             socialCat++;
                             break;
                         case CONTENT_CREATOR:
                             if (rank.getId() != player.getRank().getId() && rank.getId() < player.getRank().getId()) {
-                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             } else {
                                 this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             }
                             contentCat++;
                             break;
                         case MODERATION:
-                            this.setItem(moderationCat, 6, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(moderationCat, 6, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             moderationCat++;
                             break;
                         case LEADERSHIP:
                             if (rank.getId() != player.getRank().getId() && rank.getId() < player.getRank().getId() && player.getRank().hasPermission("admin")) {
-                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             } else {
                                 this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             }
@@ -104,7 +104,7 @@ public class SetRank extends GUI {
                 if (currentRank.getCategory() == Rank.RankCategory.SOCIAL_MEDIA) {
                     for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }
@@ -121,7 +121,7 @@ public class SetRank extends GUI {
                 //Generate GUI
                 for (Rank rank : ranks) {
                     if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                        this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                        this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                         playerCat++;
                     }
                 }
@@ -130,7 +130,7 @@ public class SetRank extends GUI {
                 if (currentRank.getCategory() == Rank.RankCategory.CONTENT_CREATOR) {
                     for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }
@@ -152,7 +152,7 @@ public class SetRank extends GUI {
                 if (currentRank.getCategory() == Rank.RankCategory.MODERATION) {
                     for (Rank rank : ranks) {
                         if (rank.getCategory() == Rank.RankCategory.PLAYER) {
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&rSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), rank.getColor()));
                             playerCat++;
                         }
                     }

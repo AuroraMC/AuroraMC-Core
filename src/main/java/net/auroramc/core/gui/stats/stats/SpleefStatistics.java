@@ -37,19 +37,19 @@ public class SpleefStatistics extends GUI {
 
         border(String.format("&b&l%s's Statistics", name), "");
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&b&l%s's Statistics", name), 1, "", (short) 3, false, name));
-        this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&rReturn to the statistics menu"));
+        this.setItem(0, 0, new GUIItem(Material.ARROW, "&3&lBACK", 1, "&r&fReturn to the statistics menu"));
 
-        this.setItem(2, 2, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rBlocks Broken: **" + targetStatistics.getStatistic(100, "blocksBroken") + "**;&rSnowballs Thrown: **" + targetStatistics.getStatistic(100, "snowballsThrown") + "**"));
+        this.setItem(2, 2, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&r&fBlocks Broken: **" + targetStatistics.getStatistic(100, "blocksBroken") + "**;&r&fSnowballs Thrown: **" + targetStatistics.getStatistic(100, "snowballsThrown") + "**"));
         long losses = (targetStatistics.getStatistic(100, "gamesPlayed") - targetStatistics.getStatistic(100, "gamesWon"));
         double wlr = ((losses == 0)?targetStatistics.getStatistic(100, "gamesWon"):(double)targetStatistics.getStatistic(100, "gamesWon")/losses);
         double finalWlr = (Math.round(wlr * 100))/100.0;
-        this.setItem(2, 4, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&rGames Played: **" + targetStatistics.getStatistic(100, "gamesPlayed") + "**;&rWins: **" + targetStatistics.getStatistic(100, "gamesWon") + "**;&rLosses: **" + losses + "**;&rWin/Loss Ratio: **" + finalWlr + "**;;&rCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "crownsEarned"))  + "**;&rTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "ticketsEarned")) + "**;&rExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "xpEarned")) + "**"));
+        this.setItem(2, 4, new GUIItem(Material.IRON_SPADE, "&b&lGame Statistics", 1, ";&r&fGames Played: **" + targetStatistics.getStatistic(100, "gamesPlayed") + "**;&r&fWins: **" + targetStatistics.getStatistic(100, "gamesWon") + "**;&r&fLosses: **" + losses + "**;&r&fWin/Loss Ratio: **" + finalWlr + "**;;&r&fCrowns Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "crownsEarned"))  + "**;&r&fTickets Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "ticketsEarned")) + "**;&r&fExperience Earned: **" + String.format("%,d", targetStatistics.getStatistic(100, "xpEarned")) + "**"));
         PlayerKitLevel spleefLevel = AuroraMCAPI.getDbManager().getKitLevel(playerId, 100, 0);
-        this.setItem(2, 6, new GUIItem(Material.IRON_SPADE, "&b&lKit Statistics", 1, ";&3&lSnowman Kit;&rLevel: **" + spleefLevel.getLevel() + "**;&rTotal XP: **" + String.format("%,d", spleefLevel.getTotalXpEarned()) + "**;&rCurrent Upgrade: **" + spleefLevel.getLatestUpgrade() + "**"));
+        this.setItem(2, 6, new GUIItem(Material.IRON_SPADE, "&b&lKit Statistics", 1, ";&3&lSnowman Kit;&r&fLevel: **" + spleefLevel.getLevel() + "**;&r&fTotal XP: **" + String.format("%,d", spleefLevel.getTotalXpEarned()) + "**;&r&fCurrent Upgrade: **" + spleefLevel.getLatestUpgrade() + "**"));
 
         long totalGameAchievements = AuroraMCAPI.getAchievements().values().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).filter((Achievement::isVisible)).count() + player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100 && !achievement.isVisible()).count();
 
-        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bSpleef Achievements", 1, String.format("&rAchieved: **%s**;&rTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).count(), totalGameAchievements)));
+        this.setItem(3, 4, new GUIItem(Material.BOOK, "&bSpleef Achievements", 1, String.format("&r&fAchieved: **%s**;&r&fTotal Achievements: **%s**;;&aClick to view more!", player.getStats().getAchievementsGained().keySet().stream().filter(achievement -> achievement.getCategory() == Achievement.AchievementCategory.GAME && achievement.getGameId() == 100).count(), totalGameAchievements)));
     }
 
     @Override
