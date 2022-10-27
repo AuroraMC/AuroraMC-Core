@@ -124,9 +124,11 @@ public class PersonalHologramLine extends HologramLine {
     }
 
     public void onLeave(AuroraMCPlayer player) {
-        armorStand.dead = true;
-        armorStand = null;
-        trackedPlayers.clear();
+        if (armorStand != null) {
+            armorStand.dead = true;
+            armorStand = null;
+            trackedPlayers.clear();
+        }
     }
 
     
