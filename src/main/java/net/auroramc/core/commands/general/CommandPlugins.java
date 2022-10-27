@@ -124,9 +124,8 @@ public class CommandPlugins extends Command {
                 " manages how maps are pushed to the network, in-progress builds etc.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
-        textComponent.addExtra(arrow);
 
-        component = new TextComponent("To view more information on how the network functions, please visit our \"How AuroraMC Works\" thread!\n");
+        component = new TextComponent("\nTo view more information on how the network functions, please visit our \"How AuroraMC Works\" thread!\n");
         component.setColor(ChatColor.AQUA);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
         textComponent.addExtra(component);
