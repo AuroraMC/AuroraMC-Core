@@ -39,7 +39,7 @@ public class ChatReportReasonListing extends GUI {
 
         border(String.format("&3&lReport %s", name), "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&rPlease choose a reason.", (short)3, false, name));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&r&fPlease choose a reason.", (short)3, false, name));
 
         this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == PlayerReport.ReportType.CHAT).collect(Collectors.toList());
         if (reportReasons.size() > 10) {
@@ -56,7 +56,7 @@ public class ChatReportReasonListing extends GUI {
                 break;
             }
             PlayerReport.ReportReason reason = reportReasons.get(pi);
-            this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+            this.setItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to report this;&r&fplayer for **%s**", reason.getName())));
             column++;
             if (column == 7) {
                 row++;
@@ -103,7 +103,7 @@ public class ChatReportReasonListing extends GUI {
                 }
 
                 PlayerReport.ReportReason reason = reportReasons.get(pi);
-                this.updateItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&rClick here to report this;&rplayer for **%s**", reason.getName())));
+                this.updateItem(row, column, new GUIItem(Material.BOOK_AND_QUILL, "&3&l" + reason.getName(), 1, String.format(";&r&fClick here to report this;&r&fplayer for **%s**", reason.getName())));
             }
         } else {
             PlayerReport.ReportReason reason = reportReasons.get(((currentPage - 1) * 10) + ((row - 2) * 5) + (column - 2));

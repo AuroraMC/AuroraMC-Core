@@ -10,6 +10,7 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.events.FakePlayerInteractEvent;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
+import net.auroramc.core.api.utils.holograms.Hologram;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
@@ -118,6 +119,22 @@ public class TabCompleteInjector {
                         }
                         FakePlayerInteractEvent event = new FakePlayerInteractEvent(player, AuroraMCAPI.getFakePlayers().get(entityId));
                         Bukkit.getPluginManager().callEvent(event);
+                    } else if (AuroraMCAPI.getHolograms().containsKey(entityId)) {
+                        Hologram hologram = AuroraMCAPI.getHolograms().get(entityId);
+                        if (!hologram.isPersonal()) {
+                            //Not personal, click handlers aren't applicable to universal holograms.
+                            return;
+                        }
+                        AuroraMCPlayer player = AuroraMCAPI.getPlayer(pl);
+                        if (player == null) {
+                            //Player has not yet loaded fully.
+                            return;
+                        }
+                        if (!player.isLoaded()) {
+                            //Player has not yet loaded fully.
+                            return;
+                        }
+                        AuroraMCAPI.getHolograms().get(entityId).onClick();
                     }
                 }
 

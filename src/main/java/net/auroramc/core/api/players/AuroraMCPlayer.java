@@ -23,6 +23,7 @@ import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.Pronoun;
+import net.auroramc.core.api.utils.holograms.Hologram;
 import net.auroramc.core.gui.report.Report;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -34,10 +35,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AuroraMCPlayer {
@@ -80,15 +78,20 @@ public class AuroraMCPlayer {
 
     protected boolean dead;
     protected boolean hidden;
+    protected boolean moved;
 
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
+
+    private Map<String, Hologram> holograms;
 
 
     public AuroraMCPlayer(Player player) {
         loaded = false;
         dead = false;
         hidden = false;
+        moved = false;
+        holograms = new HashMap<>();
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         AuroraMCPlayer pl = this;
         this.player = player;
@@ -313,7 +316,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.isLoaded()) {
@@ -371,7 +374,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                        s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
                                         String suffix = "";
@@ -412,7 +415,7 @@ public class AuroraMCPlayer {
                                             if (!s.equals("")) {
                                                 s += " ";
                                             }
-                                            s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
+                                            s += "§" + ((player.getTeam() == null) ? "f" : player.getTeam().getTeamColor());
                                             team.setPrefix(s);
 
                                             suffix = "";
@@ -457,7 +460,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -510,7 +513,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -551,7 +554,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
+                                    s += "§" + ((pla.getTeam() == null) ? "f" : pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pla.getActiveSubscription() != null) {
@@ -666,6 +669,7 @@ public class AuroraMCPlayer {
         loaded = oldPlayer.loaded;
         dead = oldPlayer.dead;
         hidden = oldPlayer.hidden;
+        holograms = oldPlayer.holograms;
     }
 
     public Rank getRank() {
@@ -914,7 +918,7 @@ public class AuroraMCPlayer {
         if (!s.equals("")) {
             s += " ";
         }
-        s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
+        s += "§" + ((player.getTeam() == null)?"f":player.getTeam().getTeamColor());
 
         team.setPrefix(s);
         String suffix = "";
@@ -1224,5 +1228,17 @@ public class AuroraMCPlayer {
                 }
             }
         }.runTaskTimerAsynchronously(AuroraMCAPI.getCore(), 0, 600);
+    }
+
+    public boolean hasMoved() {
+        return moved;
+    }
+
+    public void moved() {
+        moved = true;
+    }
+
+    public Map<String, Hologram> getHolograms() {
+        return holograms;
     }
 }

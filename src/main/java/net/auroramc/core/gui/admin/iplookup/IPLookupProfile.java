@@ -23,10 +23,10 @@ public class IPLookupProfile extends GUI {
 
         this.setItem(0, 4, new GUIItem(Material.PAPER, String.format("&3&lIP Lookup for Profile #%s", playerProfile.getId())));
 
-        this.setItem(1, 1, new GUIItem(Material.EMERALD_BLOCK, "&3&lPunishment Information", 1, String.format(";&rOf known accounts:;**%s** are currently muted.;**%s** are currently banned.", playerProfile.getMutes(), playerProfile.getBans())));
-        this.setItem(1, 3, new GUIItem(Material.BOOK, "&3&lAccounts", 1, String.format(";&rThis IP Profile is;&rshared with **%s** accounts.;;&rMost recent alts:;**%s**", playerProfile.getNumberOfAccounts(), String.join("**;**", playerProfile.getAccounts()))));
-        this.setItem(1, 5, new GUIItem(Material.BARRIER, "&3&lLatest Information", 1, String.format("&rThis IP was last used by:;**%s**;;&rDate:;**%s**", playerProfile.getLastUsedBy(), new Date(playerProfile.getLastUsedAt()))));
-        this.setItem(1, 7, new GUIItem(Material.REDSTONE_BLOCK, "&3&lGlobal Account Suspension Status", 1, String.format(";&rStatus: %s%s", ((playerProfile.isGlobalAccountSuspended())?"&cSuspended":"&aNot Suspended"), ((playerProfile.isGlobalAccountSuspended())?";&rReason: **" + playerProfile.getGlobalAccountSuspensionReason() + "**":""))));
+        this.setItem(1, 1, new GUIItem(Material.EMERALD_BLOCK, "&3&lPunishment Information", 1, String.format(";&r&fOf known accounts:;**%s** are currently muted.;**%s** are currently banned.", playerProfile.getMutes(), playerProfile.getBans())));
+        this.setItem(1, 3, new GUIItem(Material.BOOK, "&3&lAccounts", 1, String.format(";&r&fThis IP Profile is;&r&fshared with **%s** accounts.;;&r&fMost recent alts:;**%s**", playerProfile.getNumberOfAccounts(), String.join("**;**", playerProfile.getAccounts()))));
+        this.setItem(1, 5, new GUIItem(Material.BARRIER, "&3&lLatest Information", 1, String.format("&r&fThis IP was last used by:;**%s**;;&r&fDate:;**%s**", playerProfile.getLastUsedBy(), new Date(playerProfile.getLastUsedAt()))));
+        this.setItem(1, 7, new GUIItem(Material.REDSTONE_BLOCK, "&3&lGlobal Account Suspension Status", 1, String.format(";&r&fStatus: %s%s", ((playerProfile.isGlobalAccountSuspended())?"&cSuspended":"&aNot Suspended"), ((playerProfile.isGlobalAccountSuspended())?";&r&fReason: **" + playerProfile.getGlobalAccountSuspensionReason() + "**":""))));
     }
 
     @Override

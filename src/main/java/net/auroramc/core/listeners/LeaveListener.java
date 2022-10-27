@@ -11,6 +11,9 @@ import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.TabCompleteInjector;
+import net.auroramc.core.api.utils.holograms.Hologram;
+import net.auroramc.core.api.utils.holograms.HologramLine;
+import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -41,7 +44,9 @@ public class LeaveListener implements Listener {
         CommunicationUtils.sendMessage(message);
 
         e.setQuitMessage(null);
-
+        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+            hologram.onLeave(player);
+        }
     }
 
     @EventHandler
@@ -69,6 +74,9 @@ public class LeaveListener implements Listener {
         CommunicationUtils.sendMessage(message);
 
         e.setLeaveMessage(null);
+        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+            hologram.onLeave(player);
+        }
     }
 
 }

@@ -27,24 +27,24 @@ public class CloseReport extends GUI {
 
         this.player = player;
 
-        fill("&r ", "");
+        fill("&r&f ", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s Report", WordUtils.capitalizeFully(player.getActiveReport().getType().name())), 1, String.format(";&rUser reported: **%s**;&rReason: **%s**", player.getActiveReport().getSuspectName(), player.getActiveReport().getReason().getName()), (short)3, false, player.getActiveReport().getSuspectName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&l%s Report", WordUtils.capitalizeFully(player.getActiveReport().getType().name())), 1, String.format(";&r&fUser reported: **%s**;&r&fReason: **%s**", player.getActiveReport().getSuspectName(), player.getActiveReport().getReason().getName()), (short)3, false, player.getActiveReport().getSuspectName()));
 
         int column = 2;
         if (player.getActiveReport().getReason().getAltRule() != null) {
             column--;
-            this.setItem(1, 7, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(player.getActiveReport().getReason().getAltRule()).getRuleName()), 1, ";&rClick here to &aaccept&r this report!", (short)13));
+            this.setItem(1, 7, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", AuroraMCAPI.getRules().getRule(player.getActiveReport().getReason().getAltRule()).getRuleName()), 1, ";&r&fClick here to &aaccept&r&f this report!", (short)13));
         }
 
         Rule rule = AuroraMCAPI.getRules().getRule(player.getActiveReport().getReason().getDefaultRule());
 
-        this.setItem(1, column, new GUIItem(Material.STAINED_CLAY, "&c&lReject", 1, ";&rClick here to &creject&r this report!", (short)14));
-        this.setItem(1, column + 2, new GUIItem(Material.STAINED_CLAY, "&6&lAccept under Different Rule", 1, ";&rClick here to &aaccept&r this report;&rbut change the rule type.", (short)1));
-        this.setItem(1, column + 4, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", rule.getRuleName()), 1, ";&rClick here to &aaccept&r this report!", (short)13));
+        this.setItem(1, column, new GUIItem(Material.STAINED_CLAY, "&c&lReject", 1, ";&r&fClick here to &creject&r&f this report!", (short)14));
+        this.setItem(1, column + 2, new GUIItem(Material.STAINED_CLAY, "&6&lAccept under Different Rule", 1, ";&r&fClick here to &aaccept&r&f this report;&r&fbut change the rule type.", (short)1));
+        this.setItem(1, column + 4, new GUIItem(Material.STAINED_CLAY, String.format("&a&lAccept as %s", rule.getRuleName()), 1, ";&r&fClick here to &aaccept&r&f this report!", (short)13));
 
-        this.setItem(2, 3, new GUIItem(Material.SKULL_ITEM, "&c&lForward to Leadership", 1, ";&rForward this report to the;&rLeadership team for handling.", (short)3, false, "MHF_ArrowUp"));
-        this.setItem(2, 5, new GUIItem(Material.BARRIER, "&c&lAbort", 1, ";&rAbort this report for another;&rstaff member to handle."));
+        this.setItem(2, 3, new GUIItem(Material.SKULL_ITEM, "&c&lForward to Leadership", 1, ";&r&fForward this report to the;&r&fLeadership team for handling.", (short)3, false, "MHF_ArrowUp"));
+        this.setItem(2, 5, new GUIItem(Material.BARRIER, "&c&lAbort", 1, ";&r&fAbort this report for another;&r&fstaff member to handle."));
     }
 
     @Override
