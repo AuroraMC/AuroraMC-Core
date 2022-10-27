@@ -131,6 +131,7 @@ public class CommandPlugins extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
         textComponent.addExtra(component);
 
+        player.getPlayer().spigot().sendMessage(textComponent);
     }
 
     @Override
