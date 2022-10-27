@@ -39,8 +39,8 @@ public class CommandPlugins extends Command {
         textComponent.addExtra(prefix);
 
         textComponent.addExtra(convert(" AuroraMC is an advanced custom-coded network that utilises many custom built plugins" +
-                "and services to allow our network to operate. As you seem to be a curious person, we thought we'd tell you the plugin we've built" +
-                "and what they do! To view more information on each of these, hover over the names below.\n\n"));
+                " and services to allow our network to operate. As you seem to be a curious person, we thought we'd tell you the plugin we've built" +
+                " and what they do! To view more information on each of these, hover over the names below.\n\n"));
 
         TextComponent arrow = new TextComponent(" ➤ ");
         arrow.setColor(ChatColor.DARK_AQUA);
@@ -125,8 +125,8 @@ public class CommandPlugins extends Command {
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
 
-        component = new TextComponent("\nTo view more information on how the network functions, please visit our \"How AuroraMC Works\" thread!\n");
-        component.setColor(ChatColor.AQUA);
+        component = new TextComponent("\nTo view more information on how the network functions, click here to visit our \"How AuroraMC Works\" thread!\n");
+        component.setColor(ChatColor.WHITE);
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
         textComponent.addExtra(component);
 
