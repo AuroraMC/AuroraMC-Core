@@ -60,6 +60,7 @@ import net.auroramc.core.cosmetics.projectiletrails.EmeraldTrail;
 import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.wineffects.ConfettiCannon;
 import net.auroramc.core.cosmetics.wineffects.Eggsplosion;
 import net.auroramc.core.cosmetics.wineffects.Fireworks;
 import net.auroramc.core.cosmetics.wineffects.TwerkApocalypse;
@@ -388,6 +389,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Fireworks());
         AuroraMCAPI.registerCosmetic(new TwerkApocalypse());
         AuroraMCAPI.registerCosmetic(new Eggsplosion());
+        AuroraMCAPI.registerCosmetic(new ConfettiCannon());
 
         //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());
