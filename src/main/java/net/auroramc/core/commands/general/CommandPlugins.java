@@ -51,7 +51,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         ComponentBuilder componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Core\n"
                 + "\n"
-                + WordUtils.wrap("Our core contains all of the core systems required by the entirety of the network and our core API handling" +
+                + WordUtils.wrap("&fOur core contains all of the core systems required by the entirety of the network and our core API handling" +
                 " things like player connections, chat, filter, punishments etc.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -61,7 +61,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Proxy\n"
                 + "\n"
-                + WordUtils.wrap("Similarly to our actual core, it contains all the core systems related to connection nodes." +
+                + WordUtils.wrap("&fSimilarly to our actual core, it contains all the core systems related to connection nodes." +
                 " A significant portion of the core and proxy core codebase is similar if not the same.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -71,7 +71,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Lobby\n"
                 + "\n"
-                + WordUtils.wrap("Our Lobby plugin contains all functionality needed for lobby servers only, such as loading in the lobby map, " +
+                + WordUtils.wrap("&fOur Lobby plugin contains all functionality needed for lobby servers only, such as loading in the lobby map, " +
                 " lobby games, opening crates and more.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -81,7 +81,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Game-Engine\n"
                 + "\n"
-                + WordUtils.wrap("The game engine deals with how games and maps are loaded, how games are" +
+                + WordUtils.wrap("&fThe game engine deals with how games and maps are loaded, how games are" +
                 " started, and the core API for games to use.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -91,7 +91,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Games\n"
                 + "\n"
-                + WordUtils.wrap("This module contains the code for all of the games that are available to play" +
+                + WordUtils.wrap("&fThis module contains the code for all of the games that are available to play" +
                 " on AuroraMC (including previous/removed games).", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -101,7 +101,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Duels\n"
                 + "\n"
-                + WordUtils.wrap("Our Duels plugin hosts the Duels game mode, as this is a separate" +
+                + WordUtils.wrap("&fOur Duels plugin hosts the Duels game mode, as this is a separate" +
                 " type of server and is handled differently from our normal games.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
@@ -111,7 +111,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Events\n"
                 + "\n"
-                + WordUtils.wrap("The Event Core manages all of the commands, special games and more that are utilised by our Events Team.", 40, "\n&r", false)));
+                + WordUtils.wrap("&fThe Event Core manages all of the commands, special games and more that are utilised by our Events Team.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
         textComponent.addExtra(arrow);
@@ -120,7 +120,7 @@ public class CommandPlugins extends Command {
         component.setColor(ChatColor.AQUA);
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC-Build\n"
                 + "\n"
-                + WordUtils.wrap("This is the core for our internal Build server which" +
+                + WordUtils.wrap("&fThis is the core for our internal Build server which" +
                 " manages how maps are pushed to the network, in-progress builds etc.", 40, "\n&r", false)));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
         textComponent.addExtra(component);
