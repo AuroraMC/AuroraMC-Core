@@ -55,7 +55,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/how-auroramc-works/"));
         ComponentBuilder componentHover = new ComponentBuilder(convert("&3&lHow AuroraMC works\n"
         + "\n"
-        + WordUtils.wrap("To cater to those who are curious as well as stay as transparent as possible," +
+        + WordUtils.wrap("&fTo cater to those who are curious as well as stay as transparent as possible," +
                 " we've put this document together to give you an insight into how the network operates," +
                 " how we create updates and the tools we use in order to run the network.", 40, "\n&r", false)
         + "\n\n&aClick here to view this document."));
@@ -68,7 +68,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/rules"));
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC Rules\n"
                 + "\n"
-                + WordUtils.wrap("Our rules are created to ensure that all players are able to have a good experience on the network." +
+                + WordUtils.wrap("&fOur rules are created to ensure that all players are able to have a good experience on the network." +
                 " Failure to follow these rules will result in punishments given at the discretion of our Moderation Team.", 40, "\n&r", false)
                 + "\n\n&aClick here to view the rules."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
@@ -80,7 +80,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC Store\n"
                 + "\n"
-                + WordUtils.wrap("The AuroraMC Store is the only place to buy AuroraMC products. From ranks, cosmetics," +
+                + WordUtils.wrap("&fThe AuroraMC Store is the only place to buy AuroraMC products. From ranks, cosmetics," +
                 " gift cards and more. It can all be found at store.auroramc.net", 40, "\n&r", false)
                 + "\n\n&aClick here to visit our store."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
@@ -92,7 +92,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.auroramc.net/"));
         componentHover = new ComponentBuilder(convert("&3&lAuroraMC Discord\n"
                 + "\n"
-                + WordUtils.wrap("The AuroraMC Discord is the main communication platform that is used by," +
+                + WordUtils.wrap("&fThe AuroraMC Discord is the main communication platform that is used by," +
                 " AuroraMC. If you want to interact with members of the community, don't hesitate to join the discord!", 40, "\n&r", false)
                 + "\n\n&aClick here to join our discord."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
@@ -104,7 +104,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/support-tickets/"));
         componentHover = new ComponentBuilder(convert("&3&lSubmit a Support Ticket\n"
                 + "\n"
-                + WordUtils.wrap("If you are having issues with purchases or missing cosmetics, feel free to contact our" +
+                + WordUtils.wrap("&fIf you are having issues with purchases or missing cosmetics, feel free to contact our" +
                 " Customer Support Team and they will look into and assist you as much as they can.", 40, "\n&r", false)
                 + "\n\n&aClick here to submit a support ticket."));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, componentHover.create()));
@@ -116,7 +116,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/appeal/"));
         componentHover = new ComponentBuilder(convert("&3&lSubmit an appeal\n"
                 + "\n"
-                + WordUtils.wrap("If you believe you were unfairly punished" +
+                + WordUtils.wrap("&fIf you believe you were unfairly punished" +
                 " or you would like a second chance, you can submit an appeal and" +
                 " a member of our team will look into your punishment.", 40, "\n&r", false)
                 + "\n\n&aClick here to submit an appeal."));
@@ -129,7 +129,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/bug-report/"));
         componentHover = new ComponentBuilder(convert("&3&lReport an issue with our systems\n"
                 + "\n"
-                + WordUtils.wrap("If you believe you have found an issue with our systems," +
+                + WordUtils.wrap("&fIf you believe you have found an issue with our systems," +
                 " you are able to send in a bug report and a member of" +
                 " our Quality Assurance will look into it as soon as possible." +
                 " If you are the first person to successfully report a game breaking bug," +
@@ -144,7 +144,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/report-info/"));
         componentHover = new ComponentBuilder(convert("&3&lReport a Rule Breaker\n"
                 + "\n"
-                + WordUtils.wrap("If you have found somebody that is breaking the AuroraMC Rules, " +
+                + WordUtils.wrap("&fIf you have found somebody that is breaking the AuroraMC Rules, " +
                 "and a Staff Member is not present to handle it, you are able to submit a report " +
                 "and have it handled by our Reports Team! These documents go into details on how to use any " +
                 "report systems we have in place to make the server a better place.", 40, "\n&r", false)
@@ -157,7 +157,7 @@ public class CommandHelp extends Command {
         component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://auroramc.net/knowledgebase"));
         componentHover = new ComponentBuilder(convert("&3&lKnowledgebase\n"
                 + "\n"
-                + WordUtils.wrap("Our knowledgebase consists of answers to a majority of the most frequently" +
+                + WordUtils.wrap("&fOur knowledgebase consists of answers to a majority of the most frequently" +
                 " asked questions on the network. If you cannot find the answer" +
                 " to your question using one of the above links, it may be in the knowledgebase!", 40, "\n&r", false)
                 + "\n\n&aClick here to visit our knowledgebase."));

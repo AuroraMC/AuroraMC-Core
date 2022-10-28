@@ -9,6 +9,10 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="javadocs" />
+    <option name="OPTION_LINK_TO_JDK_DOCS" value="true" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
