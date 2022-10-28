@@ -113,11 +113,11 @@ public class Hologram {
 
     public void despawn() {
         if (!spawned) return;
+        AuroraMCAPI.deregisterHologram(this);
         for (HologramLine line : lines.values()) {
             line.despawn();
         }
         spawned = false;
-        AuroraMCAPI.deregisterHologram(this);
 
     }
 
