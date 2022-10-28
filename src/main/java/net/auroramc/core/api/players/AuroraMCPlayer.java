@@ -613,13 +613,14 @@ public class AuroraMCPlayer {
                  if (AuroraMCAPI.getServerInfo().getNetwork() == ServerInfo.Network.TEST) {
 
                      creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
-                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆&r\n" +
+                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆&r\n \n" +
                              "                     &c&l«MISSION CONTROL»\n" +
                              " \n" +
-                             "&fYou are currently connected to the AuroraMC Test network!\n" +
+                             "&fYou are currently connected to the AuroraMC Test\n" +
+                             "Network!\n" +
                              " \n" +
-                             "&fAll servers in this network will not save data, and are all on\n" +
-                             "test versions of our plugins.\n" +
+                             "&fAll servers in this network will not save data, and are\n" +
+                             "all on test versions of our plugins.\n" +
                              " \n" +
                              "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
                  } else if (AuroraMCAPI.isTestServer()) {
