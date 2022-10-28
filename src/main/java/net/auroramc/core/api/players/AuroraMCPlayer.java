@@ -613,7 +613,7 @@ public class AuroraMCPlayer {
                  if (AuroraMCAPI.getServerInfo().getNetwork() == ServerInfo.Network.TEST) {
 
                      creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
-                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆&r\n \n" +
+                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆&r\n" +
                              "                     &c&l«MISSION CONTROL»\n" +
                              " \n" +
                              "&fYou are currently connected to the AuroraMC Test\n" +
