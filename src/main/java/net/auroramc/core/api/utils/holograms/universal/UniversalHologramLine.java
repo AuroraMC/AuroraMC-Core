@@ -62,7 +62,7 @@ public class UniversalHologramLine extends HologramLine {
 
     public void spawn() {
         if (armorStand != null) return;
-        Location location = hologram.getLocation().getBlock().getLocation().add(0.5, ((hologram.getLines().size()- (line + 1)) * 0.3), 0.5);
+        Location location = hologram.getLocation().getBlock().getLocation().add(0.5, ((hologram.getLines().size() - (line)) * 0.3), 0.5);
         armorStand = new EntityArmorStand(((CraftWorld) Bukkit.getWorld("world")).getHandle(), location.getX(), location.getY(), location.getZ());
         armorStand.setArms(false);
         //Set as marker
