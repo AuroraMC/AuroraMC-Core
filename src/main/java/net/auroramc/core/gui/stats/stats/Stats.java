@@ -50,6 +50,8 @@ public class Stats extends GUI {
         this.setItem(3, 3, new GUIItem(Material.IRON_AXE, "&c&lFFA", 1, ";&r&fGames Played: **" + targetStatistics.getStatistic(102, "gamesPlayed") + "**;&r&fWins: **" + targetStatistics.getStatistic(102, "gamesWon") + "**;&r&fLosses: **" + (targetStatistics.getStatistic(102, "gamesPlayed") - targetStatistics.getStatistic(102, "gamesWon")) + "**;;&aClick to view more!"));
         this.setItem(3, 4, new GUIItem(Material.LEASH, "&c&lTag", 1, ";&r&fGames Played: **" + targetStatistics.getStatistic(103, "gamesPlayed") + "**;&r&fWins: **" + targetStatistics.getStatistic(103, "gamesWon") + "**;&r&fLosses: **" + (targetStatistics.getStatistic(103, "gamesPlayed") - targetStatistics.getStatistic(103, "gamesWon")) + "**;;&aClick to view more!"));
         this.setItem(3, 5, new GUIItem(Material.STAINED_CLAY, "&e&lRun", 1, ";&r&fGames Played: **" + targetStatistics.getStatistic(104, "gamesPlayed") + "**;&r&fWins: **" + targetStatistics.getStatistic(104, "gamesWon") + "**;&r&fLosses: **" + (targetStatistics.getStatistic(104, "gamesPlayed") - targetStatistics.getStatistic(104, "gamesWon")) + "**;;&aClick to view more!", (short)14));
+
+        this.setItem(5, 4, new GUIItem(Material.DIAMOND_BOOTS, "&b&lLobby Parkour", 1, ";&r&fCheckpoints Hit: **" + targetStatistics.getStatistic(0, "pkcheckpoints") + "**;&r&fJumps: **" + targetStatistics.getStatistic(0, "pkjumps") + "**;&r&fDistance Travelled: **" + ((targetStatistics.getStatistic(0, "pkdistance"))/10f) + "**;&r&fTime Spent in Parkour: **" + (new TimeLength(targetStatistics.getStatistic(0, "pktime")/3600000d)) + "**"));
     }
 
     @Override
