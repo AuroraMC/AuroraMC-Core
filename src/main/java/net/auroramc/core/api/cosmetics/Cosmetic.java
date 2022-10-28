@@ -73,8 +73,8 @@ public abstract class Cosmetic {
 
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r" + WordUtils.wrap(description, 40, ";&r", false))).split(";")));
-        lore.add(AuroraMCAPI.getFormatter().convert("&rRarity: " + rarity.getDisplayName()));
+        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r&f" + WordUtils.wrap(description, 40, ";&r&f", false))).split(";")));
+        lore.add(AuroraMCAPI.getFormatter().convert("&r&fRarity: " + rarity.getDisplayName()));
         lore.add("");
         if (hasUnlocked) {
             if (player.getActiveCosmetics().get(type) != null) {
