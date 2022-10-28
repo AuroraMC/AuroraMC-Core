@@ -7,6 +7,7 @@ package net.auroramc.core.api.players;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.backend.ServerInfo;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.FriendStatus;
 import net.auroramc.core.api.cosmetics.PlusSymbol;
@@ -609,8 +610,21 @@ public class AuroraMCPlayer {
                 }
                 AuroraMCAPI.newPlayer(creationEvent.getPlayer());
                 creationEvent.getPlayer().loaded = true;
-                if (AuroraMCAPI.isTestServer()) {
-                    creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "&c&lThis server is now in test mode. While test mode is enabled, stats and other core features will not be saved."));
+                 if (AuroraMCAPI.getServerInfo().getNetwork() == ServerInfo.Network.TEST) {
+
+                     creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().highlight(AuroraMCAPI.getFormatter().convert("" +
+                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆&r\n" +
+                             "                     &c&l«MISSION CONTROL»\n" +
+                             " \n" +
+                             "&fYou are currently connected to the AuroraMC Test\n" +
+                             "Network!\n" +
+                             " \n" +
+                             "&fAll servers in this network will not save data, and are\n" +
+                             "all on test versions of our plugins.\n" +
+                             " \n" +
+                             "&4&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
+                 } else if (AuroraMCAPI.isTestServer()) {
+                    creationEvent.getPlayer().getPlayer().sendMessage(AuroraMCAPI.getFormatter().pluginMessage("Server Manager", "&c&lThis server is in test mode. While test mode is enabled, stats and other core features will not be saved."));
                 }
             }
         }.runTaskAsynchronously(AuroraMCAPI.getCore());

@@ -73,8 +73,8 @@ public abstract class Cosmetic {
 
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r" + WordUtils.wrap(description, 40, ";&r", false))).split(";")));
-        lore.add(AuroraMCAPI.getFormatter().convert("&rRarity: " + rarity.getDisplayName()));
+        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r&f" + WordUtils.wrap(description, 40, ";&r&f", false))).split(";")));
+        lore.add(AuroraMCAPI.getFormatter().convert("&r&fRarity: " + rarity.getDisplayName()));
         lore.add("");
         if (hasUnlocked) {
             if (player.getActiveCosmetics().get(type) != null) {
@@ -211,6 +211,7 @@ public abstract class Cosmetic {
         //Does not add to automatic loot pool of certain crates.
         SPECIAL_CRATE,
         LEVEL,
+        GIVEAWAY,
         ALL
     }
 
@@ -260,6 +261,7 @@ public abstract class Cosmetic {
             }
             case STORE_PURCHASE:
             case CRATE:
+            case GIVEAWAY:
             case LEVEL:
             case TICKETS:{
                 return player.getUnlockedCosmetics().contains(this);
