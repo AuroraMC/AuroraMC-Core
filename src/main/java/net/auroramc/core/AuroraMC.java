@@ -12,6 +12,7 @@ import net.auroramc.core.achievements.game.hotpotato.*;
 import net.auroramc.core.achievements.game.spleef.*;
 import net.auroramc.core.achievements.general.*;
 import net.auroramc.core.achievements.general.Murderer;
+import net.auroramc.core.achievements.lobby.*;
 import net.auroramc.core.achievements.loyalty.HappyBirthday;
 import net.auroramc.core.achievements.party.*;
 import net.auroramc.core.achievements.time.*;
@@ -68,7 +69,6 @@ import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Egg;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -153,7 +153,6 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new BoredNow());
         AuroraMCAPI.registerAchievement(new AmIFamousYet());
         AuroraMCAPI.registerAchievement(new BasicallyStaff());
-        AuroraMCAPI.registerAchievement(new JumperMcJumperson());
         AuroraMCAPI.registerAchievement(new Welp());
         AuroraMCAPI.registerAchievement(new WinnerWinnerChickenDinner());
         AuroraMCAPI.registerAchievement(new Murderer());
@@ -247,6 +246,15 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new TheLuckWasNotOnMySide());
         AuroraMCAPI.registerAchievement(new WhoLeftTheOvenOn());
         AuroraMCAPI.registerAchievement(new WhyMe());
+
+        //Lobby Achievements
+        AuroraMCAPI.registerAchievement(new JumperMcJumperson());
+        AuroraMCAPI.registerAchievement(new ParkourMaster());
+        AuroraMCAPI.registerAchievement(new DamnThatWasChallenging());
+        AuroraMCAPI.registerAchievement(new HardcoreParkour());
+        AuroraMCAPI.registerAchievement(new IsThatAllYouveGot());
+        AuroraMCAPI.registerAchievement(new TooEasyForMe());
+        AuroraMCAPI.registerAchievement(new WhoopsMyBad());
 
         //Banners
         AuroraMCAPI.registerCosmetic(new AngryCraig());
