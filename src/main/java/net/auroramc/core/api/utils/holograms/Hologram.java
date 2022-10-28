@@ -96,6 +96,7 @@ public class Hologram {
             this.lines.put(i, line);
             line.setHologram(this);
             if (spawned) line.spawn();
+            i++;
         }
         if (spawned) {
             AuroraMCAPI.registerHologram(this);
