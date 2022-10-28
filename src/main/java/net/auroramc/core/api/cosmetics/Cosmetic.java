@@ -211,6 +211,7 @@ public abstract class Cosmetic {
         //Does not add to automatic loot pool of certain crates.
         SPECIAL_CRATE,
         LEVEL,
+        GIVEAWAY,
         ALL
     }
 

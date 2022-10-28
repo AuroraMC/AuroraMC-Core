@@ -38,6 +38,7 @@ import net.auroramc.core.cosmetics.banners.Germany;
 import net.auroramc.core.cosmetics.banners.Japan;
 import net.auroramc.core.cosmetics.banners.Poland;
 import net.auroramc.core.cosmetics.banners.UnitedStates;
+import net.auroramc.core.cosmetics.deatheffects.Confetti;
 import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.deatheffects.LayAnEgg;
 import net.auroramc.core.cosmetics.friendstatuses.*;
@@ -391,6 +392,7 @@ public class AuroraMC extends JavaPlugin {
         //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());
         AuroraMCAPI.registerCosmetic(new LayAnEgg());
+        AuroraMCAPI.registerCosmetic(new Confetti());
 
         //Gadgets
         AuroraMCAPI.registerCosmetic(new FireworkGadget());
