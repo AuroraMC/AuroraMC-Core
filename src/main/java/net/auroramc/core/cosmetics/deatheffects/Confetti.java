@@ -16,7 +16,7 @@ import java.util.List;
 public class Confetti extends DeathEffect {
 
     public Confetti() {
-        super(702, "Confetti", "&d&kCo&a&knf&b&ket&e&kti", "A mystery that is yet to be uncovered...", UnlockMode.GIVEAWAY, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked by &kBuilding", true, Material.FIREWORK, (short)0, Rarity.MYTHICAL);
+        super(702, "Confetti", "&d&kCo&a&knf&b&ket&e&kti", "A mystery that is yet to be uncovered...", UnlockMode.GIVEAWAY, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked by &kBuilding", true, Material.GOLDEN_CARROT, (short)0, Rarity.MYTHICAL);
     }
 
     @Override
