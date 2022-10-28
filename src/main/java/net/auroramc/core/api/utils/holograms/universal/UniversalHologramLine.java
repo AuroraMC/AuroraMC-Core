@@ -26,8 +26,6 @@ public class UniversalHologramLine extends HologramLine {
         if (maxViewRange > 64) maxViewRange = 64;
     }
 
-    private EntityArmorStand armorStand;
-
     public UniversalHologramLine(Hologram hologram, String text, int line) {
         super(hologram, text, line);
         this.armorStand = null;
