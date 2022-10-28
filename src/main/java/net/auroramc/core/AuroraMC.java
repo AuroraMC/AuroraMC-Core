@@ -12,6 +12,7 @@ import net.auroramc.core.achievements.game.hotpotato.*;
 import net.auroramc.core.achievements.game.spleef.*;
 import net.auroramc.core.achievements.general.*;
 import net.auroramc.core.achievements.general.Murderer;
+import net.auroramc.core.achievements.lobby.*;
 import net.auroramc.core.achievements.loyalty.HappyBirthday;
 import net.auroramc.core.achievements.party.*;
 import net.auroramc.core.achievements.time.*;
@@ -38,6 +39,7 @@ import net.auroramc.core.cosmetics.banners.Germany;
 import net.auroramc.core.cosmetics.banners.Japan;
 import net.auroramc.core.cosmetics.banners.Poland;
 import net.auroramc.core.cosmetics.banners.UnitedStates;
+import net.auroramc.core.cosmetics.deatheffects.Confetti;
 import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.deatheffects.LayAnEgg;
 import net.auroramc.core.cosmetics.friendstatuses.*;
@@ -59,6 +61,7 @@ import net.auroramc.core.cosmetics.projectiletrails.EmeraldTrail;
 import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.wineffects.ConfettiCannon;
 import net.auroramc.core.cosmetics.wineffects.Eggsplosion;
 import net.auroramc.core.cosmetics.wineffects.Fireworks;
 import net.auroramc.core.cosmetics.wineffects.TwerkApocalypse;
@@ -66,7 +69,6 @@ import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Egg;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -151,7 +153,6 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new BoredNow());
         AuroraMCAPI.registerAchievement(new AmIFamousYet());
         AuroraMCAPI.registerAchievement(new BasicallyStaff());
-        AuroraMCAPI.registerAchievement(new JumperMcJumperson());
         AuroraMCAPI.registerAchievement(new Welp());
         AuroraMCAPI.registerAchievement(new WinnerWinnerChickenDinner());
         AuroraMCAPI.registerAchievement(new Murderer());
@@ -245,6 +246,15 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerAchievement(new TheLuckWasNotOnMySide());
         AuroraMCAPI.registerAchievement(new WhoLeftTheOvenOn());
         AuroraMCAPI.registerAchievement(new WhyMe());
+
+        //Lobby Achievements
+        AuroraMCAPI.registerAchievement(new JumperMcJumperson());
+        AuroraMCAPI.registerAchievement(new ParkourMaster());
+        AuroraMCAPI.registerAchievement(new DamnThatWasChallenging());
+        AuroraMCAPI.registerAchievement(new HardcoreParkour());
+        AuroraMCAPI.registerAchievement(new IsThatAllYouveGot());
+        AuroraMCAPI.registerAchievement(new TooEasyForMe());
+        AuroraMCAPI.registerAchievement(new WhoopsMyBad());
 
         //Banners
         AuroraMCAPI.registerCosmetic(new AngryCraig());
@@ -387,10 +397,12 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Fireworks());
         AuroraMCAPI.registerCosmetic(new TwerkApocalypse());
         AuroraMCAPI.registerCosmetic(new Eggsplosion());
+        AuroraMCAPI.registerCosmetic(new ConfettiCannon());
 
         //Death Effects
         AuroraMCAPI.registerCosmetic(new Firework());
         AuroraMCAPI.registerCosmetic(new LayAnEgg());
+        AuroraMCAPI.registerCosmetic(new Confetti());
 
         //Gadgets
         AuroraMCAPI.registerCosmetic(new FireworkGadget());

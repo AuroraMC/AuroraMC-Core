@@ -96,8 +96,9 @@ public class Hologram {
             this.lines.put(i, line);
             line.setHologram(this);
             if (spawned) line.spawn();
+            i++;
         }
-        if (spawned && player != null) {
+        if (spawned) {
             AuroraMCAPI.registerHologram(this);
         }
     }
@@ -108,33 +109,26 @@ public class Hologram {
             line.spawn();
         }
         spawned = true;
-        if (player != null) {
-            AuroraMCAPI.registerHologram(this);
-        }
+        AuroraMCAPI.registerHologram(this);
     }
 
     public void despawn() {
         if (!spawned) return;
+        AuroraMCAPI.deregisterHologram(this);
         for (HologramLine line : lines.values()) {
             line.despawn();
         }
         spawned = false;
-        if (player != null) {
-            AuroraMCAPI.deregisterHologram(this);
-        }
+
     }
 
     public void update() {
         if (!spawned) return;
-        if (player != null) {
-            AuroraMCAPI.deregisterHologram(this);
-        }
+        AuroraMCAPI.deregisterHologram(this);
         for (HologramLine line : lines.values()) {
             line.update();
         }
-        if (player != null) {
-            AuroraMCAPI.registerHologram(this);
-        }
+        AuroraMCAPI.registerHologram(this);
     }
 
     public void onJoin(AuroraMCPlayer player) {
