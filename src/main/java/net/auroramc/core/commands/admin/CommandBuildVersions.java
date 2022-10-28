@@ -60,7 +60,7 @@ public class CommandBuildVersions extends Command {
                         sb.append(gitCommit);
                         sb.append("**\n" +
                                 "Branch: **");
-                        sb.append(branch);
+                        sb.append(((branch.equals("null")?"master":branch)));
                         sb.append("**");
                     }
                 }
