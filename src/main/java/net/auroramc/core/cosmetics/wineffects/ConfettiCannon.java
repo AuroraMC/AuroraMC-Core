@@ -13,7 +13,7 @@ import java.util.Collections;
 public class ConfettiCannon extends WinEffect {
 
     public ConfettiCannon() {
-        super(603, "Confetti Cannon", "&d&kConf&aetti&r &bCann&eon", "A mystery that is yet to be uncovered...", UnlockMode.GIVEAWAY, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked by &kBuilding", true, Material.GOLDEN_CARROT, (short)0, Rarity.MYTHICAL);
+        super(603, "Confetti Cannon", "&d&kConf&a&ketti&r &b&kCann&e&kon", "A mystery that is yet to be uncovered...", UnlockMode.GIVEAWAY, -1, Collections.emptyList(), Collections.emptyList(), "Unlocked by &kBuilding", true, Material.GOLDEN_CARROT, (short)0, Rarity.MYTHICAL);
     }
 
     @Override
