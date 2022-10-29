@@ -53,7 +53,9 @@ public class Hologram {
                 HologramLine line1 = lines.get(i);
                 line1.setLine(i + 1);
                 lines.put(i + 1, line1);
-                line1.move();
+                if (spawned) {
+                    line1.move();
+                }
             }
         }
 
@@ -79,7 +81,9 @@ public class Hologram {
             HologramLine line1 = lines.remove(i);
             line1.setLine(i - 1);
             lines.put(i - 1, line1);
-            line1.move();
+            if (spawned) {
+                line1.move();
+            }
         }
     }
 
