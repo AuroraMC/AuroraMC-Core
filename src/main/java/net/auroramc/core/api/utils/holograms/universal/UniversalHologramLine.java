@@ -80,7 +80,7 @@ public class UniversalHologramLine extends HologramLine {
         armorStand.locZ = location.getZ();
         PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(armorStand);
         for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-            if (!hologram.shouldTrack(player)) {
+            if (hologram.shouldTrack(player)) {
                 PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
                 con.sendPacket(packet);
             }
