@@ -37,25 +37,10 @@ public class UniversalHologramLine extends HologramLine {
             armorStand.setCustomName(AuroraMCAPI.getFormatter().convert(text));
             PacketPlayOutUpdateEntityNBT packet = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
             for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-                if (!shouldTrack(player)) {
-                    if (trackedPlayers.contains(player)) {
-                        trackedPlayers.remove(player);
-                        PacketPlayOutEntityDestroy packet1 = new PacketPlayOutEntityDestroy(armorStand.getId());
-                        PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-                        con.sendPacket(packet1);
-                    }
-                    continue;
-                }
-                if (!trackedPlayers.contains(player)) {
-                    trackedPlayers.add(player);
+                if (hologram.shouldTrack(player)) {
                     PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-                    PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
-                    PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-                    con.sendPacket(packet1);
-                    con.sendPacket(packet2);
+                    con.sendPacket(packet);
                 }
-                PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-                con.sendPacket(packet);
             }
         }
     }
@@ -77,11 +62,8 @@ public class UniversalHologramLine extends HologramLine {
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(armorStand);
         PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
         for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-            if (!shouldTrack(player)) {
+            if (!hologram.shouldTrack(player)) {
                 continue;
-            }
-            if (!trackedPlayers.contains(player)) {
-                trackedPlayers.add(player);
             }
             PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
             con.sendPacket(packet);
@@ -98,23 +80,7 @@ public class UniversalHologramLine extends HologramLine {
         armorStand.locZ = location.getZ();
         PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(armorStand);
         for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-            if (!shouldTrack(player)) {
-                if (trackedPlayers.contains(player)) {
-                    trackedPlayers.remove(player);
-                    PacketPlayOutEntityDestroy packet1 = new PacketPlayOutEntityDestroy(armorStand.getId());
-                    PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-                    con.sendPacket(packet1);
-                }
-                continue;
-            }
-            if (!trackedPlayers.contains(player)) {
-                trackedPlayers.add(player);
-                PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-                PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
-                PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-                con.sendPacket(packet1);
-                con.sendPacket(packet2);
-            } else {
+            if (!hologram.shouldTrack(player)) {
                 PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
                 con.sendPacket(packet);
             }
@@ -125,7 +91,7 @@ public class UniversalHologramLine extends HologramLine {
         if (armorStand == null) return;
         PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(armorStand.getId());
         for (AuroraMCPlayer player : AuroraMCAPI.getPlayers()) {
-            if (!trackedPlayers.contains(player)) {
+            if (!hologram.shouldTrack(player)) {
                 continue;
             }
             PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
@@ -133,23 +99,18 @@ public class UniversalHologramLine extends HologramLine {
         }
         armorStand.dead = true;
         armorStand = null;
-        trackedPlayers.clear();
     }
 
 
     public void onJoin(AuroraMCPlayer player) {
-        if (shouldTrack(player)) {
-            trackedPlayers.add(player);
-            PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
-            PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
-            PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-            con.sendPacket(packet1);
-            con.sendPacket(packet2);
-        }
+        PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
+        PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
+        PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
+        con.sendPacket(packet1);
+        con.sendPacket(packet2);
+
     }
 
-    public void onLeave(AuroraMCPlayer player) {
-        trackedPlayers.remove(player);
-    }
+    public void onLeave(AuroraMCPlayer player) {}
 
 }
