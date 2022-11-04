@@ -154,8 +154,10 @@ public class Hologram {
 
     public void onJoin(AuroraMCPlayer player) {
         if (!spawned || (this.player != null && !player.equals(this.player))) return;
-        for (HologramLine line : lines.values()) {
-            line.onJoin(player);
+        if (shouldTrack(player)) {
+            for (HologramLine line : lines.values()) {
+                line.onJoin(player);
+            }
         }
     }
 
@@ -174,6 +176,8 @@ public class Hologram {
         for (HologramLine line : lines.values()) {
             line.onLeave(player);
         }
+
+        trackedPlayers.remove(player);
     }
 
     public void moveCheck(AuroraMCPlayer player) {
