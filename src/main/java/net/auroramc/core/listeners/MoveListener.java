@@ -21,29 +21,28 @@ public class MoveListener implements Listener {
     public void onMove(PlayerMoveEvent e) {
         if (AuroraMCAPI.getPlayer(e.getPlayer()) != null && !e.getFrom().equals(e.getTo())) {
             AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
-            for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
-                hologram.moveCheck(player);
-            }
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+                        hologram.moveCheck(player);
+                    }
+                }
+            }.runTaskAsynchronously(AuroraMCAPI.getCore());
             if (!player.hasMoved()) {
                 player.moved();
-                new BukkitRunnable(){
-                    @Override
-                    public void run() {
-                        for (EntityPlayer player : AuroraMCAPI.getFakePlayers().values()) {
-                            PlayerConnection con = ((CraftPlayer) e.getPlayer().getPlayer()).getHandle().playerConnection;
-                            con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, player));
-                            con.sendPacket(new PacketPlayOutNamedEntitySpawn(player));
-                            con.sendPacket(new PacketPlayOutEntityHeadRotation(player, (byte) ((player.yaw * 256.0F) / 360.0F)));
-                            new BukkitRunnable(){
-                                @Override
-                                public void run() {
-                                    con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, player));
-                                }
-                            }.runTaskLater(AuroraMCAPI.getCore(), 40);
+                for (EntityPlayer player2 : AuroraMCAPI.getFakePlayers().values()) {
+                    PlayerConnection con = ((CraftPlayer) e.getPlayer().getPlayer()).getHandle().playerConnection;
+                    con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, player2));
+                    con.sendPacket(new PacketPlayOutNamedEntitySpawn(player2));
+                    con.sendPacket(new PacketPlayOutEntityHeadRotation(player2, (byte) ((player2.yaw * 256.0F) / 360.0F)));
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, player2));
                         }
-
-                    }
-                }.runTask(AuroraMCAPI.getCore());
+                    }.runTaskLater(AuroraMCAPI.getCore(), 40);
+                }
             }
         }
     }
