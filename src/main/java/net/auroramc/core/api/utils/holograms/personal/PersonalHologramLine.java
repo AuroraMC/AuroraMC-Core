@@ -25,23 +25,6 @@ public class PersonalHologramLine extends HologramLine {
         if (armorStand != null) {
             armorStand.setCustomName(AuroraMCAPI.getFormatter().convert(text));
             PacketPlayOutUpdateEntityNBT packet = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-            if (!shouldTrack(hologram.getPlayer())) {
-                if (trackedPlayers.contains(hologram.getPlayer())) {
-                    trackedPlayers.remove(hologram.getPlayer());
-                    PacketPlayOutEntityDestroy packet1 = new PacketPlayOutEntityDestroy(armorStand.getId());
-                    PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
-                    con.sendPacket(packet1);
-                }
-                return;
-            }
-            if (!trackedPlayers.contains(hologram.getPlayer())) {
-                trackedPlayers.add(hologram.getPlayer());
-                PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
-                PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
-                PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-                con.sendPacket(packet1);
-                con.sendPacket(packet2);
-            }
             PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
             con.sendPacket(packet);
         }
@@ -63,11 +46,8 @@ public class PersonalHologramLine extends HologramLine {
         armorStand.setInvisible(true);
         PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(armorStand);
         PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-        if (!shouldTrack(hologram.getPlayer())) {
+        if (!hologram.shouldTrack(hologram.getPlayer())) {
             return;
-        }
-        if (!trackedPlayers.contains(hologram.getPlayer())) {
-            trackedPlayers.add(hologram.getPlayer());
         }
         PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
         con.sendPacket(packet);
@@ -82,40 +62,17 @@ public class PersonalHologramLine extends HologramLine {
         armorStand.locY = location.getY();
         armorStand.locZ = location.getZ();
         PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(armorStand);
-        if (!shouldTrack(hologram.getPlayer())) {
-            if (trackedPlayers.contains(hologram.getPlayer())) {
-                trackedPlayers.remove(hologram.getPlayer());
-                PacketPlayOutEntityDestroy packet1 = new PacketPlayOutEntityDestroy(armorStand.getId());
-                PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
-                con.sendPacket(packet1);
-            }
-            return;
-        }
-        if (!trackedPlayers.contains(hologram.getPlayer())) {
-            trackedPlayers.add(hologram.getPlayer());
-            PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
-            PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(armorStand);
-            PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
-            con.sendPacket(packet1);
-            con.sendPacket(packet2);
-        } else {
-            PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
-            con.sendPacket(packet);
-        }
+        PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
+        con.sendPacket(packet);
     }
 
     public void despawn() {
         if (armorStand == null) return;
         PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(armorStand.getId());
-        if (!trackedPlayers.contains(hologram.getPlayer())) {
-            
-            return;
-        }
         PlayerConnection con = ((CraftPlayer) hologram.getPlayer().getPlayer()).getHandle().playerConnection;
         con.sendPacket(packet);
         armorStand.dead = true;
         armorStand = null;
-        trackedPlayers.clear();
     }
 
     public void setLine(int line) {
@@ -129,7 +86,6 @@ public class PersonalHologramLine extends HologramLine {
         if (armorStand != null) {
             armorStand.dead = true;
             armorStand = null;
-            trackedPlayers.clear();
         }
     }
 
