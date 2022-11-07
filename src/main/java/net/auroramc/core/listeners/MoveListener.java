@@ -21,14 +21,6 @@ public class MoveListener implements Listener {
     public void onMove(PlayerMoveEvent e) {
         if (AuroraMCAPI.getPlayer(e.getPlayer()) != null && !e.getFrom().equals(e.getTo())) {
             AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
-                        hologram.moveCheck(player);
-                    }
-                }
-            }.runTaskAsynchronously(AuroraMCAPI.getCore());
             if (!player.hasMoved()) {
                 player.moved();
                 for (EntityPlayer player2 : AuroraMCAPI.getFakePlayers().values()) {
@@ -43,6 +35,15 @@ public class MoveListener implements Listener {
                         }
                     }.runTaskLater(AuroraMCAPI.getCore(), 40);
                 }
+            } else if (!e.getFrom().getBlock().equals(e.getTo().getBlock())) {
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+                            hologram.moveCheck(player);
+                        }
+                    }
+                }.runTaskAsynchronously(AuroraMCAPI.getCore());
             }
         }
     }
