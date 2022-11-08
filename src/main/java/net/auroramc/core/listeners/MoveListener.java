@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+
 public class MoveListener implements Listener {
 
     @EventHandler
@@ -39,11 +41,11 @@ public class MoveListener implements Listener {
                 new BukkitRunnable(){
                     @Override
                     public void run() {
-                        for (Hologram hologram : AuroraMCAPI.getHolograms().values()) {
+                        for (Hologram hologram : new ArrayList<>(AuroraMCAPI.getHolograms().values())) {
                             hologram.moveCheck(player);
                         }
                     }
-                }.runTaskAsynchronously(AuroraMCAPI.getCore());
+                }.runTask(AuroraMCAPI.getCore());
             }
         }
     }
