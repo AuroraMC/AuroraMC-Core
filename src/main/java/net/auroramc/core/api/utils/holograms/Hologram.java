@@ -9,8 +9,16 @@ import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.holograms.personal.HologramClickHandler;
 import net.auroramc.core.api.utils.holograms.personal.PersonalHologramLine;
 import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateEntityNBT;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +30,14 @@ public class Hologram {
     private boolean spawned;
     private final AuroraMCPlayer player;
     private final HologramClickHandler clickHandler;
+    protected List<AuroraMCPlayer> trackedPlayers;
+
+    private static int maxViewRange;
+
+    static {
+        maxViewRange = (Bukkit.getViewDistance() - 1) * 16;
+        if (maxViewRange > 64) maxViewRange = 64;
+    }
 
     public Hologram(AuroraMCPlayer player, Location location, HologramClickHandler clickHandler) {
         this.location = location;
@@ -29,6 +45,7 @@ public class Hologram {
         lines = new HashMap<>();
         this.player = player;
         this.clickHandler = clickHandler;
+        trackedPlayers = new ArrayList<>();
     }
 
     public void move(Location location) {
@@ -137,8 +154,10 @@ public class Hologram {
 
     public void onJoin(AuroraMCPlayer player) {
         if (!spawned || (this.player != null && !player.equals(this.player))) return;
-        for (HologramLine line : lines.values()) {
-            line.onJoin(player);
+        if (shouldTrack(player)) {
+            for (HologramLine line : lines.values()) {
+                line.onJoin(player);
+            }
         }
     }
 
@@ -157,13 +176,54 @@ public class Hologram {
         for (HologramLine line : lines.values()) {
             line.onLeave(player);
         }
+
+        trackedPlayers.remove(player);
     }
 
     public void moveCheck(AuroraMCPlayer player) {
         if (!spawned || (this.player != null && !player.equals(this.player))) return;
-        for (HologramLine line : lines.values()) {
-            line.moveCheck(player);
+        if (shouldTrack(player)) {
+            if (!trackedPlayers.contains(player)) {
+                trackedPlayers.add(player);
+                PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
+                for (HologramLine line : lines.values()) {
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            PacketPlayOutSpawnEntityLiving packet1 = new PacketPlayOutSpawnEntityLiving(line.getArmorStand());
+                            PacketPlayOutUpdateEntityNBT packet2 = new PacketPlayOutUpdateEntityNBT(line.getArmorStand().getId(), line.getArmorStand().getNBTTag());
+                            con.sendPacket(packet1);
+                            con.sendPacket(packet2);
+                        }
+                    }.runTask(AuroraMCAPI.getCore());
+                }
+            }
+        } else {
+            if (trackedPlayers.contains(player)) {
+                PlayerConnection con = ((CraftPlayer) player.getPlayer()).getHandle().playerConnection;
+                for (HologramLine line : lines.values()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(line.getArmorStand().getId());
+                            con.sendPacket(packet);
+                        }
+                    }.runTask(AuroraMCAPI.getCore());
+                }
+                trackedPlayers.remove(player);
+            }
         }
+    }
+
+    public boolean shouldTrack(AuroraMCPlayer player) {
+        if (!player.getPlayer().getLocation().getWorld().equals(location.getWorld())) {
+            return false;
+        }
+        double diffX = Math.abs(player.getPlayer().getLocation().getX() - location.getX());
+        double diffZ = Math.abs(player.getPlayer().getLocation().getZ() - location.getZ());
+
+        return diffX <= maxViewRange
+                && diffZ <= maxViewRange;
     }
 
     public Location getLocation() {
