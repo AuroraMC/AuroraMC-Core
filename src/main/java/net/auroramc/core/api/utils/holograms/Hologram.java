@@ -82,6 +82,9 @@ public class Hologram {
         } else {
             hl = new UniversalHologramLine(this, text, line);
         }
+        if (spawned) {
+            hl.spawn();
+        }
         lines.put(line, hl);
     }
 
