@@ -61,10 +61,12 @@ public class Hologram {
         if (line < 1) {
             throw new IllegalArgumentException("A line number below 1 was used.");
         }
+        boolean move = false;
         if (!lines.containsKey(line)) {
             if (line != lines.size() + 1) {
                 line = lines.size() + 1;
             }
+            move = true;
         } else {
             for (int i = lines.size();i >= line;line--) {
                 HologramLine line1 = lines.get(i);
@@ -86,6 +88,14 @@ public class Hologram {
             hl.spawn();
         }
         lines.put(line, hl);
+        if (spawned && move) {
+            for (int i = 1;i <= lines.size();line++) {
+                if (i == line) {
+                    continue;
+                }
+                lines.get(i).move();
+            }
+        }
     }
 
     public void removeLine(int line) {
