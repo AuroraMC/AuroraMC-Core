@@ -84,16 +84,13 @@ public class Hologram {
         } else {
             hl = new UniversalHologramLine(this, text, line);
         }
+        lines.put(line, hl);
         if (spawned) {
             hl.spawn();
         }
-        lines.put(line, hl);
         if (spawned && move) {
-            for (int i = 1;i <= lines.size();line++) {
-                if (i == line) {
-                    continue;
-                }
-                lines.get(i).move();
+            for (HologramLine hl2 : lines.values()) {
+                hl2.move();
             }
         }
     }
