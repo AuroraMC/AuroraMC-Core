@@ -103,7 +103,7 @@ public class HalfWayThere extends KillMessage {
                     if (killer != null) {
                         return String.format("**%s** was paintballed by **%s**.", victimName, killerName);
                     } else {
-                        return String.format("**%s** was paintballed by the game. Somehow.", victimName);
+                        return String.format("**%s** was paintballed by a Missile Strike.", victimName);
                     }
                 }
             }
