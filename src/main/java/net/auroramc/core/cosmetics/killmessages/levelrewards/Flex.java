@@ -103,7 +103,7 @@ public class Flex extends KillMessage {
                     if (killer != null) {
                         return String.format("**%s** was paintball kill **#%s** for **%s**", victimName, killer.getStats().getStatistic(3, "kills") , killerName);
                     } else {
-                        return String.format("**%s** has been magically died to a paintball **%s** times", victimName, victim.getStats().getStatistic(3, "deaths"));
+                        return String.format("**%s** has been died to a paintball in a Missile Strike **%s** times", victimName, victim.getStats().getStatistic(3, "deaths"));
                     }
                 }
             }

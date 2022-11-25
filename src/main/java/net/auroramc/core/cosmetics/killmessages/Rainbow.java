@@ -104,7 +104,7 @@ public class Rainbow extends KillMessage {
                     if (killer != null) {
                         return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by %s.", victimName, killerName));
                     } else {
-                        return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by the game. Somehow.", victimName));
+                        return AuroraMCAPI.getFormatter().rainbow(String.format("%s was paintballed by a Missile Strike.", victimName));
                     }
                 }
             }
