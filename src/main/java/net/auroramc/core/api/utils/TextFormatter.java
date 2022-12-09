@@ -18,14 +18,14 @@ import org.jetbrains.annotations.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TextFormatter {
 
     private final String prefixFormat = "&3&l«%s» &r%s";
     private final String nonPrefixFormat = "&r%s";
-    private final String chatPrefixFormat = "&%s«%s%s»";
+    private final String tabPrefixFormat = "&%s&l«%s%s»";
+    private final String chatPrefixFormat = "&%s&l«%s%s»";
     private final String chatLevelFormat = "&%s«%s»";
     private final String chatUltimateFormat = "&%s&l%s";
     private final String chatStaffMessageFormat = " &r&%s%s %s &l»&r ";
@@ -63,7 +63,7 @@ public class TextFormatter {
 
     public String rankFormat(Rank rank, PlusSubscription subscription) {
         if (rank.getPrefixAppearance() != null) {
-            return convert(String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null && !rank.hasPermission("moderation") && !rank.hasPermission("build") && !rank.hasPermission("debug.info"))?"+":"")));
+            return convert(String.format(tabPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null && rank.getId() < 5)?"+":"")));
         } else {
             return "";
         }
