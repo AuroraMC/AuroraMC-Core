@@ -68,11 +68,12 @@ public enum Rank {
             "&fand help our design team plan upcoming\n" +
             "&fupdates!", null, '4', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     PARTNER(14, "Partner", "Partner", "&c&l«PARTNER»\n\n" +
-            "&fThis rank is given to content creators\n" +
-            "that AuroraMC have an active partnership\n" +
-            "with. They are members of the AuroraMC\n" +
-            "Affiliate Program.\n \n" +
-            "&aThis can is invite only.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
+            "&fThis is given to content creators\n" +
+            "that are a part of the AuroraMC Affiliate\n" +
+            "Program! They have special creator codes\n" +
+            "that you can use for a small discount on\n" +
+            "our store!\n \n" +
+            "&fThis rank is invite only!", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(255, 170, 170)),
     OWNER(9001, "Owner", "Owner", "&4&l«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +
