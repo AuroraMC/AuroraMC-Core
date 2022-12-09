@@ -42,6 +42,7 @@ import net.auroramc.core.cosmetics.banners.UnitedStates;
 import net.auroramc.core.cosmetics.deatheffects.Confetti;
 import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.deatheffects.LayAnEgg;
+import net.auroramc.core.cosmetics.emotes.Shrug;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.gadgets.FireworkGadget;
 import net.auroramc.core.cosmetics.gadgets.GrapplingHook;
@@ -82,9 +83,6 @@ public class AuroraMC extends JavaPlugin {
 
         AuroraMCAPI.init(this);
 
-
-        AuroraMCAPI.loadRules();
-        AuroraMCAPI.loadFilter();
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
         AuroraMCAPI.registerCommand(new CommandLink());
@@ -423,6 +421,13 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new DeveloperKillPlayer());
         AuroraMCAPI.registerCosmetic(new Flex());
         AuroraMCAPI.registerCosmetic(new KillerGoose());
+
+        //Emotes
+        AuroraMCAPI.registerCosmetic(new Shrug());
+
+
+        AuroraMCAPI.loadRules();
+        AuroraMCAPI.loadFilter();
 
 
         //Registering default Event Listeners
