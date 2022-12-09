@@ -317,7 +317,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.isLoaded()) {
@@ -375,7 +375,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                        s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
                                         String suffix = "";
@@ -416,7 +416,7 @@ public class AuroraMCPlayer {
                                             if (!s.equals("")) {
                                                 s += " ";
                                             }
-                                            s += "§" + ((player.getTeam() == null) ? "f" : player.getTeam().getTeamColor());
+                                            s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
                                             team.setPrefix(s);
 
                                             suffix = "";
@@ -461,7 +461,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -514,7 +514,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -555,7 +555,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pla.getTeam() == null) ? "f" : pla.getTeam().getTeamColor());
+                                    s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pla.getActiveSubscription() != null) {
@@ -932,7 +932,7 @@ public class AuroraMCPlayer {
         if (!s.equals("")) {
             s += " ";
         }
-        s += "§" + ((player.getTeam() == null)?"f":player.getTeam().getTeamColor());
+        s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
 
         team.setPrefix(s);
         String suffix = "";
