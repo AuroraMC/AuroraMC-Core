@@ -93,6 +93,7 @@ public class ChatListener implements Listener {
                         }
                     }
                     e.setMessage(AuroraMCAPI.getFilter().filter(player, e.getMessage()));
+                    e.setMessage(AuroraMCAPI.getFilter().processEmotes(player, e.getMessage()));
                     if (player.isDisguised()) {
                         if (player.getPreferences().isHideDisguiseNameEnabled()) {
                             player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().undisguisedFormatTeamChat(player, AuroraMCAPI.getFilter().processMentions(e.getMessage())));
@@ -165,6 +166,7 @@ public class ChatListener implements Listener {
                     }
                 }
                 e.setMessage(AuroraMCAPI.getFilter().filter(player, e.getMessage()));
+                e.setMessage(AuroraMCAPI.getFilter().processEmotes(player, e.getMessage()));
                 if (e.getMessage().contains("mod")) {
                     if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(14))) {
                         player.getStats().achievementGained(AuroraMCAPI.getAchievement(14), 1, true);
