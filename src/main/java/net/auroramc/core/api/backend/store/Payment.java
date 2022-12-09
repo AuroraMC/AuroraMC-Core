@@ -4,9 +4,7 @@
 
 package net.auroramc.core.api.backend.store;
 
-import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.UUID;

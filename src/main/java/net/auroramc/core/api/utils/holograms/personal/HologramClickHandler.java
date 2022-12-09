@@ -5,7 +5,6 @@
 package net.auroramc.core.api.utils.holograms.personal;
 
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
 
 public interface HologramClickHandler {
 

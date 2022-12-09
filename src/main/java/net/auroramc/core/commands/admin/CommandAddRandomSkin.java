@@ -9,19 +9,10 @@ import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.disguise.DisguiseUtil;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
 public class CommandAddRandomSkin extends Command {
 

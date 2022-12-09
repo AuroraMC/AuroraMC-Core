@@ -6,16 +6,15 @@ package net.auroramc.core.commands.admin.iplookup;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
-import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.punishments.ipprofiles.IPProfile;
-import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
-import net.auroramc.core.gui.admin.iplookup.IPLookupPlayer;
 import net.auroramc.core.gui.admin.iplookup.IPLookupProfile;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CommandIPLookupProfile extends Command {
 

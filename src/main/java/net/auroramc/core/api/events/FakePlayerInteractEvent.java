@@ -7,7 +7,6 @@ package net.auroramc.core.api.events;
 import net.auroramc.core.api.events.player.PlayerEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class FakePlayerInteractEvent extends PlayerEvent {

@@ -4,17 +4,13 @@
 
 package net.auroramc.core.cosmetics.deatheffects;
 
-import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.DeathEffect;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;

@@ -5,15 +5,12 @@
 package net.auroramc.core.cosmetics.killmessages;
 
 import net.auroramc.core.api.cosmetics.KillMessage;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Default extends KillMessage {
 
