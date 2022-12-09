@@ -69,8 +69,8 @@ public abstract class Banner extends Cosmetic {
 
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert(("&r" + WordUtils.wrap(getDescription(), 40, ";&r", false))).split(";")));
-        lore.add(AuroraMCAPI.getFormatter().convert("&rRarity: " + this.getRarity().getDisplayName()));
+        lore.addAll(Arrays.asList(AuroraMCAPI.getFormatter().convert("&r&f" + WordUtils.wrap(getDescription(), 40, ";&r&f", false)).split(";")));
+        lore.add(AuroraMCAPI.getFormatter().convert("&r&fRarity: " + this.getRarity().getDisplayName()));
         lore.add("");
         if (hasUnlocked(player)) {
             if (player.getActiveCosmetics().get(getType()) != null) {
