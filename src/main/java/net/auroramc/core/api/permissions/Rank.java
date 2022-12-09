@@ -15,26 +15,26 @@ import java.util.List;
 public enum Rank {
 
     PLAYER(0, "Player", null, null, null, null, 'f', '3', 'f', false, Collections.emptyList(), Collections.singletonList(Permission.PLAYER), RankCategory.PLAYER, Color.fromRGB(255, 255, 255)),
-    ELITE(1, "Elite", "Elite", "&b«ELITE»\n \n" +
+    ELITE(1, "Elite", "Elite", "&b&l«ELITE»\n \n" +
             "&fThis rank is very rare, and only\n" +
             "&fthe most daring of players will\n" +
             "&fventure into its unknown value!\n\n", "http://store.auroramc.net/", 'b', 'f', 'b', 'f', false, Collections.singletonList(PLAYER), Collections.singletonList(Permission.ELITE), RankCategory.PLAYER, Color.fromRGB(85, 255, 255)),
-    MASTER(2, "Master", "Master", "&d«MASTER»\n \n" +
+    MASTER(2, "Master", "Master", "&d&l«MASTER»\n \n" +
             "&fThis rank is uncommon, and is\n" +
             "&fonly found in the Realm of the\n" +
             "Unknown! It's value is incomparable!\n\n", "http://store.auroramc.net/", 'd', 'f', 'd', 'f', false, Collections.singletonList(ELITE), Collections.singletonList(Permission.MASTER), RankCategory.PLAYER, Color.fromRGB(255, 85, 255)),
-    YOUTUBE(5, "YouTube", "YouTube", "&6«YOUTUBE»\n\n" +
+    YOUTUBE(5, "YouTube", "YouTube", "&6&l«YOUTUBE»\n\n" +
             "&fThis rank is given to YouTube\n" +
             "&fcontent creators on AuroraMC.\n \n" +
             "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '6', 'f', 'e', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), Rank.RankCategory.SOCIAL_MEDIA, Color.fromRGB(255, 170, 0)),
-    TWITCH(6, "Twitch", "Twitch", "&5«TWITCH»\n\n" +
+    STREAMER(6, "Streamer", "Streamer", "&5&l«STREAMER»\n\n" +
             "&fThis rank is given to Twitch\n" +
             "&fstreamers on AuroraMC.\n \n" +
             "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '5', 'f', 'd', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
-    BUILDER(7, "Builder", "Builder", "&a«BUILDER»\n \n" +
+    BUILDER(7, "Builder", "Builder", "&a&l«BUILDER»\n \n" +
             "&fBuilders create and fix all of the\n" +
             "&fmaps you can find on the network!", null, 'a', 'f', 'a', 'f', false, Collections.singletonList(MASTER), Collections.singletonList(Permission.BUILD), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
-    BUILD_TEAM_MANAGEMENT(8, "Build Team Management", "BTM", "&a«BTM»\n \n" +
+    BUILD_TEAM_MANAGEMENT(8, "Build Team Management", "BTM", "&a&l«BTM»\n \n" +
             "&fBTM members manage and maintain the\n" +
             "&fbuilders, build server and maps!", null, 'a', 'f', 'a', 'f', false, Collections.singletonList(BUILDER), Collections.singletonList(Permission.BUILD_TEAM_MANAGEMENT), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
     JUNIOR_MODERATOR(9, "Junior Moderator", "Jr.Mod", "&9«JUNIOR MOD»\n \n" +
@@ -42,36 +42,42 @@ public enum Rank {
             "&fqueries players have, as well as\n" +
             "&fmoderate the network. Junior Mods have\n" +
             "&fless permissions than Moderators.", null, '9', 'f', '9', 'f', false, Collections.singletonList(MASTER), Collections.singletonList(Permission.MODERATION), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
-    MODERATOR(10, "Moderator", "Mod", "&9«MOD»\n \n" +
+    MODERATOR(10, "Moderator", "Mod", "&9&l«MOD»\n \n" +
             "&rMods answer any questions or\n" +
             "&fqueries players have, as well as\n" +
             "&fmoderate the network. ", null, '9', 'f', '9', 'f', false, Collections.singletonList(JUNIOR_MODERATOR), Arrays.asList(Permission.BYPASS_APPROVAL, Permission.DISGUISE), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
-    ROBOT(8001, "Robot", "Robot", "&c«ROBOT»\n \n" +
+    ROBOT(8001, "Robot", "Robot", "&4&l«ROBOT»\n \n" +
             "&fThis account is a bot account which is\n" +
             "&fused and managed by the AuroraMC\n" +
             "&fManagement Team for miscellaneous\n" +
-            "&ftasks and duties.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.MODERATION, Permission.BUILD), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
-    ADMIN(11, "Administrator", "Admin", "&c«ADMIN»\n \n" +
+            "&ftasks and duties.", null, '4', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.MODERATION, Permission.BUILD), RankCategory.MODERATION, Color.fromRGB(85, 85, 255)),
+    ADMIN(11, "Administrator", "Admin", "&4&l«ADMIN»\n \n" +
             "&fAdmins monitor their specific teams,\n" +
             "&fmaking sure all of the staff inside those\n" +
             "&fteams are working efficiently and to the\n" +
-            "&fbest of their ability.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.CUSTOM_DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO, Permission.PANEL, Permission.SOCIAL_MEDIA, Permission.STAFF_MANAGEMENT, Permission.RECRUITMENT, Permission.DEBUG_ACTION), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fbest of their ability.", null, '4', 'f', 'c', 'f', true, Collections.singletonList(MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DISGUISE, Permission.CUSTOM_DISGUISE, Permission.SOCIAL, Permission.DEBUG_INFO, Permission.PANEL, Permission.SOCIAL_MEDIA, Permission.STAFF_MANAGEMENT, Permission.RECRUITMENT, Permission.DEBUG_ACTION), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     DEVELOPER(12, "Developer", "Dev", "&a«DEV»\n \n" +
             "&fDevelopers create the content that\n" +
             "&fyou see on all our servers! They work\n" +
             "&fbehind the scenes coding the games you\n" +
             "&flove to play!", null, 'a', 'f', 'a', 'f', true, Collections.singletonList(MASTER), Arrays.asList(Permission.DEBUG_INFO, Permission.PANEL), RankCategory.CONTENT_CREATOR, Color.fromRGB(85, 255, 85)),
-    SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&c«SR.DEV»\n \n" +
+    SENIOR_DEVELOPER(13, "Senior Developer", "Sr.Dev", "&4&l«SR.DEV»\n \n" +
             "&fSenior Developers oversee the development\n" +
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
             "&fand help our design team plan upcoming\n" +
-            "&fupdates!", null, 'c', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
-    OWNER(9001, "Owner", "Owner", "&c«OWNER»\n \n" +
+            "&fupdates!", null, 'c', '4', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+    PARTNER(14, "Partner", "Partner", "&c&l«PARTNER»\n\n" +
+            "&fThis rank is given to content creators\n" +
+            "that AuroraMC have an active partnership\n" +
+            "with. They are members of the AuroraMC\n" +
+            "Affiliate Program.\n \n" +
+            "&aThis can is invite only.", null, 'c', 'f', 'c', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
+    OWNER(9001, "Owner", "Owner", "&4&l«OWNER»\n \n" +
             "&fOwners manage all aspects of\n" +
             "&fthe network, keeping an eye on\n" +
             "&fthe staff team and managing all\n" +
-            "&fcontent that is published.", null, 'c', 'f', 'c', 'f', true, Collections.singletonList(ADMIN), Collections.singletonList(Permission.ALL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0));
+            "&fcontent that is published.", null, '4', 'f', 'c', 'f', true, Collections.singletonList(ADMIN), Collections.singletonList(Permission.ALL), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0));
 
     public enum RankCategory {PLAYER, SOCIAL_MEDIA, CONTENT_CREATOR, MODERATION, LEADERSHIP}
 
