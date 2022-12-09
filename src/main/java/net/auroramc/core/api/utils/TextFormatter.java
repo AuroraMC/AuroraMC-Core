@@ -4,14 +4,15 @@
 
 package net.auroramc.core.api.utils;
 
+import com.sun.deploy.uitoolkit.impl.text.TextConsoleWindow;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.players.IgnoredPlayer;
 import net.auroramc.core.api.players.PlayerReport;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -142,13 +143,18 @@ public class TextFormatter {
             name = player.getPlayer().getDisplayName();
         }
 
+        TextComponent nameComponent = new TextComponent(name);
+
         //Adding in name color.
         if (player.getTeam() != null) {
-            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor() + name)));
+            nameComponent.setColor(ChatColor.getByChar(player.getTeam().getTeamColor()));
         } else {
-            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor() + name)));
+            nameComponent.setColor(ChatColor.getByChar(rank.getNameColor()));
         }
 
+        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n&fPreferred Pronouns: **" + player.getPreferences().getPreferredPronouns().getFull() + "**").create()));
+
+        chatMessage.addExtra(nameComponent);
 
         //Adding in spacer.
         chatMessage.addExtra(new TextComponent(convert(" &" + rank.getConnectorColor() + "» ")));
@@ -230,12 +236,18 @@ public class TextFormatter {
         //Adding in name.
         name = player.getName();
 
+        TextComponent nameComponent = new TextComponent(name);
+
         //Adding in name color.
         if (player.getTeam() != null) {
-            chatMessage.addExtra(new TextComponent(convert("&" + player.getTeam().getTeamColor() + name)));
+            nameComponent.setColor(ChatColor.getByChar(player.getTeam().getTeamColor()));
         } else {
-            chatMessage.addExtra(new TextComponent(convert("&" + rank.getNameColor() + name)));
+            nameComponent.setColor(ChatColor.getByChar(rank.getNameColor()));
         }
+
+        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n&fPreferred Pronouns: **" + player.getPreferences().getPreferredPronouns().getFull() + "**").create()));
+
+        chatMessage.addExtra(nameComponent);
 
 
         //Adding in spacer.
@@ -437,7 +449,7 @@ public class TextFormatter {
     public BaseComponent formatReportMessage(PlayerReport report) {
         TextComponent textComponent = new TextComponent("");
         TextComponent prefix = new TextComponent("«REPORTS»");
-        prefix.setColor(ChatColor.DARK_AQUA.asBungee());
+        prefix.setColor(ChatColor.DARK_AQUA);
         prefix.setBold(true);
 
         textComponent.addExtra(prefix);
@@ -452,7 +464,7 @@ public class TextFormatter {
             textComponent.addExtra(convert("\n\n&b&lCHATLOG:&r "));
             TextComponent chatLog = new TextComponent("Click here to view chatlog");
             chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chatlogs.auroramc.net/log?uuid=%s&id=%s", report.getChatReportUUID().toString(), report.getId())));
-            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN.asBungee()).create()));
+            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create()));
             textComponent.addExtra(chatLog);
         }
 
@@ -462,7 +474,7 @@ public class TextFormatter {
     public BaseComponent formatIgnoreList(AuroraMCPlayer player, int page) {
         TextComponent textComponent = new TextComponent("");
         TextComponent prefix = new TextComponent("«IGNORE»");
-        prefix.setColor(ChatColor.DARK_AQUA.asBungee());
+        prefix.setColor(ChatColor.DARK_AQUA);
         prefix.setBold(true);
 
         textComponent.addExtra(prefix);
