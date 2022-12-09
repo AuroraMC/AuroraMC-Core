@@ -8,7 +8,6 @@ import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 
 import java.util.List;
 

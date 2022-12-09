@@ -9,12 +9,10 @@ import net.auroramc.core.api.events.ProtocolMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class IncomingProtocolMessageThread extends Thread {
 

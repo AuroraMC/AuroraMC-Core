@@ -6,8 +6,6 @@ package net.auroramc.core.cosmetics.projectiletrails;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.ProjectileTrail;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
@@ -17,7 +15,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class FireworkTrail extends ProjectileTrail {

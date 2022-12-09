@@ -4,7 +4,6 @@
 
 package net.auroramc.core.achievements.lobby;
 
-import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.stats.AchievementTier;
 import net.auroramc.core.api.stats.TieredAcheivement;
 

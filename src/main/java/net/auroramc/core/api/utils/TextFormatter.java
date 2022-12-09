@@ -4,7 +4,6 @@
 
 package net.auroramc.core.api.utils;
 
-import com.sun.deploy.uitoolkit.impl.text.TextConsoleWindow;
 import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
