@@ -66,7 +66,7 @@ public enum Rank {
             "&fand everyday maintenance of the network.\n" +
             "&fThey help give out developer assignments\n" +
             "&fand help our design team plan upcoming\n" +
-            "&fupdates!", null, 'c', '4', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
+            "&fupdates!", null, '4', 'f', 'c', 'f', true, Arrays.asList(DEVELOPER, JUNIOR_MODERATOR), Arrays.asList(Permission.ADMIN, Permission.DEBUG_ACTION, Permission.PANEL, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), RankCategory.LEADERSHIP, Color.fromRGB(170, 0, 0)),
     PARTNER(14, "Partner", "Partner", "&c&l«PARTNER»\n\n" +
             "&fThis rank is given to content creators\n" +
             "that AuroraMC have an active partnership\n" +
