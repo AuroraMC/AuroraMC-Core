@@ -27,7 +27,7 @@ public enum Rank {
             "&fThis rank is given to YouTube\n" +
             "&fcontent creators on AuroraMC.\n \n" +
             "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '6', 'f', 'e', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), Rank.RankCategory.SOCIAL_MEDIA, Color.fromRGB(255, 170, 0)),
-    STREAMER(6, "Streamer", "Streamer", "&5&l«STREAMER»\n\n" +
+    STREAMER(6, "Streamer", "Stream", "&5&l«STREAMER»\n\n" +
             "&fThis rank is given to Twitch\n" +
             "&fstreamers on AuroraMC.\n \n" +
             "&aClick to view rank requirements.", "https://auroramc.net/threads/content-creator-ranks-information.49/", '5', 'f', 'd', 'f', false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, Color.fromRGB(170, 0, 170)),
