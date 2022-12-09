@@ -35,6 +35,9 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import us.myles.ViaVersion.ViaVersionPlugin;
+import us.myles.ViaVersion.api.Via;
+import us.myles.ViaVersion.api.ViaAPI;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -317,12 +320,10 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(player.getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(player.getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
-                                    if (pl.isLoaded()) {
-                                        
-                                    }
                                     //Check for a valid subscription and give suffix if they have one enabled.
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
@@ -375,7 +376,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                        s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(player.getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(player.getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
                                         String suffix = "";
@@ -416,7 +417,7 @@ public class AuroraMCPlayer {
                                             if (!s.equals("")) {
                                                 s += " ";
                                             }
-                                            s += "§" + ((player.getTeam() == null) ? "r" : player.getTeam().getTeamColor());
+                                            s += "§" + ((player.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") :((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") +  player.getTeam().getTeamColor());
                                             team.setPrefix(s);
 
                                             suffix = "";
@@ -461,7 +462,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -514,7 +515,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "r" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(pla.getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(pla.getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
@@ -555,7 +556,7 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pla.getTeam() == null) ? "r" : pla.getTeam().getTeamColor());
+                                    s += "§" + ((pla.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") + pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pla.getActiveSubscription() != null) {
@@ -932,7 +933,7 @@ public class AuroraMCPlayer {
         if (!s.equals("")) {
             s += " ";
         }
-        s += "§" + ((player.getTeam() == null)?"r":player.getTeam().getTeamColor());
+        s += "§" + ((player.getTeam() == null)?"r" + ((Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393)?"§f":""):((Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393)?"r§":"") + player.getTeam().getTeamColor());
 
         team.setPrefix(s);
         String suffix = "";
