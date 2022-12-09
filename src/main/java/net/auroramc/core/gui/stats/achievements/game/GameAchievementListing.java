@@ -11,7 +11,6 @@ import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.stats.TieredAcheivement;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
-import net.auroramc.core.gui.stats.achievements.Achievements;
 import net.auroramc.core.gui.stats.achievements.TieredAchievementListing;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;

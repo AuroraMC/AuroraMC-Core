@@ -9,9 +9,7 @@ import net.auroramc.core.api.permissions.PlusSubscription;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.stats.Achievement;
 import net.auroramc.core.api.stats.PlayerStatistics;
-import net.auroramc.core.api.utils.LevelUtils;
 import net.auroramc.core.api.utils.PlayerKitLevel;
-import net.auroramc.core.api.utils.TimeLength;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import net.auroramc.core.gui.stats.achievements.game.GameAchievementListing;
@@ -19,8 +17,6 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-
-import java.text.DecimalFormat;
 
 public class CrystalQuestStatistics extends GUI {
 

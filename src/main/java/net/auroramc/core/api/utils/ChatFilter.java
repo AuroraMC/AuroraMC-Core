@@ -8,10 +8,6 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.ChatEmote;
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.players.PlayerPreferences;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;

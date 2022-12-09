@@ -5,11 +5,8 @@
 package net.auroramc.core.cosmetics.hats;
 
 import net.auroramc.core.api.cosmetics.Hat;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Astronaut extends Hat {
 
