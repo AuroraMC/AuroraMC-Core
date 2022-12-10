@@ -151,7 +151,9 @@ public class TextFormatter {
             nameComponent.setColor(ChatColor.getByChar(rank.getNameColor()));
         }
 
-        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n&fPreferred Pronouns: **" + player.getPreferences().getPreferredPronouns().getFull() + "**").create()));
+        if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
+            nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n§fPreferred Pronouns: §b" + player.getPreferences().getPreferredPronouns().getFull() + "").create()));
+        }
 
         chatMessage.addExtra(nameComponent);
 
@@ -244,7 +246,9 @@ public class TextFormatter {
             nameComponent.setColor(ChatColor.getByChar(rank.getNameColor()));
         }
 
-        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n&fPreferred Pronouns: **" + player.getPreferences().getPreferredPronouns().getFull() + "**").create()));
+        if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
+            nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("\n§fPreferred Pronouns: §b" + player.getPreferences().getPreferredPronouns().getFull() + "").create()));
+        }
 
         chatMessage.addExtra(nameComponent);
 
