@@ -38,7 +38,7 @@ public class Cosmetics extends GUI {
 
         Map<Integer, Cosmetic> cosmetics = AuroraMCAPI.getCosmetics();
 
-        GUIItem swordGUI = new GUIItem(Material.GOLD_SWORD, "&6&lKill Messages", 1, String.format(";&r&fYou have unlocked **%s** out of **%s** kill messages.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.KILL_MESSAGE).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.KILL_MESSAGE).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count()));
+        GUIItem swordGUI = new GUIItem(Material.GOLD_SWORD, "&6&lKill Messages", 1, String.format(";&r&fYou have unlocked **%s** &fout of **%s** &fkill messages.;;&r&7These are messages that appear in;&r&7chat when you kill a player in any game.", cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.KILL_MESSAGE).filter(cosmetic -> cosmetic.hasUnlocked(player)).count(), cosmetics.values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.KILL_MESSAGE).filter(cosmetic -> cosmetic.hasUnlocked(player) || cosmetic.showIfNotUnlocked()).count()));
         ItemStack item = swordGUI.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

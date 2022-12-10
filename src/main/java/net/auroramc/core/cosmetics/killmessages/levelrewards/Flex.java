@@ -4,17 +4,13 @@
 
 package net.auroramc.core.cosmetics.killmessages.levelrewards;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.KillMessage;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Flex extends KillMessage {
     public Flex() {
@@ -103,7 +99,7 @@ public class Flex extends KillMessage {
                     if (killer != null) {
                         return String.format("**%s** was paintball kill **#%s** for **%s**", victimName, killer.getStats().getStatistic(3, "kills") , killerName);
                     } else {
-                        return String.format("**%s** has been magically died to a paintball **%s** times", victimName, victim.getStats().getStatistic(3, "deaths"));
+                        return String.format("**%s** has been died to a paintball in a Missile Strike **%s** times", victimName, victim.getStats().getStatistic(3, "deaths"));
                     }
                 }
             }

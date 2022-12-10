@@ -7,7 +7,6 @@ package net.auroramc.core.listeners;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.holograms.Hologram;
-import net.auroramc.core.api.utils.holograms.HologramLine;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;

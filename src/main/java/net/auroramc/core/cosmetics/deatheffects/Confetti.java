@@ -5,13 +5,10 @@
 package net.auroramc.core.cosmetics.deatheffects;
 
 import net.auroramc.core.api.cosmetics.DeathEffect;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.bukkit.Material;
 
 import java.util.Collections;
-import java.util.List;
 
 public class Confetti extends DeathEffect {
 

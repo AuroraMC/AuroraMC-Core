@@ -11,7 +11,6 @@ import net.auroramc.core.api.utils.disguise.DisguiseUtil;
 import net.auroramc.core.api.utils.disguise.Skin;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
-import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
 

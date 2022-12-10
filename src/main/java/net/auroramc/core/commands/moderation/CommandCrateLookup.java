@@ -5,12 +5,10 @@
 package net.auroramc.core.commands.moderation;
 
 import net.auroramc.core.api.AuroraMCAPI;
-import net.auroramc.core.api.backend.store.Payment;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.cosmetics.Crate;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.gui.support.PaymentHistory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
