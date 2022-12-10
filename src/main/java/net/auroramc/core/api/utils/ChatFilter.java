@@ -229,4 +229,7 @@ public class ChatFilter {
         bannedPhrases.add(phrase);
     }
 
+    public static Map<String, ChatEmote> getEmotes() {
+        return emotes;
+    }
 }
