@@ -151,9 +151,7 @@ public class TextFormatter {
             nameComponent.setColor(ChatColor.getByChar(rank.getNameColor()));
         }
 
-        if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
-            nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(nameComponent.getColor().toString() + name + ((player.getPreferences().getPreferredPronouns()!=Pronoun.NONE)?"\n§7" + player.getPreferences().getPreferredPronouns().getFull():"") + "\n\n§fGames Played: §b" + player.getStats().getGamesPlayed() + "\n§fIn-Game Time: §b" + new TimeLength(player.getStats().getGameTimeMs()/3600000d, false)).create()));
-        }
+        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(nameComponent.getColor().toString() + name + ((player.getPreferences().getPreferredPronouns()!=Pronoun.NONE)?"\n§7" + player.getPreferences().getPreferredPronouns().getFull():"") + "\n\n§fGames Played: §b" + player.getStats().getGamesPlayed() + "\n§fIn-Game Time: §b" + new TimeLength(player.getStats().getGameTimeMs()/3600000d, false)).create()));
 
         chatMessage.addExtra(nameComponent);
 
