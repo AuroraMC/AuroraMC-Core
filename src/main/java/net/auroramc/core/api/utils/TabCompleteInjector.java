@@ -16,7 +16,6 @@ import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTabComplete;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

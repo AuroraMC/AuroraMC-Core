@@ -5,16 +5,12 @@
 package net.auroramc.core.api.utils;
 
 import net.auroramc.core.api.AuroraMCAPI;
+import net.auroramc.core.api.cosmetics.ChatEmote;
+import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.players.PlayerPreferences;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChatFilter {
 
@@ -23,6 +19,17 @@ public class ChatFilter {
     private final List<String> wordWhitelist;
     private final List<String> wordBlacklist;
     private final List<String> bannedPhrases;
+
+    private static final Map<String, ChatEmote> emotes;
+
+
+    static {
+        emotes = new HashMap<>();
+        for (Cosmetic cosmetic : AuroraMCAPI.getCosmetics().values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.CHAT_EMOTE).collect(Collectors.toList())) {
+            ChatEmote emote = (ChatEmote) cosmetic;
+            emotes.put(emote.getDisplayName(), emote);
+        }
+    }
 
     public ChatFilter(List<String> coreFilteredWords, List<String> wordBlacklist, List<String> wordWhitelist, List<String> toxicReplacements, List<String> bannedPhrases) {
         this.coreFilteredWords = coreFilteredWords;
@@ -158,6 +165,30 @@ public class ChatFilter {
         return String.join(" ", finalMessage);
     }
 
+    public String processEmotes(AuroraMCPlayer player, String message) {
+        String[] msg = message.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String s : msg) {
+            if (s.matches("^:[a-zA-Z]+:$")) {
+                ChatEmote emote = emotes.get(s.substring(1, s.length()-1).toLowerCase());
+                if (emote != null && emote.hasUnlocked(player)) {
+                    builder.append("§");
+                    builder.append(emote.getColor().getChar());
+                    if (emote.isBold()) {
+                        builder.append("§l");
+                    }
+                    builder.append(emote.getDescription());
+                    builder.append("§r");
+                    builder.append(" ");
+                    continue;
+                }
+            }
+            builder.append(s);
+            builder.append(" ");
+        }
+        return builder.toString().trim();
+    }
+
     public List<String> getCoreFilteredWords() {
         return new ArrayList<>(coreFilteredWords);
     }
@@ -198,4 +229,7 @@ public class ChatFilter {
         bannedPhrases.add(phrase);
     }
 
+    public static Map<String, ChatEmote> getEmotes() {
+        return emotes;
+    }
 }

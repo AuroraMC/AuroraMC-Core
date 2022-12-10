@@ -177,7 +177,8 @@ public abstract class Cosmetic {
         GADGET("Gadget"),
         FRIEND_STATUS("Friend Status"),
         SERVER_MESSAGE("Server Message"),
-        PLUS_SYMBOL("Plus Symbol");
+        PLUS_SYMBOL("Plus Symbol"),
+        CHAT_EMOTE("Chat Emote");
 
         static {
             HAT.conflicts = new CosmeticType[]{BANNER};

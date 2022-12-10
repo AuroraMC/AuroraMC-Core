@@ -19,7 +19,8 @@ public enum Pronoun {
     VE_VER("Ve/Ver","Ve/Ver/Vis/Vers"),
     XE_XEM("Xe/Xem","Xe/Xem/Xyr/Xyrs"),
     ZE_HIR("Ze/Hir","Ze/Hir/Hirs"),
-    ZIR_ZIM("Zir/Zim","Zie/Zim/Zir/Zis");
+    ZIR_ZIM("Zir/Zim","Zie/Zim/Zir/Zis"),
+    ANY_PRONOUNS("Any", "Any Pronouns");
 
 
     private final String display;

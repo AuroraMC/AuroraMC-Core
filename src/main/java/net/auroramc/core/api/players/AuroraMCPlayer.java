@@ -25,7 +25,6 @@ import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.api.utils.holograms.Hologram;
-import net.auroramc.core.gui.report.Report;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -35,6 +34,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import us.myles.ViaVersion.api.Via;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -317,18 +317,16 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(player.getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(player.getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
-                                    if (pl.isLoaded()) {
-                                        
-                                    }
                                     //Check for a valid subscription and give suffix if they have one enabled.
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(((pl.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + pl.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
 
                                             } else if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                 suffix = " §7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
@@ -375,7 +373,7 @@ public class AuroraMCPlayer {
                                         if (!s.equals("")) {
                                             s += " ";
                                         }
-                                        s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                        s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(player.getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(player.getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                         team.setPrefix(s);
 
                                         String suffix = "";
@@ -383,7 +381,7 @@ public class AuroraMCPlayer {
                                             if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                 if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                     PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                    suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                    suffix += AuroraMCAPI.getFormatter().convert(String.format(((pl.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + pl.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                                 } else if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                     suffix = " §7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
                                                 }
@@ -416,7 +414,7 @@ public class AuroraMCPlayer {
                                             if (!s.equals("")) {
                                                 s += " ";
                                             }
-                                            s += "§" + ((player.getTeam() == null) ? "f" : player.getTeam().getTeamColor());
+                                            s += "§" + ((player.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") :((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") +  player.getTeam().getTeamColor());
                                             team.setPrefix(s);
 
                                             suffix = "";
@@ -424,7 +422,7 @@ public class AuroraMCPlayer {
                                                 if (player.isLoaded() && player.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                                     if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                         PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                        suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                        suffix += AuroraMCAPI.getFormatter().convert(String.format(((player.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + player.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                                     } else if (player.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                         suffix = " §7" + player.preferences.getPreferredPronouns().getDisplay() + suffix;
                                                     }
@@ -461,14 +459,14 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(((pl.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + pl.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             } else if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                 suffix = " §7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
                                             }
@@ -514,14 +512,14 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pl.getTeam() == null) ? "f" : pl.getTeam().getTeamColor());
+                                    s += "§" + ((pl.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(pla.getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(pla.getPlayer().getUniqueId()) >= 393)?"r§":"") + pl.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pl.getActiveSubscription() != null) {
                                         if (pl.isLoaded() && pl.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pl.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(((pl.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + pl.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", pl.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             } else if (pl.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                 suffix = " §7" + pl.preferences.getPreferredPronouns().getDisplay() + suffix;
                                             }
@@ -555,14 +553,14 @@ public class AuroraMCPlayer {
                                     if (!s.equals("")) {
                                         s += " ";
                                     }
-                                    s += "§" + ((pla.getTeam() == null) ? "f" : pla.getTeam().getTeamColor());
+                                    s += "§" + ((pla.getTeam() == null) ? "r" + ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"§f":"") : ((Via.getAPI().getPlayerVersion(scoreboard.getPlayer().getPlayer().getUniqueId()) >= 393)?"r§":"") + pla.getTeam().getTeamColor());
                                     team.setPrefix(s);
                                     String suffix = "";
                                     if (pla.getActiveSubscription() != null) {
                                         if (pla.isLoaded() && pla.getActiveCosmetics().containsKey(Cosmetic.CosmeticType.PLUS_SYMBOL)) {
                                             if (pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                                                 PlusSymbol symbol = (PlusSymbol) pla.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                                                suffix += AuroraMCAPI.getFormatter().convert(String.format(((pla.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + pla.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", pla.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                                             } else if (pla.preferences.getPreferredPronouns() != Pronoun.NONE) {
                                                 suffix = " §7" + pla.preferences.getPreferredPronouns().getDisplay() + suffix;
                                             }
@@ -932,7 +930,7 @@ public class AuroraMCPlayer {
         if (!s.equals("")) {
             s += " ";
         }
-        s += "§" + ((player.getTeam() == null)?"f":player.getTeam().getTeamColor());
+        s += "§" + ((player.getTeam() == null)?"r" + ((Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393)?"§f":""):((Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393)?"r§":"") + player.getTeam().getTeamColor());
 
         team.setPrefix(s);
         String suffix = "";
@@ -941,7 +939,7 @@ public class AuroraMCPlayer {
                 if (player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
                     PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
 
-                    suffix += AuroraMCAPI.getFormatter().convert(String.format(" &%s&l%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+                    suffix += AuroraMCAPI.getFormatter().convert(String.format(((player.getPreferences().getPreferredPronouns() != Pronoun.NONE)?" &7" + player.getPreferences().getPreferredPronouns().getDisplay():"") + " &%s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
                 } else if (player.preferences.getPreferredPronouns() != Pronoun.NONE) {
                     suffix = " §7" + player.preferences.getPreferredPronouns().getDisplay() ;
                 }

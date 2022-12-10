@@ -4,17 +4,14 @@
 
 package net.auroramc.core.cosmetics.killmessages;
 
-import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.KillMessage;
 import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 
 import java.util.Collections;
-import java.util.List;
 
 public class DeveloperKillPlayer extends KillMessage {
 
@@ -104,7 +101,7 @@ public class DeveloperKillPlayer extends KillMessage {
                     if (killer != null) {
                         return String.format("**%s**.setPaintballed(**%s**);", killerName, victimName);
                     } else {
-                        return String.format("**%s**.setPaintballedSomehow(&atrue&r);", victimName);
+                        return String.format("**%s**.setPaintballedMissileStrike(&atrue&r);", victimName);
                     }
                 }
             }

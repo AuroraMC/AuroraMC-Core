@@ -7,17 +7,13 @@ package net.auroramc.core.cosmetics.wineffects;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.WinEffect;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Egg;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Collections;
-import java.util.Random;
 
 public class Eggsplosion extends WinEffect {
 

@@ -5,7 +5,6 @@
 package net.auroramc.core.gui.admin.iplookup;
 
 import net.auroramc.core.api.punishments.ipprofiles.IPProfile;
-import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Material;
