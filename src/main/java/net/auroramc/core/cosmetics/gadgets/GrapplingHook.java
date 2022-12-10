@@ -6,8 +6,6 @@ package net.auroramc.core.cosmetics.gadgets;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Gadget;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
@@ -19,7 +17,6 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.util.Vector;
 
 import java.util.Collections;
-import java.util.List;
 
 public class GrapplingHook extends Gadget implements Listener {
 

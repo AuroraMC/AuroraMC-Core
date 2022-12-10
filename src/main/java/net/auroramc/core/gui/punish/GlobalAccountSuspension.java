@@ -17,8 +17,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
-
 public class GlobalAccountSuspension extends GUI {
 
     private final AuroraMCPlayer player;

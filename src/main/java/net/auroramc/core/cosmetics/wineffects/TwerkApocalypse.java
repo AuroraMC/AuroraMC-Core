@@ -5,26 +5,22 @@
 package net.auroramc.core.cosmetics.wineffects;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.WinEffect;
-import net.auroramc.core.api.permissions.Permission;
-import net.auroramc.core.api.permissions.Rank;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Team;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TwerkApocalypse extends WinEffect {
 

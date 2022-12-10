@@ -8,7 +8,6 @@ import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
-import net.auroramc.core.api.players.lookup.IPLookup;
 import net.auroramc.core.api.punishments.Punishment;
 import net.auroramc.core.api.punishments.PunishmentHistory;
 import net.auroramc.core.api.punishments.ipprofiles.PlayerProfile;
