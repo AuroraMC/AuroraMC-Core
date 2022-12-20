@@ -426,7 +426,7 @@ public class AuroraMC extends JavaPlugin {
 
         //Emotes
         AuroraMCAPI.registerCosmetic(new Shrug());
-        AuroraMCAPI.registerCosmetic(new Heart());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Heart());
         AuroraMCAPI.registerCosmetic(new Left());
         AuroraMCAPI.registerCosmetic(new Right());
         AuroraMCAPI.registerCosmetic(new Up());
