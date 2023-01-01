@@ -31,6 +31,8 @@ import java.util.*;
 
 public class AuroraMCAPI {
 
+    private static final long startTime;
+
     private static boolean cosmeticsEnabled;
     private static boolean testServer;
 
@@ -79,6 +81,7 @@ public class AuroraMCAPI {
 
         fakePlayers = new HashMap<>();
         holograms = new HashMap<>();
+        startTime = System.currentTimeMillis();
     }
 
 
@@ -370,6 +373,10 @@ public class AuroraMCAPI {
         for (HologramLine value : hologram.getLines().values()) {
             holograms.remove(value.getArmorStand().getId());
         }
+    }
+
+    public static long getStartTime() {
+        return startTime;
     }
 }
 
