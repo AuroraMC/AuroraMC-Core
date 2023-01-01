@@ -42,7 +42,7 @@ import net.auroramc.core.cosmetics.banners.*;
 import net.auroramc.core.cosmetics.deatheffects.Confetti;
 import net.auroramc.core.cosmetics.deatheffects.Firework;
 import net.auroramc.core.cosmetics.deatheffects.LayAnEgg;
-import net.auroramc.core.cosmetics.emotes.Shrug;
+import net.auroramc.core.cosmetics.emotes.*;
 import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.gadgets.FireworkGadget;
 import net.auroramc.core.cosmetics.gadgets.GrapplingHook;
@@ -56,6 +56,7 @@ import net.auroramc.core.cosmetics.killmessages.levelrewards.Flex;
 import net.auroramc.core.cosmetics.particleeffects.BloodSwirl;
 import net.auroramc.core.cosmetics.particleeffects.EmeraldSwirl;
 import net.auroramc.core.cosmetics.plussymbols.*;
+import net.auroramc.core.cosmetics.plussymbols.Heart;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Castle;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Sword;
@@ -425,6 +426,12 @@ public class AuroraMC extends JavaPlugin {
 
         //Emotes
         AuroraMCAPI.registerCosmetic(new Shrug());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Heart());
+        AuroraMCAPI.registerCosmetic(new Left());
+        AuroraMCAPI.registerCosmetic(new Right());
+        AuroraMCAPI.registerCosmetic(new Up());
+        AuroraMCAPI.registerCosmetic(new Yes());
+        AuroraMCAPI.registerCosmetic(new No());
 
 
         AuroraMCAPI.loadRules();
