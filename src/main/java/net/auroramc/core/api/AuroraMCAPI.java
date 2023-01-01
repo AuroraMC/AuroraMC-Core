@@ -300,7 +300,7 @@ public class AuroraMCAPI {
         if (sendMessage) {
             for (AuroraMCPlayer player : getPlayers()) {
                 if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
-                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**. The goose has granted you immunity from it because of your rank!", length.getFormatted())));
+                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 } else {
                     player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 }
