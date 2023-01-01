@@ -25,10 +25,12 @@ public class MoveListener implements Listener {
             if (!player.hasMoved()) {
                 player.moved();
                 for (EntityPlayer player2 : AuroraMCAPI.getFakePlayers().values()) {
+                    player2.getDataWatcher().watch(10, (byte)127);
                     PlayerConnection con = ((CraftPlayer) e.getPlayer().getPlayer()).getHandle().playerConnection;
                     con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, player2));
                     con.sendPacket(new PacketPlayOutNamedEntitySpawn(player2));
                     con.sendPacket(new PacketPlayOutEntityHeadRotation(player2, (byte) ((player2.yaw * 256.0F) / 360.0F)));
+                    con.sendPacket(new PacketPlayOutEntityMetadata(player2.getId(), player2.getDataWatcher(), true));
                     new BukkitRunnable() {
                         @Override
                         public void run() {
