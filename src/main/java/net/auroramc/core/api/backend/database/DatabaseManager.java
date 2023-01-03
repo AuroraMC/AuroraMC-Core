@@ -27,6 +27,7 @@ import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
+import net.auroramc.core.api.utils.GameLog;
 import net.auroramc.core.api.utils.PlayerKitLevel;
 import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
@@ -2705,6 +2706,26 @@ public class DatabaseManager {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<GameLog> getGames(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM game_session WHERE (game_session.players REGEXP CONCAT('^', ?,'$|^', ?,',.*$|^.*,', ?,'$|^.*,', ?,',.*$')) ORDER BY timestamp DESC LIMIT 28");
+            statement.setInt(1, id);
+            statement.setInt(2, id);
+            statement.setInt(3, id);
+            statement.setInt(4, id);
+
+            ResultSet set = statement.executeQuery();
+            List<GameLog> gameLogs = new ArrayList<>();
+            while (set.next()) {
+                gameLogs.add(new GameLog(UUID.fromString(set.getString(1)), set.getTimestamp(2).getTime(), set.getString(3), set.getString(4), new JSONObject(set.getString(5))));
+            }
+            return gameLogs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
