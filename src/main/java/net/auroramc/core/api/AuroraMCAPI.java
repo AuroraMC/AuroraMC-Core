@@ -31,6 +31,8 @@ import java.util.*;
 
 public class AuroraMCAPI {
 
+    private static final long startTime;
+
     private static boolean cosmeticsEnabled;
     private static boolean testServer;
 
@@ -79,6 +81,7 @@ public class AuroraMCAPI {
 
         fakePlayers = new HashMap<>();
         holograms = new HashMap<>();
+        startTime = System.currentTimeMillis();
     }
 
 
@@ -300,7 +303,7 @@ public class AuroraMCAPI {
         if (sendMessage) {
             for (AuroraMCPlayer player : getPlayers()) {
                 if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
-                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**. The goose has granted you immunity from it because of your rank!", length.getFormatted())));
+                    player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 } else {
                     player.getPlayer().sendMessage(formatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 }
@@ -370,6 +373,10 @@ public class AuroraMCAPI {
         for (HologramLine value : hologram.getLines().values()) {
             holograms.remove(value.getArmorStand().getId());
         }
+    }
+
+    public static long getStartTime() {
+        return startTime;
     }
 }
 
