@@ -470,6 +470,35 @@ public class TextFormatter {
         return textComponent;
     }
 
+    public BaseComponent formatReportInfoMessage(PlayerReport report) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent("«REPORTS»");
+        prefix.setColor(ChatColor.DARK_AQUA);
+        prefix.setBold(true);
+
+        textComponent.addExtra(prefix);
+
+
+
+        textComponent.addExtra(convert(String.format(" %s Report #%s\n" +
+                "\n" +
+                "&b&lSUSPECT:&r %s\n" +
+                "&b&lOFFENCE:&r %s\n " +
+                "\n" +
+                "&b&lHANDLER:&r %s\n" +
+                "&b&lOUTCOME:&r %s%s", WordUtils.capitalizeFully(report.getType().name().replace("_", " ")), report.getId(), report.getSuspectName(), report.getReason().getName(), ((report.getHandlerName() != null)?report.getHandlerName():"Unassigned"), ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")), ((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED && report.getType() != PlayerReport.ReportType.INAPPROPRIATE_NAME && report.getReason() != report.getReasonAccepted())?"\n&b&lREASON ACCEPTED:&r&f " + report.getReasonAccepted().getName():""))));
+
+        if (report.getChatReportUUID() != null) {
+            textComponent.addExtra(convert("\n\n&b&lCHATLOG:&r "));
+            TextComponent chatLog = new TextComponent("Click here to view chatlog");
+            chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chatlogs.auroramc.net/log?uuid=%s&id=%s", report.getChatReportUUID().toString(), report.getId())));
+            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create()));
+            textComponent.addExtra(chatLog);
+        }
+
+        return textComponent;
+    }
+
     public BaseComponent formatIgnoreList(AuroraMCPlayer player, int page) {
         TextComponent textComponent = new TextComponent("");
         TextComponent prefix = new TextComponent("«IGNORE»");
