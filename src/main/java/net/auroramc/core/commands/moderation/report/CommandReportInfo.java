@@ -44,7 +44,7 @@ public class CommandReportInfo extends Command {
                         return;
                     }
 
-                    player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportMessage(report));
+                    player.getPlayer().spigot().sendMessage(AuroraMCAPI.getFormatter().formatReportInfoMessage(report));
                 }
             }.runTaskAsynchronously(AuroraMCAPI.getCore());
         } else {
