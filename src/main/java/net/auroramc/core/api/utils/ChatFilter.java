@@ -22,9 +22,12 @@ public class ChatFilter {
 
     private static final Map<String, ChatEmote> emotes;
 
+    private static final List<String> replacements;
+
 
     static {
         emotes = new HashMap<>();
+        replacements = Arrays.asList("BLEEP!", "BLORP!", "BLURP!", "BLOOP!");
         for (Cosmetic cosmetic : AuroraMCAPI.getCosmetics().values().stream().filter(cosmetic -> cosmetic.getType() == Cosmetic.CosmeticType.CHAT_EMOTE).collect(Collectors.toList())) {
             ChatEmote emote = (ChatEmote) cosmetic;
             emotes.put(emote.getDisplayName(), emote);
@@ -80,7 +83,7 @@ public class ChatFilter {
 
         for (String phrase : bannedPhrases) {
             if (finalJoinedMessage.toLowerCase().contains(phrase)) {
-                finalJoinedMessage = finalJoinedMessage.replace(phrase, "HONK!");
+                finalJoinedMessage = finalJoinedMessage.replace(phrase, replacements.get(new Random().nextInt(replacements.size())));
             }
         }
 
@@ -98,14 +101,14 @@ public class ChatFilter {
                 }
                 //This is not in the word whitelist, filter it;
                 //So as to skip the second part of the pair, add 1.
-                return "HONK!";
+                return replacements.get(new Random().nextInt(replacements.size()));
             }
         }
 
         for (String blacklistedWord : wordBlacklist) {
             if (word.toLowerCase().equalsIgnoreCase(blacklistedWord)) {
                 //So as to skip the second part of the pair, add 1.
-                return "HONK!";
+                return replacements.get(new Random().nextInt(replacements.size()));
             }
         }
 

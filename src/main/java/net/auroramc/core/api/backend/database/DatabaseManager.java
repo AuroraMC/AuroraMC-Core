@@ -27,6 +27,7 @@ import net.auroramc.core.api.stats.GameStatistics;
 import net.auroramc.core.api.stats.PlayerBank;
 import net.auroramc.core.api.stats.PlayerStatistics;
 import net.auroramc.core.api.utils.ChatFilter;
+import net.auroramc.core.api.utils.GameLog;
 import net.auroramc.core.api.utils.PlayerKitLevel;
 import net.auroramc.core.api.utils.Pronoun;
 import net.auroramc.core.api.utils.disguise.CachedSkin;
@@ -2394,6 +2395,37 @@ public class DatabaseManager {
         }
     }
 
+    public PlayerReport getReport(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT reports.id, reports.reporters, reports.timestamp, reports.type, reports.chat_type, reports.reason, reports.handler, reports.outcome, reports.chatlog_uuid, reports.reason_accepted, reports.queue, reports.suspect FROM reports WHERE id = ? ORDER BY timestamp DESC LIMIT 56");
+            statement.setInt(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(12));
+
+                ResultSet nameSet = statement.executeQuery();
+                nameSet.next();
+                String name = nameSet.getString(1);
+
+                statement = connection.prepareStatement("SELECT name FROM auroramc_players WHERE id = ?");
+                statement.setInt(1, set.getInt(7));
+
+                ResultSet name2Set = statement.executeQuery();
+                String name2 = null;
+                if (name2Set.next()) {
+                    name2 = name2Set.getString(1);
+                }
+                return new PlayerReport(set.getInt(1), set.getInt(12), name, new ArrayList<>(Arrays.stream(set.getString(2).split(",")).mapToInt(Integer::parseInt).boxed().collect(Collectors.toList())), set.getLong(3), PlayerReport.ReportType.valueOf(set.getString(4)), ((set.getString(5) == null)?null: PlayerReport.ChatType.valueOf(set.getString(5))), PlayerReport.ReportReason.valueOf(set.getString(6)), set.getInt(7), name2, PlayerReport.ReportOutcome.valueOf(set.getString(8)), ((set.getString(10) == null)?null: PlayerReport.ReportReason.valueOf(set.getString(10))), (PlayerReport.QueueType.valueOf(set.getString(11))), ((set.getString(9) == null)?null:UUID.fromString(set.getString(9))));
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean hasActiveSession(int player) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM sessions WHERE record_after IS NULL AND timestamp + INTERVAL 1 DAY > now() AND amc_id = ?");
@@ -2705,6 +2737,26 @@ public class DatabaseManager {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<GameLog> getGames(int id) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM game_session WHERE (game_session.players REGEXP CONCAT('^', ?,'$|^', ?,',.*$|^.*,', ?,'$|^.*,', ?,',.*$')) ORDER BY timestamp DESC LIMIT 28");
+            statement.setInt(1, id);
+            statement.setInt(2, id);
+            statement.setInt(3, id);
+            statement.setInt(4, id);
+
+            ResultSet set = statement.executeQuery();
+            List<GameLog> gameLogs = new ArrayList<>();
+            while (set.next()) {
+                gameLogs.add(new GameLog(UUID.fromString(set.getString(1)), set.getTimestamp(2).getTime(), set.getString(3), set.getString(4), new JSONObject(set.getString(5))));
+            }
+            return gameLogs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
