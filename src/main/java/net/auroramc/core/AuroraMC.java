@@ -30,6 +30,7 @@ import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
+import net.auroramc.core.commands.moderation.report.CommandReportInfo;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.cosmetics.banners.Belgium;
 import net.auroramc.core.cosmetics.banners.Denmark;
@@ -133,6 +134,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandPlugins());
         AuroraMCAPI.registerCommand(new CommandEmotes());
         AuroraMCAPI.registerCommand(new CommandViewGames());
+        AuroraMCAPI.registerCommand(new CommandReportInfo());
 
         //Register achievements with the API
         AuroraMCAPI.registerAchievement(new Welcome());
