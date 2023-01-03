@@ -51,9 +51,9 @@ public class GameLog {
         FFA("&c&lFFA", Material.IRON_AXE, (short)0),
         HOTPOTATO("&c&lHotPotato", Material.BAKED_POTATO, (short)0),
         PAINTBALL("&a&lPaintball", Material.SNOW_BALL, (short)0),
-        RUN("&e&lRun", Material.STAINED_CLAY, (short)0),
+        RUN("&e&lRun", Material.STAINED_CLAY, (short)14),
         TAG("&c&lTag", Material.LEASH, (short)0),
-        SPLEEF("&b&lSpleef", Material.IRON_SPADE, (short)14);
+        SPLEEF("&b&lSpleef", Material.IRON_SPADE, (short)0);
 
         private final String name;
         private final Material item;
