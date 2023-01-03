@@ -38,7 +38,7 @@ public class CommandViewGames extends Command {
                         return;
                     }
                     List<GameLog> games = AuroraMCAPI.getDbManager().getGames(id);
-                    ViewGames viewGames = new ViewGames(player, games);
+                    ViewGames viewGames = new ViewGames(player, games, args.get(0));
                     new BukkitRunnable(){
                         @Override
                         public void run() {
@@ -54,7 +54,7 @@ public class CommandViewGames extends Command {
                 @Override
                 public void run() {
                     List<GameLog> games = AuroraMCAPI.getDbManager().getGames(player.getId());
-                    ViewGames viewGames = new ViewGames(player, games);
+                    ViewGames viewGames = new ViewGames(player, games, null);
                     new BukkitRunnable(){
                         @Override
                         public void run() {
