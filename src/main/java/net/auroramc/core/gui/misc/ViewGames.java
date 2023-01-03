@@ -31,14 +31,14 @@ public class ViewGames extends GUI {
     private List<GameLog> logs;
     private AuroraMCPlayer player;
 
-    public ViewGames(AuroraMCPlayer player, List<GameLog> logs) {
-        super("&3&lRecent Games", 5, true);
-        border("&3&lRecent Games", null);
+    public ViewGames(AuroraMCPlayer player, List<GameLog> logs, String name) {
+        super("&3&l" + ((name != null)?name + "'s ":"") + "Recent Games", 5, true);
+        border("&3&l" + ((name != null)?name + "'s ":"") + "Recent Games", null);
 
         this.player = player;
         this.logs = logs;
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Games", 1, ";&r&fView all recent games you've played.", (short)3, false, player.getName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&l" + ((name != null)?name + "'s ":"") + "Recent Games", 1, ";&r&fView all recent games " + ((name != null)?name + " has":"you've") +" played.", (short)3, false, ((name != null)?name:player.getName())));
 
         int row = 1;
         int column = 1;
@@ -65,13 +65,13 @@ public class ViewGames extends GUI {
         //Get the clicked punishment.
         GameLog log = logs.get(((row - 1) * 7) + (column - 1));
 
-        TextComponent component = new TextComponent(AuroraMCAPI.getFormatter().pluginMessage("Game Manager", ""));
-
         TextComponent click = new TextComponent("Click here to open the game log!");
         click.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to open game log!").color(ChatColor.GREEN).create()));
         click.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://gamelogs.auroramc.net/log?uuid=" + log.getUuid()));
+        click.setColor(ChatColor.GREEN);
+        click.setBold(true);
 
-        component.addExtra(click);
-         player.getPlayer().spigot().sendMessage(component);
+         player.getPlayer().spigot().sendMessage(click);
+         player.getPlayer().closeInventory();
     }
 }
