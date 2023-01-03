@@ -21,7 +21,7 @@ public class CommandReportInfo extends Command {
 
 
     public CommandReportInfo() {
-        super("reporthandle", Collections.singletonList("ri"), Collections.singletonList(Permission.MODERATION), false, null);
+        super("reportinfo", Collections.singletonList("ri"), Collections.singletonList(Permission.MODERATION), false, null);
     }
 
     @Override
