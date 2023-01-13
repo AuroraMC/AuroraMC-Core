@@ -54,7 +54,7 @@ public class TwerkApocalypse extends WinEffect {
             double y = 256;
             double z = (player.getPlayer().getLocation().getZ() + (random.nextInt(40) - 20));
 
-            for (int i2 = 5;i >= -5;i--) {
+            for (int i2 = 5;i2 >= -5;i2--) {
                 Location location = new Location(player.getPlayer().getWorld(), player.getPlayer().getLocation().getY() + i2, 256, z);
                 if (location.getBlock().getType() != Material.AIR) {
                     y = player.getPlayer().getLocation().getY() + i2;
