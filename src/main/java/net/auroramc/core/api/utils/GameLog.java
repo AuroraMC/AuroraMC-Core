@@ -49,7 +49,7 @@ public class GameLog {
     public enum GameType {
         CRYSTAL_QUEST("&b&lCrystal Quest", Material.NETHER_STAR, (short)0),
         FFA("&c&lFFA", Material.IRON_AXE, (short)0),
-        HOTPOTATO("&c&lHotPotato", Material.BAKED_POTATO, (short)0),
+        HOT_POTATO("&c&lHot Potato", Material.BAKED_POTATO, (short)0),
         PAINTBALL("&a&lPaintball", Material.SNOW_BALL, (short)0),
         RUN("&e&lRun", Material.STAINED_CLAY, (short)14),
         TAG("&c&lTag", Material.LEASH, (short)0),
