@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class ReportReasonListing extends GUI {
 
         this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, String.format("&3&lReport %s", name), 1, "&r&fPlease choose a reason.", (short)3, false, name));
 
-        this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == type).collect(Collectors.toList());
+        this.reportReasons = Arrays.stream(PlayerReport.ReportReason.values()).filter(reason -> reason.getType() == type).sorted(Comparator.comparing(PlayerReport.ReportReason::getName)).collect(Collectors.toList());
         if (reportReasons.size() > 10) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&£&lNext Page"));
         }
