@@ -6,6 +6,7 @@ package net.auroramc.core.cosmetics.gadgets;
 
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.cosmetics.Gadget;
+import net.auroramc.core.api.events.player.PlayerUseCosmeticEvent;
 import net.auroramc.core.api.players.AuroraMCPlayer;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import org.bukkit.Bukkit;
@@ -34,12 +35,16 @@ public class GrapplingHook extends Gadget implements Listener {
 
     @Override
     public void onUse(AuroraMCPlayer player, Location location) {
-
     }
 
     @EventHandler
     public void onFish(PlayerFishEvent e) {
         AuroraMCPlayer player = AuroraMCAPI.getPlayer(e.getPlayer());
+        PlayerUseCosmeticEvent event = new PlayerUseCosmeticEvent(player, this);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            return;
+        }
         if (this.equals(player.getActiveCosmetics().get(CosmeticType.GADGET)) && e.getState() != PlayerFishEvent.State.FISHING) {
             Vector vector = e.getHook().getLocation().toVector().subtract(player.getPlayer().getLocation().toVector()).normalize().multiply(3);
             player.getPlayer().setVelocity(vector);
