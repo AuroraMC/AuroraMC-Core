@@ -51,12 +51,24 @@ public class TwerkApocalypse extends WinEffect {
             profile.getProperties().put("textures", new ArrayList<>(((CraftPlayer) player.getPlayer()).getHandle().getProfile().getProperties().get("textures")).get(0));
             EntityPlayer pl = new EntityPlayer(((CraftServer) Bukkit.getServer()).getServer(), ((CraftWorld) Bukkit.getWorld("world")).getHandle(), profile, new PlayerInteractManager(((CraftWorld) Bukkit.getWorld("world")).getHandle()));
             double x = (player.getPlayer().getLocation().getX() + (random.nextInt(40) - 20));
+            double y = 256;
             double z = (player.getPlayer().getLocation().getZ() + (random.nextInt(40) - 20));
-            Location location = new Location(player.getPlayer().getWorld(), x, 256, z);
-            while (location.getBlock().getType() == Material.AIR) {
-                location.setY(location.getY() - 1);
-                if (location.getY() < 0) {
-                    continue outer;
+
+            for (int i2 = 5;i2 >= -5;i2--) {
+                Location location = new Location(player.getPlayer().getWorld(), x, player.getPlayer().getLocation().getY() + i2, z);
+                if (location.getBlock().getType() != Material.AIR) {
+                    y = player.getPlayer().getLocation().getY() + i2;
+                    break;
+                }
+            }
+
+            Location location = new Location(player.getPlayer().getWorld(), x, y, z);
+            if (y == 256) {
+                while (location.getBlock().getType() == Material.AIR) {
+                    location.setY(location.getY() - 1);
+                    if (location.getY() < 0) {
+                        continue outer;
+                    }
                 }
             }
             pl.setLocation(x, location.getY() + 1, z, (random.nextInt(360) - 180), 0f);

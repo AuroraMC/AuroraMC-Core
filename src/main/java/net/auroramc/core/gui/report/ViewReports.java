@@ -24,15 +24,15 @@ public class ViewReports extends GUI {
     private final List<PlayerReport> reports;
     private int currentPage;
 
-    public ViewReports(AuroraMCPlayer player, List<PlayerReport> reports) {
-        super("&3&lYour Reports", 5, true);
+    public ViewReports(AuroraMCPlayer player, List<PlayerReport> reports, String target) {
+        super("&3&l" + ((target != null)?target + "'s ":"") + " Recent Reports", 5, true);
 
         this.player = player;
         this.reports = reports;
 
-        border("&3&lYour Reports", "");
+        border("&3&l" + ((target != null)?target + "'s ":"") + " Recent Reports", "");
 
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Reports", 1, ";&r&fView all reports you have submitted.", (short)3, false, player.getName()));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&l" + ((target != null)?target + "'s ":"") + " Recent Reports", 1, ";&r&fView all recent reports " + ((target != null)?target + " has":"you've") +" submitted.", (short)3, false, target));
 
         if (reports.size() > 28) {
             this.setItem(5, 7, new GUIItem(Material.ARROW, "&3&lNext Page"));
