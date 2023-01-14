@@ -58,6 +58,7 @@ public class TwerkApocalypse extends WinEffect {
                 Location location = new Location(player.getPlayer().getWorld(), x, player.getPlayer().getLocation().getY() + i2, z);
                 if (location.getBlock().getType() != Material.AIR) {
                     y = player.getPlayer().getLocation().getY() + i2;
+                    break;
                 }
             }
 
