@@ -124,7 +124,7 @@ public class AuroraMCAPI {
 
     public static void playerLeave(Player player) {
         PlayerLeaveEvent event = new PlayerLeaveEvent(players.get(player));
-        if (!players.get(player).isLoaded()) {
+        if (event.getPlayer().isLoaded()) {
             Bukkit.getPluginManager().callEvent(event);
         }
         players.remove(player);
