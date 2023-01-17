@@ -58,6 +58,9 @@ import net.auroramc.core.cosmetics.particleeffects.BloodSwirl;
 import net.auroramc.core.cosmetics.particleeffects.EmeraldSwirl;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.cosmetics.plussymbols.Heart;
+import net.auroramc.core.cosmetics.plussymbols.Peace;
+import net.auroramc.core.cosmetics.plussymbols.Star;
+import net.auroramc.core.cosmetics.plussymbols.Tea;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Castle;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Sword;
@@ -435,6 +438,11 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Up());
         AuroraMCAPI.registerCosmetic(new Yes());
         AuroraMCAPI.registerCosmetic(new No());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Peace());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Star());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Tea());
+        AuroraMCAPI.registerCosmetic(new Tableflip());
+        AuroraMCAPI.registerCosmetic(new Unflip());
 
 
         AuroraMCAPI.loadRules();
