@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class ThatsFarTooLong extends Achievement {
     public ThatsFarTooLong() {
-        super(49, "That's far too long", "Spend two weeks on AuroraMC", "None", true, false, AchievementCategory.TIME);
+        super(49, "That's far too long", "Spend two weeks on AuroraMC", ";&a50000 XP;&d50000 Tickets", true, false, AchievementCategory.TIME);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class YouCantSeeMe extends Achievement {
     public YouCantSeeMe() {
-        super(72, "You can't see me!", "Kill a player without losing any health points.", "None", true, true, AchievementCategory.GAME, 1);
+        super(72, "You can't see me!", "Kill a player without losing any health points.", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GAME, 1);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class WhoLeftTheOvenOn extends Achievement {
     public WhoLeftTheOvenOn() {
-        super(163, "Who left the oven on?", "Receive a Hot Potato every round and win the game.", "None", true, true, AchievementCategory.GAME, 101);
+        super(163, "Who left the oven on?", "Receive a Hot Potato every round and win the game.", ";&a10000 XP;&610000 Crowns", true, true, AchievementCategory.GAME, 101);
     }
 }

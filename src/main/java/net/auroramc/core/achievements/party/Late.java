@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Late extends Achievement {
     public Late() {
-        super(38, "Late", "Join a party that already has 5 people in it", "None", true, true, AchievementCategory.PARTY);
+        super(38, "Late", "Join a party that already has 5 people in it", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.PARTY);
     }
 }

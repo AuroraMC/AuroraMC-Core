@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class YoureAbsolutelyGodTier extends Achievement {
     public YoureAbsolutelyGodTier() {
-        super(143, "You're absolutely god tier!", "Kill a member of the AuroraMC Leadership Team.", "None", true, true, AchievementCategory.GAME, 102);
+        super(143, "You're absolutely god tier!", "Kill a member of the AuroraMC Leadership Team.", ";&a10000 XP;&610000 Crowns", true, true, AchievementCategory.GAME, 102);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class TisTheSeason extends Achievement {
     public TisTheSeason() {
-        super(123, "Tis The Season?", "Break 50,000 Snow Blocks", "None", true, false, AchievementCategory.GAME, 100);
+        super(123, "Tis The Season?", "Break 50,000 Snow Blocks", ";&a2500 XP;&62500 Crowns", true, false, AchievementCategory.GAME, 100);
     }
 }
