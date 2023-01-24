@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class BasicallyStaff extends Achievement {
     public BasicallyStaff() {
-        super(18, "Basically Staff", "Get 100 in-game reports accepted", "None", true, false, AchievementCategory.GENERAL);
+        super(18, "Basically Staff", "Get 100 in-game reports accepted", ";&a1000 XP;&61000 Crowns", true, false, AchievementCategory.GENERAL);
     }
 }
