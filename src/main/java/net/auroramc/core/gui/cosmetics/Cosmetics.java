@@ -103,8 +103,11 @@ public class Cosmetics extends GUI {
             case 4:
                 if (row == 3) {
                     type = Cosmetic.CosmeticType.SERVER_MESSAGE;
-                } else {
+                } else if (row == 2) {
                     type = Cosmetic.CosmeticType.PLUS_SYMBOL;
+                } else {
+                    player.getPlayer().playSound(player.getPlayer().getLocation(), Sound.ITEM_BREAK, 100, 0);
+                    return;
                 }
                 break;
             case 7:
