@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class ThatsNotNice extends Achievement {
     public ThatsNotNice() {
-        super(169, "That's not nice!", "Punch a player while you don't have a Hot Potato.", "None", true, false, AchievementCategory.GAME, 101);
+        super(169, "That's not nice!", "Punch a player while you don't have a Hot Potato.", ";&a500 XP;&6500 Crowns", true, false, AchievementCategory.GAME, 101);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Unlucky extends Achievement {
     public Unlucky() {
-        super(63, "Unlucky", "Lose a game of Crystal Quest after capturing all 3 Enemy Crystals.", "None", true, true, AchievementCategory.GAME, 1);
+        super(63, "Unlucky", "Lose a game of Crystal Quest after capturing all 3 Enemy Crystals.", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GAME, 1);
     }
 }

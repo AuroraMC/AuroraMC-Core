@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class IsThatAllYouveGot extends Achievement {
     public IsThatAllYouveGot() {
-        super(206, "Is that all you've got?", "Achieve a time of less than 5 minutes 30 seconds on the Hard Parkour!", "None", true, true, AchievementCategory.LOBBY);
+        super(206, "Is that all you've got?", "Achieve a time of less than 5 minutes 30 seconds on the Hard Parkour!", ";&a25000 XP;&625000 Crowns;&d25000 Tickets", true, true, AchievementCategory.LOBBY);
     }
 }
