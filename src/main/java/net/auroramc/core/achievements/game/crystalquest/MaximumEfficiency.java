@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class MaximumEfficiency extends Achievement {
     public MaximumEfficiency() {
-        super(69, "Maximum Efficiency", "Upgrade a Mining Robot to Level 3.", "None", true, false, AchievementCategory.GAME, 1);
+        super(69, "Maximum Efficiency", "Upgrade a Mining Robot to Level 3.", ";&a2500 XP;&62500 Crowns", true, false, AchievementCategory.GAME, 1);
     }
 }
