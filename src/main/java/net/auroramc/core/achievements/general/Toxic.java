@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Toxic extends Achievement {
     public Toxic() {
-        super(12, "Toxic", "Attempt to say 'ez' or 'trash' after killing someone", "None", true, true, AchievementCategory.GENERAL);
+        super(12, "Toxic", "Attempt to say 'ez' or 'trash' after killing someone", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GENERAL);
     }
 }

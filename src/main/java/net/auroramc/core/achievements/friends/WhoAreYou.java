@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class WhoAreYou extends Achievement {
     public WhoAreYou() {
-        super(32, "Who are you?", "Deny a friend request", "None", true, true, AchievementCategory.FRIENDS);
+        super(32, "Who are you?", "Deny a friend request", ";&a6000 XP;&66000 Crowns", true, true, AchievementCategory.FRIENDS);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class HappyWithMyOwnCompany extends Achievement {
     public HappyWithMyOwnCompany() {
-        super(42, "Happy with my own company", "Deny a party request", "None", true, true, AchievementCategory.PARTY);
+        super(42, "Happy with my own company", "Deny a party request", ";&a500 XP;&6500 Crowns", true, true, AchievementCategory.PARTY);
     }
 }

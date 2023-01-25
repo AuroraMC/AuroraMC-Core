@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class HeyStopThatsYourFriend extends Achievement {
     public HeyStopThatsYourFriend() {
-        super(67, "Hey, Stop! That's your friend!", "Attempt to kill one of your mining robots.", "None", true, true, AchievementCategory.GAME, 1);
+        super(67, "Hey, Stop! That's your friend!", "Attempt to kill one of your mining robots.", ";&a500 XP;&6500 Crowns", true, true, AchievementCategory.GAME, 1);
     }
 }
