@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Welp extends Achievement {
     public Welp() {
-        super(20, "Welp", "Lose a game for the first time", "None", true, false, AchievementCategory.GENERAL);
+        super(20, "Welp", "Lose a game for the first time", ";&a100 XP;&6100 Crowns", true, false, AchievementCategory.GENERAL);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class ParkourMaster extends Achievement {
     public ParkourMaster() {
-        super(19, "Parkour Master", "Complete all Lobby Parkour Courses", "None", true, false, AchievementCategory.LOBBY);
+        super(19, "Parkour Master", "Complete all Lobby Parkour Courses", ";&a5000 XP;&d5000 Tickets", true, false, AchievementCategory.LOBBY);
     }
 }

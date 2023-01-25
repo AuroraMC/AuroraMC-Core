@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Wumpus extends Achievement {
     public Wumpus() {
-        super(15, "Wumpus", "Link your Discord account with your in-game account", "None", true, false, AchievementCategory.GENERAL);
+        super(15, "Wumpus", "Link your Discord account with your in-game account", ";&a5000 XP;&d5000 Tickets", true, false, AchievementCategory.GENERAL);
     }
 }

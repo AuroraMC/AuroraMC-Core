@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Awkward extends Achievement {
     public Awkward() {
-        super(41, "Awkward...", "Leave a party to join a different one.", "None", true, false, AchievementCategory.PARTY);
+        super(41, "Awkward...", "Leave a party to join a different one.", ";&a750 XP;&6750 Crowns", true, false, AchievementCategory.PARTY);
     }
 }

@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class AndHisNameIs extends Achievement {
     public AndHisNameIs() {
-        super(124, "And his name is...", "Punch someone out of the ring", "None", true, false, AchievementCategory.GAME, 100);
+        super(124, "And his name is...", "Punch someone out of the ring", ";&a500 XP;&6500 Crowns", true, false, AchievementCategory.GAME, 100);
     }
 }
