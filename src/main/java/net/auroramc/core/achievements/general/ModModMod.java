@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class ModModMod extends Achievement {
     public ModModMod() {
-        super(14, "MOD! MOD! MOD!", "Call a staff member 'mod' instead of their name", "None", true, true, AchievementCategory.GENERAL);
+        super(14, "MOD! MOD! MOD!", "Call a staff member 'mod' instead of their name", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GENERAL);
     }
 }

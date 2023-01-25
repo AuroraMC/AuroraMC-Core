@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Murderer extends Achievement {
     public Murderer() {
-        super(22, "Murderer!", "Kill a player for the first time", "None", true, false, AchievementCategory.GENERAL);
+        super(22, "Murderer!", "Kill a player for the first time", ";&a2000 XP;&62000 Crowns", true, false, AchievementCategory.GENERAL);
     }
 }
