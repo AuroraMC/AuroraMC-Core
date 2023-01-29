@@ -32,7 +32,7 @@ public class EmeraldTrail extends ProjectileTrail {
                     this.cancel();
                     return;
                 }
-                PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, false, (float) projectile.getLocation().getX(), (float) projectile.getLocation().getY(), (float) projectile.getLocation().getZ(), 0, 0, 0, 1, 5);
+                PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.VILLAGER_HAPPY, false, (float) projectile.getLocation().getX(), (float) projectile.getLocation().getY(), (float) projectile.getLocation().getZ(), 0, 0, 0, 1, 0);
                 for (AuroraMCPlayer pl : AuroraMCAPI.getPlayers()) {
                     if (pl.getPlayer().getWorld().equals(projectile.getWorld())) {
                         ((CraftPlayer) pl.getPlayer().getPlayer()).getHandle().playerConnection.sendPacket(packet);
