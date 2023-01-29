@@ -56,6 +56,7 @@ import net.auroramc.core.cosmetics.killmessages.Rainbow;
 import net.auroramc.core.cosmetics.killmessages.levelrewards.Flex;
 import net.auroramc.core.cosmetics.particleeffects.BloodSwirl;
 import net.auroramc.core.cosmetics.particleeffects.EmeraldSwirl;
+import net.auroramc.core.cosmetics.particleeffects.PurpleSwirl;
 import net.auroramc.core.cosmetics.plussymbols.*;
 import net.auroramc.core.cosmetics.plussymbols.Heart;
 import net.auroramc.core.cosmetics.plussymbols.Peace;
@@ -417,6 +418,7 @@ public class AuroraMC extends JavaPlugin {
         //Particle Effects
         AuroraMCAPI.registerCosmetic(new BloodSwirl());
         AuroraMCAPI.registerCosmetic(new EmeraldSwirl());
+        AuroraMCAPI.registerCosmetic(new PurpleSwirl());
 
         //Projectile Trails
         AuroraMCAPI.registerCosmetic(new FireworkTrail());
