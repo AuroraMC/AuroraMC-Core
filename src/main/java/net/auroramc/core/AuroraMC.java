@@ -67,6 +67,7 @@ import net.auroramc.core.cosmetics.plussymbols.kitrewards.Pickaxe;
 import net.auroramc.core.cosmetics.plussymbols.kitrewards.Sword;
 import net.auroramc.core.cosmetics.projectiletrails.EmeraldTrail;
 import net.auroramc.core.cosmetics.projectiletrails.FireworkTrail;
+import net.auroramc.core.cosmetics.projectiletrails.PurpleTrail;
 import net.auroramc.core.cosmetics.servermessages.*;
 import net.auroramc.core.cosmetics.wineffects.ConfettiCannon;
 import net.auroramc.core.cosmetics.wineffects.Eggsplosion;
@@ -423,6 +424,7 @@ public class AuroraMC extends JavaPlugin {
         //Projectile Trails
         AuroraMCAPI.registerCosmetic(new FireworkTrail());
         AuroraMCAPI.registerCosmetic(new EmeraldTrail());
+        AuroraMCAPI.registerCosmetic(new PurpleTrail());
 
         //Kill Messages
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.killmessages.Default());
