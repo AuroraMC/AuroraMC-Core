@@ -14,6 +14,6 @@ import java.util.List;
 
 public class Wink extends ChatEmote {
     public Wink() {
-        super(1118, "Wink", "wink", "(ಠ‿↼", ChatColor.AQUA, false, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.UNCOMMON);
+        super(1118, "Wink", "wink", "(ಠ‿↼)", ChatColor.AQUA, false, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.UNCOMMON);
     }
 }
