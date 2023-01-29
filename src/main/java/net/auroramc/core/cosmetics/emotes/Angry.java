@@ -14,6 +14,6 @@ import java.util.List;
 
 public class Angry extends ChatEmote {
     public Angry() {
-        super(1117, "Angry", "angry", "(⩺_⩹)", ChatColor.DARK_RED, false, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.LEGENDARY);
+        super(1117, "Angry", "angry", "(⩺_⩹)", ChatColor.RED, true, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.LEGENDARY);
     }
 }

@@ -14,6 +14,6 @@ import java.util.List;
 
 public class HeartEyes extends ChatEmote {
     public HeartEyes() {
-        super(1115, "Heart Eyes", "hearteyes", "(｡♥‿♥｡)", ChatColor.LIGHT_PURPLE, false, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.EPIC);
+        super(1115, "Heart Eyes", "heart_eyes", "(｡♥‿♥｡)", ChatColor.LIGHT_PURPLE, false, UnlockMode.CRATE, Collections.emptyList(), Collections.emptyList(), Rarity.EPIC);
     }
 }
