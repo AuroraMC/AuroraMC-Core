@@ -443,7 +443,13 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.emotes.Tea());
         AuroraMCAPI.registerCosmetic(new Tableflip());
         AuroraMCAPI.registerCosmetic(new Unflip());
-
+        AuroraMCAPI.registerCosmetic(new Wave());
+        AuroraMCAPI.registerCosmetic(new Dead());
+        AuroraMCAPI.registerCosmetic(new Hug());
+        AuroraMCAPI.registerCosmetic(new HeartEyes());
+        AuroraMCAPI.registerCosmetic(new Running());
+        AuroraMCAPI.registerCosmetic(new Angry());
+        AuroraMCAPI.registerCosmetic(new Wink());
 
         AuroraMCAPI.loadRules();
         AuroraMCAPI.loadFilter();
