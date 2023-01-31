@@ -12,6 +12,6 @@ import java.util.Collections;
 public class Estonia extends Hat {
 
     public Estonia() {
-        super(355, "Estonia", "&9&lEst&0&lon&f&lia", "", Cosmetic.UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", "48cce6627e4dba96640da7bbca8cd43a783495167baf2834aa99117018adf", true, Cosmetic.Rarity.COMMON);
+        super(355, "Estonia", "&9&lEst&8&lon&f&lia", "", Cosmetic.UnlockMode.CRATE, -1, Collections.emptyList(), Collections.emptyList(), "Found in Crates", "48cce6627e4dba96640da7bbca8cd43a783495167baf2834aa99117018adf", true, Cosmetic.Rarity.COMMON);
     }
 }
