@@ -48,6 +48,7 @@ import net.auroramc.core.cosmetics.friendstatuses.*;
 import net.auroramc.core.cosmetics.gadgets.FireworkGadget;
 import net.auroramc.core.cosmetics.gadgets.GrapplingHook;
 import net.auroramc.core.cosmetics.hats.*;
+import net.auroramc.core.cosmetics.hats.countries.*;
 import net.auroramc.core.cosmetics.hats.rewards.*;
 import net.auroramc.core.cosmetics.killmessages.DeveloperKillPlayer;
 import net.auroramc.core.cosmetics.killmessages.HalfWayThere;
@@ -347,20 +348,20 @@ public class AuroraMC extends JavaPlugin {
 
         //Hats
         AuroraMCAPI.registerCosmetic(new Astronaut());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Belgium());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.Belgium());
         AuroraMCAPI.registerCosmetic(new Brazil());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Denmark());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.Denmark());
         AuroraMCAPI.registerCosmetic(new Finland());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.France());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Germany());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.France());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.Germany());
         AuroraMCAPI.registerCosmetic(new Italy());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Japan());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.Japan());
         AuroraMCAPI.registerCosmetic(new Korea());
         AuroraMCAPI.registerCosmetic(new Netherlands());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.Poland());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.Poland());
         AuroraMCAPI.registerCosmetic(new Portugal());
         AuroraMCAPI.registerCosmetic(new Spain());
-        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.UnitedStates());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.hats.countries.UnitedStates());
         AuroraMCAPI.registerCosmetic(new ShulkerOne());
         AuroraMCAPI.registerCosmetic(new ShulkerTwo());
         AuroraMCAPI.registerCosmetic(new ShulkerThree());
@@ -392,6 +393,21 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new ShulkerTwentyNine());
         AuroraMCAPI.registerCosmetic(new ShulkerThirty());
         AuroraMCAPI.registerCosmetic(new Goose());
+        AuroraMCAPI.registerCosmetic(new Enderman());
+        AuroraMCAPI.registerCosmetic(new Croatia());
+        AuroraMCAPI.registerCosmetic(new England());
+        AuroraMCAPI.registerCosmetic(new Estonia());
+        AuroraMCAPI.registerCosmetic(new Iceland());
+        AuroraMCAPI.registerCosmetic(new Ireland());
+        AuroraMCAPI.registerCosmetic(new Latvia());
+        AuroraMCAPI.registerCosmetic(new Lithuania());
+        AuroraMCAPI.registerCosmetic(new Norway());
+        AuroraMCAPI.registerCosmetic(new Scotland());
+        AuroraMCAPI.registerCosmetic(new Serbia());
+        AuroraMCAPI.registerCosmetic(new Singapore());
+        AuroraMCAPI.registerCosmetic(new Sweden());
+        AuroraMCAPI.registerCosmetic(new Ukraine());
+        AuroraMCAPI.registerCosmetic(new Wales());
 
         //Server Messages
         AuroraMCAPI.registerCosmetic(new Default());

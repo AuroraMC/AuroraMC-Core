@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2023 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.cosmetics.hats;
+package net.auroramc.core.cosmetics.hats.countries;
 
 import net.auroramc.core.api.cosmetics.Cosmetic;
 import net.auroramc.core.api.cosmetics.Hat;
