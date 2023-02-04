@@ -319,6 +319,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new CommittedForLife());
         AuroraMCAPI.registerCosmetic(new BugHunter());
         AuroraMCAPI.registerCosmetic(new PreparingToParty());
+        AuroraMCAPI.registerCosmetic(new NotSwimmingThatsForSure());
 
         //Plus Symbols
         AuroraMCAPI.registerCosmetic(new Star());
@@ -416,6 +417,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCosmetic(new Hungry());
         AuroraMCAPI.registerCosmetic(new net.auroramc.core.cosmetics.servermessages.Murderer());
         AuroraMCAPI.registerCosmetic(new PeterPan());
+        AuroraMCAPI.registerCosmetic(new Teleported());
 
         //Win Effects
         AuroraMCAPI.registerCosmetic(new Fireworks());
