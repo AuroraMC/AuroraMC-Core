@@ -14,8 +14,8 @@ import java.util.List;
 
 public enum SubRank {
 
-    JUNIOR_QUALITY_ASSURANCE(2, "Junior Quality Assurance", Collections.singletonList(Permission.DEBUG_INFO), Color.fromRGB(85, 255, 85), 'a'),
-    SENIOR_QUALITY_ASSURANCE(3, "Senior Quality Assurance", Arrays.asList(Permission.DEBUG_INFO, Permission.DEBUG_ACTION, Permission.PANEL), Color.fromRGB(85, 255, 85), 'a'),
+    QUALITY_ASSURANCE(2, "Quality Assurance", Collections.singletonList(Permission.DEBUG_INFO), Color.fromRGB(85, 255, 85), 'a'),
+    QUALITY_ASSURANCE_MANAGEMENT(3, "Quality Assurance Management", Arrays.asList(Permission.DEBUG_INFO, Permission.DEBUG_ACTION, Permission.PANEL), Color.fromRGB(85, 255, 85), 'a'),
     STAFF_MANAGEMENT(4, "Staff Management", Arrays.asList(Permission.STAFF_MANAGEMENT, Permission.DISGUISE, Permission.CUSTOM_DISGUISE, Permission.PANEL), Color.fromRGB(255, 170, 0), '6'),
     SUPPORT(5, "Support", Collections.singletonList(Permission.SUPPORT), Color.fromRGB(85, 85, 255), '9'),
     RECRUITMENT(6, "Recruitment", Arrays.asList(Permission.RECRUITMENT, Permission.DISGUISE, Permission.CUSTOM_DISGUISE), Color.fromRGB(255, 170, 0), '6'),
