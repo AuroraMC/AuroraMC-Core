@@ -12,12 +12,12 @@ public class ServerInfo {
     private final String name, ip;
     private final JSONObject serverType;
     private final int protocolPort, port;
-    private int buildNumber, lobbyBuildNumber, gameBuildNumber, engineBuildNumber, buildBuildNumber, duelsBuildNumber;
+    private int buildNumber, lobbyBuildNumber, gameBuildNumber, engineBuildNumber, buildBuildNumber, duelsBuildNumber, pathfinderBuildNumber;
     private final Network network;
     private final boolean forced;
     private final String authKey;
 
-    public ServerInfo(String name, String ip, int port, Network network, boolean forced, JSONObject serverType, int protocolPort, int buildNumber, int lobbyBuildNumber, int engineBuildNumber, int gameBuildNumber, int buildBuildNumber, int duelsBuildNumber, String authKey) {
+    public ServerInfo(String name, String ip, int port, Network network, boolean forced, JSONObject serverType, int protocolPort, int buildNumber, int lobbyBuildNumber, int engineBuildNumber, int gameBuildNumber, int buildBuildNumber, int duelsBuildNumber, int pathfinderBuildNumber, String authKey) {
         this.name = name;
         this.ip = ip;
         this.port = port;
@@ -32,6 +32,7 @@ public class ServerInfo {
         this.forced = forced;
         this.authKey = authKey;
         this.duelsBuildNumber = duelsBuildNumber;
+        this.pathfinderBuildNumber = pathfinderBuildNumber;
     }
 
     public String getName() {
@@ -107,6 +108,22 @@ public class ServerInfo {
 
     public void setLobbyBuildNumber(int lobbyBuildNumber) {
         this.lobbyBuildNumber = lobbyBuildNumber;
+    }
+
+    public void setPathfinderBuildNumber(int pathfinderBuildNumber) {
+        this.pathfinderBuildNumber = pathfinderBuildNumber;
+    }
+
+    public void setDuelsBuildNumber(int duelsBuildNumber) {
+        this.duelsBuildNumber = duelsBuildNumber;
+    }
+
+    public int getDuelsBuildNumber() {
+        return duelsBuildNumber;
+    }
+
+    public int getPathfinderBuildNumber() {
+        return pathfinderBuildNumber;
     }
 
     public String getAuthKey() {
