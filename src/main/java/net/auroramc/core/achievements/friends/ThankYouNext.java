@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class ThankYouNext extends Achievement {
     public ThankYouNext() {
-        super(31, "Thank you, next", "Remove a friend", "None", true, true, AchievementCategory.FRIENDS);
+        super(31, "Thank you, next", "Remove a friend", ";&a400 XP;&6400 Crowns", true, true, AchievementCategory.FRIENDS);
     }
 }

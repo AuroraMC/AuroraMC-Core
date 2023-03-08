@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class DamnThatWasChallenging extends Achievement {
     public DamnThatWasChallenging() {
-        super(205, "Damn, that was challenging!", "Achieve a time of less than 2 minutes 30 seconds on the Medium Parkour!", "None", true, true, AchievementCategory.LOBBY);
+        super(205, "Damn, that was challenging!", "Achieve a time of less than 2 minutes 30 seconds on the Medium Parkour!", ";&a5000 XP;&65000 Crowns", true, true, AchievementCategory.LOBBY);
     }
 }

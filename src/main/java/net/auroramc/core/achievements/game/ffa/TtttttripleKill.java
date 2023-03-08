@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class TtttttripleKill extends Achievement {
     public TtttttripleKill() {
-        super(150, "T-t-t-t-t-triple Kill", "Kill 3 players within the first minute of the game.", "None", true, false, AchievementCategory.GAME, 102);
+        super(150, "T-t-t-t-t-triple Kill", "Kill 3 players within the first minute of the game.", ";&a2500 XP;&62500 Crowns", true, false, AchievementCategory.GAME, 102);
     }
 }
