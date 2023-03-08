@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class CliffJumper extends Achievement {
     public CliffJumper() {
-        super(146, "Cliff Jumper", "Somehow... if you manage to... die to fall damage.", "None", true, true, AchievementCategory.GAME, 102);
+        super(146, "Cliff Jumper", "Somehow... if you manage to... die to fall damage.", ";&a10000 XP;&65000 Crowns", true, true, AchievementCategory.GAME, 102);
     }
 }

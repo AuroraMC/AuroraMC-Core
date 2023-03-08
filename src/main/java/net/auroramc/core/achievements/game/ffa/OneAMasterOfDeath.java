@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class OneAMasterOfDeath extends Achievement {
     public OneAMasterOfDeath() {
-        super(148, "One, a master of Death", "Die 100 times in FFA.", "None", true, false, AchievementCategory.GAME, 102);
+        super(148, "One, a master of Death", "Die 100 times in FFA.", ";&a2500 XP;&62500 Crowns", true, false, AchievementCategory.GAME, 102);
     }
 }
