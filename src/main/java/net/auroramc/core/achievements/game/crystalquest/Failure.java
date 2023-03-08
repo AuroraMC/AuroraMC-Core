@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Failure extends Achievement {
     public Failure() {
-        super(64, "Failure", "Fail to capture an Enemy Crystal after collecting it from their tower.", "None", true, true, AchievementCategory.GAME, 1);
+        super(64, "Failure", "Fail to capture an Enemy Crystal after collecting it from their tower.", ";&a500 XP;&6500 Crowns", true, true, AchievementCategory.GAME, 1);
     }
 }

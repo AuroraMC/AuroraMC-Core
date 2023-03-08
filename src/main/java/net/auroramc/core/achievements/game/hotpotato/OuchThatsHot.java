@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class OuchThatsHot extends Achievement {
     public OuchThatsHot() {
-        super(164, "Ouch, that's hot!", "Die from receiving a Hot Potato in the last 3 seconds of the round", "None", true, true, AchievementCategory.GAME, 101);
+        super(164, "Ouch, that's hot!", "Die from receiving a Hot Potato in the last 3 seconds of the round", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GAME, 101);
     }
 }

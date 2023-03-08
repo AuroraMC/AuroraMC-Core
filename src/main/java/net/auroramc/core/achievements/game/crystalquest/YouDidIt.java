@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class YouDidIt extends Achievement {
     public YouDidIt() {
-        super(61, "You Did It!", "Win a game of Crystal Quest for the first time.", "None", true, false, AchievementCategory.GAME, 1);
+        super(61, "You Did It!", "Win a game of Crystal Quest for the first time.", ";&a1000 XP;&61000 Crowns", true, false, AchievementCategory.GAME, 1);
     }
 }

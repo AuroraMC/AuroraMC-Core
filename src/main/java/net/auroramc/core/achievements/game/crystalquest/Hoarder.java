@@ -8,6 +8,6 @@ import net.auroramc.core.api.stats.Achievement;
 
 public class Hoarder extends Achievement {
     public Hoarder() {
-        super(68, "Hoarder", "Have a stack of Emeralds in your inventory.", "None", true, true, AchievementCategory.GAME, 1);
+        super(68, "Hoarder", "Have a stack of Emeralds in your inventory.", ";&a1000 XP;&61000 Crowns", true, true, AchievementCategory.GAME, 1);
     }
 }
