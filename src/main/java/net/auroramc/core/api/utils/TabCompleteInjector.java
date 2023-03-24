@@ -7,6 +7,7 @@ package net.auroramc.core.api.utils;
 import io.netty.channel.*;
 import net.auroramc.core.api.AuroraMCAPI;
 import net.auroramc.core.api.command.Command;
+import net.auroramc.core.api.events.FakePlayerAttackEvent;
 import net.auroramc.core.api.events.FakePlayerInteractEvent;
 import net.auroramc.core.api.permissions.Permission;
 import net.auroramc.core.api.players.AuroraMCPlayer;
@@ -21,10 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TabCompleteInjector {
@@ -115,6 +113,10 @@ public class TabCompleteInjector {
                         if (!player.isLoaded()) {
                             //Player has not yet loaded fully.
                             return;
+                        }
+                        if (Objects.requireNonNull(useEntity.a()) == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK) {
+                            FakePlayerAttackEvent event = new FakePlayerAttackEvent(player, AuroraMCAPI.getFakePlayers().get(entityId));
+                            Bukkit.getPluginManager().callEvent(event);
                         }
                         FakePlayerInteractEvent event = new FakePlayerInteractEvent(player, AuroraMCAPI.getFakePlayers().get(entityId));
                         Bukkit.getPluginManager().callEvent(event);
