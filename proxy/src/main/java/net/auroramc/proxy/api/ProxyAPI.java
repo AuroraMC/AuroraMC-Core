@@ -66,13 +66,11 @@ public class ProxyAPI {
         ProxyAPI.core = core;
         players = new HashMap<>();
 
-
-        CommunicationUtils.init();
         playerCountTask = ProxyServer.getInstance().getScheduler().schedule(core, () -> {
             playerCount = AuroraMCAPI.getDbManager().getPlayerCount();
         }, 1, 1, TimeUnit.SECONDS);
         loadProxyInfo();
-
+        CommunicationUtils.init();
     }
 
     public static void loadProxyInfo() {
