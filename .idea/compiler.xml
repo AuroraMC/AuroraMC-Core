@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="AuroraMC-Core" />
+        <module name="common" />
+        <module name="proxy" />
+        <module name="server" />
       </profile>
     </annotationProcessing>
   </component>
