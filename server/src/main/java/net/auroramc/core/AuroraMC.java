@@ -24,6 +24,7 @@ import net.auroramc.core.commands.moderation.report.CommandReportInfo;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
+import net.auroramc.core.managers.EventManager;
 import net.auroramc.core.managers.GUIManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
@@ -103,6 +104,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LeaveListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProtocolMessageReceivedListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EventManager(), this);
 
 
         //Register the BungeeCord plugin message channel
@@ -125,3 +127,4 @@ public class AuroraMC extends JavaPlugin {
         }
     }
 }
+

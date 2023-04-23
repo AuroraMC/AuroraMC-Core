@@ -35,8 +35,13 @@ public class ServerAPI {
     private static Map<Integer, Hologram> holograms;
     private static final HashMap<AuroraMCServerPlayer, GUI> openGUIs;
 
+    private static boolean shuttingDown;
+
     static {
         openGUIs = new HashMap<>();
+        holograms = new HashMap<>();
+        fakePlayers = new HashMap<>();
+        shuttingDown = false;
     }
 
     public static void init(AuroraMC core) {
@@ -182,6 +187,13 @@ public class ServerAPI {
         }
     }
 
+    public static boolean isShuttingDown() {
+        return shuttingDown;
+    }
+
+    public static void setShuttingDown(boolean shuttingDown) {
+        ServerAPI.shuttingDown = shuttingDown;
+    }
 
 
 }
