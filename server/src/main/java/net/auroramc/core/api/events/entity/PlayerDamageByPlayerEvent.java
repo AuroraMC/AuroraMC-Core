@@ -15,17 +15,17 @@ public class PlayerDamageByPlayerEvent extends PlayerDamageEvent implements Canc
 
     private static final HandlerList handlers = new HandlerList();
 
-    private final AuroraMCServerPlayer damaged;
+    private final AuroraMCServerPlayer damager;
     private boolean cancelled;
 
-    public PlayerDamageByPlayerEvent(AuroraMCServerPlayer player, AuroraMCServerPlayer damaged, DamageCause cause, double damage) {
+    public PlayerDamageByPlayerEvent(AuroraMCServerPlayer player, AuroraMCServerPlayer damager, DamageCause cause, double damage) {
         super(player, cause, damage);
-        this.damaged = damaged;
+        this.damager = damager;
         cancelled = false;
     }
 
-    public AuroraMCServerPlayer getDamaged() {
-        return damaged;
+    public AuroraMCServerPlayer getDamager() {
+        return damager;
     }
 
     @Override
