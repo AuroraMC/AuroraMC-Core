@@ -19,6 +19,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.deploy.skip>false</maven.deploy.skip>
     </properties>
 
     <build>
@@ -144,5 +146,6 @@
             <url>https://nexus.block2block.me/repository/AuroraMC-Core</url>
         </repository>
     </distributionManagement>
+
 
 </project>
