@@ -13,6 +13,6 @@ public class WhyMe extends Achievement {
 
 
     public WhyMe() {
-        super(165, "WHY ME", "Die in the first round of the game.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(165, "WHY ME", "Die in the first round of the game.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 101);
     }
 }

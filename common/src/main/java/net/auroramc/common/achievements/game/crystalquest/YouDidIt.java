@@ -12,6 +12,6 @@ import java.util.Collections;
 public class YouDidIt extends Achievement {
 
     public YouDidIt() {
-        super(61, "You Did It!", "Win a game of Crystal Quest for the first time.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(61, "You Did It!", "Win a game of Crystal Quest for the first time.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 1);
     }
 }

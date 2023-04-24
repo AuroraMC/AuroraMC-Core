@@ -11,6 +11,6 @@ import java.util.Collections;
 
 public class TisTheSeason extends Achievement {
     public TisTheSeason() {
-        super(123, "Tis The Season?", "Break 50,000 Snow Blocks", new Reward("&a+2500 XP\n&6+2500 Crowns", 2500, 0, 2500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(123, "Tis The Season?", "Break 50,000 Snow Blocks", new Reward("&a+2500 XP\n&6+2500 Crowns", 2500, 0, 2500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 100);
     }
 }

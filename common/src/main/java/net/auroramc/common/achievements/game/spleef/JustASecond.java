@@ -11,6 +11,6 @@ import java.util.Collections;
 
 public class JustASecond extends Achievement {
     public JustASecond() {
-        super(126, "Just a second...", "Break a block with your BARE HAND.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(126, "Just a second...", "Break a block with your BARE HAND.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 100);
     }
 }

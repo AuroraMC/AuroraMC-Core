@@ -45,9 +45,9 @@ public class CommandCosmetic extends ServerCommand {
             }
         } else {
             player.sendMessage(TextFormatter.pluginMessage("Cosmetics", "Available commands:\n" +
-                    "&b/cosmetic add [player] [id]&r - Adds a cosmetic to a players account.\n" +
-                    "&b/cosmetic remove [player] [id]&r - Remove a player to a players account.\n" +
-                    "&b/cosmetic list [player]&r - List all cosmetics a user has."));
+                    "**/cosmetic add [player] [id]** - Adds a cosmetic to a players account.\n" +
+                    "**/cosmetic remove [player] [id]** - Remove a player to a players account.\n" +
+                    "**/cosmetic list [player]** - List all cosmetics a user has."));
         }
     }
 

@@ -49,7 +49,7 @@ public class CommandCrateLookup extends ServerCommand {
                             "Type: **" + crate.getType() + "**\n" +
                             "Generated: **" + new Date(crate.getGenerated()) + "**\n" +
                             "Opened: **" + ((crate.getOpened() != -1)?new Date(crate.getOpened()):"N/A") + "**\n" +
-                            "Reward: **" + ((crate.getLoot() != null)?crate.getLoot().getRewardTitle():"N/A") + "**"));
+                            "Reward: **" + ((crate.getLoot() != null)?TextFormatter.convert(crate.getLoot().getRewardTitle()):"N/A") + "**"));
 
                 }
             }.runTaskAsynchronously(ServerAPI.getCore());

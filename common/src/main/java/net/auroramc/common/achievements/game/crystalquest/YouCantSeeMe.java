@@ -13,6 +13,6 @@ public class YouCantSeeMe extends Achievement {
 
 
     public YouCantSeeMe() {
-        super(72, "You can't see me!", "Kill a player without losing any health points.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME);
+        super(72, "You can't see me!", "Kill a player without losing any health points.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME, 1);
     }
 }

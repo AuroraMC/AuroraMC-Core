@@ -13,6 +13,6 @@ public class Hoarder extends Achievement {
 
 
     public Hoarder() {
-        super(68, "Hoarder", "Have a stack of Emeralds in your inventory.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME);
+        super(68, "Hoarder", "Have a stack of Emeralds in your inventory.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME, 1);
     }
 }
