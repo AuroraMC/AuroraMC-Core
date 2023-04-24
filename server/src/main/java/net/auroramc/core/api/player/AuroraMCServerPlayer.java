@@ -7,6 +7,7 @@ package net.auroramc.core.api.player;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.info.Info;
 import net.auroramc.api.cosmetics.Cosmetic;
 import net.auroramc.api.cosmetics.PlusSymbol;
 import net.auroramc.api.permissions.Rank;
@@ -16,9 +17,12 @@ import net.auroramc.api.punishments.Punishment;
 import net.auroramc.api.utils.Pronoun;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
+import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.player.scoreboard.PlayerScoreboard;
 import net.auroramc.core.api.utils.holograms.Hologram;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -60,7 +64,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     private Map<String, Hologram> holograms;
 
     public AuroraMCServerPlayer(Player player) {
-        super(player.getUniqueId());
+        super(player.getUniqueId(), player.getName(), player);
         this.player = player;
         dead = false;
         hidden = false;
@@ -88,8 +92,9 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
 
     @Override
-    public void loadBefore() {
-        this.vanished = AuroraMCAPI.getDbManager().isVanished(this);
+    public void loadBefore(Object playerObject) {
+        Player player = (Player) playerObject;
+        this.vanished = AuroraMCAPI.getDbManager().isVanished(getUuid());
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             player1.hidePlayer(player);
             player.hidePlayer(player1);
@@ -98,14 +103,15 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     @Override
     public void loadExtra() {
-
-        if (getActiveSubscription().getEndTimestamp() != -1 && getActiveSubscription().getEndTimestamp() > System.currentTimeMillis() && (getActiveSubscription().getEndTimestamp() - System.currentTimeMillis()) < 2592000000L) {
-            subscriptionTask = new BukkitRunnable(){
-                @Override
-                public void run() {
-                    AuroraMCServerPlayer.this.expireSubscription();
-                }
-            }.runTaskLater(ServerAPI.getCore(), (getActiveSubscription().getEndTimestamp() - System.currentTimeMillis())/50);
+        if (getActiveSubscription() != null) {
+            if (getActiveSubscription().getEndTimestamp() != -1 && getActiveSubscription().getEndTimestamp() > System.currentTimeMillis() && (getActiveSubscription().getEndTimestamp() - System.currentTimeMillis()) < 2592000000L) {
+                subscriptionTask = new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        AuroraMCServerPlayer.this.expireSubscription();
+                    }
+                }.runTaskLater(ServerAPI.getCore(), (getActiveSubscription().getEndTimestamp() - System.currentTimeMillis())/50);
+            }
         }
 
         expiryTasks = new HashMap<>();
@@ -146,12 +152,43 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             }
         }
 
+        if (AuroraMCAPI.getInfo().getNetwork() == Info.Network.TEST) {
+
+            TextComponent component = new TextComponent("");
+
+            TextComponent lines = new TextComponent("▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆");
+            lines.setBold(true);
+            lines.setColor(net.md_5.bungee.api.ChatColor.DARK_RED);
+
+            component.addExtra(lines);
+            component.addExtra("\n                     ");
+
+            TextComponent cmp = new TextComponent("«MISSION CONTROL»\n \n");
+            cmp.setColor(net.md_5.bungee.api.ChatColor.RED);
+            cmp.setBold(true);
+            component.addExtra(cmp);
+
+            cmp = new TextComponent("You are currently connected to the AuroraMC Test\n" +
+                    "Network!\n" +
+                    "\n" +
+                    "All servers in this network will not save data, and are\n" +
+                    "all on test versions of our plugins.\n \n");
+            cmp.setColor(ChatColor.WHITE);
+            cmp.setBold(false);
+            component.addExtra(cmp);
+            component.addExtra(lines);
+            sendMessage(component);
+        } else if (AuroraMCAPI.isTestServer()) {
+            sendMessage(TextFormatter.pluginMessage("Server Manager", "&c&lThis server is in test mode. While test mode is enabled, stats and other core features will not be saved."));
+        }
+
         //Get the bungee to send all of the friend data to the server
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("UpdateFriendsList");
         out.writeUTF(getName());
         sendPluginMessage(out.toByteArray());
+
 
         new BukkitRunnable(){
             @Override
@@ -161,21 +198,44 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
                     updateNametag(player1);
 
                     if (player1 != AuroraMCServerPlayer.this) {
-                        if (player1.isVanished() && player1.getRank().getId() <= AuroraMCServerPlayer.this.getRank().getId()) {
-                            AuroraMCServerPlayer.this.showPlayer(player1);
-                        }
-                        if (isVanished() && player1.getRank().getId() >= AuroraMCServerPlayer.this.getRank().getId()) {
-                            player1.showPlayer(AuroraMCServerPlayer.this);
-                        }
+
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                if (!player1.isVanished() || player1.getRank().getId() <= AuroraMCServerPlayer.this.getRank().getId()) {
+                                    AuroraMCServerPlayer.this.hidePlayer(player1);
+                                    AuroraMCServerPlayer.this.showPlayer(player1);
+                                }
+                                if (!isVanished() || player1.getRank().getId() >= AuroraMCServerPlayer.this.getRank().getId()) {
+                                    player1.hidePlayer(AuroraMCServerPlayer.this);
+                                    player1.showPlayer(AuroraMCServerPlayer.this);
+                                }
+                            }
+                        }.runTaskLater(ServerAPI.getCore(), 1);
                     }
                 }
+
+                updateNametag(AuroraMCServerPlayer.this);
+
+                //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
+                if (!player.isOnline()) {
+                    return;
+                }
+                PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(AuroraMCServerPlayer.this);
+                Bukkit.getPluginManager().callEvent(creationEvent);
+                if (!player.isOnline()) {
+                    return;
+                }
+                ServerAPI.newPlayer(player, creationEvent.getPlayer());
+                creationEvent.getPlayer().setLoaded(true);
+
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("UpdateParty");
+                out.writeUTF(getName());
+                sendPluginMessage(out.toByteArray());
             }
         }.runTask(ServerAPI.getCore());
 
-        out = ByteStreams.newDataOutput();
-        out.writeUTF("UpdateParty");
-        out.writeUTF(getName());
-        sendPluginMessage(out.toByteArray());
     }
 
     @Override
@@ -254,13 +314,10 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     }
 
     public void clearScoreboard() {
-        for (Player bukkitPlayer : Bukkit.getOnlinePlayers()) {
-            AuroraMCServerPlayer player = ServerAPI.getPlayer(bukkitPlayer);
-            if (player != null) {
-                org.bukkit.scoreboard.Team team = player.getScoreboard().getScoreboard().getTeam(player.getName());
-                if (team != null) {
-                    team.unregister();
-                }
+        for (AuroraMCServerPlayer bukkitPlayer : ServerAPI.getPlayers()) {
+            org.bukkit.scoreboard.Team team = bukkitPlayer.getScoreboard().getScoreboard().getTeam(getByDisguiseName());
+            if (team != null) {
+                team.unregister();
             }
         }
     }
@@ -464,27 +521,26 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         }
 
         //Prefix.
-        s = new StringBuilder(TextFormatter.rankFormat(rank, getActiveSubscription()));
-        if (scoreboard.getScoreboard().getTeam(player.getName()) == null) {
-            scoreboard.getScoreboard().registerNewTeam(player.getName());
+        s = new StringBuilder(TextFormatter.rankFormat(rank, player.getActiveSubscription()));
+        if (scoreboard.getScoreboard().getTeam(name) == null) {
+            scoreboard.getScoreboard().registerNewTeam(name);
         }
-        team = scoreboard.getScoreboard().getTeam(player.getName());
-        if (!s.equals("")) {
+        team = scoreboard.getScoreboard().getTeam(name);
+        if (rank != Rank.PLAYER || player.getActiveSubscription() != null) {
             s.append(" ");
         }
-        s.append("§");
         if (player.getTeam() == null) {
-            s.append("r");
+            s.append("§r");
             if (Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393) {
                 s.append("§f");
             }
         } else {
             if (Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393) {
-                s.append("r§");
+                s.append("§r");
             }
             s.append(getTeam().getTeamColor());
         }
-        team.setSuffix(s.toString());
+        team.setPrefix(s.toString());
 
 
         s = new StringBuilder();
@@ -494,7 +550,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         }
         if (player.getActiveSubscription() != null && player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
             PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
-            s.append(String.format(" &%s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
+            s.append(String.format(" %s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
         }
 
         team.setSuffix(s.toString());

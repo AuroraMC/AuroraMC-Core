@@ -10,6 +10,9 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 public class ServerChatUtils {
 
 
@@ -17,61 +20,19 @@ public class ServerChatUtils {
         TextComponent component = new TextComponent("");
         boolean mentionFound = false;
 
-        String[] args = message.getText().split(" ");
+        if (message.getText().equals(" ")) {
+            component.setText(" ");
+        } else {
+            String[] args = message.getText().split(" ");
 
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase(recipient.getByDisguiseName()) && !recipient.isVanished()) {
-                if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                    arg = recipient.getName();
-                } else {
-                    arg = recipient.getByDisguiseName();
-                }
-                TextComponent component1 = new TextComponent(arg);
-                component1.setBold(message.isBold());
-                component1.setColor(ChatColor.AQUA);
-                component1.setItalic(message.isItalic());
-                component1.setObfuscated(message.isObfuscated());
-                component1.setStrikethrough(message.isStrikethrough());
-                component1.setUnderlined(message.isUnderlined());
-                component.addExtra(component1);
-                mentionFound = true;
-            } else if (!arg.equals("")) {
-                TextComponent component1 = new TextComponent(arg);
-                component1.setBold(message.isBold());
-                component1.setColor(message.getColor());
-                component1.setItalic(message.isItalic());
-                component1.setObfuscated(message.isObfuscated());
-                component1.setStrikethrough(message.isStrikethrough());
-                component1.setUnderlined(message.isUnderlined());
-                component.addExtra(component1);
-            }
-        }
-
-        if (message.getExtra().size() > 0) {
-            for (BaseComponent component1 : message.getExtra()) {
-                MentionMessage mentionMessage = processMentions(recipient, (TextComponent) component1);
-                mentionFound = mentionFound || mentionMessage.isMentionFound();
-                component.addExtra(mentionMessage.getFormattedText());
-            }
-        }
-        return new MentionMessage(component, mentionFound);
-    }
-
-    public static BaseComponent processMentions(TextComponent message) {
-        TextComponent component = new TextComponent("");
-
-        String[] args = message.getText().split(" ");
-
-        for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
-            if (player.isVanished()) {
-                continue;
-            }
-            for (String arg : args) {
-                if (arg.equalsIgnoreCase(player.getByDisguiseName()) && !player.isVanished()) {
-                    if (player.isDisguised() && player.getPreferences().isHideDisguiseNameEnabled()) {
-                        arg = player.getName();
+            Iterator<String> iterator = Arrays.stream(args).iterator();
+            while (iterator.hasNext()) {
+                String arg = iterator.next();
+                if (arg.equalsIgnoreCase(recipient.getByDisguiseName()) && !recipient.isVanished()) {
+                    if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
+                        arg = recipient.getName();
                     } else {
-                        arg = player.getByDisguiseName();
+                        arg = recipient.getByDisguiseName();
                     }
                     TextComponent component1 = new TextComponent(arg);
                     component1.setBold(message.isBold());
@@ -81,6 +42,7 @@ public class ServerChatUtils {
                     component1.setStrikethrough(message.isStrikethrough());
                     component1.setUnderlined(message.isUnderlined());
                     component.addExtra(component1);
+                    mentionFound = true;
                 } else if (!arg.equals("")) {
                     TextComponent component1 = new TextComponent(arg);
                     component1.setBold(message.isBold());
@@ -93,8 +55,64 @@ public class ServerChatUtils {
                 }
             }
         }
+        if (message.getExtra() != null && message.getExtra().size() > 0) {
+            for (BaseComponent component1 : message.getExtra()) {
+                MentionMessage mentionMessage = processMentions(recipient, (TextComponent) component1);
+                mentionFound = mentionFound || mentionMessage.isMentionFound();
+                component.addExtra(mentionMessage.getFormattedText());
+            }
+        }
+        return new MentionMessage(component, mentionFound);
+    }
 
-        if (message.getExtra().size() > 0) {
+    public static BaseComponent processMentions(TextComponent message) {
+        TextComponent component = new TextComponent("");
+
+        if (message.getText().equals(" ")) {
+            component.setText(" ");
+        } else {
+            String[] args = message.getText().split(" ");
+
+                Iterator<String> iterator = Arrays.stream(args).iterator();
+                while (iterator.hasNext()) {
+                    String arg = iterator.next();
+                    boolean found = false;
+                    for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+                        if (player.isVanished()) {
+                            continue;
+                        }
+                        if (arg.equalsIgnoreCase(player.getByDisguiseName()) && !player.isVanished()) {
+                            if (player.isDisguised() && player.getPreferences().isHideDisguiseNameEnabled()) {
+                                arg = player.getName();
+                            } else {
+                                arg = player.getByDisguiseName();
+                            }
+                            TextComponent component1 = new TextComponent(arg);
+                            component1.setBold(message.isBold());
+                            component1.setColor(ChatColor.AQUA);
+                            component1.setItalic(message.isItalic());
+                            component1.setObfuscated(message.isObfuscated());
+                            component1.setStrikethrough(message.isStrikethrough());
+                            component1.setUnderlined(message.isUnderlined());
+                            component.addExtra(component1);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found && !arg.equals("")) {
+                        TextComponent component1 = new TextComponent(arg);
+                        component1.setBold(message.isBold());
+                        component1.setColor(message.getColor());
+                        component1.setItalic(message.isItalic());
+                        component1.setObfuscated(message.isObfuscated());
+                        component1.setStrikethrough(message.isStrikethrough());
+                        component1.setUnderlined(message.isUnderlined());
+                        component.addExtra(component1);
+                    }
+            }
+        }
+
+        if (message.getExtra() != null && message.getExtra().size() > 0) {
             for (BaseComponent component1 : message.getExtra()) {
                 component.addExtra(processMentions((TextComponent) component1));
             }

@@ -28,10 +28,6 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
-        if (e.getPlayer().isVanished()) {
-            e.getPlayer().sendMessage(TextFormatter.pluginMessage("Vanish", "You cannot talk while vanished!"));
-            return;
-        }
         switch (e.getPlayer().getChannel()) {
             case STAFF: {
                 AuroraMCServerPlayer player = e.getPlayer();
@@ -52,6 +48,10 @@ public class ChatListener implements Listener {
                 break;
             }
             case TEAM: {
+                if (e.getPlayer().isVanished()) {
+                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Vanish", "You cannot talk while vanished!"));
+                    return;
+                }
                 AuroraMCServerPlayer player = e.getPlayer();
                 if (player.getTeam() != null) {
                     if (!player.getPreferences().isChatVisibilityEnabled()) {
@@ -122,6 +122,10 @@ public class ChatListener implements Listener {
             }
             case ALL:
             case PARTY:
+                if (e.getPlayer().isVanished()) {
+                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Vanish", "You cannot talk while vanished!"));
+                    return;
+                }
                 AuroraMCServerPlayer player = e.getPlayer();
                 if (!player.getPreferences().isChatVisibilityEnabled()) {
                     e.getPlayer().sendMessage(TextFormatter.pluginMessage("Message", "You currently have chat disabled! Please enable chat in order to send messages again."));

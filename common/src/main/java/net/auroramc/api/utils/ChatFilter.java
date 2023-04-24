@@ -128,7 +128,7 @@ public class ChatFilter {
                 ChatEmote emote = emotes.get(s.substring(1, s.length()-1).toLowerCase());
                 if (emote != null && emote.hasUnlocked(player)) {
 
-                    TextComponent em = new TextComponent(emote.getDescription() + ((component.getExtra().size() < msg.length)?" ":""));
+                    TextComponent em = new TextComponent(emote.getDescription());
                     em.setColor(emote.getColor());
                     em.setBold(emote.isBold());
                     component.addExtra(em);
@@ -142,6 +142,9 @@ public class ChatFilter {
             cmp.setBold(false);
             cmp.setColor(player.getRank().getDefaultChatColor());
             component.addExtra(cmp);
+            if (iterator.hasNext()) {
+                component.addExtra(" ");
+            }
         }
         return component;
     }

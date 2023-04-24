@@ -26,7 +26,7 @@ public class LevelColour extends GUI {
         this.player = player;
 
         border("&3&lYour Level Colour", "");
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Level Colour", 1, String.format("&r&fCurrent Level Colour: &%s%s", player.getActiveSubscription().getLevelColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getLevelColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Level Colour", 1, String.format("&r&fCurrent Level Colour: %s%s", player.getActiveSubscription().getLevelColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getLevelColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
 
 
         this.setItem(1, 3, new GUIItem(Material.LEATHER_CHESTPLATE, "&0&lBlack", 1, "&r&fSet &0Black&r&f as your Level colour", (short) 0, (player.getActiveSubscription().getLevelColor() == ChatColor.BLACK), Color.BLACK));
