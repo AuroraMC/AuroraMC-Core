@@ -63,16 +63,19 @@ public abstract class AuroraMCPlayer {
     private List<Cosmetic> unlockedCosmetics;
     private HashMap<Cosmetic.CosmeticType, Cosmetic> activeCosmetics;
 
+    private UUID uuid;
+
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
 
-    public AuroraMCPlayer(UUID uuid) {
+    public AuroraMCPlayer(UUID uuid, String name, Object playerObject) {
+        this.uuid = uuid;
         loaded = false;
-        AuroraMCPlayer pl = this;
         lastMessageSent = -1;
         team = null;
+        this.name = name;
 
-        Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(pl);
+        Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(this, uuid);
         if (disguise != null) {
             activeDisguise = disguise;
             if (!AuroraMCAPI.getDbManager().isHideDisguiseName(uuid)) {
@@ -80,20 +83,21 @@ public abstract class AuroraMCPlayer {
             }
         }
 
-        loadBefore();
+        loadBefore(playerObject);
 
         ScheduleFactory.scheduleAsync(() -> {
             int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);
             if (id == -1) {
                 //
-                id = AuroraMCAPI.getDbManager().newUser(pl);
+                id = AuroraMCAPI.getDbManager().newUser(AuroraMCPlayer.this);
                 newPlayer = true;
             }
-            pl.id = id;
+            AuroraMCPlayer.this.id = id;
             //Get Punishment History and active mutes.
             List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id);
             history = new PunishmentHistory(id);
             activeMutes = new ArrayList<>();
+
             for (Punishment punishment : punishments) {
                 history.registerPunishment(punishment);
                 if (punishment.getStatus() == 1 || punishment.getStatus() == 2 || punishment.getStatus() == 3) {
@@ -110,25 +114,26 @@ public abstract class AuroraMCPlayer {
                     }
                 }
             }
-            preferences = AuroraMCAPI.getDbManager().getPlayerPreferences(pl);
-            rank = AuroraMCAPI.getDbManager().getRank(pl);
+
+            preferences = AuroraMCAPI.getDbManager().getPlayerPreferences(AuroraMCPlayer.this);
+            rank = AuroraMCAPI.getDbManager().getRank(AuroraMCPlayer.this);
             if (rank.hasPermission("all")) {
-                activeSubscription = new PlusSubscription(pl);
+                activeSubscription = new PlusSubscription(AuroraMCPlayer.this);
             }  else {
-                long endTimestamp = AuroraMCAPI.getDbManager().getExpire(pl);
+                long endTimestamp = AuroraMCAPI.getDbManager().getExpire(AuroraMCPlayer.this);
                 if (endTimestamp != -1 && endTimestamp > System.currentTimeMillis()) {
-                    activeSubscription = new PlusSubscription(pl);
+                    activeSubscription = new PlusSubscription(AuroraMCPlayer.this);
                 }
             }
 
-            subranks = AuroraMCAPI.getDbManager().getSubRanks(pl);
+            subranks = AuroraMCAPI.getDbManager().getSubRanks(AuroraMCPlayer.this);
 
             //Load the friends list.
-            friendsList = AuroraMCAPI.getDbManager().getFriendsList(pl);
+            friendsList = AuroraMCAPI.getDbManager().getFriendsList(AuroraMCPlayer.this);
 
             linkedDiscord = AuroraMCAPI.getDbManager().getDiscord(id);
 
-            statistics = AuroraMCAPI.getDbManager().getStatistics(pl);
+            statistics = AuroraMCAPI.getDbManager().getStatistics(AuroraMCPlayer.this);
 
             if (friendsList.getFriends().values().stream().anyMatch(friend -> friend.getType() == Friend.FriendType.NORMAL || friend.getType() == Friend.FriendType.FAVOURITE)) {
                 if (!statistics.getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(30))) {
@@ -187,9 +192,9 @@ public abstract class AuroraMCPlayer {
                 }
             }
 
-            bank = AuroraMCAPI.getDbManager().getBank(pl);
+            bank = AuroraMCAPI.getDbManager().getBank(AuroraMCPlayer.this);
 
-            channel = AuroraMCAPI.getDbManager().getChannel(pl);
+            channel = AuroraMCAPI.getDbManager().getChannel(AuroraMCPlayer.this);
 
             activeReport = AuroraMCAPI.getDbManager().getActiveReport(id);
 
@@ -212,58 +217,30 @@ public abstract class AuroraMCPlayer {
             activeCosmetics = AuroraMCAPI.getDbManager().getActiveCosmetics(uuid);
 
             //If they have a rank-exclusive status set, check if they still have permission to use it.
-            if (!friendsList.getCurrentStatus().hasUnlocked(pl)) {
+            if (!friendsList.getCurrentStatus().hasUnlocked(AuroraMCPlayer.this)) {
                 //They no longer have permission, default to Online.
                 friendsList.setCurrentStatus((FriendStatus) AuroraMCAPI.getCosmetics().get(101), true);
             }
 
             if (AuroraMCAPI.isCosmeticsEnabled()) {
                 for (Cosmetic cosmetic : activeCosmetics.values()) {
-                    ScheduleFactory.scheduleSync(() -> cosmetic.onEquip(pl));
+                    ScheduleFactory.scheduleSync(() -> cosmetic.onEquip(AuroraMCPlayer.this));
                 }
             }
 
             if (disguise != null && preferences.isHideDisguiseNameEnabled()) {
-                ScheduleFactory.scheduleSync(() -> pl.applyDisguise(true));
+                ScheduleFactory.scheduleSync(() -> AuroraMCPlayer.this.applyDisguise(true));
             }
             //To ensure that this is being called after everything has been retrived, it is called here and then replaces the object already in the cache.
             if (!isOnline()) {
                 return;
-            }
-            if (AuroraMCAPI.getInfo().getNetwork() == Info.Network.TEST) {
-
-                TextComponent component = new TextComponent("");
-
-                TextComponent lines = new TextComponent("▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆");
-                lines.setBold(true);
-                lines.setColor(ChatColor.DARK_RED);
-
-                component.addExtra(lines);
-                component.addExtra("\n                     ");
-
-                TextComponent cmp = new TextComponent("«MISSION CONTROL»\n \n");
-                cmp.setColor(ChatColor.RED);
-                cmp.setBold(true);
-                component.addExtra(cmp);
-
-                cmp = new TextComponent("You are currently connected to the AuroraMC Test\n" +
-                                               "Network!\n" +
-                        "\n" +
-                        "All servers in this network will not save data, and are\n" +
-                        "all on test versions of our plugins.\n \n");
-                cmp.setColor(ChatColor.WHITE);
-                cmp.setBold(false);
-                component.addExtra(cmp);
-                component.addExtra(lines);
-                sendMessage(lines);
-            } else if (AuroraMCAPI.isTestServer()) {
-                sendMessage(TextFormatter.pluginMessage("Server Manager", "&c&lThis server is in test mode. While test mode is enabled, stats and other core features will not be saved."));
             }
             loadExtra();
         });
     }
 
     public AuroraMCPlayer(AuroraMCPlayer oldPlayer) {
+        uuid = oldPlayer.uuid;
         id = oldPlayer.getId();
         name = oldPlayer.getName();
         rank = oldPlayer.getRank();
@@ -297,9 +274,14 @@ public abstract class AuroraMCPlayer {
         activeCosmetics = oldPlayer.activeCosmetics;
         loaded = oldPlayer.loaded;
         team = oldPlayer.team;
+        newPlayer = oldPlayer.newPlayer;
     }
 
-    public abstract void loadBefore();
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public abstract void loadBefore(Object playerObject);
     public abstract void loadExtra();
 
     public abstract boolean isOnline();
@@ -326,6 +308,9 @@ public abstract class AuroraMCPlayer {
         return activeSubscription;
     }
 
+    protected void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
 
     public String getName() {
         return name;
@@ -514,8 +499,19 @@ public abstract class AuroraMCPlayer {
         return friendsList;
     }
 
-    public void setChannel(ChatChannel channel) {
+    public void setChannel(ChatChannel channel, boolean send) {
         this.channel = channel;
+
+        if (send) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("ChatChannelSet");
+            out.writeUTF(getName());
+            out.writeUTF(channel.name());
+            sendPluginMessage(out.toByteArray());
+            ScheduleFactory.scheduleAsync(() -> {
+                AuroraMCAPI.getDbManager().channelSet(AuroraMCPlayer.this, channel);
+            });
+        }
     }
 
     public ChatChannel getChannel() {

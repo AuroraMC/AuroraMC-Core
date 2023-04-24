@@ -324,7 +324,7 @@ public class JoinListener implements Listener {
             }
         }, timeout, TimeUnit.MILLISECONDS);
 
-        ProxyAPI.getPlayer(e.getPlayer()).updateServer(ProxyAPI.getAmcServers().get(from.getInfo().getName()));
+        ProxyAPI.getPlayer(e.getPlayer()).updateServer(ProxyAPI.getAmcServers().get(e.getTarget().getName()));
     }
 
     @EventHandler

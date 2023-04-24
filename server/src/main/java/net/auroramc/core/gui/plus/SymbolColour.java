@@ -27,7 +27,7 @@ public class SymbolColour extends GUI {
         this.player = player;
 
         border("&3&lYour Plus Symbol Colour", "");
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Plus Colour", 1, String.format("&r&fCurrent Plus Colour: &%s%s", player.getActiveSubscription().getSuffixColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getSuffixColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Plus Colour", 1, String.format("&r&fCurrent Plus Colour: %s%s", player.getActiveSubscription().getSuffixColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getSuffixColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
 
 
         this.setItem(1, 3, new GUIItem(Material.LEATHER_CHESTPLATE, "&0&lBlack", 1, "&r&fSet &0Black&r&f as your Plus Symbol colour", (short) 0, (player.getActiveSubscription().getSuffixColor() == ChatColor.BLACK), Color.BLACK));

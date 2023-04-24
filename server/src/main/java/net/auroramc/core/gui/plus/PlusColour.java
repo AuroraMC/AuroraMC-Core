@@ -26,7 +26,7 @@ public class PlusColour extends GUI {
         this.player = player;
 
         border("&3&lYour Plus Colour", "");
-        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Plus Colour", 1, String.format("&r&fCurrent Plus Colour: &%s%s", player.getActiveSubscription().getColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
+        this.setItem(0, 4, new GUIItem(Material.SKULL_ITEM, "&3&lYour Plus Colour", 1, String.format("&r&fCurrent Plus Colour: %s%s", player.getActiveSubscription().getColor(), WordUtils.capitalizeFully(player.getActiveSubscription().getColor().name().replace("_", " ").toLowerCase())), (short) 3, false));
 
 
         this.setItem(1, 3, new GUIItem(Material.LEATHER_CHESTPLATE, "&0&lBlack", 1, "&r&fSet &0Black&r&f as your Plus colour", (short) 0, (player.getActiveSubscription().getColor() == ChatColor.BLACK), Color.BLACK));

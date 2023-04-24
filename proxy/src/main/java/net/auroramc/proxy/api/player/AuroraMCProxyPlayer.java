@@ -51,7 +51,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
 
 
     public AuroraMCProxyPlayer(ProxiedPlayer player) {
-        super(player.getUniqueId());
+        super(player.getUniqueId(), player.getName(), player);
         this.player = player;
         this.session = new Session(this);
         this.partyInvites = new ArrayList<>();
@@ -59,7 +59,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     }
 
     @Override
-    public void loadBefore() {
+    public void loadBefore(Object playerObject) {
 
     }
 

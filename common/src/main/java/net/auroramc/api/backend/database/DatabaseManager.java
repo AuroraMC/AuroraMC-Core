@@ -74,7 +74,7 @@ public class DatabaseManager {
         config.setTimeBetweenEvictionRunsMillis(Duration.ofSeconds(30).toMillis());
         config.setNumTestsPerEvictionRun(3);
         config.setBlockWhenExhausted(true);
-        jedis = new JedisPool(config, redisHost, 6379, 2000, redisHost);
+        jedis = new JedisPool(config, redisHost, 6379, 2000, redisAuth);
     }
 
     public ProxyInfo getProxyInfo(String proxyUUID, String network) {
@@ -87,6 +87,7 @@ public class DatabaseManager {
             if (set.next()) {
                 return new ProxyInfo(UUID.fromString(set.getString(1)), set.getString(2), set.getInt(3), ServerInfo.Network.valueOf(set.getString(4)), set.getBoolean(5), set.getInt(6), set.getInt(7), set.getString(8));
             } else {
+                AuroraMCAPI.getLogger().info("test");
                 return null;
             }
         } catch (SQLException e) {
@@ -95,18 +96,18 @@ public class DatabaseManager {
         }
     }
 
-    public Disguise getDisguise(AuroraMCPlayer player) {
+    public Disguise getDisguise(AuroraMCPlayer player, UUID uuid) {
         try (Jedis connection = jedis.getResource()) {
-            if (connection.exists(String.format("disguise.%s.skin", player.getUniqueId().toString()))) {
+            if (connection.exists(String.format("disguise.%s.skin", uuid))) {
                 //They have an active disguise.
                 String skin,signature,name;
                 Rank rank;
 
-                skin = connection.get(String.format("disguise.%s.skin", player.getUniqueId().toString()));
-                signature = connection.get(String.format("disguise.%s.signature", player.getUniqueId().toString()));
-                name = connection.get(String.format("disguise.%s.name", player.getUniqueId().toString()));
+                skin = connection.get(String.format("disguise.%s.skin", uuid));
+                signature = connection.get(String.format("disguise.%s.signature", uuid));
+                name = connection.get(String.format("disguise.%s.name", uuid));
 
-                rank = Rank.getByID(Integer.parseInt(connection.get(String.format("disguise.%s.rank", player.getUniqueId().toString()))));
+                rank = Rank.getByID(Integer.parseInt(connection.get(String.format("disguise.%s.rank", uuid))));
 
                 return DisguiseFactory.newDisguise(player, name, skin, signature, rank);
             }
@@ -1540,6 +1541,12 @@ public class DatabaseManager {
     public boolean isVanished(UUID player) {
         try (Jedis con = jedis.getResource()) {
             return con.sismember("vanish", player.toString());
+        }
+    }
+
+    public void channelSet(AuroraMCPlayer player, ChatChannel chatChannel) {
+        try (Jedis redisConnection = jedis.getResource()) {
+            redisConnection.hset(String.format("prefs.%s", player.getUniqueId()), "channel", chatChannel.name());
         }
     }
 

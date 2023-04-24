@@ -62,7 +62,7 @@ public class ProxyAPI {
     }
 
     public static void init(AuroraMC core) {
-        AuroraMCAPI.init(core.getLogger(), new ProxyAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("name"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),true);
+        AuroraMCAPI.init(core.getLogger(), new ProxyAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("uuid"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),true);
         ProxyAPI.core = core;
         players = new HashMap<>();
 
@@ -71,6 +71,7 @@ public class ProxyAPI {
         }, 1, 1, TimeUnit.SECONDS);
         loadProxyInfo();
         CommunicationUtils.init();
+        loadServers();
     }
 
     public static void loadProxyInfo() {
