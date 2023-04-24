@@ -29,9 +29,9 @@ public class CommandBlacklistCheck extends ProxyCommand {
         if (args.size() == 1) {
             ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
                 if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0).toLowerCase())) {
-                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: &atrue", args.get(0))));
+                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: §atrue", args.get(0))));
                 } else {
-                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: &cfalse", args.get(0))));
+                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: §cfalse", args.get(0))));
                 }
             });
         } else {

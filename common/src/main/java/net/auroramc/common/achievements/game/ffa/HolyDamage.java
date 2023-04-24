@@ -13,6 +13,6 @@ public class HolyDamage extends Achievement {
 
 
     public HolyDamage() {
-        super(142, "Holy Damage", "Deal a total of 1000 damage.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(142, "Holy Damage", "Deal a total of 1000 damage.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 102);
     }
 }

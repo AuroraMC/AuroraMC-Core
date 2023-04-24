@@ -12,6 +12,6 @@ import java.util.Collections;
 public class WaitIsThisPrisons extends Achievement {
 
     public WaitIsThisPrisons() {
-        super(127, "Wait, is this Prisons?", "Break 300 blocks in one game", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(127, "Wait, is this Prisons?", "Break 300 blocks in one game", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 100);
     }
 }

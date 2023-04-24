@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Rampage extends TieredAcheivement {
 
     public Rampage() {
-        super(145, "Rampage", "Kill %s amount of players in FFA.", new Reward("None", 0, 0, 0, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(145, "Rampage", "Kill %s amount of players in FFA.", new Reward("None", 0, 0, 0, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 102);
         this.setTier(1, new AchievementTier(this, 1, 10, new Reward("&a+500 XP\n&6+500 Crowns", 500, 0, 500, Collections.emptyMap(), Collections.emptyList())));
         this.setTier(2, new AchievementTier(this, 2, 50, new Reward("&a+750 XP\n&6+750 Crowns", 750, 0, 750, Collections.emptyMap(), Collections.emptyList())));
         this.setTier(3, new AchievementTier(this, 3, 100, new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList())));

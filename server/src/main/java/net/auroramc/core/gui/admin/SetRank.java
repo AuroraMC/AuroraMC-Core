@@ -69,30 +69,30 @@ public class SetRank extends GUI {
                 for (Rank rank : ranks) {
                     switch (rank.getCategory()) {
                         case PLAYER:
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             playerCat++;
                             break;
                         case SOCIAL_MEDIA:
-                            this.setItem(socialCat, 2, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                            this.setItem(socialCat, 2, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             socialCat++;
                             break;
                         case CONTENT_CREATOR:
                             if (rank.getId() != player.getRank().getId() && rank.getId() < player.getRank().getId()) {
-                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             } else {
-                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                                this.setItem(contentCat, 4, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             }
                             contentCat++;
                             break;
                         case MODERATION:
-                            this.setItem(moderationCat, 6, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                            this.setItem(moderationCat, 6, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             moderationCat++;
                             break;
                         case LEADERSHIP:
                             if (rank.getId() != player.getRank().getId() && rank.getId() < player.getRank().getId() && player.getRank().hasPermission("admin")) {
-                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, rank.getPrefixAppearance(), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             } else {
-                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("&%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                                this.setItem(leadershipCat, 8, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", rank.getPrefixColor(), rank.getName()), 1, String.format("&r&4&lYou do not have permission to set this rank.;;&r&7ID: &b%s", rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             }
                             leadershipCat++;
                             break;

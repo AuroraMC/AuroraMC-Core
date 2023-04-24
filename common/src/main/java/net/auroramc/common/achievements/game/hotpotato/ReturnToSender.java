@@ -13,6 +13,6 @@ public class ReturnToSender extends Achievement {
 
 
     public ReturnToSender() {
-        super(167, "Return to Sender", "Give the Hot Potato back to the player that gave it to you", new Reward("&a+500 XP\n&6+500 Crowns", 500, 0, 500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(167, "Return to Sender", "Give the Hot Potato back to the player that gave it to you", new Reward("&a+500 XP\n&6+500 Crowns", 500, 0, 500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 101);
     }
 }

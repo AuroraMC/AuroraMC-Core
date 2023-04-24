@@ -33,12 +33,12 @@ public class CommandEmotes extends ServerCommand {
         builder.append("Your available emotes:\n");
         for (ChatEmote emote : ChatFilter.getEmotes().values()) {
             if (emote.hasUnlocked(player)) {
-                builder.append("\n&b:");
+                builder.append("\n**:");
                 builder.append(emote.getDisplayName());
-                builder.append(": &3&l» ");
+                builder.append(":** §3§l» ");
                 builder.append(emote.getColor());
                 builder.append(emote.getDescription());
-                builder.append("&r");
+                builder.append("§r");
             }
         }
         player.sendMessage(TextFormatter.pluginMessage("Emotes", builder.toString().trim()));
