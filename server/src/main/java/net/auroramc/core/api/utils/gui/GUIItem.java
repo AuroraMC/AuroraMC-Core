@@ -117,6 +117,8 @@ public class GUIItem {
         if (glowing) {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+            im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         }
         if (skullOwner != null && !skullOwner.equals("")) {
             SkullMeta sm = (SkullMeta) im;

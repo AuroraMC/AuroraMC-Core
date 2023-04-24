@@ -375,7 +375,7 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
                     AuroraMCServerPlayer player = ServerAPI.getPlayer(in.readUTF());
                     assert player != null;
                     ChatChannel chatChannel = ChatChannel.valueOf(in.readUTF());
-                    player.setChannel(chatChannel);
+                    player.setChannel(chatChannel, false);
                     break;
                 }
                 case "PartySet": {

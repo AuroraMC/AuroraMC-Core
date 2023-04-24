@@ -4,6 +4,7 @@
 
 package net.auroramc.core.managers;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.events.block.*;
 import net.auroramc.core.api.events.enchantment.EnchantItemEvent;
@@ -12,6 +13,7 @@ import net.auroramc.core.api.events.entity.*;
 import net.auroramc.core.api.events.inventory.*;
 import net.auroramc.core.api.events.player.*;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -147,8 +149,6 @@ public class EventManager implements Listener {
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
                 e.setDamage(event.getDamage());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -162,8 +162,6 @@ public class EventManager implements Listener {
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
                 e.setFoodLevel(event.getLevel());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -247,8 +245,6 @@ public class EventManager implements Listener {
                 PlayerCreatePortalEvent event = new PlayerCreatePortalEvent(player, e.getBlocks(), e.getPortalType());
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -260,8 +256,6 @@ public class EventManager implements Listener {
             PlayerLeashEntityEvent event = new PlayerLeashEntityEvent(player, e.getEntity(), e.getLeashHolder());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -273,8 +267,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setCurrentItem(event.getCurrentItem());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -296,8 +288,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCurrentItem(event.getCurrentItem());
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -318,8 +308,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCursor(event.getCursor());
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -330,8 +318,6 @@ public class EventManager implements Listener {
             InventoryOpenEvent event = new InventoryOpenEvent(player, e.getView());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -350,11 +336,8 @@ public class EventManager implements Listener {
         if (player != null && player.isLoaded()) {
             AsyncPlayerChatEvent event = new AsyncPlayerChatEvent(true, player, e.getMessage());
             Bukkit.getPluginManager().callEvent(event);
-            e.setCancelled(e.isCancelled());
-            e.setMessage(e.getMessage());
-            e.setFormat(e.getFormat());
-        } else {
-            e.setCancelled(true);
+            e.setCancelled(event.isCancelled());
+            e.setMessage(event.getMessage());
         }
     }
 
@@ -374,8 +357,6 @@ public class EventManager implements Listener {
             PlayerBedEnterEvent event = new PlayerBedEnterEvent(player, e.getBed());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -413,8 +394,6 @@ public class EventManager implements Listener {
             PlayerDropItemEvent event = new PlayerDropItemEvent(player, e.getItemDrop());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -427,8 +406,6 @@ public class EventManager implements Listener {
             e.setCancelled(event.isCancelled());
             e.setSigning(event.isSigning());
             e.setNewBookMeta(event.getNewBookMeta());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -462,8 +439,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setExpToDrop(event.getExpToDrop());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -474,8 +449,6 @@ public class EventManager implements Listener {
             PlayerGameModeChangeEvent event = new PlayerGameModeChangeEvent(player, e.getNewGameMode());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -486,8 +459,16 @@ public class EventManager implements Listener {
             PlayerInteractAtEntityEvent event = new PlayerInteractAtEntityEvent(player, e.getRightClicked(), e.getClickedPosition());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void playerInteractAtEntityEvent(org.bukkit.event.player.PlayerInteractEvent e) {
+        AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
+        if (player != null && player.isLoaded()) {
+            PlayerInteractEvent event = new PlayerInteractEvent(player, e.getAction(), e.getItem(), e.getClickedBlock(), e.getBlockFace());
+            Bukkit.getPluginManager().callEvent(event);
+            e.setCancelled(event.isCancelled());
         }
     }
 
@@ -496,11 +477,10 @@ public class EventManager implements Listener {
         if (!(e instanceof org.bukkit.event.player.PlayerInteractAtEntityEvent)) {
             AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
             if (player != null && player.isLoaded()) {
+
                 PlayerInteractEntityEvent event = new PlayerInteractEntityEvent(player, e.getRightClicked());
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -522,8 +502,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setItem(event.getItem());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -535,8 +513,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setDamage(event.getDamage());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -547,8 +523,6 @@ public class EventManager implements Listener {
             PlayerItemHeldEvent event = new PlayerItemHeldEvent(player, e.getPreviousSlot(), e.getNewSlot());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -561,9 +535,7 @@ public class EventManager implements Listener {
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
                 e.setFrom(event.getFrom());
-                e.setTo(event.getFrom());
-            } else {
-                e.setCancelled(true);
+                e.setTo(event.getTo());
             }
         }
     }
@@ -608,11 +580,9 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setFrom(event.getFrom());
-            e.setTo(event.getFrom());
+            e.setTo(event.getTo());
             e.setPortalTravelAgent(event.getTravelAgent());
             e.useTravelAgent(event.useTravelAgent());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -625,8 +595,6 @@ public class EventManager implements Listener {
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
                 e.setAmount(event.getAmount());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -648,8 +616,6 @@ public class EventManager implements Listener {
             PlayerPickupItemEvent event = new PlayerPickupItemEvent(player, e.getItem(), e.getRemaining());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -660,8 +626,6 @@ public class EventManager implements Listener {
             PlayerShearEntityEvent event = new PlayerShearEntityEvent(player, e.getEntity());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -673,8 +637,6 @@ public class EventManager implements Listener {
                 PlayerShootBotEvent event = new PlayerShootBotEvent(player, e.getBow(), (Projectile) e.getProjectile(), e.getForce());
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
-            } else {
-                e.setCancelled(true);
             }
         }
     }
@@ -687,9 +649,7 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setFrom(event.getFrom());
-            e.setTo(event.getFrom());
-        } else {
-            e.setCancelled(true);
+            e.setTo(event.getTo());
         }
     }
 
@@ -700,8 +660,6 @@ public class EventManager implements Listener {
             PlayerToggleFlightEvent event = new PlayerToggleFlightEvent(player, e.isFlying());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -712,8 +670,6 @@ public class EventManager implements Listener {
             PlayerToggleSneakEvent event = new PlayerToggleSneakEvent(player, e.isSneaking());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -724,8 +680,6 @@ public class EventManager implements Listener {
             PlayerToggleSprintEvent event = new PlayerToggleSprintEvent(player, e.isSprinting());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -736,8 +690,6 @@ public class EventManager implements Listener {
             PlayerUnleashEntityEvent event = new PlayerUnleashEntityEvent(player, e.getEntity());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
-        } else {
-            e.setCancelled(true);
         }
     }
 
@@ -749,8 +701,6 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setVelocity(event.getVelocity());
-        } else {
-            e.setCancelled(true);
         }
     }
 }

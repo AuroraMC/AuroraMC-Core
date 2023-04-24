@@ -23,7 +23,7 @@ import java.util.List;
 
 public class TextFormatter {
 
-    private static final String tabPrefixFormat = "&%s&l«%s%s»";
+    private static final String tabPrefixFormat = "%s&l«%s%s»";
 
     public static BaseComponent highlight(@NotNull String message) {
         List<String> toHighlight = new ArrayList<>(Arrays.asList(message.split("[*]{2}")));
@@ -103,7 +103,7 @@ public class TextFormatter {
         if (rank.getPrefixAppearance() != null) {
             return convert(String.format(tabPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((subscription != null && rank.getId() < 5)?"+":"")));
         } else {
-            return "";
+            return ((subscription != null && rank.getId() < 5)?((rank.getPrefixColor()!=null)?rank.getPrefixColor():ChatColor.GRAY) + "+":"");
         }
     }
 
@@ -117,7 +117,7 @@ public class TextFormatter {
         TextComponent level = new TextComponent("«" + player.getStats().getLevel() + "»");
         level.setColor(((player.getActiveSubscription() != null)?((player.getActiveSubscription().getLevelColor() != null)?player.getActiveSubscription().getLevelColor():((rank.getPrefixColor() != null)?rank.getPrefixColor():ChatColor.DARK_AQUA)):((rank.getPrefixColor() != null)?rank.getPrefixColor():ChatColor.DARK_AQUA)));
 
-        ComponentBuilder levelHover;
+        TextComponent levelHover;
         if (player.getStats().getLevel() != 250) {
             String progress = "||||||||||||||||||||||||||||||";
             TextComponent prog = new TextComponent("");
@@ -137,114 +137,114 @@ public class TextFormatter {
                 percentage = 100.0;
             }
 
-            levelHover = new ComponentBuilder("");
+            levelHover = new TextComponent("");
             TextComponent lvl = new TextComponent("«LEVEL " + player.getStats().getLevel() + "»");
             lvl.setColor(level.getColor());
             lvl.setBold(true);
-            levelHover.append(lvl);
-            levelHover.append("\n \n");
+            levelHover.addExtra(lvl);
+            levelHover.addExtra("\n \n");
 
             TextComponent cmp = new TextComponent("Current Level: ");
             cmp.setColor(ChatColor.WHITE);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
             cmp = new TextComponent("Level " + player.getStats().getLevel());
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
-            levelHover.append(cmp);
-            levelHover.append("\n");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n");
 
             cmp = new TextComponent("Total EXP Earned: ");
             cmp.setColor(ChatColor.WHITE);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
             cmp = new TextComponent(String.valueOf(player.getStats().getTotalXpEarned()));
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
-            levelHover.append(cmp);
-            levelHover.append("\n \n ");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n \n ");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
-            levelHover.append(" ");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra(" ");
 
-            levelHover.append(prog);
-            levelHover.append(" ");
+            levelHover.addExtra(prog);
+            levelHover.addExtra(" ");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() + ((player.getStats().getLevel() != 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
-            levelHover.append("\n");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n");
 
             cmp = new TextComponent("Progress to Next Level: ");
             cmp.setColor(ChatColor.WHITE);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
             cmp = new TextComponent(new DecimalFormat("##.#").format(percentage));
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
         } else {
-            levelHover = new ComponentBuilder("");
+            levelHover = new TextComponent("");
             TextComponent lvl = new TextComponent("«LEVEL " + player.getStats().getLevel() + "»");
             lvl.setColor(level.getColor());
             lvl.setBold(true);
-            levelHover.append(lvl);
-            levelHover.append("\n \n");
+            levelHover.addExtra(lvl);
+            levelHover.addExtra("\n \n");
 
             TextComponent cmp = new TextComponent("Current Level: ");
             cmp.setColor(ChatColor.WHITE);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
             cmp = new TextComponent("Level " + player.getStats().getLevel());
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
-            levelHover.append(cmp);
-            levelHover.append("\n");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n");
 
             cmp = new TextComponent("Total EXP Earned: ");
             cmp.setColor(ChatColor.WHITE);
             cmp.setBold(false);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
             cmp = new TextComponent(String.valueOf(player.getStats().getTotalXpEarned()));
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
-            levelHover.append(cmp);
-            levelHover.append("\n \n ");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n \n ");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
-            levelHover.append(" ");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra(" ");
 
             cmp = new TextComponent("||||||||||||||||||||||||||||||");
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
-            levelHover.append(" ");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra(" ");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() + ((player.getStats().getLevel() != 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
-            levelHover.append("\n");
+            levelHover.addExtra(cmp);
+            levelHover.addExtra("\n");
 
             cmp = new TextComponent("MAX LEVEL");
             cmp.setColor(ChatColor.DARK_AQUA);
             cmp.setBold(true);
-            levelHover.append(cmp);
+            levelHover.addExtra(cmp);
 
         }
-        level.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(levelHover.create())));
+        level.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{levelHover}));
         chatMessage.addExtra(level);
 
         chatMessage.addExtra(" ");
@@ -282,37 +282,36 @@ public class TextFormatter {
 
 
             if (rank.getPrefixHoverText() != null) {
-                ComponentBuilder hoverText = new ComponentBuilder("");
-                hoverText.append(rank.getPrefixHoverText());
+                TextComponent hoverText = new TextComponent("");
+                hoverText.addExtra(rank.getPrefixHoverText());
                 if (player.getActiveSubscription() != null) {
                     if (rank != Rank.ELITE && rank != Rank.MASTER && rank.getPrefixHoverURL() == null) {
-                        hoverText.append("\n\n");
-                        hoverText.append(player.getActiveSubscription().getHoverText());
+                        hoverText.addExtra("\n\n");
+                        hoverText.addExtra(player.getActiveSubscription().getHoverText());
                         prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
                     } else {
-                        hoverText.append(player.getActiveSubscription().getHoverText());
+                        hoverText.addExtra(player.getActiveSubscription().getHoverText());
                     }
                 } else if (rank == Rank.ELITE || rank == Rank.MASTER) {
                     TextComponent cmp2 = new TextComponent("Click to visit the store!");
                     cmp2.setBold(false);
                     cmp2.setColor(ChatColor.GREEN);
-                    hoverText.append(cmp2);
+                    hoverText.addExtra(cmp2);
                 }
-                prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hoverText.create())));
+                prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{hoverText}));
             }
             if (rank.getPrefixHoverURL() != null) {
                 prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, rank.getPrefixHoverURL()));
             }
 
             chatMessage.addExtra(prefix);
-            chatMessage.addExtra(" ");
         } else if (player.getActiveSubscription() != null) {
             TextComponent prefix = new TextComponent("+");
             prefix.setColor(player.getActiveSubscription().getColor());
             prefix.setBold(false);
 
             ComponentBuilder hoverText = new ComponentBuilder(player.getActiveSubscription().getHoverText());
-            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hoverText.create())));
+            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
 
             prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, player.getActiveSubscription().getClickURL()));
 
@@ -326,7 +325,7 @@ public class TextFormatter {
         if (player.getActiveDisguise() != null && !(player.equals(recipient) && player.getPreferences().isHideDisguiseNameEnabled())) {
             name = player.getActiveDisguise().getName();
         } else {
-            name = player.getActiveDisguise().getName();
+            name = player.getName();
         }
 
         TextComponent nameComponent = new TextComponent(name);
@@ -338,51 +337,51 @@ public class TextFormatter {
             nameComponent.setColor(rank.getNameColor());
         }
 
-        ComponentBuilder componentBuilder = new ComponentBuilder("");
+        TextComponent componentBuilder = new TextComponent("");
         TextComponent cmp = new TextComponent(name);
         cmp.setColor(nameComponent.getColor());
-        componentBuilder.append(cmp);
-        componentBuilder.append("\n");
+        componentBuilder.addExtra(cmp);
+        componentBuilder.addExtra("\n");
 
 
         if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
             cmp = new TextComponent(player.getPreferences().getPreferredPronouns().getFull());
             cmp.setColor(ChatColor.GRAY);
             cmp.setBold(false);
-            componentBuilder.append(cmp);
-            componentBuilder.append("\n");
+            componentBuilder.addExtra(cmp);
+            componentBuilder.addExtra("\n");
         }
 
-        componentBuilder.append("\n");
+        componentBuilder.addExtra("\n");
 
         cmp = new TextComponent("Games Played: ");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(false);
-        componentBuilder.append(cmp);
+        componentBuilder.addExtra(cmp);
 
         cmp = new TextComponent(String.valueOf(player.getStats().getGamesPlayed()));
         cmp.setColor(ChatColor.AQUA);
         cmp.setBold(false);
-        componentBuilder.append(cmp);
-        componentBuilder.append("\n");
+        componentBuilder.addExtra(cmp);
+        componentBuilder.addExtra("\n");
 
         cmp = new TextComponent("In-Game Time: ");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(false);
-        componentBuilder.append(cmp);
+        componentBuilder.addExtra(cmp);
 
         cmp = new TextComponent(new TimeLength(player.getStats().getGameTimeMs()/3600000d, false).getFormatted());
         cmp.setColor(ChatColor.AQUA);
         cmp.setBold(false);
-        componentBuilder.append(cmp);
+        componentBuilder.addExtra(cmp);
 
 
 
-        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(componentBuilder.create())));
+        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{componentBuilder}));
 
         chatMessage.addExtra(nameComponent);
 
-        TextComponent connector = new TextComponent("» ");
+        TextComponent connector = new TextComponent(" » ");
         connector.setColor(rank.getConnectorColor());
         connector.setBold(false);
 
@@ -431,9 +430,8 @@ public class TextFormatter {
 
 
             if (rank.getPrefixHoverText() != null) {
-                ComponentBuilder hoverText = new ComponentBuilder("");
-                hoverText.append(rank.getPrefixHoverText());
-                prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(hoverText.create())));
+                ComponentBuilder hoverText = new ComponentBuilder(rank.getPrefixHoverText());
+                prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
             }
             if (rank.getPrefixHoverURL() != null) {
                 prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, rank.getPrefixHoverURL()));
@@ -469,19 +467,18 @@ public class TextFormatter {
         prefix.setBold(true);
 
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
         TextComponent cmp = new TextComponent("«TEAM CHAT»");
         cmp.setColor(ChatColor.DARK_PURPLE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
         cmp = new TextComponent("\n \nYou can use this chat to communicate\n" +
                 "with people in your team!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(false);
-        prefixHover.append(cmp);
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
-
+        prefixHover.addExtra(cmp);
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
 
         Rank rank = sender.getRank();
@@ -609,13 +606,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -623,9 +620,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
 
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
@@ -655,13 +652,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -669,9 +666,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -718,13 +715,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -732,9 +729,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -778,13 +775,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -792,9 +789,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -839,13 +836,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -853,9 +850,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -890,13 +887,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -904,9 +901,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -938,13 +935,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -952,9 +949,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -989,13 +986,13 @@ public class TextFormatter {
         prefix.setBold(true);
         prefix.setColor(ChatColor.DARK_RED);
 
-        ComponentBuilder prefixHover = new ComponentBuilder("");
+        TextComponent prefixHover = new TextComponent("");
 
         TextComponent cmp = new TextComponent("«STAFF CHAT»");
         cmp.setColor(ChatColor.DARK_RED);
         cmp.setBold(true);
-        prefixHover.append(cmp);
-        prefixHover.append("\n \n");
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
 
         cmp = new TextComponent("You can use this chat to get help\n" +
                 "from our Moderation staff! You can\n" +
@@ -1003,9 +1000,9 @@ public class TextFormatter {
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
         cmp.setBold(true);
-        prefixHover.append(cmp);
+        prefixHover.addExtra(cmp);
 
-        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(prefixHover.create())));
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
         textComponent.addExtra(prefix);
         textComponent.addExtra(" ");
 
@@ -1073,7 +1070,7 @@ public class TextFormatter {
             textComponent.addExtra(component);
             TextComponent chatLog = new TextComponent("Click here to view chatlog");
             chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chatlogs.auroramc.net/log?uuid=%s&id=%s", report.getChatReportUUID().toString(), report.getId())));
-            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create())));
+            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create()));
             textComponent.addExtra(chatLog);
         }
 
@@ -1154,7 +1151,7 @@ public class TextFormatter {
             textComponent.addExtra(component);
             TextComponent chatLog = new TextComponent("Click here to view chatlog");
             chatLog.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, String.format("https://chatlogs.auroramc.net/log?uuid=%s&id=%s", report.getChatReportUUID().toString(), report.getId())));
-            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create())));
+            chatLog.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to open the chatlog for this report").color(ChatColor.GREEN).create()));
             textComponent.addExtra(chatLog);
         }
 
@@ -1181,7 +1178,7 @@ public class TextFormatter {
                 TextComponent unignore = new TextComponent("UNIGNORE");
                 unignore.setColor(net.md_5.bungee.api.ChatColor.RED);
                 unignore.setBold(true);
-                unignore.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(new ComponentBuilder("Click here to unignore this player.").color(net.md_5.bungee.api.ChatColor.RED).create())));
+                unignore.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to unignore this player.").color(net.md_5.bungee.api.ChatColor.RED).create()));
                 unignore.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/ignore remove %s", ignoredPlayer.getName())));
 
                 textComponent.addExtra(unignore);
@@ -1196,7 +1193,7 @@ public class TextFormatter {
         TextComponent prev = new TextComponent("«");
         prev.setColor(net.md_5.bungee.api.ChatColor.DARK_AQUA);
         prev.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/ignore list %s", ((page == 1)?1:page-1))));
-        prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(new ComponentBuilder("Click here to go to the previous page.").color(net.md_5.bungee.api.ChatColor.WHITE).create())));
+        prev.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to the previous page.").color(net.md_5.bungee.api.ChatColor.WHITE).create()));
         textComponent.addExtra(prev);
 
         int totalPages = 1;
@@ -1210,7 +1207,7 @@ public class TextFormatter {
         TextComponent next = new TextComponent("»");
         next.setColor(net.md_5.bungee.api.ChatColor.DARK_AQUA);
         next.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/ignore list %s", ((page == totalPages)?page:page+1))));
-        next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(new ComponentBuilder("Click here to go to the next page.").color(net.md_5.bungee.api.ChatColor.WHITE).create())));
+        next.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to go to the next page.").color(net.md_5.bungee.api.ChatColor.WHITE).create()));
         textComponent.addExtra(next);
 
 
