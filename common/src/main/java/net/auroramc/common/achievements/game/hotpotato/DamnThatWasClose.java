@@ -13,6 +13,6 @@ public class DamnThatWasClose extends Achievement {
 
 
     public DamnThatWasClose() {
-        super(161, "Damn, that was close...", "Pass the potato to another player less than 3 seconds before it explodes.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME);
+        super(161, "Damn, that was close...", "Pass the potato to another player less than 3 seconds before it explodes.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME, 101);
     }
 }

@@ -33,8 +33,8 @@ public class CommandPunishmentLookup extends ServerCommand {
         super("punishmentlookup", Collections.singletonList("plookup"),  Arrays.asList(Permission.MODERATION,Permission.ADMIN), false, null);
     }
 
-    private static final String[] statuses = {"&aActive","&6Pending Approval","&aSM Approved","&cSM Denied","&eExpired","&eExpired (Approved)","&7Warning"};
-    private static final String[] weights = {"&2Light", "&aMedium", "&eHeavy", "&6Severe", "&4Extreme"};
+    private static final String[] statuses = {"§aActive","§6Pending Approval","§aSM Approved","§cSM Denied","§eExpired","§eExpired (Approved)","§7Warning"};
+    private static final String[] weights = {"§2Light", "§aMedium", "§eHeavy", "§6Severe", "§4Extreme"};
 
     @Override
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {

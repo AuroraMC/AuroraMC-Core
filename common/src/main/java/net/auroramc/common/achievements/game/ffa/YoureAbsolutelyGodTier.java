@@ -13,6 +13,6 @@ public class YoureAbsolutelyGodTier extends Achievement {
 
 
     public YoureAbsolutelyGodTier() {
-        super(143, "You're absolutely god tier!", "Kill a member of the AuroraMC Leadership Team.", new Reward("&a+10000 XP\n&6+10000 Crowns", 10000, 0, 10000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME);
+        super(143, "You're absolutely god tier!", "Kill a member of the AuroraMC Leadership Team.", new Reward("&a+10000 XP\n&6+10000 Crowns", 10000, 0, 10000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME, 102);
     }
 }

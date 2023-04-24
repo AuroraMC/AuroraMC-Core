@@ -13,6 +13,6 @@ public class MissleStrike extends Achievement {
 
 
     public MissleStrike() {
-        super(75, "Missle Strike", "Die from a Crystal Explosion.", new Reward("&a+1500 XP\n&6+1500 Crowns", 1500, 0, 1500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(75, "Missle Strike", "Die from a Crystal Explosion.", new Reward("&a+1500 XP\n&6+1500 Crowns", 1500, 0, 1500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 1);
     }
 }

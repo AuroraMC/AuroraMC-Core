@@ -13,6 +13,6 @@ public class OuchThatsHot extends Achievement {
 
 
     public OuchThatsHot() {
-        super(164, "Ouch, that's hot!", "Die from receiving the hot potato in the last 3 seconds of the round.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME);
+        super(164, "Ouch, that's hot!", "Die from receiving the hot potato in the last 3 seconds of the round.", new Reward("&a+1000 XP\n&6+1000 Crowns", 1000, 0, 1000, Collections.emptyMap(), Collections.emptyList()), true, true, AchievementCategory.GAME, 101);
     }
 }

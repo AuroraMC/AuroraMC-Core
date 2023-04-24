@@ -51,6 +51,7 @@ public class CommandGlobalChatSlow extends ProxyCommand {
             });
         } else {
             if (AuroraMCAPI.getChatSlow() != -1) {
+                player.sendMessage(TextFormatter.pluginMessage("ChatSlow", "ChatSL"));
                 ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
                     ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_CHAT_SLOW, "Mission Control", "", AuroraMCAPI.getInfo().getName(), "-1" + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                     CommunicationUtils.sendMessage(message);

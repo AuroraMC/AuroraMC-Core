@@ -619,7 +619,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -665,7 +665,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -728,7 +728,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -788,7 +788,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -849,7 +849,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -900,7 +900,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -948,7 +948,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
@@ -999,7 +999,7 @@ public class TextFormatter {
                 "ask questions, or request help with\n" +
                 "rule breakers!");
         cmp.setColor(ChatColor.WHITE);
-        cmp.setBold(true);
+        cmp.setBold(false);
         prefixHover.addExtra(cmp);
 
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));

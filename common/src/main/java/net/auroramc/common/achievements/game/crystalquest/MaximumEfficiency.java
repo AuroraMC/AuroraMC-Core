@@ -13,6 +13,6 @@ public class MaximumEfficiency extends Achievement {
 
 
     public MaximumEfficiency() {
-        super(69, "Maximum Efficiency", "Upgrade a Mining Robot to Level 3.", new Reward("&a+2500 XP\n&6+2500 Crowns", 2500, 0, 2500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME);
+        super(69, "Maximum Efficiency", "Upgrade a Mining Robot to Level 3.", new Reward("&a+2500 XP\n&6+2500 Crowns", 2500, 0, 2500, Collections.emptyMap(), Collections.emptyList()), true, false, AchievementCategory.GAME, 1);
     }
 }
