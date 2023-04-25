@@ -43,9 +43,9 @@ public class CommandChatSilence extends ServerCommand {
             ServerAPI.enableChatSilence(amount, true);
         } else {
             if (AuroraMCAPI.getChatSilenceEnd() != -2) {
-                AuroraMCAPI.disableSilence();
+                ServerAPI.disableSilence();
             } else {
-                AuroraMCAPI.enableChatSilence((short) -1);
+                ServerAPI.enableChatSilence((short) -1, true);
             }
         }
     }
