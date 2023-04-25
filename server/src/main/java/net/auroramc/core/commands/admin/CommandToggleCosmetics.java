@@ -31,7 +31,7 @@ public class CommandToggleCosmetics extends ServerCommand {
         if (AuroraMCAPI.isCosmeticsEnabled()) {
             AuroraMCAPI.setCosmeticsEnabled(false);
             for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
-                player1.sendMessage(TextFormatter.pluginMessage("Player Manager", "Cosmetics have been §cdisabled &rby an admin! All of your active cosmetics were disabled."));
+                player1.sendMessage(TextFormatter.pluginMessage("Player Manager", "Cosmetics have been §cdisabled §rby an admin! All of your active cosmetics were disabled."));
                 for (Cosmetic cosmetic : player1.getActiveCosmetics().values()) {
                     cosmetic.onUnequip(player1);
                 }
@@ -39,7 +39,7 @@ public class CommandToggleCosmetics extends ServerCommand {
         } else {
             AuroraMCAPI.setCosmeticsEnabled(true);
             for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
-                player1.sendMessage(TextFormatter.pluginMessage("Player Manager", "Cosmetics have been §aenabled &rby an admin!"));
+                player1.sendMessage(TextFormatter.pluginMessage("Player Manager", "Cosmetics have been §aenabled §rby an admin!"));
             }
         }
     }
