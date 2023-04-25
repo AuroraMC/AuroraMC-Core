@@ -45,13 +45,14 @@ public class CommandGlobalChatSlow extends ProxyCommand {
                 return;
             }
 
+            player.sendMessage(TextFormatter.pluginMessage("ChatSlow", "Global chat slow has been set to **" + amount + " seconds**."));
             ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
-                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_CHAT_SLOW, "Mission Control", "", AuroraMCAPI.getInfo().getName(), "" + amount + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
+                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_CHAT_SLOW, "Mission Control", "", AuroraMCAPI.getInfo().getName(), amount + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                 CommunicationUtils.sendMessage(message);
             });
         } else {
             if (AuroraMCAPI.getChatSlow() != -1) {
-                player.sendMessage(TextFormatter.pluginMessage("ChatSlow", "ChatSL"));
+                player.sendMessage(TextFormatter.pluginMessage("ChatSlow", "Global chat slow has been disabled."));
                 ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
                     ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_CHAT_SLOW, "Mission Control", "", AuroraMCAPI.getInfo().getName(), "-1" + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                     CommunicationUtils.sendMessage(message);

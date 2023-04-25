@@ -218,7 +218,7 @@ public class TextFormatter {
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
             levelHover.addExtra(cmp);
-            levelHover.addExtra("\n \n ");
+            levelHover.addExtra("\n \n");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
@@ -310,8 +310,8 @@ public class TextFormatter {
             prefix.setColor(player.getActiveSubscription().getColor());
             prefix.setBold(false);
 
-            ComponentBuilder hoverText = new ComponentBuilder(player.getActiveSubscription().getHoverText());
-            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText.create()));
+            TextComponent hoverText = new TextComponent(player.getActiveSubscription().getHoverText());
+            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{hoverText}));
 
             prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, player.getActiveSubscription().getClickURL()));
 
@@ -1030,7 +1030,7 @@ public class TextFormatter {
 
     public static BaseComponent formatReportMessage(PlayerReport report) {
         TextComponent textComponent = new TextComponent("");
-        TextComponent prefix = new TextComponent("«REPORTS»");
+        TextComponent prefix = new TextComponent("«REPORTS» ");
         prefix.setColor(ChatColor.DARK_AQUA);
         prefix.setBold(true);
 
@@ -1046,7 +1046,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(report.getSuspectName() + "\n");
+        component = new TextComponent(" " + report.getSuspectName() + "\n");
         component.setColor(ChatColor.WHITE);
         component.setBold(false);
         textComponent.addExtra(component);
@@ -1056,7 +1056,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(report.getReason().getName());
+        component = new TextComponent(" " + report.getReason().getName());
         component.setColor(ChatColor.WHITE);
         component.setBold(false);
         textComponent.addExtra(component);
@@ -1064,7 +1064,7 @@ public class TextFormatter {
 
 
         if (report.getChatReportUUID() != null) {
-            component = new TextComponent("\n\nCHATLOG:");
+            component = new TextComponent("\n\nCHATLOG: ");
             component.setColor(ChatColor.AQUA);
             component.setBold(true);
             textComponent.addExtra(component);
@@ -1079,7 +1079,7 @@ public class TextFormatter {
 
     public static BaseComponent formatReportInfoMessage(PlayerReport report) {
         TextComponent textComponent = new TextComponent("");
-        TextComponent prefix = new TextComponent("«REPORTS»");
+        TextComponent prefix = new TextComponent("«REPORTS» ");
         prefix.setColor(ChatColor.DARK_AQUA);
         prefix.setBold(true);
 
@@ -1095,7 +1095,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(report.getSuspectName() + "\n");
+        component = new TextComponent(" " + report.getSuspectName() + "\n");
         component.setColor(ChatColor.WHITE);
         component.setBold(false);
         textComponent.addExtra(component);
@@ -1105,7 +1105,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(report.getReason().getName() + "\n \n");
+        component = new TextComponent(" " + report.getReason().getName() + "\n \n");
         component.setColor(ChatColor.WHITE);
         component.setBold(false);
         textComponent.addExtra(component);
@@ -1115,7 +1115,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(((report.getHandlerName() != null)?report.getHandlerName():"Unassigned") + "\n");
+        component = new TextComponent(" " + ((report.getHandlerName() != null)?report.getHandlerName():"Unassigned") + "\n");
         component.setColor(ChatColor.WHITE);
         component.setBold(false);
         textComponent.addExtra(component);
@@ -1125,8 +1125,8 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"&6Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"&aAccepted":"&cDenied")));
-        component.setColor(ChatColor.WHITE);
+        component = new TextComponent(" " + ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"accepted":"Denied")));
+        component.setColor(((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?ChatColor.GOLD:((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?ChatColor.GREEN:ChatColor.RED)));
         component.setBold(false);
         textComponent.addExtra(component);
 
@@ -1136,7 +1136,7 @@ public class TextFormatter {
             component.setBold(true);
             textComponent.addExtra(component);
 
-            component = new TextComponent(report.getReasonAccepted().getName());
+            component = new TextComponent(" " + report.getReasonAccepted().getName());
             component.setColor(ChatColor.WHITE);
             component.setBold(false);
             textComponent.addExtra(component);
@@ -1145,7 +1145,7 @@ public class TextFormatter {
 
 
         if (report.getChatReportUUID() != null) {
-            component = new TextComponent("\n\nCHATLOG:");
+            component = new TextComponent("\n\nCHATLOG: ");
             component.setColor(ChatColor.AQUA);
             component.setBold(true);
             textComponent.addExtra(component);
@@ -1284,7 +1284,7 @@ public class TextFormatter {
         prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, prefixHover.create()));
 
         textComponent.addExtra(prefix);
-        textComponent.addExtra(convert(String.format("&r&%s%s &l»&r ", ((rank == Rank.PLAYER)?'7':rank.getPrefixColor()), sender)));
+        textComponent.addExtra(convert(String.format(" %s%s &l»&r ", ((rank == Rank.PLAYER)?"§7":rank.getPrefixColor()), sender)));
         textComponent.addExtra(message);
         return textComponent;
     }

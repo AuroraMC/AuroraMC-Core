@@ -41,7 +41,7 @@ public class CommandWhoIs extends ServerCommand {
                            UUID uuid = AuroraMCAPI.getDbManager().getUUIDFromDisguise(args.get(0));
                            Rank rank = AuroraMCAPI.getDbManager().getRank(uuid);
                            String name = AuroraMCAPI.getDbManager().getNameFromUUID(uuid.toString());
-                           player.sendMessage(TextFormatter.pluginMessage("Who Is", String.format("Player **%s** is actually **%s** (&%s%s&r)", args.get(0), name, rank.getPrefixColor(), rank.getName())));
+                           player.sendMessage(TextFormatter.pluginMessage("Who Is", String.format("Player **%s** is actually **%s** (%s%s§r)", args.get(0), name, rank.getPrefixColor(), rank.getName())));
                        } else {
                            player.sendMessage(TextFormatter.pluginMessage("Who Is", String.format("No matches found for player **%s**", args.get(0))));
                        }

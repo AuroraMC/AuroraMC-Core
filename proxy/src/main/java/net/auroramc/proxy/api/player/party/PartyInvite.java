@@ -38,7 +38,7 @@ public class PartyInvite {
 
             textComponent.addExtra(lines);
             textComponent.addExtra("\n\n");
-            textComponent.addExtra(String.format(TextFormatter.highlightRaw("You have been invited to **%s**'s party!"), party.getLeader().getName()));
+            textComponent.addExtra(TextFormatter.highlight(String.format("You have been invited to **%s**'s party!", party.getLeader().getName())));
             textComponent.addExtra("\n\n");
 
             TextComponent accept = new TextComponent("ACCEPT");

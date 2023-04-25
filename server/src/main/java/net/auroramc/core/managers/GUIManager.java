@@ -22,12 +22,10 @@ public class GUIManager implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e) {
-        if (e.getPlayer() instanceof Player) {
-            AuroraMCServerPlayer player = e.getPlayer();
-            if (ServerAPI.getGUI(player) != null) {
-                ServerAPI.closeGUI(player);
-                player.closeInventory();
-            }
+        AuroraMCServerPlayer player = e.getPlayer();
+        if (ServerAPI.getGUI(player) != null) {
+            ServerAPI.closeGUI(player);
+            player.closeInventory();
         }
     }
 

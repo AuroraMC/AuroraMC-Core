@@ -282,7 +282,7 @@ public class ProtocolMessageReceivedListener implements Listener {
             }
             case UPDATE_CHAT_SLOW: {
                 short i = Short.parseShort(e.getMessage().getExtraInfo());
-                AuroraMCAPI.setChatSlow(i);
+                ProxyAPI.setChatSlow(i);
                 break;
             }
             case EMERGENCY_SHUTDOWN: {
@@ -297,7 +297,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                         break;
                     }
                     case "disable": {
-                        AuroraMCAPI.disableSilence();
+                        ProxyAPI.disableSilence();
                         break;
                     }
                 }
@@ -1062,7 +1062,7 @@ public class ProtocolMessageReceivedListener implements Listener {
             case REPORT_NOTIFICATION: {
                 int id = Integer.parseInt(e.getMessage().getExtraInfo());
                 PlayerReport report = AuroraMCAPI.getDbManager().getReport(id);
-                BaseComponent message = TextFormatter.pluginMessage("Reports", String.format("Your report against **%s** has been &%s&r. Thank you for submitting a report!", report.getSuspectName(), ((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"aaccepted":"cdenied&r. After review, it was deemed that there was not enough evidence to punish the user at this time")));
+                BaseComponent message = TextFormatter.pluginMessage("Reports", String.format("Your report against **%s** has been §%s§r. Thank you for submitting a report!", report.getSuspectName(), ((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"aaccepted":"cdenied§r. After review, it was deemed that there was not enough evidence to punish the user at this time")));
                 for (int i : report.getReporters()) {
                     AuroraMCProxyPlayer player = ProxyAPI.getPlayer(i);
                     if (player != null) {

@@ -204,7 +204,10 @@ public class DatabaseManager {
 
     public UUID getUUIDFromDisguise(String name) {
         try (Jedis connection = jedis.getResource()) {
-            return UUID.fromString(connection.get(String.format("disguisenames.%s", name)));
+            if (connection.exists(String.format("disguisenames.%s", name))) {
+                return UUID.fromString(connection.get(String.format("disguisenames.%s", name)));
+            }
+            return null;
         }
     }
 
