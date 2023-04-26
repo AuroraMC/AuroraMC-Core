@@ -539,7 +539,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             if (Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393) {
                 s.append("§r");
             }
-            s.append(getTeam().getTeamColor());
+            s.append(player.getTeam().getTeamColor());
         }
         team.setPrefix(s.toString());
 
