@@ -62,8 +62,9 @@ public class EventManager implements Listener {
     public void blockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
         if (player!=null && player.isLoaded()) {
-            BlockPlaceEvent event = new BlockPlaceEvent(player, e.getBlock());
+            BlockPlaceEvent event = new BlockPlaceEvent(player, e.getBlock(), e.getBlockReplacedState(), e.getBlockAgainst(), e.getItemInHand(), e.canBuild());
             Bukkit.getPluginManager().callEvent(event);
+            e.setBuild(event.canBuild());
             e.setCancelled(event.isCancelled());
         }
     }
