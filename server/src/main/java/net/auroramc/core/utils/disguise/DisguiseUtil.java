@@ -18,6 +18,8 @@ import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,8 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 public class DisguiseUtil {
 
@@ -157,6 +158,7 @@ public class DisguiseUtil {
         final float xp = player.getExp();
         final double maxHealth = player.getMaxHealth();
         final double health = player.getHealth();
+        final Collection<PotionEffect> potioneffects = player.getActivePotionEffects();
 
 
         Bukkit.getScheduler().runTaskLater(ServerAPI.getCore(), () -> {
@@ -187,6 +189,7 @@ public class DisguiseUtil {
                     player.setExp(xp);
                     player.setMaxHealth(maxHealth);
                     player.setHealth(health);
+                    player.addPotionEffects(potioneffects);
                 }
                 for (AuroraMCServerPlayer player2 : ServerAPI.getPlayers()) {
                     if (player2.canSee(player)) {

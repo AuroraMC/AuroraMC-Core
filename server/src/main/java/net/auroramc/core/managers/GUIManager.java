@@ -4,6 +4,7 @@
 
 package net.auroramc.core.managers;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.events.inventory.InventoryClickEvent;
 import net.auroramc.core.api.events.inventory.InventoryCloseEvent;

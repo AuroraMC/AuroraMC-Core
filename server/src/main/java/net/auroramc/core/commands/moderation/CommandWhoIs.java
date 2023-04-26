@@ -32,7 +32,7 @@ public class CommandWhoIs extends ServerCommand {
         if (args.size() == 1) {
             AuroraMCServerPlayer target = ServerAPI.getDisguisedPlayer(args.get(0));
             if (target != null) {
-                player.sendMessage(TextFormatter.pluginMessage("Who Is", String.format("Player **%s** is actually **%s** (&%s%s&r)", target.getActiveDisguise().getName(), target.getName(), target.getRank().getPrefixColor(), target.getRank().getName())));
+                player.sendMessage(TextFormatter.pluginMessage("Who Is", String.format("Player **%s** is actually **%s** (%s%s§r)", target.getActiveDisguise().getName(), target.getName(), target.getRank().getPrefixColor(), target.getRank().getName())));
             } else {
                new BukkitRunnable(){
                    @Override
