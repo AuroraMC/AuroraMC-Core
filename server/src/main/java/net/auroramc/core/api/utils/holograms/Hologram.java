@@ -9,20 +9,16 @@ import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.holograms.personal.HologramClickHandler;
 import net.auroramc.core.api.utils.holograms.personal.PersonalHologramLine;
 import net.auroramc.core.api.utils.holograms.universal.UniversalHologramLine;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateEntityNBT;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Hologram {
+
+    private static Deque<EntityArmorStand> usedEntities = new ArrayDeque<>();
 
     private final Map<Integer, HologramLine> lines;
     private Location location;
@@ -103,6 +99,7 @@ public class Hologram {
         }
         HologramLine hl = lines.remove(line);
         hl.despawn();
+        usedEntities.add(hl.getArmorStand());
         for (int i = line + 1;i <= lines.size();line++) {
             HologramLine line1 = lines.remove(i);
             line1.setLine(i - 1);
@@ -118,7 +115,10 @@ public class Hologram {
             ServerAPI.deregisterHologram(this);
         }
         for (HologramLine line : this.lines.values()) {
-            if (spawned) line.despawn();
+            if (spawned || line.armorStand != null) {
+                line.despawn();
+                usedEntities.addLast(line.getArmorStand());
+            }
         }
         this.lines.clear();
         int i = 1;
@@ -149,7 +149,6 @@ public class Hologram {
             line.despawn();
         }
         spawned = false;
-
     }
 
     public void update() {
@@ -245,5 +244,9 @@ public class Hologram {
 
     public boolean isPersonal() {
         return player != null;
+    }
+
+    public static Deque<EntityArmorStand> getUsedEntities() {
+        return usedEntities;
     }
 }

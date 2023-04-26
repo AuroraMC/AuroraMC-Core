@@ -50,7 +50,7 @@ public class CommandChat extends ProxyCommand {
             player.setChannel(channel, true);
             player.sendMessage(TextFormatter.pluginMessage("Chat", String.format("Chat channel set to: **%s**", channel.name())));
             if (channel == ChatChannel.NETWORK) {
-                player.sendMessage(TextFormatter.pluginMessage("Chat", "**&lPLEASE NOTE:** There might be a slight delay between sending the message and the message sending in chat. This is just the delay of Mission Control distributing the message to all of the connection nodes."));
+                player.sendMessage(TextFormatter.pluginMessage("Chat", "**§lPLEASE NOTE:** There might be a slight delay between sending the message and the message sending in chat. This is just the delay of Mission Control distributing the message to all of the connection nodes."));
             }
         } else {
             player.sendMessage(TextFormatter.pluginMessage("Chat", "Invalid syntax. Correct syntax: **/chat [channel]**"));
