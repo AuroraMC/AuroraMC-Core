@@ -22,6 +22,21 @@ import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
 import net.auroramc.core.commands.moderation.report.CommandReportInfo;
 import net.auroramc.core.commands.moderation.staffmanagement.CommandRecruitmentLookup;
+import net.auroramc.core.executors.deatheffects.ConfettiExecutor;
+import net.auroramc.core.executors.deatheffects.FireworkExecutor;
+import net.auroramc.core.executors.deatheffects.LayAnEggExecutor;
+import net.auroramc.core.executors.gadgets.FireworkGadgetExecutor;
+import net.auroramc.core.executors.gadgets.GrapplingHookExecutor;
+import net.auroramc.core.executors.particleeffects.BloodSwirlExecutor;
+import net.auroramc.core.executors.particleeffects.EmeraldExecutor;
+import net.auroramc.core.executors.particleeffects.PurpleExecutor;
+import net.auroramc.core.executors.projectiletrails.EmeraldTrailExecutor;
+import net.auroramc.core.executors.projectiletrails.FireworkTrailExecutor;
+import net.auroramc.core.executors.projectiletrails.PurpleTrailExecutor;
+import net.auroramc.core.executors.wineffects.ConfettiCannonExecutor;
+import net.auroramc.core.executors.wineffects.EggsplosionExecutor;
+import net.auroramc.core.executors.wineffects.FireworksWinExecutor;
+import net.auroramc.core.executors.wineffects.TwerkApocalypseExecutor;
 import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.EventManager;
@@ -91,6 +106,28 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandEmotes());
         AuroraMCAPI.registerCommand(new CommandViewGames());
         AuroraMCAPI.registerCommand(new CommandReportInfo());
+
+
+        //Register Executors
+        AuroraMCAPI.registerCosmeticExecutor(new ConfettiCannonExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new EggsplosionExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new FireworksWinExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new TwerkApocalypseExecutor());
+
+        AuroraMCAPI.registerCosmeticExecutor(new EmeraldTrailExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new FireworkTrailExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new PurpleTrailExecutor());
+
+        AuroraMCAPI.registerCosmeticExecutor(new BloodSwirlExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new EmeraldExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new PurpleExecutor());
+
+        AuroraMCAPI.registerCosmeticExecutor(new FireworkGadgetExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new GrapplingHookExecutor());
+
+        AuroraMCAPI.registerCosmeticExecutor(new LayAnEggExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new FireworkExecutor());
+        AuroraMCAPI.registerCosmeticExecutor(new ConfettiExecutor());
 
         AuroraMCAPI.loadRules();
         AuroraMCAPI.loadFilter();

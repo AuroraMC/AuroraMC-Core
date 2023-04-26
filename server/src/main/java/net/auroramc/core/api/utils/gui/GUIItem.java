@@ -6,6 +6,7 @@ package net.auroramc.core.api.utils.gui;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.utils.Item;
 import net.auroramc.api.utils.TextFormatter;
 import org.bukkit.Color;
@@ -69,10 +70,12 @@ public class GUIItem {
     }
 
     public GUIItem(String name, int amount, String lore, boolean glowing, String baseColor, List<Item.Pattern> patterns) {
-        ItemStack item = new ItemStack(Material.BANNER, amount, (short)0);
+        ItemStack item = new ItemStack(Material.BANNER, amount);
         ItemMeta im = item.getItemMeta();
         im.spigot().setUnbreakable(true);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         if (name != null) {
             im.setDisplayName(TextFormatter.convert(name));
         }
@@ -86,15 +89,9 @@ public class GUIItem {
 
         BannerMeta banner = (BannerMeta) im;
         banner.setBaseColor(DyeColor.valueOf(baseColor));
-
-        List<Pattern> pattern = new ArrayList<>();
-
         for (Item.Pattern pattern1 : patterns) {
-            pattern.add(new Pattern(DyeColor.valueOf(pattern1.getDye()), PatternType.valueOf(pattern1.getPatternType())));
+            banner.addPattern(new Pattern(DyeColor.valueOf(pattern1.getDye()), PatternType.valueOf(pattern1.getPatternType())));
         }
-
-        banner.setPatterns(pattern);
-
         item.setItemMeta(banner);
         this.item = item;
     }
@@ -104,6 +101,8 @@ public class GUIItem {
         ItemMeta im = item.getItemMeta();
         im.spigot().setUnbreakable(true);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         if (name != null) {
             im.setDisplayName(TextFormatter.convert(name));
         }
@@ -146,6 +145,8 @@ public class GUIItem {
         ItemMeta im = item.getItemMeta();
         im.spigot().setUnbreakable(true);
         im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         if (name != null) {
             im.setDisplayName(TextFormatter.convert(name));
         }
@@ -155,8 +156,6 @@ public class GUIItem {
         if (glowing) {
             im.addEnchant(Enchantment.DURABILITY, 1, true);
             im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-            im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         }
         if (skullOwner != null && !skullOwner.equals("")) {
             SkullMeta sm = (SkullMeta) im;
@@ -171,6 +170,9 @@ public class GUIItem {
     public GUIItem(Material material, String name, int amount, String lore, short data, boolean glowing, Color color) {
         ItemStack item = new ItemStack(material, amount, data);
         ItemMeta im = item.getItemMeta();
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         if (name != null) {
             im.setDisplayName(TextFormatter.convert(name));
         }
@@ -207,3 +209,4 @@ public class GUIItem {
         }
     }
 }
+
