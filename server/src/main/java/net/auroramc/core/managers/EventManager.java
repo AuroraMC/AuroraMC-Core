@@ -153,6 +153,16 @@ public class EventManager implements Listener {
                 } else {
                     e.setCancelled(true);
                 }
+            } else if (entityEvent.getDamager() instanceof Projectile && ((Projectile) entityEvent.getDamager()).getShooter() instanceof Player) {
+                AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) ((Projectile) entityEvent.getDamager()).getShooter());
+                if (player != null && player.isLoaded()) {
+                    PlayerDamageEvent event = new EntityDamageByPlayerRangedEvent(player, e.getEntity(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage(), (Projectile) ((EntityDamageByEntityEvent) e).getDamager());
+                    Bukkit.getPluginManager().callEvent(event);
+                    e.setDamage(event.getDamage());
+                    e.setCancelled(event.isCancelled());
+                } else {
+                    e.setCancelled(true);
+                }
             }
         } else if (e.getEntity() instanceof Player) {
             AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) e.getEntity());
@@ -665,9 +675,9 @@ public class EventManager implements Listener {
         if (player != null && player.isLoaded()) {
             PlayerTeleportEvent event = new PlayerTeleportEvent(player, e.getFrom(), e.getTo(), PlayerTeleportEvent.TeleportCause.valueOf(e.getCause().name()));
             Bukkit.getPluginManager().callEvent(event);
-            e.setCancelled(event.isCancelled());
             e.setFrom(event.getFrom());
             e.setTo(event.getTo());
+            e.setCancelled(event.isCancelled());
         }
     }
 
