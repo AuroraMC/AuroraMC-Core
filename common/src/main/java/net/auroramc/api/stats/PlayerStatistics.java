@@ -343,7 +343,7 @@ public class PlayerStatistics {
                         component.addExtra(cmp);
                     }
                     component.addExtra("\n \n");
-                    cmp = new TextComponent(achievement.getDescription());
+                    cmp = new TextComponent(((achievement instanceof TieredAcheivement)?String.format(achievement.getDescription(), ((TieredAcheivement) achievement).getTier(tier).getRequirement()):achievement.getDescription()));
                     cmp.setColor(ChatColor.WHITE);
                     cmp.setBold(false);
                     component.addExtra(cmp);
@@ -401,7 +401,7 @@ public class PlayerStatistics {
                     component.addExtra(cmp);
                 }
                 component.addExtra("\n \n");
-                cmp = new TextComponent(achievement.getDescription());
+                cmp = new TextComponent(((achievement instanceof TieredAcheivement)?String.format(achievement.getDescription(), ((TieredAcheivement) achievement).getTier(tier).getRequirement()):achievement.getDescription()));
                 cmp.setColor(ChatColor.WHITE);
                 cmp.setBold(false);
                 component.addExtra(cmp);

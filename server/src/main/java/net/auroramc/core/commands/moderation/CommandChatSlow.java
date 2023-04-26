@@ -46,7 +46,7 @@ public class CommandChatSlow extends ServerCommand {
             ChatSlowLength length = new ChatSlowLength(amount);
             for (AuroraMCServerPlayer player2 : ServerAPI.getPlayers()) {
                 if (player2.hasPermission("moderation") || player2.hasPermission("social") ||  player2.hasPermission("debug.info")) {
-                    player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("A chat slow of **%s** was enabled on this server.", length.getFormatted())));
+                    player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("A chat slow of **%s** was enabled on this server. You are immune to Chat Slow due to your rank.", length.getFormatted())));
                 } else {
                     player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("A Moderator has enabled a chat slow on this server. You may now only chat every **%s**.", length.getFormatted())));
                 }

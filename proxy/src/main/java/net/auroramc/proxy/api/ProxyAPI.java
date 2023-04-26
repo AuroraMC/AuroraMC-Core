@@ -248,7 +248,7 @@ public class ProxyAPI {
             ChatSlowLength length = new ChatSlowLength(chatSlow);
             for (AuroraMCProxyPlayer player2 : getPlayers()) {
                 if (player2.hasPermission("moderation") || player2.hasPermission("social") ||  player2.hasPermission("debug.info")) {
-                    player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("A global chat slow of **%s** was enabled across the network.", length.getFormatted())));
+                    player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("A global chat slow of **%s** was enabled across the network. You are immune from Chat Slow due to your rank.", length.getFormatted())));
                 } else {
                     player2.sendMessage(TextFormatter.pluginMessage("ChatSlow", String.format("The Administration Team has enabled a chat slow network-wide. You may now only chat every **%s** in any server.", length.getFormatted())));
                 }
@@ -273,7 +273,7 @@ public class ProxyAPI {
         if (sendMessage) {
             for (AuroraMCProxyPlayer player : getPlayers()) {
                 if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
-                    player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced across the entire network for **%s**.", length.getFormatted())));
+                    player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced across the entire network for **%s**. You are immune from Chat Silence due to your rank.", length.getFormatted())));
                 } else {
                     player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced across the entire network for **%s**.", length.getFormatted())));
                 }

@@ -438,14 +438,13 @@ public class TextFormatter {
             }
 
             chatMessage.addExtra(prefix);
-            chatMessage.addExtra(" ");
         }
 
         TextComponent nameComponent = new TextComponent(name);
         nameComponent.setColor(rank.getNameColor());
         chatMessage.addExtra(nameComponent);
 
-        TextComponent connector = new TextComponent("» ");
+        TextComponent connector = new TextComponent(" » ");
         connector.setColor(rank.getConnectorColor());
         connector.setBold(false);
 

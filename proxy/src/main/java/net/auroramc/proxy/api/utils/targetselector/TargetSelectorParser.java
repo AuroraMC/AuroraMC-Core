@@ -102,7 +102,7 @@ public class TargetSelectorParser {
                     }
                     return new TargetSelection(false, false, null, subranks, null);
                 }
-                case "games": {
+                case "game": {
                     List<Game> games = new ArrayList<>();
                     String[] gameStrings = args[1].split(",");
                     for (String game : gameStrings) {
