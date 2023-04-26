@@ -1091,6 +1091,14 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         return Objects.hash(player);
     }
 
+    public boolean getCollidesWithEntities() {
+        return player.spigot().getCollidesWithEntities();
+    }
+
+    public void setCollidesWithEntities(boolean collides) {
+        player.spigot().setCollidesWithEntities(collides);
+    }
+
     public BukkitTask getActiveReportTask() {
         return activeReportTask;
     }
