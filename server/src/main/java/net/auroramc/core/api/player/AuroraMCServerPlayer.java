@@ -18,6 +18,7 @@ import net.auroramc.api.utils.Pronoun;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
+import net.auroramc.core.api.events.player.PlayerShowEvent;
 import net.auroramc.core.api.player.scoreboard.PlayerScoreboard;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.md_5.bungee.api.ChatColor;
@@ -204,12 +205,19 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
                             @Override
                             public void run() {
                                 if (!player1.isVanished() || player1.getRank().getId() <= AuroraMCServerPlayer.this.getRank().getId()) {
-                                    AuroraMCServerPlayer.this.hidePlayer(player1);
-                                    AuroraMCServerPlayer.this.showPlayer(player1);
+                                    if (!player1.hidden) {
+                                        AuroraMCServerPlayer.this.hidePlayer(player1);
+                                        AuroraMCServerPlayer.this.showPlayer(player1);
+                                    }
                                 }
                                 if (!isVanished() || player1.getRank().getId() >= AuroraMCServerPlayer.this.getRank().getId()) {
-                                    player1.hidePlayer(AuroraMCServerPlayer.this);
-                                    player1.showPlayer(AuroraMCServerPlayer.this);
+                                    PlayerShowEvent event = new PlayerShowEvent(AuroraMCServerPlayer.this);
+                                    Bukkit.getPluginManager().callEvent(event);
+                                    hidden = event.isHidden();
+                                    if (!hidden) {
+                                        player1.hidePlayer(AuroraMCServerPlayer.this);
+                                        player1.showPlayer(AuroraMCServerPlayer.this);
+                                    }
                                 }
                             }
                         }.runTaskLater(ServerAPI.getCore(), 1);
@@ -747,7 +755,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     }
 
     public void setAllowFlight(boolean b) {
-        player.setAllowFlight(true);
+        player.setAllowFlight(b);
     }
 
     public void hidePlayer(AuroraMCServerPlayer player) {
