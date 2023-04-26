@@ -13,9 +13,7 @@ import net.auroramc.core.api.events.entity.*;
 import net.auroramc.core.api.events.inventory.*;
 import net.auroramc.core.api.events.player.*;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -25,7 +23,6 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.DragType;
-import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EventManager implements Listener {
@@ -647,7 +644,7 @@ public class EventManager implements Listener {
         if (e.getEntity() instanceof Player) {
             AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) e.getEntity());
             if (player != null && player.isLoaded()) {
-                PlayerShootBotEvent event = new PlayerShootBotEvent(player, e.getBow(), (Projectile) e.getProjectile(), e.getForce());
+                PlayerShootBowEvent event = new PlayerShootBowEvent(player, e.getBow(), (Projectile) e.getProjectile(), e.getForce());
                 Bukkit.getPluginManager().callEvent(event);
                 e.setCancelled(event.isCancelled());
             }
