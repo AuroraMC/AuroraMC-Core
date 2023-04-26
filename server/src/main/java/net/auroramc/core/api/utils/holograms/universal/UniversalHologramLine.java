@@ -30,7 +30,7 @@ public class UniversalHologramLine extends HologramLine {
 
     public void setText(String text) {
         this.text = text;
-        if (armorStand != null) {
+        if (armorStand != null && !armorStand.dead) {
             armorStand.setCustomName(TextFormatter.convert(text));
             PacketPlayOutUpdateEntityNBT packet = new PacketPlayOutUpdateEntityNBT(armorStand.getId(), armorStand.getNBTTag());
             for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
@@ -43,10 +43,23 @@ public class UniversalHologramLine extends HologramLine {
     }
 
     public void spawn() {
-        if (armorStand != null) return;
+        if (armorStand != null && !armorStand.dead) return;
         Location location = hologram.getLocation().clone().getBlock().getLocation().clone().add(0.5, 0, 0.5);
         location.setY(hologram.getLocation().getY() + ((hologram.getLines().size() - (line + 1)) * 0.25));
-        armorStand = new EntityArmorStand(((CraftWorld) Bukkit.getWorld("world")).getHandle(), location.getX(), location.getY(), location.getZ());
+        if (armorStand != null) {
+            armorStand.dead = false;
+            armorStand.world = ((CraftWorld) Bukkit.getWorld("world")).getHandle();
+            armorStand.setPosition(location.getX(), location.getY(), location.getZ());
+        } else {
+            if (Hologram.getUsedEntities().size() > 0) {
+                armorStand = Hologram.getUsedEntities().pop();
+                armorStand.dead = false;
+                armorStand.world = ((CraftWorld) Bukkit.getWorld("world")).getHandle();
+                armorStand.setPosition(location.getX(), location.getY(), location.getZ());
+            } else {
+                armorStand = new EntityArmorStand(((CraftWorld) Bukkit.getWorld("world")).getHandle(), location.getX(), location.getY(), location.getZ());
+            }
+        }
         armorStand.setArms(false);
         //Set as marker
         armorStand.n(true);
@@ -95,7 +108,6 @@ public class UniversalHologramLine extends HologramLine {
             con.sendPacket(packet);
         }
         armorStand.dead = true;
-        armorStand = null;
     }
 
 

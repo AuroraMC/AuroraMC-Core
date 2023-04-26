@@ -615,11 +615,11 @@ public class RecievePluginMessage implements Listener {
                         UUID uuid = UUID.fromString(in.readUTF());
                         ProxiedPlayer target = ProxyServer.getInstance().getPlayer(uuid);
                         if (target != null) {
-                            AuroraMCProxyPlayer AuroraMCProxyPlayer = ProxyAPI.getPlayer(target);
-                            FriendsList.VisibilityMode visibilityMode = AuroraMCProxyPlayer.getFriendsList().getVisibilityMode();
-                            player.getFriendsList().friendRequestAccepted(uuid, true, ((visibilityMode == FriendsList.VisibilityMode.ALL) ? player.getServer().getName() : null), AuroraMCProxyPlayer.getFriendsList().getCurrentStatus(), true);
+                            AuroraMCProxyPlayer auroraMCProxyPlayer = ProxyAPI.getPlayer(target);
+                            FriendsList.VisibilityMode visibilityMode = auroraMCProxyPlayer.getFriendsList().getVisibilityMode();
+                            player.getFriendsList().friendRequestAccepted(uuid, true, ((visibilityMode == FriendsList.VisibilityMode.ALL) ? player.getServer().getName() : null), auroraMCProxyPlayer.getFriendsList().getCurrentStatus(), true);
                             visibilityMode = player.getFriendsList().getVisibilityMode();
-                            AuroraMCProxyPlayer.getFriendsList().friendRequestAccepted(player.getUniqueId(), true, ((visibilityMode == FriendsList.VisibilityMode.ALL) ? player.getServer().getName() : null), player.getFriendsList().getCurrentStatus(), true);
+                            auroraMCProxyPlayer.getFriendsList().friendRequestAccepted(player.getUniqueId(), true, ((visibilityMode == FriendsList.VisibilityMode.ALL) ? player.getServer().getName() : null), player.getFriendsList().getCurrentStatus(), true);
                         } else {
                             if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
                                 UUID proxy = AuroraMCAPI.getDbManager().getProxy(uuid);

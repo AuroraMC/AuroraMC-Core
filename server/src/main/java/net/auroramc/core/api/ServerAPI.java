@@ -167,7 +167,7 @@ public class ServerAPI {
         if (sendMessage) {
             for (AuroraMCServerPlayer player : getPlayers()) {
                 if (player.hasPermission("moderation") || player.hasPermission("social") ||  player.hasPermission("debug.info")) {
-                    player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
+                    player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**. You are immune to Chat Silence due to your rank.", length.getFormatted())));
                 } else {
                     player.sendMessage(TextFormatter.pluginMessage("Silence", String.format("The chat has been silenced for **%s**.", length.getFormatted())));
                 }
@@ -186,6 +186,8 @@ public class ServerAPI {
             task.cancel();
         }
     }
+
+
 
     public static boolean isShuttingDown() {
         return shuttingDown;
