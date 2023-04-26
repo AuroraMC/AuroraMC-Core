@@ -69,7 +69,7 @@ public class SetRank extends GUI {
                 for (Rank rank : ranks) {
                     switch (rank.getCategory()) {
                         case PLAYER:
-                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", ((rank.getPrefixColor()==null)?'f':rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
+                            this.setItem(playerCat, 0, new GUIItem(Material.LEATHER_CHESTPLATE, String.format("%s&l%s", ((rank.getPrefixColor()==null)?"§f":rank.getPrefixColor()), rank.getName()), 1, String.format("&r&fSet %s's rank to %s;;&r&7ID: &b%s", name, ((rank.getPrefixAppearance()==null)?"Player":rank.getPrefixAppearance()), rank.getId()), (short)0, rank.getId() == currentRank.getId(), Color.fromRGB(rank.getR(), rank.getG(), rank.getB())));
                             playerCat++;
                             break;
                         case SOCIAL_MEDIA:

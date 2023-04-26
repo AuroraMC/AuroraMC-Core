@@ -15,6 +15,7 @@ import net.auroramc.core.api.events.player.*;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,8 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.DragType;
+import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class EventManager implements Listener {
 
@@ -113,20 +116,22 @@ public class EventManager implements Listener {
                     AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) entityEvent.getEntity());
                     if (player != null && player.isLoaded()) {
                         AuroraMCServerPlayer damager = ServerAPI.getPlayer((Player) entityEvent.getDamager());
-                        PlayerDamageByPlayerEvent event = new PlayerDamageByPlayerEvent(damager, player, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
+                        PlayerDamageEvent event = new PlayerDamageByPlayerEvent(player, damager, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                         Bukkit.getPluginManager().callEvent(event);
-                        e.setCancelled(event.isCancelled());
+                        AuroraMCAPI.getLogger().info("called1 " + event.isCancelled());
                         e.setDamage(event.getDamage());
+                        e.setCancelled(event.isCancelled());
                     } else {
                         e.setCancelled(true);
                     }
                 } else {
                     AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) entityEvent.getEntity());
                     if (player != null && player.isLoaded()) {
-                        PlayerDamageByEntityEvent event = new PlayerDamageByEntityEvent(player, entityEvent.getDamager(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
+                        PlayerDamageEvent event = new PlayerDamageByEntityEvent(player, entityEvent.getDamager(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                         Bukkit.getPluginManager().callEvent(event);
-                        e.setCancelled(event.isCancelled());
+                        AuroraMCAPI.getLogger().info("called2");
                         e.setDamage(event.getDamage());
+                        e.setCancelled(event.isCancelled());
                     } else {
                         e.setCancelled(true);
                     }
@@ -134,10 +139,11 @@ public class EventManager implements Listener {
             } else if (entityEvent.getDamager() instanceof Player) {
                 AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) entityEvent.getDamager());
                 if (player != null && player.isLoaded()) {
-                    EntityDamageByPlayerEvent event = new EntityDamageByPlayerEvent(player, e.getEntity(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
+                    PlayerDamageEvent event = new EntityDamageByPlayerEvent(player, e.getEntity(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                     Bukkit.getPluginManager().callEvent(event);
-                    e.setCancelled(event.isCancelled());
+                    AuroraMCAPI.getLogger().info("called3");
                     e.setDamage(event.getDamage());
+                    e.setCancelled(event.isCancelled());
                 } else {
                     e.setCancelled(true);
                 }
@@ -147,8 +153,9 @@ public class EventManager implements Listener {
             if (player != null && player.isLoaded()) {
                 PlayerDamageEvent event = new PlayerDamageEvent(player, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                 Bukkit.getPluginManager().callEvent(event);
-                e.setCancelled(event.isCancelled());
+                AuroraMCAPI.getLogger().info("called4");
                 e.setDamage(event.getDamage());
+                e.setCancelled(event.isCancelled());
             }
         }
     }
@@ -284,10 +291,17 @@ public class EventManager implements Listener {
     public void inventoryClickEvent(org.bukkit.event.inventory.InventoryClickEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) e.getWhoClicked());
         if (player != null && player.isLoaded()) {
-            InventoryClickEvent event = new InventoryClickEvent(player, e.getView(), e.getSlotType(), e.getSlot(), e.getClick(), e.getAction(), e.getHotbarButton());
+            InventoryClickEvent event = new InventoryClickEvent(player, e.getView(), e.getSlotType(), e.getRawSlot(), e.getClick(), e.getAction(), e.getHotbarButton());
             Bukkit.getPluginManager().callEvent(event);
-            e.setCurrentItem(event.getCurrentItem());
             e.setCancelled(event.isCancelled());
+            if (event.isCancelled()) {
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        player.updateInventory();
+                    }
+                }.runTaskLater(ServerAPI.getCore(), 1);
+            }
         }
     }
 
@@ -306,7 +320,6 @@ public class EventManager implements Listener {
         if (player != null && player.isLoaded()) {
             InventoryDragEvent event = new InventoryDragEvent(player, e.getView(), e.getCursor(), e.getOldCursor(), e.getType() == DragType.SINGLE, e.getNewItems());
             Bukkit.getPluginManager().callEvent(event);
-            e.setCursor(event.getCursor());
             e.setCancelled(event.isCancelled());
         }
     }

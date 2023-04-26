@@ -10,7 +10,7 @@ import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.ServerCommand;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,7 +43,7 @@ public class CommandCosmeticList extends ServerCommand {
                     for (Cosmetic cosmetic : cosmetics) {
                         sb.append(" - **").append(ChatColor.stripColor(TextFormatter.convert(cosmetic.getName()))).append(" ").append(cosmetic.getType().getName()).append("**\n");
                     }
-                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("Cosmetics unlocked for player [**%s**]:\n", args.get(0)) + sb.toString()));
+                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("Cosmetics unlocked for player [**%s**]:\n", args.get(0)) + sb.toString().trim()));
 
                 }
             }.runTaskAsynchronously(ServerAPI.getCore());

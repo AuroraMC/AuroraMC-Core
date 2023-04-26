@@ -147,7 +147,7 @@ public class CosmeticsListing extends GUI {
                     }
                     player.getActiveCosmetics().remove(type);
                     cosmetic.onUnequip(player);
-                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cosmetic.getName())));
+                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", TextFormatter.convert(cosmetic.getName()))));
                     if (!AuroraMCAPI.isTestServer()) {
                         new BukkitRunnable(){
                             @Override
@@ -168,11 +168,11 @@ public class CosmeticsListing extends GUI {
                         player.sendMessage(TextFormatter.pluginMessage("Cosmetics", "You currently cannot enable that gadget!"));
                         return;
                     }
-                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", player.getActiveCosmetics().get(type).getName())));
+                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", TextFormatter.convert(player.getActiveCosmetics().get(type).getName()))));
                     Cosmetic prevCosmetic = player.getActiveCosmetics().get(type);
                     player.getActiveCosmetics().put(type, cosmetic);
                     prevCosmetic.onUnequip(player);
-                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
+                    player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have equipped **%s**.", TextFormatter.convert(cosmetic.getName()))));
                     cosmetic.onEquip(player);
                     if (!AuroraMCAPI.isTestServer()) {
                         new BukkitRunnable(){
@@ -201,7 +201,7 @@ public class CosmeticsListing extends GUI {
                         Cosmetic cos = player.getActiveCosmetics().get(type);
                         player.getActiveCosmetics().remove(type);
                         cos.onUnequip(player);
-                        player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", cos.getName())));
+                        player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have unequipped **%s**.", TextFormatter.convert(cos.getName()))));
                         new BukkitRunnable(){
                             @Override
                             public void run() {
@@ -212,7 +212,7 @@ public class CosmeticsListing extends GUI {
                 }
                 player.getActiveCosmetics().put(type, cosmetic);
                 cosmetic.onEquip(player);
-                player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have equipped **%s**.", cosmetic.getName())));
+                player.sendMessage(TextFormatter.pluginMessage("Cosmetics", String.format("You have equipped **%s**.", TextFormatter.convert(cosmetic.getName()))));
                 if (!AuroraMCAPI.isTestServer()) {
                     new BukkitRunnable(){
                         @Override

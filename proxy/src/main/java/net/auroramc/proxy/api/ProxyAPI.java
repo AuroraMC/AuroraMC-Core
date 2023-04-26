@@ -260,8 +260,8 @@ public class ProxyAPI {
         if (silenceTask != null) {
             silenceTask.cancel();
         }
+        AuroraMCAPI.enableChatSilence(seconds);
         if (seconds != -1) {
-            AuroraMCAPI.enableChatSilence(seconds);
             silenceTask = core.getProxy().getScheduler().schedule(core, () -> {
                 if (AuroraMCAPI.getChatSilenceEnd() != -2) {
                     disableSilence();

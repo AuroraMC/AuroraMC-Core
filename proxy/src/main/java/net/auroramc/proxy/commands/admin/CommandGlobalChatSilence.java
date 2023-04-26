@@ -50,7 +50,7 @@ public class CommandGlobalChatSilence extends ProxyCommand {
                 CommunicationUtils.sendMessage(message);
             });
         } else {
-            if (AuroraMCAPI.getChatSilenceEnd() != -1) {
+            if (AuroraMCAPI.getChatSilenceEnd() != -2) {
                 player.sendMessage(TextFormatter.pluginMessage("Silence", "Global chat silence has been disabled."));
                 ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
                     ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_CHAT_SILENCE, "Mission Control", "disable", AuroraMCAPI.getInfo().getName(), "\n" + AuroraMCAPI.getInfo().getNetwork().name());
