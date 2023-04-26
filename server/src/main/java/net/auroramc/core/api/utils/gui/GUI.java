@@ -96,6 +96,9 @@ public abstract class GUI {
         }
         player.openInventory(inventory);
         inv = inventory;
+        if (player.getOpenInventory() == null) {
+            return;
+        }
         ServerAPI.openGUI(player, this);
     }
 

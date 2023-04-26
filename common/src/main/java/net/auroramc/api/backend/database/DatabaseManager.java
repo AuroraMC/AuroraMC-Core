@@ -3010,6 +3010,10 @@ public class DatabaseManager {
             Set<String> cosmeticsStrings = connection.smembers(String.format("cosmetics.unlocked.%s", uuid.toString()));
             for (String s : cosmeticsStrings) {
                 int i = Integer.parseInt(s);
+                if (AuroraMCAPI.getCosmetics().get(i) == null) {
+                    AuroraMCAPI.getLogger().info("Cosmetic with ID " + i + " does not exist.");
+                    continue;
+                }
                 cosmetics.add(AuroraMCAPI.getCosmetics().get(i));
             }
             return cosmetics;

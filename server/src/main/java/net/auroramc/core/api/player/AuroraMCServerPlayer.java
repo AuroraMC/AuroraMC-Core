@@ -94,6 +94,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     @Override
     public void loadBefore(Object playerObject) {
         Player player = (Player) playerObject;
+        this.player = player;
         this.vanished = AuroraMCAPI.getDbManager().isVanished(getUuid());
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             player1.hidePlayer(player);

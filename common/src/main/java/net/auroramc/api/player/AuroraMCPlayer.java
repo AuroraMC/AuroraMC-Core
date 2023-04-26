@@ -75,6 +75,8 @@ public abstract class AuroraMCPlayer {
         team = null;
         this.name = name;
 
+        loadBefore(playerObject);
+
         Disguise disguise = AuroraMCAPI.getDbManager().getDisguise(this, uuid);
         if (disguise != null) {
             activeDisguise = disguise;
@@ -83,7 +85,7 @@ public abstract class AuroraMCPlayer {
             }
         }
 
-        loadBefore(playerObject);
+
 
         ScheduleFactory.scheduleAsync(() -> {
             int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid);

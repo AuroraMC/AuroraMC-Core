@@ -11,39 +11,17 @@ import org.bukkit.event.HandlerList;
 
 import java.util.Map;
 
-public class PlayerDamageByPlayerEvent extends PlayerDamageEvent implements Cancellable {
-
-    private static final HandlerList handlers = new HandlerList();
+public class PlayerDamageByPlayerEvent extends PlayerDamageEvent {
 
     private final AuroraMCServerPlayer damager;
-    private boolean cancelled;
 
     public PlayerDamageByPlayerEvent(AuroraMCServerPlayer player, AuroraMCServerPlayer damager, DamageCause cause, double damage) {
         super(player, cause, damage);
         this.damager = damager;
-        cancelled = false;
     }
 
     public AuroraMCServerPlayer getDamager() {
         return damager;
     }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        cancelled = b;
-    }
 }

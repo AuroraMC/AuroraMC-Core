@@ -164,7 +164,7 @@ public class TextFormatter {
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
             levelHover.addExtra(cmp);
-            levelHover.addExtra("\n \n ");
+            levelHover.addExtra("\n \n");
 
             cmp = new TextComponent(String.format("«%s»", player.getStats().getLevel() - ((player.getStats().getLevel() == 250)?1:0)));
             cmp.setColor(ChatColor.DARK_AQUA);
@@ -186,7 +186,7 @@ public class TextFormatter {
             cmp.setBold(false);
             levelHover.addExtra(cmp);
 
-            cmp = new TextComponent(new DecimalFormat("##.#").format(percentage));
+            cmp = new TextComponent(new DecimalFormat("##.#").format(percentage) + "%");
             cmp.setColor(ChatColor.AQUA);
             cmp.setBold(false);
             levelHover.addExtra(cmp);
@@ -1125,7 +1125,7 @@ public class TextFormatter {
         component.setBold(true);
         textComponent.addExtra(component);
 
-        component = new TextComponent(" " + ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"accepted":"Denied")));
+        component = new TextComponent(" " + ((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?"Pending":((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"Accepted":"Denied")));
         component.setColor(((report.getOutcome() == PlayerReport.ReportOutcome.PENDING)?ChatColor.GOLD:((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?ChatColor.GREEN:ChatColor.RED)));
         component.setBold(false);
         textComponent.addExtra(component);

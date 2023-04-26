@@ -151,8 +151,8 @@ public class ServerAPI {
         if (silenceTask != null) {
             silenceTask.cancel();
         }
+        AuroraMCAPI.enableChatSilence(seconds);
         if (seconds != -1) {
-            AuroraMCAPI.enableChatSilence(seconds);
             silenceTask = new BukkitRunnable(){
                 @Override
                 public void run() {

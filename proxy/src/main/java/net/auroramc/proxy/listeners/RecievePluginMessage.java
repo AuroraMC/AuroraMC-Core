@@ -919,7 +919,7 @@ public class RecievePluginMessage implements Listener {
                                     }
                                 }
                             }
-                            BaseComponent message = TextFormatter.pluginMessage("Reports", String.format("Your report against **%s** has been &%s&r. Thank you for submitting a report!", report.getSuspectName(), ((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"aaccepted":"cdenied&r. After review, it was deemed that there was not enough evidence to punish the user at this time")));
+                            BaseComponent message = TextFormatter.pluginMessage("Reports", String.format("Your report against **%s** has been §%s§r. Thank you for submitting a report!", report.getSuspectName(), ((report.getOutcome() == PlayerReport.ReportOutcome.ACCEPTED)?"aaccepted":"cdenied§r. After review, it was deemed that there was not enough evidence to punish the user at this time")));
                             List<UUID> uuidsToSend = new ArrayList<>();
                             for (int i : report.getReporters()) {
                                 AuroraMCProxyPlayer player = ProxyAPI.getPlayer(i);
