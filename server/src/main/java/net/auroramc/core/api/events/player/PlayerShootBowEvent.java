@@ -10,7 +10,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-public class PlayerShootBotEvent extends PlayerEvent implements Cancellable {
+public class PlayerShootBowEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
 
@@ -20,7 +20,7 @@ public class PlayerShootBotEvent extends PlayerEvent implements Cancellable {
     private final ItemStack bow;
 
 
-    public PlayerShootBotEvent(AuroraMCServerPlayer player, ItemStack bow, Projectile projectile, float force) {
+    public PlayerShootBowEvent(AuroraMCServerPlayer player, ItemStack bow, Projectile projectile, float force) {
         super(player);
         this.cancelled = false;
         this.force = force;
