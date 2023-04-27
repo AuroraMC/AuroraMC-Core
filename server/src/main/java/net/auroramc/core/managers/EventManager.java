@@ -116,7 +116,9 @@ public class EventManager implements Listener {
                         AuroraMCServerPlayer damager = ServerAPI.getPlayer((Player) entityEvent.getDamager());
                         PlayerDamageEvent event = new PlayerDamageByPlayerEvent(player, damager, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                         Bukkit.getPluginManager().callEvent(event);
-                        e.setDamage(event.getDamage());
+                        if (e.getFinalDamage() != event.getDamage()) {
+                            e.setDamage(event.getDamage());
+                        }
                         e.setCancelled(event.isCancelled());
                     } else {
                         e.setCancelled(true);
@@ -127,7 +129,9 @@ public class EventManager implements Listener {
                         AuroraMCServerPlayer damager = ServerAPI.getPlayer((Player) ((Projectile) entityEvent.getDamager()).getShooter());
                         PlayerDamageEvent event = new PlayerDamageByPlayerRangedEvent(player, damager, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage(), (Projectile) entityEvent.getDamager());
                         Bukkit.getPluginManager().callEvent(event);
-                        e.setDamage(event.getDamage());
+                        if (e.getFinalDamage() != event.getDamage()) {
+                            e.setDamage(event.getDamage());
+                        }
                         e.setCancelled(event.isCancelled());
                     } else {
                         e.setCancelled(true);
@@ -137,7 +141,9 @@ public class EventManager implements Listener {
                     if (player != null && player.isLoaded()) {
                         PlayerDamageEvent event = new PlayerDamageByEntityEvent(player, entityEvent.getDamager(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                         Bukkit.getPluginManager().callEvent(event);
-                        e.setDamage(event.getDamage());
+                        if (e.getFinalDamage() != event.getDamage()) {
+                            e.setDamage(event.getDamage());
+                        }
                         e.setCancelled(event.isCancelled());
                     } else {
                         e.setCancelled(true);
@@ -148,7 +154,9 @@ public class EventManager implements Listener {
                 if (player != null && player.isLoaded()) {
                     PlayerDamageEvent event = new EntityDamageByPlayerEvent(player, e.getEntity(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                     Bukkit.getPluginManager().callEvent(event);
-                    e.setDamage(event.getDamage());
+                    if (e.getFinalDamage() != event.getDamage()) {
+                        e.setDamage(event.getDamage());
+                    }
                     e.setCancelled(event.isCancelled());
                 } else {
                     e.setCancelled(true);
@@ -158,7 +166,9 @@ public class EventManager implements Listener {
                 if (player != null && player.isLoaded()) {
                     PlayerDamageEvent event = new EntityDamageByPlayerRangedEvent(player, e.getEntity(), PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage(), (Projectile) ((EntityDamageByEntityEvent) e).getDamager());
                     Bukkit.getPluginManager().callEvent(event);
-                    e.setDamage(event.getDamage());
+                    if (e.getFinalDamage() != event.getDamage()) {
+                        e.setDamage(event.getDamage());
+                    }
                     e.setCancelled(event.isCancelled());
                 } else {
                     e.setCancelled(true);
@@ -169,7 +179,9 @@ public class EventManager implements Listener {
             if (player != null && player.isLoaded()) {
                 PlayerDamageEvent event = new PlayerDamageEvent(player, PlayerDamageEvent.DamageCause.valueOf(e.getCause().name()), e.getFinalDamage());
                 Bukkit.getPluginManager().callEvent(event);
-                e.setDamage(event.getDamage());
+                if (e.getFinalDamage() != event.getDamage()) {
+                    e.setDamage(event.getDamage());
+                }
                 e.setCancelled(event.isCancelled());
             }
         }
