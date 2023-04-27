@@ -228,6 +228,8 @@ public abstract class AuroraMCPlayer {
                 for (Cosmetic cosmetic : activeCosmetics.values()) {
                     ScheduleFactory.scheduleSync(() -> cosmetic.onEquip(AuroraMCPlayer.this));
                 }
+            } else {
+                activeCosmetics.values().stream().filter(Cosmetic::shouldBypassDisabled).forEach((cosmetic) -> cosmetic.onEquip(AuroraMCPlayer.this));
             }
 
             if (disguise != null && preferences.isHideDisguiseNameEnabled()) {
