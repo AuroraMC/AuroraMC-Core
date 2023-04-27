@@ -7,6 +7,7 @@ package net.auroramc.api.player;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.abstraction.EventFactory;
 import net.auroramc.api.abstraction.ScheduleFactory;
 import net.auroramc.api.utils.Pronoun;
 
@@ -172,6 +173,7 @@ public class PlayerPreferences {
         this.preferredPronouns = preferredPronouns;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPreferredPronouns(player, preferredPronouns));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PreferredPronounsChanged");
@@ -185,6 +187,7 @@ public class PlayerPreferences {
         this.approvalNotifications = approvalNotifications;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setApprovalNotifications(player, approvalNotifications));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("ApprovalNotificationsChanged");
@@ -198,6 +201,7 @@ public class PlayerPreferences {
         this.approvalProcessedNotifications = approvalProcessedNotifications;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setApprovalProcessedNotifications(player, approvalProcessedNotifications));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("ApprovalProcessedNotificationsChanged");
@@ -211,6 +215,7 @@ public class PlayerPreferences {
         this.chatVisibility = chatVisibility;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setChatVisibility(player, chatVisibility));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("ChatVisibilityChanged");
@@ -226,6 +231,7 @@ public class PlayerPreferences {
         this.friendRequests = friendRequests;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setFriendRequests(player, friendRequests));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("FriendRequestsChanged");
@@ -241,6 +247,7 @@ public class PlayerPreferences {
         this.hideDisguiseName = hideDisguiseName;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHideDisguiseName(player, hideDisguiseName));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HideDisguiseNameChanged");
@@ -256,6 +263,7 @@ public class PlayerPreferences {
         this.hubFlight = hubFlight;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHubFlight(player, hubFlight));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HubFlightChanged");
@@ -271,6 +279,7 @@ public class PlayerPreferences {
         this.hubForcefield = hubForcefield;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHubForcefield(player, hubForcefield));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HubForcefieldChanged");
@@ -286,6 +295,7 @@ public class PlayerPreferences {
         this.hubInvisibility = hubInvisibility;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHubInvisibility(player, hubInvisibility));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HubInvisibilityChanged");
@@ -301,6 +311,7 @@ public class PlayerPreferences {
         this.hubSpeed = hubSpeed;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHubSpeed(player, hubSpeed));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HubSpeedChanged");
@@ -316,6 +327,7 @@ public class PlayerPreferences {
         this.hubVisibility = hubVisibility;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setHubVisibility(player, hubVisibility));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("HubVisibilityChanged");
@@ -330,6 +342,7 @@ public class PlayerPreferences {
         this.ignoreHubKnockback = ignoreHubKnockback;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setIgnoreHubKnockback(player, ignoreHubKnockback));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("IgnoreHubKnockbackChanged");
@@ -345,6 +358,7 @@ public class PlayerPreferences {
         this.muteInformMode = muteInformMode;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setMuteInformMode(player, muteInformMode));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("MuteInformModeChanged");
@@ -360,6 +374,7 @@ public class PlayerPreferences {
         this.partyRequests = partyRequests;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPartyRequests(player, partyRequests));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PartyRequestsChanged");
@@ -375,6 +390,7 @@ public class PlayerPreferences {
         this.pingOnPartyChat = pingOnPartyChat;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPingOnPartyChat(player, pingOnPartyChat));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PingOnPartyChatChanged");
@@ -390,6 +406,7 @@ public class PlayerPreferences {
         this.pingOnPrivateMessage = pingOnPrivateMessage;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPingOnPrivateMessage(player, pingOnPrivateMessage));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PingOnPrivateMessageChanged");
@@ -405,6 +422,7 @@ public class PlayerPreferences {
         this.pingOnChatMention = pingOnChatMention;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPingOnChatMention(player, pingOnChatMention));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PingOnChatMentionChanged");
@@ -420,6 +438,7 @@ public class PlayerPreferences {
         this.privateMessageMode = privateMessageMode;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setPrivateMessageMode(player, privateMessageMode));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PrivateMessageModeChanged");
@@ -435,6 +454,7 @@ public class PlayerPreferences {
         this.reportNotifications = reportNotifications;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setReportNotifications(player, reportNotifications));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("ReportNotificationsChanged");
@@ -450,6 +470,7 @@ public class PlayerPreferences {
         this.socialMediaNotifications = socialMediaNotifications;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setSocialMediaNotifications(player, socialMediaNotifications));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("SocialMediaNotificationsChanged");
@@ -465,6 +486,7 @@ public class PlayerPreferences {
         this.staffLoginNotifications = staffLoginNotifications;
 
         if (send) {
+            EventFactory.firePreferenceEvent(this.getPlayer());
             ScheduleFactory.scheduleAsync(() -> AuroraMCAPI.getDbManager().setStaffLoginNotifications(player, staffLoginNotifications));
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("StaffLoginNotificationsChanged");
