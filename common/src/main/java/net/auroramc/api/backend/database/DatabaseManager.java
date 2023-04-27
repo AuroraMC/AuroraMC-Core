@@ -3828,6 +3828,21 @@ public class DatabaseManager {
         }
     }
 
+    public long getLastSeen(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("seen." + id)) {
+                return -1;
+            }
+            return Long.parseLong(connection.get("seen." + id));
+        }
+    }
+
+    public void setLastSeen(int id, long timestamp) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("seen." + id, String.valueOf(timestamp));
+        }
+    }
+
     public String hashIP(String ip) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");

@@ -45,6 +45,8 @@ public abstract class AbstractedMethods {
     public abstract void onUnequipGadget(AuroraMCPlayer player, Gadget gadget);
 
     public abstract void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer);
+
+    public abstract void firePreferenceEvent(AuroraMCPlayer player);
     
 }
 

@@ -103,4 +103,7 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
     public void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer) {
 
     }
+
+    @Override
+    public void firePreferenceEvent(AuroraMCPlayer player) {}
 }
