@@ -55,6 +55,10 @@ public abstract class Cosmetic {
 
     public abstract void onUnequip(AuroraMCPlayer player);
 
+    public boolean shouldBypassDisabled() {
+        return type.shouldBypassDisabled();
+    }
+
     public Item getItem(AuroraMCPlayer player) {
         String material = this.material;
         short data = this.data;
@@ -153,18 +157,18 @@ public abstract class Cosmetic {
     }
 
     public enum CosmeticType {
-        PARTICLE("Particle Effect"),
-        HAT("Hat"),
-        BANNER("Banner"),
-        KILL_MESSAGE("Kill Message"),
-        PROJECTILE_TRAIL("Projectile Trail"),
-        DEATH_EFFECT("Death Effect"),
-        WIN_EFFECT("Win Effect"),
-        GADGET("Gadget"),
-        FRIEND_STATUS("Friend Status"),
-        SERVER_MESSAGE("Server Message"),
-        PLUS_SYMBOL("Plus Symbol"),
-        CHAT_EMOTE("Chat Emote");
+        PARTICLE("Particle Effect", false),
+        HAT("Hat", false),
+        BANNER("Banner", false),
+        KILL_MESSAGE("Kill Message", true),
+        PROJECTILE_TRAIL("Projectile Trail", true),
+        DEATH_EFFECT("Death Effect", true),
+        WIN_EFFECT("Win Effect", true),
+        GADGET("Gadget", false),
+        FRIEND_STATUS("Friend Status", true),
+        SERVER_MESSAGE("Server Message", true),
+        PLUS_SYMBOL("Plus Symbol", true),
+        CHAT_EMOTE("Chat Emote", false);
 
         static {
             HAT.conflicts = new CosmeticType[]{BANNER};
@@ -173,9 +177,11 @@ public abstract class Cosmetic {
 
         private final String name;
         private CosmeticType[] conflicts;
+        private boolean bypassDisabled;
 
-        CosmeticType(String name) {
+        CosmeticType(String name, boolean bypassDisabled) {
             this.name = name;
+            this.bypassDisabled = bypassDisabled;
             conflicts = new CosmeticType[]{};
         }
 
@@ -185,6 +191,10 @@ public abstract class Cosmetic {
 
         public CosmeticType[] getConflicts() {
             return conflicts;
+        }
+
+        public boolean shouldBypassDisabled() {
+            return bypassDisabled;
         }
     }
 
