@@ -95,6 +95,7 @@ public abstract class AuroraMCPlayer {
                 newPlayer = true;
             }
             AuroraMCPlayer.this.id = id;
+            AuroraMCAPI.getDbManager().setLastSeen(id, System.currentTimeMillis());
             //Get Punishment History and active mutes.
             List<Punishment> punishments = AuroraMCAPI.getDbManager().getPunishmentHistory(id);
             history = new PunishmentHistory(id);

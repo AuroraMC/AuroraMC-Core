@@ -96,6 +96,8 @@ public class ProxyPingListener implements Listener {
             t.addExtra(motd.toString());
             response.setDescriptionComponent(t);
 
+            ServerPing.Protocol protocol = response.getVersion();
+            protocol.setName("AuroraMC 1.8-1.19");
             File file = new File(ProxyAPI.getCore().getDataFolder(), "normal.png");
             try {
                 response.setFavicon(Favicon.create(ImageIO.read(file)));

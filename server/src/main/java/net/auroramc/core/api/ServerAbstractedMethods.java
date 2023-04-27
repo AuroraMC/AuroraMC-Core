@@ -14,10 +14,12 @@ import net.auroramc.common.cosmetics.crates.DiamondCrate;
 import net.auroramc.common.cosmetics.crates.EmeraldCrate;
 import net.auroramc.common.cosmetics.crates.GoldCrate;
 import net.auroramc.common.cosmetics.crates.IronCrate;
+import net.auroramc.core.api.events.player.PlayerPreferenceChangeEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.ServerDisguise;
 import net.auroramc.core.api.utils.gui.GUIItem;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
@@ -148,5 +150,11 @@ public class ServerAbstractedMethods extends AbstractedMethods {
                 }
             }
         }
+    }
+
+    @Override
+    public void firePreferenceEvent(AuroraMCPlayer player) {
+        PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent((AuroraMCServerPlayer) player);
+        Bukkit.getPluginManager().callEvent(e);
     }
 }
