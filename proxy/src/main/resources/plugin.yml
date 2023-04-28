@@ -1,0 +1,4 @@
+name: AuroraMC-Proxy
+main: net.auroramc.proxy.AuroraMC
+version: "1.0-SNAPSHOT"
+author: "The AuroraMC Network Development Team"
