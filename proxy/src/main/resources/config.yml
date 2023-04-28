@@ -1,0 +1,9 @@
+mysqldb: PLACEHOLDER
+mysqlhost: PLACEHOLDER
+mysqlpassword: PLACEHOLDER
+mysqlport: PLACEHOLDER
+mysqlusername: PLACEHOLDER
+redisauth: PLACEHOLDER
+redishost: PLACEHOLDER
+uuid: PLACEHOLDER
+network: PLACEHOLDER
