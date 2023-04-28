@@ -44,6 +44,7 @@ public class IncomingProtocolMessageThread extends Thread {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
+                                AuroraMCAPI.getLogger().info("Received plugin message for protocol: " + message.getProtocol().name());
                                 ProtocolMessageEvent event = new ProtocolMessageEvent(message);
                                 Bukkit.getPluginManager().callEvent(event);
                             }
