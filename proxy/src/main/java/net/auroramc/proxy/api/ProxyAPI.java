@@ -354,7 +354,7 @@ public class ProxyAPI {
                         cmp.setBold(false);
                         component.addExtra(cmp);
                         component.addExtra(lines);
-                        player.sendMessage(lines);
+                        player.sendMessage(component);
                     }
                     i--;
                 }
