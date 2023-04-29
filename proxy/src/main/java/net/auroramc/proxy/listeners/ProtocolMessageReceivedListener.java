@@ -493,7 +493,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                     }
                     case "message": {
                         String[] args = e.getMessage().getExtraInfo().split("\n");
-                        if (args.length == 3) {
+                        if (args.length == 4) {
                             Party party = ProxyAPI.getParties().get(UUID.fromString(args[0]));
                             UUID sender = UUID.fromString(args[1]);
                             String message = args[2];
