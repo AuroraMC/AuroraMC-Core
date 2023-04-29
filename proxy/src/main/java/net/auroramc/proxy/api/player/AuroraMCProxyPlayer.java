@@ -7,7 +7,10 @@ package net.auroramc.proxy.api.player;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.cosmetics.FriendStatus;
 import net.auroramc.api.player.AuroraMCPlayer;
+import net.auroramc.api.player.friends.Friend;
+import net.auroramc.api.player.friends.FriendsList;
 import net.auroramc.api.punishments.Punishment;
 import net.auroramc.api.utils.DiscordWebhook;
 import net.auroramc.api.utils.TextFormatter;
@@ -118,6 +121,73 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
                 }
             }
         }
+
+        for (Friend friend : getFriendsList().getFriends().values()) {
+            ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(friend.getUuid());
+            if (proxiedPlayer != null) {
+                //This player is online, load their settings and update this player for them.
+                AuroraMCProxyPlayer auroraMCPlayer = ProxyAPI.getPlayer(proxiedPlayer);
+                if (auroraMCPlayer != null) {
+                    if (auroraMCPlayer.getFriendsList() != null) {
+                        switch (auroraMCPlayer.getFriendsList().getVisibilityMode()) {
+                            case FAVOURITE_FRIENDS_ONLY:
+                                if (auroraMCPlayer.getFriendsList().getFriends().get(player.getUniqueId()).getType() != Friend.FriendType.FAVOURITE) {
+                                    friend.loggedOn(null, auroraMCPlayer.getFriendsList().getCurrentStatus(), false);
+                                    break;
+                                }
+                            case ALL:
+                                if (auroraMCPlayer.getFriendsList().getCurrentStatus().equals(AuroraMCAPI.getCosmetics().get(101))) {
+                                    friend.loggedOn(null, (FriendStatus) AuroraMCAPI.getCosmetics().get(101), false);
+                                    break;
+                                }
+                                try {
+                                    friend.loggedOn(auroraMCPlayer.getServer().getName(), auroraMCPlayer.getFriendsList().getCurrentStatus(), false);
+                                } catch (Exception ignored){
+                                    //Send a null server, means a server has yet to be connected to, and will update when they have actually connected to the server so no need to worry about it here.
+                                    friend.loggedOn(null, auroraMCPlayer.getFriendsList().getCurrentStatus(), false);
+                                }
+                                break;
+                            default:
+                                friend.loggedOn(null, auroraMCPlayer.getFriendsList().getCurrentStatus(), false);
+                                break;
+                        }
+                    }
+                }
+            } else {
+                if (AuroraMCAPI.getDbManager().hasActiveSession(friend.getUuid())) {
+                    UUID proxy = AuroraMCAPI.getDbManager().getProxy(friend.getUuid());
+                    ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_FRIENDS, proxy.toString(), "loggedon", player.getUniqueId().toString(), friend.getUuid().toString());
+                    CommunicationUtils.sendMessage(message);
+                    FriendsList.VisibilityMode mode = AuroraMCAPI.getDbManager().getVisibilityMode(friend.getUuid());
+                    FriendStatus status1 = AuroraMCAPI.getDbManager().getFriendStatus(friend.getUuid());
+                    String server = AuroraMCAPI.getDbManager().getCurrentServer(friend.getUuid());
+                    switch (mode) {
+                        case FAVOURITE_FRIENDS_ONLY:
+
+                            if (!AuroraMCAPI.getDbManager().isFavouriteFriend(friend.getAmcId(), this.getId())) {
+                                friend.loggedOn(null, status1, false);
+                                break;
+                            }
+                        case ALL:
+                            if (status1.equals(AuroraMCAPI.getCosmetics().get(101))) {
+                                friend.loggedOn(null, (FriendStatus) AuroraMCAPI.getCosmetics().get(101), false);
+                                break;
+                            }
+                            try {
+                                friend.loggedOn(server, status1, false);
+                            } catch (Exception ignored){
+                                //Send a null server, means a server has yet to be connected to, and will update when they have actually connected to the server so no need to worry about it here.
+                                friend.loggedOn(null, status1, false);
+                            }
+                            break;
+                        default:
+                            friend.loggedOn(null, status1, false);
+                            break;
+                    }
+                }
+            }
+        }
+
         if (isNewPlayer()) {
             TextComponent component = new TextComponent("");
             TextComponent welcome = new TextComponent("Welcome to the AuroraMC Network!");
