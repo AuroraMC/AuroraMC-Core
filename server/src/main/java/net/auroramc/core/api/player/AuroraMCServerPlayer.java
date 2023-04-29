@@ -554,8 +554,8 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
         s = new StringBuilder();
 
-        if (getPreferences().getPreferredPronouns() != Pronoun.NONE) {
-            s.append(" §7" + getPreferences().getPreferredPronouns().getDisplay());
+        if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
+            s.append(" §7" + player.getPreferences().getPreferredPronouns().getDisplay());
         }
         if (player.getActiveSubscription() != null && player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
             PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
