@@ -346,7 +346,7 @@ public class ProxyAPI {
                         component.addExtra(cmp);
 
                         cmp = new TextComponent("The connection node that you are connected to is\n" +
-                                String.format("scheduled to restart in &c&l%s minute%s&r!\n", i, ((i > 1)?"s":"")) +
+                                String.format("scheduled to restart in §c§l%s minute%s§r!\n", i, ((i > 1)?"s":"")) +
                                 "\n" +
                                 "Please reconnect to the network to continue playing\n" +
                                 "without any interruptions!\n \n");
