@@ -61,6 +61,18 @@ public class CommandServer extends ProxyCommand {
                                 player.sendMessage(TextFormatter.pluginMessage("Server Manager", "You cannot manually go to a Pathfinder Server as Pathfinder Servers are assigned."));
                                 return;
                             }
+                            player.connect(target);
+                            player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getServer().getName(), target.getName())));
+                            break;
+                        }
+                        case "smp": {
+                            if (!player.hasPermission("moderation")) {
+                                player.sendMessage(TextFormatter.pluginMessage("Server Manager", "You cannot manually go to an SMP servers. You must use the Lobby to connect to SMP."));
+                                return;
+                            }
+                            player.connect(target);
+                            player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getServer().getName(), target.getName())));
+                            break;
                         }
                         default:
                             player.connect(target);

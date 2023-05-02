@@ -1,3 +1,6 @@
 settings:
   allow-end: false
   bungeecord: true
+messages:
+  outdated-client: "§3§l«SERVER MANAGER»§r In order to join this server, you must be using {} or higher!"
+  outdated-server: "§3§l«SERVER MANAGER»§r Uh oh! It seems we haven't updated to this version yet, keep an eye out for an update soon!"
