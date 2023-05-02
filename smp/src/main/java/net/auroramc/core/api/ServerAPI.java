@@ -15,6 +15,7 @@ import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.auroramc.core.api.utils.holograms.HologramLine;
 import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.world.level.portal.PortalTravelAgent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

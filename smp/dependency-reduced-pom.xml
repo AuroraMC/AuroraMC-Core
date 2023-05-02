@@ -96,12 +96,6 @@
       <version>1.19.4-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>us.myles</groupId>
-      <artifactId>viaversion</artifactId>
-      <version>3.2.1</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
   <properties>
     <maven.compiler.release>17</maven.compiler.release>

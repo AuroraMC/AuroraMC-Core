@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2021-2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2023 AuroraMC Ltd. All Rights Reserved.
  */
 
-package net.auroramc.core.utils.disguise;
+package net.auroramc.core.utils;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

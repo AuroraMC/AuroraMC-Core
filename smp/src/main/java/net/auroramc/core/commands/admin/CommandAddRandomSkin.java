@@ -10,7 +10,7 @@ import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.ServerCommand;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import net.auroramc.core.utils.disguise.DisguiseUtil;
+import net.auroramc.core.utils.DisguiseUtil;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 

@@ -142,15 +142,12 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ProtocolMessageReceivedListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
 
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
-
-        getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");
-        ProtocolMessage message = new ProtocolMessage(Protocol.SERVER_ONLINE, "Mission Control", "", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name());
-        CommunicationUtils.sendMessage(message);
     }
 
     @Override
