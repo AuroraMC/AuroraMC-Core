@@ -11,6 +11,7 @@ public class Weight {
 
     public static final String[] WEIGHTS = new String[]{"&2&lLight","&a&lMedium","&e&lHeavy","&6&lSevere","&4&lExtreme"};
     public static final short[] WEIGHT_ICON_DATA = new short[]{13,5,4,1,14};
+    public static final String[] WEIGHT_ICON_MATERIAL = new String[]{"GREEN_WOOL","LIME_WOOL","YELLOW_WOOL","ORANGE_WOOL","RED_WOOL"};
 
     private final int weight;
     private final HashMap<Integer, Rule> rules;
