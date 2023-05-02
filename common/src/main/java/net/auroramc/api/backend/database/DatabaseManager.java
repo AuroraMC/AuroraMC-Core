@@ -25,10 +25,7 @@ import net.auroramc.api.stats.Achievement;
 import net.auroramc.api.stats.GameStatistics;
 import net.auroramc.api.stats.PlayerBank;
 import net.auroramc.api.stats.PlayerStatistics;
-import net.auroramc.api.utils.ChatFilter;
-import net.auroramc.api.utils.GameLog;
-import net.auroramc.api.utils.PlayerKitLevel;
-import net.auroramc.api.utils.Pronoun;
+import net.auroramc.api.utils.*;
 import net.auroramc.api.utils.disguise.CachedSkin;
 import net.auroramc.api.utils.disguise.Skin;
 import net.md_5.bungee.api.ChatColor;
@@ -3857,6 +3854,188 @@ public class DatabaseManager {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public SMPLocation getSMPLogoutLocation(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".logout")) {
+                return null;
+            }
+            double x = Double.parseDouble(connection.hget("smp." + id + ".logout", "x"));
+            double y = Double.parseDouble(connection.hget("smp." + id + ".logout", "y"));
+            double z = Double.parseDouble(connection.hget("smp." + id + ".logout", "z"));
+            float pitch = Float.parseFloat(connection.hget("smp." + id + ".logout", "pitch"));
+            float yaw = Float.parseFloat(connection.hget("smp." + id + ".logout", "yaw"));
+            SMPLocation.Dimension dimension = SMPLocation.Dimension.valueOf(connection.hget("smp." + id + ".logout", "dimension"));
+
+            return new SMPLocation(dimension, x, y, z, pitch, yaw);
+        }
+    }
+
+    public void setSMPLogoutLocation(int id, SMPLocation location) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp." + id + ".logout", "x", String.valueOf(location.getX()));
+            connection.hset("smp." + id + ".logout", "y", String.valueOf(location.getY()));
+            connection.hset("smp." + id + ".logout", "z", String.valueOf(location.getZ()));
+            connection.hset("smp." + id + ".logout", "pitch", String.valueOf(location.getPitch()));
+            connection.hset("smp." + id + ".logout", "yaw", String.valueOf(location.getYaw()));
+            connection.hset("smp." + id + ".logout", "dimension", location.getDimension().name());
+        }
+    }
+
+    public void setInventory(int id, String[] inventory) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".inventory", String.join(",", inventory));
+        }
+    }
+
+    public double getHealth(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".health")) {
+                return 20.0;
+            }
+            return Double.parseDouble(connection.get("smp." + id + ".health"));
+        }
+    }
+
+    public void setHealth(int id, double health) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".health", String.valueOf(health));
+        }
+    }
+
+    public int getHunger(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".hunger")) {
+                return 20;
+            }
+            return Integer.parseInt(connection.get("smp." + id + ".hunger"));
+        }
+    }
+
+    public void setHunger(int id, int hunger) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".hunger", String.valueOf(hunger));
+        }
+    }
+
+    public float getLogoutFall(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".fall")) {
+                return 0;
+            }
+            return Float.parseFloat(connection.get("smp." + id + ".fall"));
+        }
+    }
+
+    public void setLogoutFall(int id, float fall) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".fall", String.valueOf(fall));
+        }
+    }
+
+    public int getLevel(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".level")) {
+                return 20;
+            }
+            return Integer.parseInt(connection.get("smp." + id + ".level"));
+        }
+    }
+
+    public void setLevel(int id, int level) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".level", String.valueOf(level));
+        }
+    }
+
+    public float getExp(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".exp")) {
+                return 20;
+            }
+            return Float.parseFloat(connection.get("smp." + id + ".exp"));
+        }
+    }
+
+    public void setExp(int id, float exp) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".exp", String.valueOf(exp));
+        }
+    }
+
+
+    public int getFireTicks(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".fire")) {
+                return 20;
+            }
+            return Integer.parseInt(connection.get("smp." + id + ".fire"));
+        }
+    }
+
+    public void setFireTicks(int id, int fire) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("smp." + id + ".fire", String.valueOf(fire));
+        }
+    }
+
+
+    public SMPLocation getLogoutVector(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".logout")) {
+                return null;
+            }
+            double x = Double.parseDouble(connection.hget("smp." + id + ".vector", "x"));
+            double y = Double.parseDouble(connection.hget("smp." + id + ".vector", "y"));
+            double z = Double.parseDouble(connection.hget("smp." + id + ".vector", "z"));
+
+            return new SMPLocation(null, x, y, z, -1, -1);
+        }
+    }
+
+    public void setLogoutVector(int id, SMPLocation location) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp." + id + ".vector", "x", String.valueOf(location.getX()));
+            connection.hset("smp." + id + ".vector", "y", String.valueOf(location.getY()));
+            connection.hset("smp." + id + ".vector", "z", String.valueOf(location.getZ()));
+        }
+    }
+
+    public List<SMPPotionEffect> getPotionEffects(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            Map<String, String> potions = connection.hgetAll("smp." + id + ".potions");
+            List<SMPPotionEffect> potionEffects = new ArrayList<>();
+            for (Map.Entry<String, String> potion : potions.entrySet()) {
+                String[] split = potion.getValue().split(";");
+                int amount = Integer.parseInt(split[0]);
+                int duration = Integer.parseInt(split[1]);
+                potionEffects.add(new SMPPotionEffect(potion.getKey(), amount, duration));
+            }
+            return potionEffects;
+        }
+    }
+
+    public void setPotionEffects(int id, List<SMPPotionEffect> effects) {
+        try (Jedis connection = jedis.getResource()) {
+            Pipeline pipeline = connection.pipelined();
+            pipeline.del("smp." + id + ".potions");
+            for (SMPPotionEffect effect : effects) {
+                pipeline.hset("smp." + id + ".potions", effect.getType(), effect.getLevel() + ";" + effect.getDuration());
+            }
+            pipeline.sync();
+        }
+    }
+
+
+
+    public String[] getInventory(int id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".inventory")) {
+                return null;
+            }
+            return connection.get("smp." + id + ".inventory").split(",");
         }
     }
 
