@@ -30,6 +30,7 @@ public class LeaveListener implements Listener {
             ServerAPI.getPlayer(e.getPlayer()).getActiveReportTask().cancel();
         }
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
+        player.saveData();
         player.clearScoreboard();
         ServerAPI.playerLeave(e.getPlayer());
         try {

@@ -67,7 +67,7 @@ public class CommandServer extends ProxyCommand {
                         }
                         case "smp": {
                             if (!player.hasPermission("moderation")) {
-                                player.sendMessage(TextFormatter.pluginMessage("Server Manager", "You cannot manually go to an SMP servers. You must use the Lobby to connect to SMP."));
+                                player.sendMessage(TextFormatter.pluginMessage("Server Manager", "You cannot manually go to an SMP server. You must use the Lobby to connect to SMP."));
                                 return;
                             }
                             player.connect(target);
