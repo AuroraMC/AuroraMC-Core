@@ -16,6 +16,7 @@
         <module>server</module>
         <module>proxy</module>
         <module>common</module>
+        <module>smp</module>
     </modules>
 
     <properties>
