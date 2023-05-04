@@ -1058,8 +1058,9 @@ public class RecievePluginMessage implements Listener {
                     case "SMP": {
                         UUID uuid = UUID.fromString(in.readUTF());
                         AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
                         player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Connecting you to §5§lNuttersSMP§r, please wait..."));
-                        SMPLocation location = AuroraMCAPI.getDbManager().getSMPLogoutLocation(player.getId());
+                        SMPLocation location = AuroraMCAPI.getDbManager().getSMPLogoutLocation(player.getUniqueId());
                         if (location != null) {
                             switch (location.getDimension()) {
                                 case END: {
@@ -1082,6 +1083,16 @@ public class RecievePluginMessage implements Listener {
                             player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
                             player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
                         }
+                        break;
+                    }
+
+                    case "SMPDeath": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
+
                         break;
                     }
                 }
