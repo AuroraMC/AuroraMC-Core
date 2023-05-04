@@ -4,26 +4,37 @@
 
 package net.auroramc.core.listeners;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.backend.info.Info;
 import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.punishments.Ban;
 import net.auroramc.api.punishments.Rule;
+import net.auroramc.api.utils.SMPLocation;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.api.utils.TimeLength;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
-import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.TabCompleteInjector;
-import net.auroramc.core.api.utils.holograms.Hologram;
+import net.minecraft.BlockUtil;
+import net.minecraft.core.BlockPosition;
+import net.minecraft.core.EnumDirection;
+import net.minecraft.server.level.WorldServer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
+
+import java.util.Optional;
 
 public class JoinListener implements Listener {
 
@@ -85,7 +96,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerLoginEvent e) {
-        new AuroraMCServerPlayer(e.getPlayer());
+        ServerAPI.newPlayer(e.getPlayer(), new AuroraMCServerPlayer(e.getPlayer()));
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "join", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name() + "\n" + ((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
     }
@@ -94,26 +105,107 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         TabCompleteInjector.onJoin(e.getPlayer());
         e.setJoinMessage(null);
+        AuroraMCServerPlayer serverPlayer = ServerAPI.getPlayer(e.getPlayer());
+        serverPlayer.loadPlayerState();
     }
 
     @EventHandler
-    public void onObjectCreation(PlayerObjectCreationEvent e) {
-        e.getPlayer().setScoreboard();
-        if (e.getPlayer().isVanished()) {
-
-
-
-            e.getPlayer().sendMessage(TextFormatter.highlight(TextFormatter.convert("" +
-                    "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
-                    " \n" +
-                    "&b&lYou are currently vanished!\n" +
-                    " \n" +
-                    "&fTo unvanish, simply use /vanish.\n" +
-                    " \n" +
-                    "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
-        }
-        for (Hologram hologram : ServerAPI.getHolograms().values()) {
-            hologram.onJoin(e.getPlayer());
+    public void onJoin(PlayerSpawnLocationEvent e) {
+        AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
+        SMPLocation location = player.getStartLocation();
+        if (location == null) {
+            if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
+                e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
+                player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Welcome to §5§lNuttersSMP§r, brought to you by §b§lThe AuroraMC Network§r! There are 4 basic rules, these are:\n" +
+                        " - No Griefing\n" +
+                        " - No Stealing\n" +
+                        " - No Cheating\n" +
+                        " - Be respectful.\n\nWe hope you enjoy your time here! If you're playing with friends, use **/team** to create a team!"));
+            } else {
+                player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a Lobby..."));
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("Lobby");
+                out.writeUTF(player.getUniqueId().toString());
+                player.sendPluginMessage(out.toByteArray());
+            }
+        } else {
+            if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
+                if (location.getDimension() == SMPLocation.Dimension.END) {
+                    if (player.getBedSpawnLocation() != null) {
+                        e.setSpawnLocation(player.getBedSpawnLocation());
+                    } else {
+                        e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
+                    }
+                } else if (location.getDimension() == SMPLocation.Dimension.NETHER) {
+                    if (location.getReason() == SMPLocation.Reason.DEATH) {
+                        if (player.getBedSpawnLocation() != null) {
+                            e.setSpawnLocation(player.getBedSpawnLocation());
+                        } else {
+                            e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
+                        }
+                    } else {
+                        WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
+                        Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                        Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), world.p_(), 128);
+                        EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
+                        if (Math.abs(location.getYaw()) >= 80) {
+                            axis = EnumDirection.EnumAxis.c;
+                        }
+                        if (opt.isEmpty()) {
+                            opt = world.o().createPortal(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), axis, player.getCraft().getHandle(), 128);
+                        }
+                        if (opt.isPresent()) {
+                            BlockUtil.Rectangle rectangle = opt.get();
+                            player.teleport(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
+                        } else {
+                            if (player.getBedSpawnLocation() != null) {
+                                e.setSpawnLocation(player.getBedSpawnLocation());
+                            } else {
+                                e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
+                            }
+                            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "An error occurred trying to generate a nether portal. You were teleported to your spawnpoint."));
+                        }
+                    }
+                } else {
+                    player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Welcome back to §5§lNuttersSMP§r, brought to you by §b§lThe AuroraMC Network§r! There are 4 basic rules, these are:\n" +
+                            " - No Griefing\n" +
+                            " - No Stealing\n" +
+                            " - No Cheating\n" +
+                            " - Be respectful.\n\nWe hope you enjoy your time here! If you're playing with friends, use **/team** to create a team!"));
+                    e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+                }
+            } else if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("NETHER")) {
+                if (location.getDimension() == SMPLocation.Dimension.NETHER) {
+                    e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+                } else {
+                    WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
+                    Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), world.p_(), 16);
+                    EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
+                    if (Math.abs(location.getYaw()) >= 80) {
+                        axis = EnumDirection.EnumAxis.c;
+                    }
+                    if (opt.isEmpty()) {
+                        opt = world.o().createPortal(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), axis, player.getCraft().getHandle(), 16);
+                    }
+                    if (opt.isPresent()) {
+                        BlockUtil.Rectangle rectangle = opt.get();
+                        e.setSpawnLocation(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
+                    } else {
+                        player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "An error occurred trying to generate a nether portal, connecting you to a Lobby..."));
+                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("Lobby");
+                        out.writeUTF(player.getUniqueId().toString());
+                        player.sendPluginMessage(out.toByteArray());
+                    }
+                }
+            } else {
+                if (location.getDimension() == SMPLocation.Dimension.END) {
+                    e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+                } else {
+                    e.setSpawnLocation(Bukkit.getWorld("smp").getSpawnLocation());
+                }
+            }
         }
     }
 

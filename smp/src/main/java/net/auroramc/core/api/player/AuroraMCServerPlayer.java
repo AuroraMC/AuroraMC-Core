@@ -20,7 +20,6 @@ import net.auroramc.api.utils.SMPLocation;
 import net.auroramc.api.utils.SMPPotionEffect;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
-import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.events.player.PlayerShowEvent;
 import net.auroramc.core.api.player.scoreboard.PlayerScoreboard;
 import net.auroramc.core.api.utils.holograms.Hologram;
@@ -29,14 +28,8 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.BlockUtil;
-import net.minecraft.core.BlockPosition;
-import net.minecraft.core.EnumDirection;
-import net.minecraft.server.level.WorldServer;
-import net.minecraft.world.level.portal.PortalTravelAgent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -69,6 +62,12 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     protected boolean hidden;
     protected boolean moved;
+    protected boolean dead;
+
+    private AuroraMCServerPlayer lastHitBy;
+    private long lastHitAt;
+
+    private SMPLocation startLocation;
 
     private Map<String, Hologram> holograms;
 
@@ -77,136 +76,14 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         this.player = player;
         hidden = false;
         moved = false;
+        dead = false;
         holograms = new HashMap<>();
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         this.player = player;
-
-        SMPLocation location = AuroraMCAPI.getDbManager().getSMPLogoutLocation(this.getId());
-
-        if (location == null) {
-            if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
-                player.teleport(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
-                sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Welcome to §5§lNuttersSMP§r, brought to you by §b§lThe AuroraMC Network§r! There are 4 basic rules, these are:\n" +
-                        " - No Griefing\n" +
-                        " - No Stealing\n" +
-                        " - No Cheating\n" +
-                        " - Be respectful.\n\nWe hope you enjoy your time here! If you're playing with friends, use **/team** to create a team!"));
-            } else {
-                sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a Lobby..."));
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("Lobby");
-                out.writeUTF(getUniqueId().toString());
-                sendPluginMessage(out.toByteArray());
-                return;
-            }
-        } else {
-            sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Welcome to §5§lNuttersSMP§r, brought to you by §b§lThe AuroraMC Network§r! There are 4 basic rules, these are:\n" +
-                    " - No Griefing\n" +
-                    " - No Stealing\n" +
-                    " - No Cheating\n" +
-                    " - Be respectful.\n\nWe hope you enjoy your time here! If you're playing with friends, use **/team** to create a team!"));
-            if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
-              if (location.getDimension() == SMPLocation.Dimension.END) {
-                  if (player.getBedSpawnLocation() != null) {
-                      player.teleport(player.getBedSpawnLocation());
-                  } else {
-                      player.teleport(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
-                  }
-              } else if (location.getDimension() == SMPLocation.Dimension.NETHER) {
-                  WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
-                  Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                  Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), world.p_(), 128);
-                  EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
-                  if (Math.abs(location.getYaw()) >= 80) {
-                      axis = EnumDirection.EnumAxis.c;
-                  }
-                  if (opt.isEmpty()) {
-                      opt = world.o().createPortal(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), axis, getCraft().getHandle(), 128);
-                  }
-                  if (opt.isPresent()) {
-                      BlockUtil.Rectangle rectangle = opt.get();
-                      player.teleport(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
-                  } else {
-                      if (player.getBedSpawnLocation() != null) {
-                          player.teleport(player.getBedSpawnLocation());
-                      } else {
-                          player.teleport(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
-                      }
-                      sendMessage(TextFormatter.pluginMessage("NuttersSMP", "An error occurred trying to generate a nether portal. You were teleported to your spawnpoint."));
-                  }
-
-              } else {
-                  player.teleport(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
-              }
-            } else if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("NETHER")) {
-                if (location.getDimension() == SMPLocation.Dimension.NETHER) {
-                    player.teleport(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
-                } else {
-                    WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
-                    Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), world.p_(), 16);
-                    EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
-                    if (Math.abs(location.getYaw()) >= 80) {
-                        axis = EnumDirection.EnumAxis.c;
-                    }
-                    if (opt.isEmpty()) {
-                        opt = world.o().createPortal(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), axis, getCraft().getHandle(), 16);
-                    }
-                    if (opt.isPresent()) {
-                        BlockUtil.Rectangle rectangle = opt.get();
-                        player.teleport(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
-                    } else {
-                        sendMessage(TextFormatter.pluginMessage("NuttersSMP", "An error occurred trying to generate a nether portal, connecting you to a Lobby..."));
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Lobby");
-                        out.writeUTF(getUniqueId().toString());
-                        sendPluginMessage(out.toByteArray());
-                    }
-                }
-            } else {
-                if (location.getDimension() == SMPLocation.Dimension.END) {
-                    player.teleport(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
-                } else {
-                    player.teleport(Bukkit.getWorld("smp").getSpawnLocation());
-                }
-            }
-        }
-
-        String[] inventory = AuroraMCAPI.getDbManager().getInventory(this.getId());
-
-        if (inventory != null) {
-            try {
-                InventoryUtil.playerInventoryFromBase64(this, inventory);
-            } catch (IOException e) {
-                e.printStackTrace();
-                sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a lobby..."));
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("Lobby");
-                out.writeUTF(getUniqueId().toString());
-                sendPluginMessage(out.toByteArray());
-            }
-        }
-
-        //Variables commmon for all servers for all players.
-        player.setFlying(false);
-        player.setAllowFlight(false);
-        player.setGameMode(GameMode.SURVIVAL);
-
-
-        //Variables for updating player state.
-        player.setHealth(AuroraMCAPI.getDbManager().getHealth(this.getId()));
-        player.setFoodLevel(AuroraMCAPI.getDbManager().getHunger(this.getId()));
-        SMPLocation location1 = AuroraMCAPI.getDbManager().getLogoutVector(this.getId());
-        player.setVelocity(new Vector(location1.getX(), location1.getY(), location1.getZ()));
-        player.setFallDistance(AuroraMCAPI.getDbManager().getLogoutFall(this.getId()));
-        player.setFireTicks(AuroraMCAPI.getDbManager().getFireTicks(this.getId()));
-        player.setExp(AuroraMCAPI.getDbManager().getExp(this.getId()));
-        player.setLevel(AuroraMCAPI.getDbManager().getLevel(this.getId()));
-        for (PotionEffect effect: player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
-        }
-        for (SMPPotionEffect potion : AuroraMCAPI.getDbManager().getPotionEffects(this.getId())) {
-            player.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(potion.getType())), potion.getDuration(), potion.getLevel()));
+        this.startLocation = AuroraMCAPI.getDbManager().getSMPLogoutLocation(this.getUniqueId());
+        SMPLocation location = AuroraMCAPI.getDbManager().getSMPBedLocation(this.getUniqueId());
+        if (location != null) {
+            this.setBedSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ()));
         }
     }
 
@@ -364,14 +241,21 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
                 if (!player.isOnline()) {
                     return;
                 }
-                PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(AuroraMCServerPlayer.this);
-                Bukkit.getPluginManager().callEvent(creationEvent);
-                if (!player.isOnline()) {
-                    return;
+                setLoaded(true);
+                setScoreboard();
+                if (isVanished()) {
+                    sendMessage(TextFormatter.highlight(TextFormatter.convert("" +
+                            "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
+                            " \n" +
+                            "&b&lYou are currently vanished!\n" +
+                            " \n" +
+                            "&fTo unvanish, simply use /vanish.\n" +
+                            " \n" +
+                            "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
                 }
-                ServerAPI.newPlayer(player, creationEvent.getPlayer());
-                creationEvent.getPlayer().setLoaded(true);
-
+                for (Hologram hologram : ServerAPI.getHolograms().values()) {
+                    hologram.onJoin(AuroraMCServerPlayer.this);
+                }
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("UpdateParty");
                 out.writeUTF(getName());
@@ -379,6 +263,45 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             }
         }.runTask(ServerAPI.getCore());
 
+    }
+
+    public void loadPlayerState() {
+        String[] inventory = AuroraMCAPI.getDbManager().getInventory(this.getUniqueId());
+
+        if (inventory != null) {
+            try {
+                InventoryUtil.playerInventoryFromBase64(this, inventory);
+            } catch (IOException e) {
+                e.printStackTrace();
+                sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a lobby..."));
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("Lobby");
+                out.writeUTF(getUniqueId().toString());
+                sendPluginMessage(out.toByteArray());
+            }
+        }
+
+        //Variables commmon for all servers for all players.
+        player.setFlying(false);
+        player.setAllowFlight(false);
+        player.setGameMode(GameMode.SURVIVAL);
+
+
+        //Variables for updating player state.
+        player.setHealth(AuroraMCAPI.getDbManager().getHealth(this.getUniqueId()));
+        player.setFoodLevel(AuroraMCAPI.getDbManager().getHunger(this.getUniqueId()));
+        SMPLocation location1 = AuroraMCAPI.getDbManager().getLogoutVector(this.getUniqueId());
+        if (location1 != null) player.setVelocity(new Vector(location1.getX(), location1.getY(), location1.getZ()));
+        player.setFallDistance(AuroraMCAPI.getDbManager().getLogoutFall(this.getUniqueId()));
+        player.setFireTicks(AuroraMCAPI.getDbManager().getFireTicks(this.getUniqueId()));
+        player.setExp(AuroraMCAPI.getDbManager().getExp(this.getUniqueId()));
+        player.setLevel(AuroraMCAPI.getDbManager().getLevel(this.getUniqueId()));
+        for (PotionEffect effect: player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+        for (SMPPotionEffect potion : AuroraMCAPI.getDbManager().getPotionEffects(this.getUniqueId())) {
+            player.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(potion.getType())), potion.getDuration(), potion.getLevel()));
+        }
     }
 
     @Override
@@ -733,27 +656,36 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             return;
         }
 
-        AuroraMCAPI.getDbManager().setSMPLogoutLocation(this.getId(), new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), getLocation().getX(), getLocation().getY(), getLocation().getZ(), getLocation().getPitch(), getLocation().getYaw()));
+        AuroraMCAPI.getDbManager().setSMPLogoutLocation(this.getUniqueId(), new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), getLocation().getX(), getLocation().getY(), getLocation().getZ(), getLocation().getPitch(), getLocation().getYaw(), ((isDead())? SMPLocation.Reason.DEATH: SMPLocation.Reason.LEAVE)));
         try {
-            AuroraMCAPI.getDbManager().setInventory(this.getId(), InventoryUtil.playerInventoryToBase64(this));
+            AuroraMCAPI.getDbManager().setInventory(this.getUniqueId(), InventoryUtil.playerInventoryToBase64(this));
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
 
-        AuroraMCAPI.getDbManager().setHealth(this.getId(), getHealth());
-        AuroraMCAPI.getDbManager().setHunger(this.getId(), getFoodLevel());
-        SMPLocation location1 = new SMPLocation(null, getVelocity().getX(), getVelocity().getY(), getVelocity().getZ(), -1, -1);
-        AuroraMCAPI.getDbManager().setLogoutVector(this.getId(), location1);
+        AuroraMCAPI.getDbManager().setHealth(this.getUniqueId(), getHealth());
+        AuroraMCAPI.getDbManager().setHunger(this.getUniqueId(), getFoodLevel());
+        SMPLocation location1 = new SMPLocation(null, getVelocity().getX(), getVelocity().getY(), getVelocity().getZ(), -1, -1, null);
+        AuroraMCAPI.getDbManager().setLogoutVector(this.getUniqueId(), location1);
 
-        AuroraMCAPI.getDbManager().setLogoutFall(this.getId(), getFallDistance());
-        AuroraMCAPI.getDbManager().setFireTicks(this.getId(), getFireTicks());
-        AuroraMCAPI.getDbManager().setExp(this.getId(), getExp());
-        AuroraMCAPI.getDbManager().setLevel(this.getId(), getLevel());
+        AuroraMCAPI.getDbManager().setLogoutFall(this.getUniqueId(), getFallDistance());
+        AuroraMCAPI.getDbManager().setFireTicks(this.getUniqueId(), getFireTicks());
+        AuroraMCAPI.getDbManager().setExp(this.getUniqueId(), getExp());
+        AuroraMCAPI.getDbManager().setLevel(this.getUniqueId(), getLevel());
         List<SMPPotionEffect> potionEffects = new ArrayList<>();
         for (PotionEffect effect: player.getActivePotionEffects()) {
             potionEffects.add(new SMPPotionEffect(effect.getType().getName(), effect.getAmplifier(), effect.getDuration()));
         }
-        AuroraMCAPI.getDbManager().setPotionEffects(this.getId(), potionEffects);
+        AuroraMCAPI.getDbManager().setPotionEffects(this.getUniqueId(), potionEffects);
+        if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
+            SMPLocation location;
+            if (player.getBedSpawnLocation() != null) {
+                location = new SMPLocation(null, player.getBedSpawnLocation().getX(), player.getBedSpawnLocation().getY(), player.getBedSpawnLocation().getZ(), -1, -1, null);
+            } else {
+                location = null;
+            }
+            AuroraMCAPI.getDbManager().setSMPBedLocation(this.getUniqueId(), location);
+        }
     }
 
     public void loadData() {
@@ -1247,5 +1179,33 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     public BukkitTask getActiveReportTask() {
         return activeReportTask;
+    }
+
+    public SMPLocation getStartLocation() {
+        return startLocation;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public AuroraMCServerPlayer getLastHitBy() {
+        return lastHitBy;
+    }
+
+    public long getLastHitAt() {
+        return lastHitAt;
+    }
+
+    public void setLastHitAt(long lastHitAt) {
+        this.lastHitAt = lastHitAt;
+    }
+
+    public void setLastHitBy(AuroraMCServerPlayer lastHitBy) {
+        this.lastHitBy = lastHitBy;
     }
 }
