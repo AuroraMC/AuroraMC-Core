@@ -6,22 +6,30 @@ package net.auroramc.core.listeners;
 
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.backend.ChatLogs;
+import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.player.ChatChannel;
 import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.player.PlayerPreferences;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.Protocol;
+import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.player.AsyncPlayerChatEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.ServerChatUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatListener implements Listener {
 
@@ -172,26 +180,33 @@ public class ChatListener implements Listener {
                 for (AuroraMCServerPlayer recipient : ServerAPI.getPlayers()) {
                     if (recipient.getPreferences().isChatVisibilityEnabled()) {
                         if (!recipient.isIgnored(player.getId()) || recipient.hasPermission("moderation")) {
-                            if (!recipient.equals(player)) {
-                                ServerChatUtils.MentionMessage mentionedMessage = ServerChatUtils.processMentions(recipient, (TextComponent) component);
-
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage.getFormattedText()));
-                                if (mentionedMessage.isMentionFound()) {
-                                    if (recipient.getActiveMutes().size() > 0 && recipient.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
-                                        BaseComponent msg = TextFormatter.privateMessage(recipient, player, true, new TextComponent("Hey! I'm currently muted and cannot message you right now."));
-                                        recipient.sendMessage(msg);
-                                        msg = TextFormatter.privateMessage(recipient, player, false, new TextComponent("Hey! I'm currently muted and cannot message you right now."));
-                                        player.sendMessage(msg);
-                                    }
-                                    if (recipient.getPreferences().isPingOnChatMentionEnabled()) {
-                                        recipient.playSound(recipient.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 2);
-                                    }
+                            recipient.sendMessage(TextFormatter.chatMessage(player, recipient, component));
+                            String extra = ComponentSerializer.toString(component) + ";" + e.getMessage() + ";" + player.getId() + ";" + player.getByDisguiseName() + ";" + player.getRank().name();
+                            List<String> destinations = new ArrayList<>();
+                            String sender = "SMP-Overworld";
+                            switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
+                                case "OVERWORLD": {
+                                    destinations.add("SMP-Nether");
+                                    destinations.add("SMP-End");
+                                    break;
                                 }
-                            } else {
-                                BaseComponent mentionedMessage = ServerChatUtils.processMentions((TextComponent) component);
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage));
+                                case "END": {
+                                    destinations.add("SMP-Nether");
+                                    destinations.add("SMP-Overworld");
+                                    sender = "SMP-End";
+                                    break;
+                                }
+                                case "NETHER": {
+                                    destinations.add("SMP-Overworld");
+                                    destinations.add("SMP-End");
+                                    sender = "SMP-Nether";
+                                    break;
+                                }
                             }
-
+                            for (String destination : destinations) {
+                                ProtocolMessage message = new ProtocolMessage(Protocol.MESSAGE, destination, "chat", sender, extra);
+                                CommunicationUtils.sendMessage(message);
+                            }
                         }
                     }
                 }

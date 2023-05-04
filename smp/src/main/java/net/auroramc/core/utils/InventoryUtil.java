@@ -35,7 +35,7 @@ public class InventoryUtil {
         player.getInventory().setContents(itemStackArrayFromBase64(inventory[0]));
         player.getInventory().setArmorContents(itemStackArrayFromBase64(inventory[1]));
         player.getInventory().setStorageContents(itemStackArrayFromBase64(inventory[2]));
-        player.getInventory().setArmorContents(itemStackArrayFromBase64(inventory[3]));
+        player.getInventory().setExtraContents(itemStackArrayFromBase64(inventory[3]));
         player.getEnderChest().setContents(itemStackArrayFromBase64(inventory[4]));
     }
 

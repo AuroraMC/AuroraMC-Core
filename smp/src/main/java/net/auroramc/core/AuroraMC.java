@@ -104,6 +104,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandEmotes());
         AuroraMCAPI.registerCommand(new CommandViewGames());
         AuroraMCAPI.registerCommand(new CommandReportInfo());
+        AuroraMCAPI.registerCommand(new CommandHub());
 
 
 
@@ -143,6 +144,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
 
 
         //Register the BungeeCord plugin message channel
