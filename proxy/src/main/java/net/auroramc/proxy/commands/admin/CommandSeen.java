@@ -18,7 +18,7 @@ import java.util.*;
 public class CommandSeen extends ProxyCommand {
 
     public CommandSeen() {
-        super("seen", Collections.singletonList("lastseen"), Arrays.asList(Permission.ADMIN, Permission.STAFF_MANAGEMENT), false, null);
+        super("seen", Collections.singletonList("lastseen"), Arrays.asList(Permission.ADMIN, Permission.STAFF_MANAGEMENT, Permission.SOCIAL_MEDIA, Permission.BUILD_TEAM_MANAGEMENT), false, null);
     }
 
 
