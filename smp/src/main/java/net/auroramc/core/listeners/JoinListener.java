@@ -131,7 +131,9 @@ public class JoinListener implements Listener {
         } else {
             if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
                 if (location.getDimension() == SMPLocation.Dimension.END) {
-                    if (player.getBedSpawnLocation() != null) {
+                    if (location.getReason() == SMPLocation.Reason.HOME) {
+                        e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
+                    } else if (player.getBedSpawnLocation() != null) {
                         e.setSpawnLocation(player.getBedSpawnLocation());
                     } else {
                         e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
@@ -143,20 +145,25 @@ public class JoinListener implements Listener {
                         } else {
                             e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), 0.5, 63, 0.5));
                         }
+                    } else if (location.getReason() == SMPLocation.Reason.HOME) {
+                        e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
                     } else {
                         WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
                         Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                        Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), world.p_(), 128);
-                        EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
-                        if (Math.abs(location.getYaw()) >= 80) {
-                            axis = EnumDirection.EnumAxis.c;
-                        }
+                        AuroraMCAPI.getLogger().info("Finding portal at: " + (location1.getBlockX()*8) + " " + location1.getBlockY() + " " + (location1.getBlockZ()*8));
+                        Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY(), location1.getBlockZ()*8), world.p_(), 128);
                         if (opt.isEmpty()) {
-                            opt = world.o().createPortal(new BlockPosition(location1.getBlockX()*8, location1.getBlockY()*8, location1.getBlockZ()*8), axis, player.getCraft().getHandle(), 128);
+                            AuroraMCAPI.getLogger().info("No portal found, creating portal...");
+                            EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
+                            if (Math.abs(location.getYaw()) >= 80) {
+                                axis = EnumDirection.EnumAxis.c;
+                            }
+                            opt = world.o().createPortal(new BlockPosition(location1.getBlockX()*8, location1.getBlockY(), location1.getBlockZ()*8), axis, player.getCraft().getHandle(), 16);
                         }
                         if (opt.isPresent()) {
                             BlockUtil.Rectangle rectangle = opt.get();
-                            player.teleport(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
+                            AuroraMCAPI.getLogger().info("Portal found at: " + rectangle.a.u() + " " + rectangle.a.v() + " " + rectangle.a.w());
+                            e.setSpawnLocation(new Location(world.getWorld(), rectangle.a.u(), rectangle.a.v(), rectangle.a.w(), location.getYaw(), location.getPitch()));
                         } else {
                             if (player.getBedSpawnLocation() != null) {
                                 e.setSpawnLocation(player.getBedSpawnLocation());
@@ -175,18 +182,18 @@ public class JoinListener implements Listener {
                     e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
                 }
             } else if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("NETHER")) {
-                if (location.getDimension() == SMPLocation.Dimension.NETHER) {
+                if (location.getDimension() == SMPLocation.Dimension.NETHER || location.getReason() == SMPLocation.Reason.HOME) {
                     e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
                 } else {
                     WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
                     Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), world.p_(), 16);
+                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY(), location1.getBlockZ()/8), world.p_(), 16);
                     EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
                     if (Math.abs(location.getYaw()) >= 80) {
                         axis = EnumDirection.EnumAxis.c;
                     }
                     if (opt.isEmpty()) {
-                        opt = world.o().createPortal(new BlockPosition(location1.getBlockX()/8, location1.getBlockY()/8, location1.getBlockZ()/8), axis, player.getCraft().getHandle(), 16);
+                        opt = world.o().createPortal(new BlockPosition(location1.getBlockX()/8, location1.getBlockY(), location1.getBlockZ()/8), axis, player.getCraft().getHandle(), 16);
                     }
                     if (opt.isPresent()) {
                         BlockUtil.Rectangle rectangle = opt.get();
@@ -200,7 +207,7 @@ public class JoinListener implements Listener {
                     }
                 }
             } else {
-                if (location.getDimension() == SMPLocation.Dimension.END) {
+                if (location.getDimension() == SMPLocation.Dimension.END || location.getReason() == SMPLocation.Reason.HOME) {
                     e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
                 } else {
                     e.setSpawnLocation(Bukkit.getWorld("smp").getSpawnLocation());

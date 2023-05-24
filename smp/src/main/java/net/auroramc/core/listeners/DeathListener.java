@@ -49,6 +49,9 @@ public class DeathListener implements Listener {
             e.setKeepInventory(true);
             e.setKeepLevel(true);
             e.setDroppedExp(0);
+        } else {
+            AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getEntity());
+            player.setDead(true);
         }
     }
 
@@ -234,11 +237,13 @@ public class DeathListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
         if (!((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
+            player.saveData();
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("SMPDeath");
+            out.writeUTF("SMPOverworld");
             out.writeUTF(player.getUniqueId().toString());
             player.sendPluginMessage(out.toByteArray());
         } else {
+            player.setDead(false);
             if (player.getBedSpawnLocation() != null && player.getBedSpawnLocation().getWorld().getName().equals("smp")) {
                 e.setRespawnLocation(player.getBedSpawnLocation());
             } else {
