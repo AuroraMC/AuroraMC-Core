@@ -46,7 +46,7 @@ public class CommandTeam extends ServerCommand {
                     **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
-                    **/team disband** - Disband your team. §c§lWARNING:§r This will unlock all of your team chests."""));
+                    **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
             return;
         }
         switch (args.get(0).toLowerCase()) {
@@ -71,7 +71,7 @@ public class CommandTeam extends ServerCommand {
                     **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
-                    **/team disband** - Disband your team. §c§lWARNING:§r This will unlock all of your team chests."""));
+                    **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
                 break;
         }
     }
