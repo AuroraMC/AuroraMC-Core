@@ -1086,12 +1086,30 @@ public class RecievePluginMessage implements Listener {
                         break;
                     }
 
-                    case "SMPDeath": {
+                    case "SMPOverworld": {
                         UUID uuid = UUID.fromString(in.readUTF());
                         AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
                         assert player != null;
                         player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
                         player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
+
+                        break;
+                    }
+                    case "SMPNether": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Nether**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-Nether"));
+
+                        break;
+                    }
+                    case "SMPEnd": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-End**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-End"));
 
                         break;
                     }

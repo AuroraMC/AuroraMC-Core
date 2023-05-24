@@ -3886,6 +3886,72 @@ public class DatabaseManager {
         }
     }
 
+    public SMPLocation getSMPHomeLocation(UUID id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".home")) {
+                return null;
+            }
+            double x = Double.parseDouble(connection.hget("smp." + id + ".home", "x"));
+            double y = Double.parseDouble(connection.hget("smp." + id + ".home", "y"));
+            double z = Double.parseDouble(connection.hget("smp." + id + ".home", "z"));
+            float pitch = Float.parseFloat(connection.hget("smp." + id + ".home", "pitch"));
+            float yaw = Float.parseFloat(connection.hget("smp." + id + ".home", "yaw"));
+            SMPLocation.Dimension dimension = SMPLocation.Dimension.valueOf(connection.hget("smp." + id + ".home", "dimension"));
+            SMPLocation.Reason reason = SMPLocation.Reason.valueOf(connection.hget("smp." + id + ".home", "reason"));
+
+            return new SMPLocation(dimension, x, y, z, pitch, yaw, reason);
+        }
+    }
+
+    public void setSMPHomeLocation(UUID id, SMPLocation location) {
+        try (Jedis connection = jedis.getResource()) {
+            if (location == null) {
+                connection.del("smp." + id + ".home");
+                return;
+            }
+            connection.hset("smp." + id + ".home", "x", String.valueOf(location.getX()));
+            connection.hset("smp." + id + ".home", "y", String.valueOf(location.getY()));
+            connection.hset("smp." + id + ".home", "z", String.valueOf(location.getZ()));
+            connection.hset("smp." + id + ".home", "pitch", String.valueOf(location.getPitch()));
+            connection.hset("smp." + id + ".home", "yaw", String.valueOf(location.getYaw()));
+            connection.hset("smp." + id + ".home", "dimension", location.getDimension().name());
+            connection.hset("smp." + id + ".home", "reason", location.getReason().name());
+        }
+    }
+
+    public SMPLocation getSMPTeamHomeLocation(UUID id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".home")) {
+                return null;
+            }
+            double x = Double.parseDouble(connection.hget("smp." + id + ".teamhome", "x"));
+            double y = Double.parseDouble(connection.hget("smp." + id + ".teamhome", "y"));
+            double z = Double.parseDouble(connection.hget("smp." + id + ".teamhome", "z"));
+            float pitch = Float.parseFloat(connection.hget("smp." + id + ".teamhome", "pitch"));
+            float yaw = Float.parseFloat(connection.hget("smp." + id + ".teamhome", "yaw"));
+            SMPLocation.Dimension dimension = SMPLocation.Dimension.valueOf(connection.hget("smp." + id + ".teamhome", "dimension"));
+            SMPLocation.Reason reason = SMPLocation.Reason.valueOf(connection.hget("smp." + id + ".teamhome", "reason"));
+
+            return new SMPLocation(dimension, x, y, z, pitch, yaw, reason);
+        }
+    }
+
+    public void setSMPTeamHomeLocation(UUID id, SMPLocation location) {
+        try (Jedis connection = jedis.getResource()) {
+            if (location == null) {
+                connection.del("smp." + id + ".home");
+                return;
+            }
+            connection.hset("smp." + id + ".teamhome", "x", String.valueOf(location.getX()));
+            connection.hset("smp." + id + ".teamhome", "y", String.valueOf(location.getY()));
+            connection.hset("smp." + id + ".teamhome", "z", String.valueOf(location.getZ()));
+            connection.hset("smp." + id + ".teamhome", "pitch", String.valueOf(location.getPitch()));
+            connection.hset("smp." + id + ".teamhome", "yaw", String.valueOf(location.getYaw()));
+            connection.hset("smp." + id + ".teamhome", "dimension", location.getDimension().name());
+            connection.hset("smp." + id + ".teamhome", "reason", location.getReason().name());
+        }
+    }
+
     public SMPLocation getSMPBedLocation(UUID id) {
         try (Jedis connection = jedis.getResource()) {
             if (!connection.exists("smp." + id + ".bed")) {
@@ -4055,7 +4121,73 @@ public class DatabaseManager {
         }
     }
 
+    public String getSMPTeamName(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.hget("smp.team." + uuid.toString(), "name");
+        }
+    }
 
+    public void setSMPTeamName(UUID uuid, String name) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp.team." + uuid.toString(), "name", name);
+        }
+    }
+
+    public String getSMPTeamPrefix(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.hget("smp.team." + uuid.toString(), "prefix");
+        }
+    }
+
+    public void setSMPTeamPrefix(UUID uuid, String prefix) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp.team." + uuid.toString(), "prefix", prefix);
+        }
+    }
+
+    public UUID getSMPTeamLeader(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp.team." + uuid.toString())) {
+                return null;
+            }
+            return UUID.fromString(connection.hget("smp.team." + uuid, "leader"));
+        }
+    }
+
+    public void setSMPTeamLeader(UUID uuid, UUID leader) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp.team." + uuid, "leader", leader.toString());
+        }
+    }
+
+    public List<UUID> getSMPTeamMembers(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp.team." + uuid.toString())) {
+                return new ArrayList<>();
+            }
+            List<UUID> uuids = new ArrayList<>();
+            String[] strings = connection.hget("smp.team." + uuid, "members").split(";");
+            for (String string : strings) {
+                uuids.add(UUID.fromString(string));
+            }
+            return uuids;
+        }
+    }
+
+    public void setSMPTeamMembers(UUID uuid, List<String> members) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.hset("smp.team." + uuid, "members", String.join(";", members));
+        }
+    }
+
+    public void disbandSMPTeam(UUID uuid, List<UUID> members) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.del("smp.team." + uuid);
+            for (UUID id : members) {
+                connection.del("smp." + id + ".team");
+            }
+        }
+    }
 
     public String[] getInventory(UUID id) {
         try (Jedis connection = jedis.getResource()) {
@@ -4063,6 +4195,25 @@ public class DatabaseManager {
                 return null;
             }
             return connection.get("smp." + id + ".inventory").split(",");
+        }
+    }
+
+    public UUID getSMPTeam(UUID id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".team")) {
+                return null;
+            }
+            return UUID.fromString(connection.get("smp." + id + ".team"));
+        }
+    }
+
+    public void setSMPTeam(UUID id, UUID team) {
+        try (Jedis connection = jedis.getResource()) {
+            if (team == null) {
+                connection.del("smp." + id + ".team");
+                return;
+            }
+            connection.set("smp." + id + ".team", team.toString());
         }
     }
 

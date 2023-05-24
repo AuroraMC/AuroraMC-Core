@@ -15,6 +15,7 @@ import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
 import net.auroramc.core.commands.admin.iplookup.CommandIPLookup;
 import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
+import net.auroramc.core.commands.general.team.CommandTeam;
 import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
@@ -53,6 +54,7 @@ public class AuroraMC extends JavaPlugin {
         getLogger().info("Loading AuroraMC-SMP...");
 
         ServerAPI.init(this);
+        AuroraMCAPI.setCosmeticsEnabled(false);
 
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
@@ -105,6 +107,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandViewGames());
         AuroraMCAPI.registerCommand(new CommandReportInfo());
         AuroraMCAPI.registerCommand(new CommandHub());
+        AuroraMCAPI.registerCommand(new CommandTeam());
 
 
 
@@ -145,6 +148,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
 
 
         //Register the BungeeCord plugin message channel
@@ -163,4 +167,5 @@ public class AuroraMC extends JavaPlugin {
         }
     }
 }
+
 

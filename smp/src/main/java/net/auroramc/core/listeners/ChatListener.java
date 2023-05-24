@@ -180,35 +180,37 @@ public class ChatListener implements Listener {
                 for (AuroraMCServerPlayer recipient : ServerAPI.getPlayers()) {
                     if (recipient.getPreferences().isChatVisibilityEnabled()) {
                         if (!recipient.isIgnored(player.getId()) || recipient.hasPermission("moderation")) {
-                            recipient.sendMessage(TextFormatter.chatMessage(player, recipient, component));
-                            String extra = ComponentSerializer.toString(component) + ";" + e.getMessage() + ";" + player.getId() + ";" + player.getByDisguiseName() + ";" + player.getRank().name();
-                            List<String> destinations = new ArrayList<>();
-                            String sender = "SMP-Overworld";
-                            switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
-                                case "OVERWORLD": {
-                                    destinations.add("SMP-Nether");
-                                    destinations.add("SMP-End");
-                                    break;
-                                }
-                                case "END": {
-                                    destinations.add("SMP-Nether");
-                                    destinations.add("SMP-Overworld");
-                                    sender = "SMP-End";
-                                    break;
-                                }
-                                case "NETHER": {
-                                    destinations.add("SMP-Overworld");
-                                    destinations.add("SMP-End");
-                                    sender = "SMP-Nether";
-                                    break;
-                                }
-                            }
-                            for (String destination : destinations) {
-                                ProtocolMessage message = new ProtocolMessage(Protocol.MESSAGE, destination, "chat", sender, extra);
-                                CommunicationUtils.sendMessage(message);
-                            }
+                            BaseComponent chat = TextFormatter.chatMessage(player, recipient, component);
+                            recipient.sendMessage(chat);
                         }
                     }
+                }
+                BaseComponent chat = TextFormatter.chatMessage(player, null, component);
+                String extra = ComponentSerializer.toString(chat) + ";" + e.getMessage() + ";" + player.getId() + ";" + player.getByDisguiseName() + ";" + player.getRank().name();
+                List<String> destinations = new ArrayList<>();
+                String sender = "SMP-Overworld";
+                switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
+                    case "OVERWORLD": {
+                        destinations.add("SMP-Nether");
+                        destinations.add("SMP-End");
+                        break;
+                    }
+                    case "END": {
+                        destinations.add("SMP-Nether");
+                        destinations.add("SMP-Overworld");
+                        sender = "SMP-End";
+                        break;
+                    }
+                    case "NETHER": {
+                        destinations.add("SMP-Overworld");
+                        destinations.add("SMP-End");
+                        sender = "SMP-Nether";
+                        break;
+                    }
+                }
+                for (String destination : destinations) {
+                    ProtocolMessage message = new ProtocolMessage(Protocol.MESSAGE, destination, "chat", sender, extra);
+                    CommunicationUtils.sendMessage(message);
                 }
                 ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), false, ChatChannel.ALL, -1, null, null);
                 break;

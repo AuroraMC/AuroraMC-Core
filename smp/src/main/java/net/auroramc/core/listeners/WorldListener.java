@@ -14,44 +14,81 @@ import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.server.ServerCloseRequestEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import net.auroramc.core.api.utils.ZipUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.entity.SpawnCategory;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.event.world.WorldInitEvent;
 
-import java.io.File;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class WorldListener implements Listener {
 
     @EventHandler
+    public void onWorldLoad(WorldInitEvent e) {
+        if (e.getWorld().getName().contains("world")) {
+            e.getWorld().setKeepSpawnInMemory(false);
+            e.getWorld().setAutoSave(false);
+            e.getWorld().setSpawnFlags(false, false);
+            //Disable entity spawning.
+            for (SpawnCategory category : SpawnCategory.values()) {
+                if (category == SpawnCategory.MISC) {
+                    continue;
+                }
+                e.getWorld().setTicksPerSpawns(category, 0);
+            }
+        }
+    }
+
+    @EventHandler
     public void onServerLoad(ServerLoadEvent e) {
         WorldCreator creator = new WorldCreator("smp");
         switch (Objects.requireNonNull(ServerAPI.getCore().getConfig().getString("type"))) {
-            case "nether": {
+            case "NETHER": {
                 creator.environment(World.Environment.NETHER);
                 break;
             }
-            case "end": {
+            case "END": {
                 creator.environment(World.Environment.THE_END);
                 break;
             }
-            case "overworld": {
+            case "OVERWORLD": {
                 creator.environment(World.Environment.NORMAL);
                 break;
             }
         }
         creator.seed(-1261677964);
 
+        creator.generateStructures(true);
+        World smp = Bukkit.createWorld(creator);
 
-        Bukkit.createWorld(creator);
 
         AuroraMCAPI.getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");
         ProtocolMessage message = new ProtocolMessage(Protocol.SERVER_ONLINE, "Mission Control", "", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name());
         CommunicationUtils.sendMessage(message);
+
+        World world = Bukkit.getWorld("world");
+        for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
+            world.unloadChunk(chunk);
+        }
+        Bukkit.unloadWorld(world, false);
+
+        world = Bukkit.getWorld("world_nether");
+        for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
+            world.unloadChunk(chunk);
+        }
+        //Bukkit.unloadWorld(world, false);
+
+        world = Bukkit.getWorld("world_the_end");
+        for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
+            world.unloadChunk(chunk);
+        }
+        Bukkit.unloadWorld(world, false);
     }
 
     @EventHandler
