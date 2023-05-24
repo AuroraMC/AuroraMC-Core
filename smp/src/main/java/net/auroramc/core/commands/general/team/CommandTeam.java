@@ -23,6 +23,14 @@ public class CommandTeam extends ServerCommand {
 
     public CommandTeam() {
         super("team", Collections.emptyList(), Collections.singletonList(Permission.PLAYER), false, null);
+        this.registerSubcommand("create", Collections.emptyList(), new CommandTeamCreate());
+        this.registerSubcommand("invite", Collections.emptyList(), new CommandTeamInvite());
+        this.registerSubcommand("remove", Collections.emptyList(), new CommandTeamRemove());
+        this.registerSubcommand("rename", Collections.emptyList(), new CommandTeamRename());
+        this.registerSubcommand("prefix", Collections.emptyList(), new CommandTeamPrefix());
+        this.registerSubcommand("info", Collections.emptyList(), new CommandTeamInfo());
+        this.registerSubcommand("accept", Collections.emptyList(), new CommandTeamAccept());
+        this.registerSubcommand("disband", Collections.emptyList(), new CommandTeamDisband());
 
     }
 
@@ -31,11 +39,14 @@ public class CommandTeam extends ServerCommand {
         if (args.size() == 0) {
             player.sendMessage(TextFormatter.pluginMessage("Team", """
                     Available commands:
-                    **/team create [name]** - Creates a team. This is compatible with spaces and colour codes.
+                    **/team create [name]** - Creates a team.
                     **/team invite [username]** - Invite a user to be part of your team.
                     **/team remove [username]** - Remove a user from your team.
                     **/team rename [name]** - Rename your team.
-                    **/team delete** - Delete your team. §c§lWARNING:§r This will unlock all of your team chests."""));
+                    **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
+                    **/team info** - Displays information about your team.
+                    **/team accept** - Accept a team invite.
+                    **/team disband** - Disband your team. §c§lWARNING:§r This will unlock all of your team chests."""));
             return;
         }
         switch (args.get(0).toLowerCase()) {
@@ -43,20 +54,24 @@ public class CommandTeam extends ServerCommand {
             case "invite":
             case "remove":
             case "rename":
-            case "delete":
+            case "disband":
             case "info":
+            case "accept":
+            case "prefix":
                 aliasUsed = args.remove(0).toLowerCase();
                 subcommands.get(aliasUsed).execute(player, aliasUsed, args);
                 break;
             default:
                 player.sendMessage(TextFormatter.pluginMessage("Team", """
                     Available commands:
-                    **/team create [name]** - Creates a team. This is compatible with spaces and colour codes.
+                    **/team create [name]** - Creates a team.
                     **/team invite [username]** - Invite a user to be part of your team.
                     **/team remove [username]** - Remove a user from your team.
                     **/team rename [name]** - Rename your team.
+                    **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
-                    **/team delete** - Delete your team. §c§lWARNING:§r This will unlock all of your team chests."""));
+                    **/team accept** - Accept a team invite.
+                    **/team disband** - Disband your team. §c§lWARNING:§r This will unlock all of your team chests."""));
                 break;
         }
     }
@@ -69,8 +84,10 @@ public class CommandTeam extends ServerCommand {
                 case "invite":
                 case "remove":
                 case "rename":
-                case "delete":
+                case "disband":
                 case "info":
+                case "accept":
+                case "prefix":
                     aliasUsed = args.remove(0);
                     return ((ServerCommand)subcommands.get(aliasUsed)).onTabComplete(player, aliasUsed, args, ((args.size() >= 1)?args.get(0):""), numberArguments - 1);
                 default:
