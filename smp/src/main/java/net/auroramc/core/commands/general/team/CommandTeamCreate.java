@@ -38,6 +38,7 @@ public class CommandTeamCreate extends ServerCommand {
                 }
 
                 SMPTeam team = new SMPTeam(UUID.randomUUID(), name, name, new SMPPlayer(player.getId(), player.getName(), player.getUuid(), player, player.getRank()));
+                ServerAPI.getLoadedTeams().put(team.getUuid(), team);
                 player.setSmpTeam(team);
                 player.sendMessage(TextFormatter.pluginMessage("Teams", "Team successfully created! Use /team invite to invite players to your team!"));
             } else {

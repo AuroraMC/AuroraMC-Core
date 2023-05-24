@@ -32,6 +32,7 @@ public class CommandTeamAccept extends ServerCommand {
             SMPTeam team = ServerAPI.getLoadedTeams().get(player.getPendingInvite());
             team.addMember(new SMPPlayer(player.getId(), player.getName(), player.getUuid(), player, player.getRank()), true);
             player.setSmpTeam(team);
+            player.setPendingInvite(null);
         } else {
             player.sendMessage(TextFormatter.pluginMessage("Teams", "You must have a pending invite to use this command."));
         }

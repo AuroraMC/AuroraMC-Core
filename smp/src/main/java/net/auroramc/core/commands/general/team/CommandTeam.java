@@ -31,6 +31,7 @@ public class CommandTeam extends ServerCommand {
         this.registerSubcommand("info", Collections.emptyList(), new CommandTeamInfo());
         this.registerSubcommand("accept", Collections.emptyList(), new CommandTeamAccept());
         this.registerSubcommand("disband", Collections.emptyList(), new CommandTeamDisband());
+        this.registerSubcommand("home", Collections.emptyList(), new CommandTeamHome());
 
     }
 
@@ -46,6 +47,7 @@ public class CommandTeam extends ServerCommand {
                     **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
+                    **/team home** - Go to your team home.
                     **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
             return;
         }
@@ -57,6 +59,7 @@ public class CommandTeam extends ServerCommand {
             case "disband":
             case "info":
             case "accept":
+            case "home":
             case "prefix":
                 aliasUsed = args.remove(0).toLowerCase();
                 subcommands.get(aliasUsed).execute(player, aliasUsed, args);
@@ -71,6 +74,7 @@ public class CommandTeam extends ServerCommand {
                     **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
+                    **/team home** - Go to your team home.
                     **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
                 break;
         }
@@ -88,6 +92,7 @@ public class CommandTeam extends ServerCommand {
                 case "info":
                 case "accept":
                 case "prefix":
+                case "home":
                     aliasUsed = args.remove(0);
                     return ((ServerCommand)subcommands.get(aliasUsed)).onTabComplete(player, aliasUsed, args, ((args.size() >= 1)?args.get(0):""), numberArguments - 1);
                 default:
@@ -105,3 +110,4 @@ public class CommandTeam extends ServerCommand {
     }
 
 }
+
