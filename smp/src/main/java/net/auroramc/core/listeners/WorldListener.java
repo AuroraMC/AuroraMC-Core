@@ -14,10 +14,7 @@ import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.server.ServerCloseRequestEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,6 +63,9 @@ public class WorldListener implements Listener {
 
         creator.generateStructures(true);
         World smp = Bukkit.createWorld(creator);
+
+        smp.setPVP(false);
+        smp.setGameRule(GameRule.DO_FIRE_TICK, false);
 
 
         AuroraMCAPI.getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");

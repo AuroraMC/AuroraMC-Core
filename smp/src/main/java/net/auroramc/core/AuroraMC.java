@@ -149,6 +149,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
+        Bukkit.getPluginManager().registerEvents(new NightSkipListener(), this);
 
 
         //Register the BungeeCord plugin message channel
@@ -167,5 +168,6 @@ public class AuroraMC extends JavaPlugin {
         }
     }
 }
+
 
 
