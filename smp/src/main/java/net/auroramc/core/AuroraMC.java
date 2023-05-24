@@ -121,6 +121,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandHub());
         AuroraMCAPI.registerCommand(new CommandTeam());
         AuroraMCAPI.registerCommand(new CommandChest());
+        AuroraMCAPI.registerCommand(new CommandSetHome());
+        AuroraMCAPI.registerCommand(new CommandHome());
 
 
 

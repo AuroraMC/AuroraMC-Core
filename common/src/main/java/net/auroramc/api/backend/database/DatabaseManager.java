@@ -4168,6 +4168,9 @@ public class DatabaseManager {
             List<UUID> uuids = new ArrayList<>();
             String[] strings = connection.hget("smp.team." + uuid, "members").split(";");
             for (String string : strings) {
+                if (string.equals("")) {
+                    continue;
+                }
                 uuids.add(UUID.fromString(string));
             }
             return uuids;

@@ -55,7 +55,7 @@ public class CommandTeamInvite extends ServerCommand {
                     new BukkitRunnable(){
                         @Override
                         public void run() {
-                            if (finalTarget.isOnline()) {
+                            if (finalTarget.isOnline() && finalTarget.getPendingInvite() != null) {
                                 finalTarget.setPendingInvite(null);
                                 finalTarget.sendMessage(TextFormatter.pluginMessage("Teams", "Your team invite from player **" + player.getByDisguiseName() + "** has expired."));
                                 player.sendMessage(TextFormatter.pluginMessage("Teams", "Your team invite to player **" + finalTarget.getByDisguiseName() + "** has expired."));

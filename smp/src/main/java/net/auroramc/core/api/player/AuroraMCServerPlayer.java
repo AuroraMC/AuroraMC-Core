@@ -207,9 +207,18 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         } else {
             if (ServerAPI.getLoadedTeams().containsKey(smpTeam)) {
                 this.smpTeam = ServerAPI.getLoadedTeams().get(smpTeam);
-                this.smpTeam.getMember(this.getUuid()).setPlayer(this);
+                if (this.smpTeam.getLeader().getUuid().equals(this.getUuid())) {
+                    this.smpTeam.getLeader().setPlayer(this);
+                } else {
+                    this.smpTeam.getMember(this.getUuid()).setPlayer(this);
+                }
             } else {
                 this.smpTeam = new SMPTeam(smpTeam);
+                if (this.smpTeam.getLeader().getUuid().equals(this.getUuid())) {
+                    this.smpTeam.getLeader().setPlayer(this);
+                } else {
+                    this.smpTeam.getMember(this.getUuid()).setPlayer(this);
+                }
                 ServerAPI.getLoadedTeams().put(smpTeam, this.smpTeam);
             }
         }
@@ -226,10 +235,13 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             @Override
             public void run() {
                 for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
+                    if (!player1.isLoaded() && !player1.equals(AuroraMCServerPlayer.this)) {
+                        continue;
+                    }
                     player1.updateNametag(AuroraMCServerPlayer.this);
                     updateNametag(player1);
 
-                    if (player1 != AuroraMCServerPlayer.this) {
+                    if (player1 != AuroraMCServerPlayer.this && player1.isLoaded()) {
 
                         new BukkitRunnable(){
                             @Override
@@ -1236,8 +1248,13 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     }
 
     public void setSmpTeam(SMPTeam smpTeam) {
+        if (smpTeam == null && this.smpTeam != null) {
+            AuroraMCAPI.getDbManager().setSMPTeam(this.getUniqueId(), null);
+        }
         this.smpTeam = smpTeam;
-        AuroraMCAPI.getDbManager().setSMPTeam(this.getUniqueId(), smpTeam.getUuid());
+        if (smpTeam != null) {
+            AuroraMCAPI.getDbManager().setSMPTeam(this.getUniqueId(), smpTeam.getUuid());
+        }
     }
 
     public void setHome(SMPLocation home) {

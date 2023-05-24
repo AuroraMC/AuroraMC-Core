@@ -12,6 +12,7 @@ import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.api.player.SMPPlayer;
 import net.auroramc.core.api.utils.TabCompleteInjector;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import org.bukkit.event.EventHandler;
@@ -32,6 +33,23 @@ public class LeaveListener implements Listener {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
         player.saveData();
         player.clearScoreboard();
+        if (player.getSmpTeam() != null) {
+            if (player.getSmpTeam().getLeader().getUuid().equals(player.getUniqueId())) {
+                player.getSmpTeam().getLeader().setPlayer(null);
+            } else {
+                player.getSmpTeam().getMember(player.getUuid()).setPlayer(null);
+            }
+            boolean unload = true;
+            for (SMPPlayer player1 : player.getSmpTeam().getMembers()) {
+                if (player1.getPlayer() != null && player1.getPlayer().isOnline()) {
+                    unload = false;
+                    break;
+                }
+            }
+            if (unload && (player.getSmpTeam().getLeader().getPlayer() == null || !player.getSmpTeam().getLeader().getPlayer().isOnline())) {
+                ServerAPI.getLoadedTeams().remove(player.getSmpTeam().getUuid());
+            }
+        }
         ServerAPI.playerLeave(e.getPlayer());
         try {
             for (Cosmetic cosmetic : player.getActiveCosmetics().values()) {

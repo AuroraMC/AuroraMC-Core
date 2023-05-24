@@ -67,12 +67,12 @@ public class SMPTeam {
         for (UUID uuid1 : uuids) {
             AuroraMCServerPlayer player2 = ServerAPI.getPlayer(uuid1);
             if (player2 != null) {
-                this.leader = new SMPPlayer(player2.getId(), player2.getName(), player2.getUuid(), player2, player2.getRank());
+                this.members.add(new SMPPlayer(player2.getId(), player2.getName(), player2.getUuid(), player2, player2.getRank()));
             } else {
                 int id = AuroraMCAPI.getDbManager().getAuroraMCID(uuid1);
                 String name = AuroraMCAPI.getDbManager().getNameFromID(id);
                 Rank rank = AuroraMCAPI.getDbManager().getRank(id);
-                this.leader = new SMPPlayer(id, name, uuid1, null, rank);
+                this.members.add(new SMPPlayer(id, name, uuid1, null, rank));
             }
         }
         this.home = AuroraMCAPI.getDbManager().getSMPTeamHomeLocation(uuid);
@@ -251,6 +251,9 @@ public class SMPTeam {
                 AuroraMCServerPlayer pl = player.getPlayer();
                 assert pl != null;
                 pl.sendMessage(TextFormatter.pluginMessage("Teams","**" + getMember(p).getName() + "** has left the team."));
+                if (pl.getUniqueId().equals(p)) {
+                    pl.setSmpTeam(null);
+                }
             }
         }
 
@@ -420,13 +423,14 @@ public class SMPTeam {
                     for (SMPPlayer player : members) {
                         uuids.add(player.getUuid());
                     }
+                    uuids.add(leader.getUuid());
                     AuroraMCAPI.getDbManager().disbandSMPTeam(uuid, uuids);
                 }
             }.runTaskAsynchronously(ServerAPI.getCore());
         }
         for (SMPPlayer player : members) {
             if (player.getPlayer() != null && player.getPlayer().isOnline()) {
-                player.getPlayer().setTeam(null);
+                player.getPlayer().setSmpTeam(null);
             }
         }
     }
