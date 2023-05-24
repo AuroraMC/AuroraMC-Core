@@ -14,6 +14,7 @@ import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
 import net.auroramc.core.commands.admin.iplookup.CommandIPLookup;
 import net.auroramc.core.commands.general.*;
+import net.auroramc.core.commands.general.chest.CommandChest;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
 import net.auroramc.core.commands.general.team.CommandTeam;
 import net.auroramc.core.commands.moderation.*;
@@ -42,10 +43,21 @@ import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.EventManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 public class AuroraMC extends JavaPlugin {
+
+
+    private static FileConfiguration internal;
+    private static File internalFile;
 
 
     @Override
@@ -108,6 +120,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandReportInfo());
         AuroraMCAPI.registerCommand(new CommandHub());
         AuroraMCAPI.registerCommand(new CommandTeam());
+        AuroraMCAPI.registerCommand(new CommandChest());
 
 
 
@@ -150,11 +163,28 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
         Bukkit.getPluginManager().registerEvents(new NightSkipListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
 
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
+
+        internalFile = new File(getDataFolder(), "internal.yml");
+        if (!internalFile.exists()) {
+            internalFile.getParentFile().mkdirs();
+            copy(getResource("internal.yml"), internalFile);
+        }
+
+        internal = new YamlConfiguration();
+        try {
+            internal.load(internalFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        internal.options().copyHeader(true);
+
+
     }
 
     @Override
@@ -166,6 +196,29 @@ public class AuroraMC extends JavaPlugin {
             }
             CommunicationUtils.shutdown();
         }
+    }
+
+    private void copy(InputStream in, File file) {
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while((len=in.read(buf))>0){
+                out.write(buf,0,len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static FileConfiguration getInternal() {
+        return internal;
+    }
+
+    public static File getInternalFile() {
+        return internalFile;
     }
 }
 
