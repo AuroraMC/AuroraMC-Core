@@ -132,6 +132,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandTeleportRequestAccept());
         AuroraMCAPI.registerCommand(new CommandTeleportRequestDeny());
         AuroraMCAPI.registerCommand(new CommandBack());
+        AuroraMCAPI.registerCommand(new CommandSpawn());
 
 
 

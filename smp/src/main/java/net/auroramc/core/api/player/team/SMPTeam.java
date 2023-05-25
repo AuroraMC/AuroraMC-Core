@@ -253,10 +253,12 @@ public class SMPTeam {
                 pl.sendMessage(TextFormatter.pluginMessage("Teams","**" + getMember(p).getName() + "** has left the team."));
                 if (pl.getUniqueId().equals(p)) {
                     pl.setSmpTeam(null);
+                    for (AuroraMCServerPlayer player2 : ServerAPI.getPlayers()) {
+                        player2.updateNametag(pl);
+                    }
                 }
             }
         }
-
         members.remove(getMember(p));
         if (send) {
             new BukkitRunnable() {
@@ -304,6 +306,14 @@ public class SMPTeam {
     public void setName(String name, boolean send) {
         this.name = name;
 
+
+        for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+            for (SMPPlayer pl : members) {
+                if (pl.getPlayer() != null && pl.getPlayer().isOnline()) {
+                    player.updateNametag(pl.getPlayer());
+                }
+            }
+        }
         if (send) {
             new BukkitRunnable() {
                 @Override
@@ -431,6 +441,14 @@ public class SMPTeam {
         for (SMPPlayer player : members) {
             if (player.getPlayer() != null && player.getPlayer().isOnline()) {
                 player.getPlayer().setSmpTeam(null);
+            }
+        }
+
+        for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+            for (SMPPlayer pl : members) {
+                if (pl.getPlayer() != null && pl.getPlayer().isOnline()) {
+                    player.updateNametag(pl.getPlayer());
+                }
             }
         }
     }
