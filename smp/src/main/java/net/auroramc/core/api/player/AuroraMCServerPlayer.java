@@ -8,6 +8,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.backend.info.Info;
+import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.cosmetics.Cosmetic;
 import net.auroramc.api.cosmetics.PlusSymbol;
 import net.auroramc.api.permissions.Rank;
@@ -15,16 +16,20 @@ import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.player.PlayerReport;
 import net.auroramc.api.punishments.Punishment;
 import net.auroramc.api.utils.Pronoun;
+import net.auroramc.api.utils.SMPLocation;
+import net.auroramc.api.utils.SMPPotionEffect;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
-import net.auroramc.core.api.events.player.PlayerObjectCreationEvent;
 import net.auroramc.core.api.events.player.PlayerShowEvent;
 import net.auroramc.core.api.player.scoreboard.PlayerScoreboard;
+import net.auroramc.core.api.player.team.SMPTeam;
 import net.auroramc.core.api.utils.holograms.Hologram;
+import net.auroramc.core.utils.InventoryUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
@@ -40,8 +45,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
-import us.myles.ViaVersion.api.Via;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.*;
 
@@ -57,27 +62,47 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     private BukkitTask subscriptionTask;
     private HashMap<Cosmetic, BukkitTask> runningCosmeticTasks;
 
-    protected boolean dead;
     protected boolean hidden;
     protected boolean moved;
+    protected boolean dead;
+
+    private AuroraMCServerPlayer lastHitBy;
+    private long lastHitAt;
+
+    private SMPLocation startLocation;
+    private SMPTeam smpTeam;
+    private SMPLocation home;
+    private UUID pendingInvite;
+    private List<UUID> pendingTPARequests;
+    private List<UUID> pendingTPAHereRequests;
+    private long lastTeleport;
+    private SMPLocation backLocation;
 
     private Map<String, Hologram> holograms;
 
     public AuroraMCServerPlayer(Player player) {
         super(player.getUniqueId(), player.getName(), player);
         this.player = player;
-        dead = false;
         hidden = false;
+        lastTeleport = 0;
         moved = false;
+        dead = false;
+        pendingTPARequests = new ArrayList<>();
+        pendingTPAHereRequests = new ArrayList<>();
         holograms = new HashMap<>();
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         this.player = player;
+        this.startLocation = AuroraMCAPI.getDbManager().getSMPLogoutLocation(this.getUniqueId());
+        this.backLocation = AuroraMCAPI.getDbManager().getSMPBackLocation(this.getUniqueId());
+        SMPLocation location = AuroraMCAPI.getDbManager().getSMPBedLocation(this.getUniqueId());
+        if (location != null) {
+            this.setBedSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ()));
+        }
     }
 
     public AuroraMCServerPlayer(AuroraMCServerPlayer player) {
         super(player);
         this.player = player.player;
-        this.dead = player.dead;
         this.hidden = player.hidden;
         this.moved = player.moved;
         this.holograms = player.holograms;
@@ -182,6 +207,29 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         } else if (AuroraMCAPI.isTestServer()) {
             sendMessage(TextFormatter.pluginMessage("Server Manager", "&c&lThis server is in test mode. While test mode is enabled, stats and other core features will not be saved."));
         }
+        home = AuroraMCAPI.getDbManager().getSMPHomeLocation(getUniqueId());
+
+        UUID smpTeam = AuroraMCAPI.getDbManager().getSMPTeam(this.getUniqueId());
+        if (smpTeam == null) {
+            this.smpTeam = null;
+        } else {
+            if (ServerAPI.getLoadedTeams().containsKey(smpTeam)) {
+                this.smpTeam = ServerAPI.getLoadedTeams().get(smpTeam);
+                if (this.smpTeam.getLeader().getUuid().equals(this.getUuid())) {
+                    this.smpTeam.getLeader().setPlayer(this);
+                } else {
+                    this.smpTeam.getMember(this.getUuid()).setPlayer(this);
+                }
+            } else {
+                this.smpTeam = new SMPTeam(smpTeam);
+                if (this.smpTeam.getLeader().getUuid().equals(this.getUuid())) {
+                    this.smpTeam.getLeader().setPlayer(this);
+                } else {
+                    this.smpTeam.getMember(this.getUuid()).setPlayer(this);
+                }
+                ServerAPI.getLoadedTeams().put(smpTeam, this.smpTeam);
+            }
+        }
 
         //Get the bungee to send all of the friend data to the server
 
@@ -195,10 +243,13 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             @Override
             public void run() {
                 for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
+                    if (!player1.isLoaded() && !player1.equals(AuroraMCServerPlayer.this)) {
+                        continue;
+                    }
                     player1.updateNametag(AuroraMCServerPlayer.this);
                     updateNametag(player1);
 
-                    if (player1 != AuroraMCServerPlayer.this) {
+                    if (player1 != AuroraMCServerPlayer.this && player1.isLoaded()) {
 
                         new BukkitRunnable(){
                             @Override
@@ -229,21 +280,70 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
                 if (!player.isOnline()) {
                     return;
                 }
-                PlayerObjectCreationEvent creationEvent = new PlayerObjectCreationEvent(AuroraMCServerPlayer.this);
-                Bukkit.getPluginManager().callEvent(creationEvent);
-                if (!player.isOnline()) {
-                    return;
+                setLoaded(true);
+                setScoreboard();
+                if (isVanished()) {
+                    sendMessage(TextFormatter.highlight(TextFormatter.convert("" +
+                            "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆\n" +
+                            " \n" +
+                            "&b&lYou are currently vanished!\n" +
+                            " \n" +
+                            "&fTo unvanish, simply use /vanish.\n" +
+                            " \n" +
+                            "&3&l▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆")));
                 }
-                ServerAPI.newPlayer(player, creationEvent.getPlayer());
-                creationEvent.getPlayer().setLoaded(true);
-
+                for (Hologram hologram : ServerAPI.getHolograms().values()) {
+                    hologram.onJoin(AuroraMCServerPlayer.this);
+                }
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("UpdateParty");
                 out.writeUTF(getName());
                 sendPluginMessage(out.toByteArray());
+                player.setPlayerListHeaderFooter("§3§lAURORAMC NETWORK         §b§lAURORAMC.NET", "\n§fYou are currently connected to §5§lNuttersSMP§r\nCurrent Realm: §dThe " + WordUtils.capitalizeFully(((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) + "\n\n" +
+                        "§rForums §3§l» §bauroramc.net\n" +
+                        "§rStore §3§l» §bstore.auroramc.net\n" +
+                        "§rDiscord §3§l» §bdiscord.auroramc.net\n");
             }
         }.runTask(ServerAPI.getCore());
+    }
 
+    public void loadPlayerState() {
+        String[] inventory = AuroraMCAPI.getDbManager().getInventory(this.getUniqueId());
+
+        if (inventory != null) {
+            try {
+                InventoryUtil.playerInventoryFromBase64(this, inventory);
+            } catch (IOException e) {
+                e.printStackTrace();
+                sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a lobby..."));
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF("Lobby");
+                out.writeUTF(getUniqueId().toString());
+                sendPluginMessage(out.toByteArray());
+            }
+        }
+
+        //Variables commmon for all servers for all players.
+        player.setFlying(false);
+        player.setAllowFlight(false);
+        player.setGameMode(GameMode.SURVIVAL);
+
+
+        //Variables for updating player state.
+        player.setHealth(AuroraMCAPI.getDbManager().getHealth(this.getUniqueId()));
+        player.setFoodLevel(AuroraMCAPI.getDbManager().getHunger(this.getUniqueId()));
+        SMPLocation location1 = AuroraMCAPI.getDbManager().getLogoutVector(this.getUniqueId());
+        if (location1 != null) player.setVelocity(new Vector(location1.getX(), location1.getY(), location1.getZ()));
+        player.setFallDistance(AuroraMCAPI.getDbManager().getLogoutFall(this.getUniqueId()));
+        player.setFireTicks(AuroraMCAPI.getDbManager().getFireTicks(this.getUniqueId()));
+        player.setExp(AuroraMCAPI.getDbManager().getExp(this.getUniqueId()));
+        player.setLevel(AuroraMCAPI.getDbManager().getLevel(this.getUniqueId()));
+        for (PotionEffect effect: player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+        for (SMPPotionEffect potion : AuroraMCAPI.getDbManager().getPotionEffects(this.getUniqueId())) {
+            player.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(potion.getType())), potion.getDuration(), potion.getLevel()));
+        }
     }
 
     @Override
@@ -449,10 +549,6 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         return lastAdminMessaged;
     }
 
-    public boolean isDead() {
-        return dead;
-    }
-
     public boolean isValid() {
         return player.isValid();
     }
@@ -517,23 +613,22 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         }
 
         //Prefix.
+
         s = new StringBuilder(TextFormatter.rankFormat(rank, player.getActiveSubscription()));
         if (scoreboard.getScoreboard().getTeam(name) == null) {
             scoreboard.getScoreboard().registerNewTeam(name);
         }
         team = scoreboard.getScoreboard().getTeam(name);
+        if (((AuroraMCServerPlayer)player).getSmpTeam() != null) {
+            s.insert(0, "§d" + ((AuroraMCServerPlayer) player).getSmpTeam().getName() + " ");
+        }
         if (rank != Rank.PLAYER || player.getActiveSubscription() != null) {
             s.append(" ");
         }
         if (player.getTeam() == null) {
-            s.append("§r");
-            if (Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393) {
-                s.append("§f");
-            }
+            s.append("§r§f");
         } else {
-            if (Via.getAPI().getPlayerVersion(this.player.getUniqueId()) >= 393) {
-                s.append("§r");
-            }
+            s.append("§r");
             s.append(player.getTeam().getTeamColor());
         }
         team.setPrefix(s.toString());
@@ -541,9 +636,6 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
         s = new StringBuilder();
 
-        if (getPreferences().getPreferredPronouns() != Pronoun.NONE) {
-            s.append(" §7" + getPreferences().getPreferredPronouns().getDisplay());
-        }
         if (player.getActiveSubscription() != null && player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
             PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
             s.append(String.format(" %s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
@@ -603,6 +695,40 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     public void saveData() {
         player.saveData();
+        if (!getWorld().getName().equals("smp")) {
+            return;
+        }
+
+        AuroraMCAPI.getDbManager().setSMPLogoutLocation(this.getUniqueId(), new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), getLocation().getX(), getLocation().getY(), getLocation().getZ(), getLocation().getPitch(), getLocation().getYaw(), ((isDead())? SMPLocation.Reason.DEATH: SMPLocation.Reason.LEAVE)));
+        try {
+            AuroraMCAPI.getDbManager().setInventory(this.getUniqueId(), InventoryUtil.playerInventoryToBase64(this));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+        AuroraMCAPI.getDbManager().setHealth(this.getUniqueId(), ((isDead())?20:getHealth()));
+        AuroraMCAPI.getDbManager().setHunger(this.getUniqueId(), ((isDead())?20:getFoodLevel()));
+        SMPLocation location1 = new SMPLocation(null, getVelocity().getX(), getVelocity().getY(), getVelocity().getZ(), -1, -1, null);
+        AuroraMCAPI.getDbManager().setLogoutVector(this.getUniqueId(), ((isDead())?(new SMPLocation(null, 0, 0, 0, -1, -1, null)):location1));
+
+        AuroraMCAPI.getDbManager().setLogoutFall(this.getUniqueId(), getFallDistance());
+        AuroraMCAPI.getDbManager().setFireTicks(this.getUniqueId(), ((isDead())?0:getFireTicks()));
+        AuroraMCAPI.getDbManager().setExp(this.getUniqueId(), ((isDead())?0:getExp()));
+        AuroraMCAPI.getDbManager().setLevel(this.getUniqueId(), ((isDead())?0:getLevel()));
+        List<SMPPotionEffect> potionEffects = new ArrayList<>();
+        for (PotionEffect effect: player.getActivePotionEffects()) {
+            potionEffects.add(new SMPPotionEffect(effect.getType().getName(), effect.getAmplifier(), effect.getDuration()));
+        }
+        AuroraMCAPI.getDbManager().setPotionEffects(this.getUniqueId(), potionEffects);
+        if (((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equals("OVERWORLD")) {
+            SMPLocation location;
+            if (player.getBedSpawnLocation() != null) {
+                location = new SMPLocation(null, player.getBedSpawnLocation().getX(), player.getBedSpawnLocation().getY(), player.getBedSpawnLocation().getZ(), -1, -1, null);
+            } else {
+                location = null;
+            }
+            AuroraMCAPI.getDbManager().setSMPBedLocation(this.getUniqueId(), location);
+        }
     }
 
     public void loadData() {
@@ -1096,5 +1222,99 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     public BukkitTask getActiveReportTask() {
         return activeReportTask;
+    }
+
+    public SMPLocation getStartLocation() {
+        return startLocation;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public AuroraMCServerPlayer getLastHitBy() {
+        return lastHitBy;
+    }
+
+    public long getLastHitAt() {
+        return lastHitAt;
+    }
+
+    public void setLastHitAt(long lastHitAt) {
+        this.lastHitAt = lastHitAt;
+    }
+
+    public void setLastHitBy(AuroraMCServerPlayer lastHitBy) {
+        this.lastHitBy = lastHitBy;
+    }
+
+    public SMPTeam getSmpTeam() {
+        return smpTeam;
+    }
+
+    public void setSmpTeam(SMPTeam smpTeam) {
+        if (smpTeam == null && this.smpTeam != null) {
+            AuroraMCAPI.getDbManager().setSMPTeam(this.getUniqueId(), null);
+        }
+        this.smpTeam = smpTeam;
+        if (smpTeam != null) {
+            AuroraMCAPI.getDbManager().setSMPTeam(this.getUniqueId(), smpTeam.getUuid());
+        }
+    }
+
+    public void setHome(SMPLocation home) {
+        this.home = home;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setSMPHomeLocation(getUniqueId(), home);
+            }
+        }.runTaskAsynchronously(ServerAPI.getCore());
+    }
+
+    public SMPLocation getHome() {
+        return home;
+    }
+
+    public UUID getPendingInvite() {
+        return pendingInvite;
+    }
+
+    public void setPendingInvite(UUID pendingInvite) {
+        this.pendingInvite = pendingInvite;
+    }
+
+    public List<UUID> getPendingTPARequests() {
+        return pendingTPARequests;
+    }
+
+    public List<UUID> getPendingTPAHereRequests() {
+        return pendingTPAHereRequests;
+    }
+
+    public long getLastTeleport() {
+        return lastTeleport;
+    }
+
+    public void setLastTeleport(long lastTeleport) {
+        this.lastTeleport = lastTeleport;
+    }
+
+    public SMPLocation getBackLocation() {
+        return backLocation;
+    }
+
+    public void setBackLocation(SMPLocation backLocation) {
+        this.backLocation = backLocation;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setSMPBackLocation(getUniqueId(), home);
+            }
+        }.runTaskAsynchronously(ServerAPI.getCore());
     }
 }

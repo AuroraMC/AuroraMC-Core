@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AuroraMC-Core.iml" filepath="$PROJECT_DIR$/.idea/AuroraMC-Core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/proxy.iml" filepath="$PROJECT_DIR$/proxy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/smp.iml" filepath="$PROJECT_DIR$/smp.iml" />
     </modules>
   </component>
 </project>

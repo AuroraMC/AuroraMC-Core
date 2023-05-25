@@ -38,7 +38,7 @@ public class ViewGames extends GUI {
         int row = 1;
         int column = 1;
         for (GameLog log : logs) {
-            this.setItem(row, column, new GUIItem(Material.valueOf(log.getGame().getItem()), log.getGame().getName(), 1, ((log.getData().getBoolean("void"))?"&r&4&lVOID GAME;":"") + ";&r&fGame UUID: **" + log.getUuid() + "**;&r&fGame Started: **" + new Date(log.getData().getLong("start")) + "**;&r&fGame Ended:** " + new Date(log.getData().getLong("end")) + "**;;&r&aClick to get the link to the game log!", log.getGame().getData()));
+            this.setItem(row, column, new GUIItem(Material.valueOf(log.getGame().getItem1_19()), log.getGame().getName(), 1, ((log.getData().getBoolean("void"))?"&r&4&lVOID GAME;":"") + ";&r&fGame UUID: **" + log.getUuid() + "**;&r&fGame Started: **" + new Date(log.getData().getLong("start")) + "**;&r&fGame Ended:** " + new Date(log.getData().getLong("end")) + "**;;&r&aClick to get the link to the game log!"));
 
             column++;
             if (column == 8) {
