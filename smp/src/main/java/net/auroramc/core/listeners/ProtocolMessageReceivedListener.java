@@ -5,8 +5,11 @@
 package net.auroramc.core.listeners;
 
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.ChatLogs;
 import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.permissions.Rank;
+import net.auroramc.api.player.ChatChannel;
+import net.auroramc.api.player.PlayerPreferences;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
@@ -15,8 +18,10 @@ import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.server.ProtocolMessageEvent;
 import net.auroramc.core.api.events.server.ServerCloseRequestEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.api.utils.ServerChatUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -58,6 +63,25 @@ public class ProtocolMessageReceivedListener implements Listener {
                     if (player != null) {
                         player.sendMessage(message);
                     }
+                } else if (to.equals("kill") && sender.startsWith("SMP")) {
+                    for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+                        player.sendMessage(TextFormatter.pluginMessage("Kill", raw));
+                    }
+                } else if (to.equals("chat") && sender.startsWith("SMP")) {
+                    String[] msg = raw.split(";");
+                    BaseComponent component = ComponentSerializer.parse(msg[0])[0];
+                    String filtered = msg[1];
+                    int id = Integer.parseInt(msg[2]);
+                    String name = msg[3];
+                    Rank rank = Rank.valueOf(msg[4]);
+                    for (AuroraMCServerPlayer recipient : ServerAPI.getPlayers()) {
+                        if (recipient.getPreferences().isChatVisibilityEnabled()) {
+                            if (!recipient.isIgnored(id) || recipient.hasPermission("moderation")) {
+                                recipient.sendMessage(component);
+                            }
+                        }
+                    }
+                    ChatLogs.chatMessage(id, name, rank, filtered, false, ChatChannel.ALL, -1, null, null);
                 } else {
                     AuroraMCServerPlayer player = ServerAPI.getPlayer(to);
                     if (player != null) {

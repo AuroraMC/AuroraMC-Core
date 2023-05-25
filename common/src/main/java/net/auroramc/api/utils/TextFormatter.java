@@ -859,7 +859,6 @@ public class TextFormatter {
         cmp.setColor(ChatColor.RED);
         cmp.setBold(false);
         textComponent.addExtra(cmp);
-        textComponent.addExtra(" ");
 
         Rank rank = ((sender.isDisguised())?sender.getActiveDisguise().getRank():sender.getRank());
         String name = ((sender.isDisguised())?sender.getActiveDisguise().getName():sender.getName());
@@ -910,7 +909,6 @@ public class TextFormatter {
         cmp.setColor(ChatColor.RED);
         cmp.setBold(false);
         textComponent.addExtra(cmp);
-        textComponent.addExtra(" ");
 
         cmp = new TextComponent(((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()) + " " + name);
         cmp.setColor((rank == Rank.PLAYER)?ChatColor.GRAY:rank.getPrefixColor());
@@ -958,7 +956,6 @@ public class TextFormatter {
         cmp.setColor(ChatColor.RED);
         cmp.setBold(false);
         textComponent.addExtra(cmp);
-        textComponent.addExtra(" ");
 
         Rank rank = ((receiver.isDisguised())?receiver.getActiveDisguise().getRank():receiver.getRank());
         String name = ((receiver.isDisguised())?receiver.getActiveDisguise().getName():receiver.getName());
@@ -1009,7 +1006,6 @@ public class TextFormatter {
         cmp.setColor(ChatColor.RED);
         cmp.setBold(false);
         textComponent.addExtra(cmp);
-        textComponent.addExtra(" ");
 
         cmp = new TextComponent(((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()) + " " + name);
         cmp.setColor((rank == Rank.PLAYER)?ChatColor.GRAY:rank.getPrefixColor());

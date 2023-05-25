@@ -6,22 +6,40 @@ package net.auroramc.core.listeners;
 
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.backend.ChatLogs;
+import net.auroramc.api.backend.info.ServerInfo;
+import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.player.ChatChannel;
 import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.player.PlayerPreferences;
+import net.auroramc.api.utils.LevelUtils;
+import net.auroramc.api.utils.Pronoun;
 import net.auroramc.api.utils.TextFormatter;
+import net.auroramc.api.utils.TimeLength;
 import net.auroramc.core.api.ServerAPI;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.Protocol;
+import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.player.AsyncPlayerChatEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.ServerChatUtils;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatListener implements Listener {
 
@@ -172,32 +190,224 @@ public class ChatListener implements Listener {
                 for (AuroraMCServerPlayer recipient : ServerAPI.getPlayers()) {
                     if (recipient.getPreferences().isChatVisibilityEnabled()) {
                         if (!recipient.isIgnored(player.getId()) || recipient.hasPermission("moderation")) {
-                            if (!recipient.equals(player)) {
-                                ServerChatUtils.MentionMessage mentionedMessage = ServerChatUtils.processMentions(recipient, (TextComponent) component);
-
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage.getFormattedText()));
-                                if (mentionedMessage.isMentionFound()) {
-                                    if (recipient.getActiveMutes().size() > 0 && recipient.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
-                                        BaseComponent msg = TextFormatter.privateMessage(recipient, player, true, new TextComponent("Hey! I'm currently muted and cannot message you right now."));
-                                        recipient.sendMessage(msg);
-                                        msg = TextFormatter.privateMessage(recipient, player, false, new TextComponent("Hey! I'm currently muted and cannot message you right now."));
-                                        player.sendMessage(msg);
-                                    }
-                                    if (recipient.getPreferences().isPingOnChatMentionEnabled()) {
-                                        recipient.playSound(recipient.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 2);
-                                    }
-                                }
-                            } else {
-                                BaseComponent mentionedMessage = ServerChatUtils.processMentions((TextComponent) component);
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage));
-                            }
-
+                            BaseComponent chat = chatMessage(player, recipient, component);
+                            recipient.sendMessage(chat);
                         }
                     }
                 }
-                ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), player.isDead(), ChatChannel.ALL, -1, null, null);
+                BaseComponent chat = chatMessage(player, null, component);
+                String extra = ComponentSerializer.toString(chat) + ";" + e.getMessage() + ";" + player.getId() + ";" + player.getByDisguiseName() + ";" + player.getRank().name();
+                List<String> destinations = new ArrayList<>();
+                String sender = "SMP-Overworld";
+                switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
+                    case "OVERWORLD": {
+                        destinations.add("SMP-Nether");
+                        destinations.add("SMP-End");
+                        break;
+                    }
+                    case "END": {
+                        destinations.add("SMP-Nether");
+                        destinations.add("SMP-Overworld");
+                        sender = "SMP-End";
+                        break;
+                    }
+                    case "NETHER": {
+                        destinations.add("SMP-Overworld");
+                        destinations.add("SMP-End");
+                        sender = "SMP-Nether";
+                        break;
+                    }
+                }
+                for (String destination : destinations) {
+                    ProtocolMessage message = new ProtocolMessage(Protocol.MESSAGE, destination, "chat", sender, extra);
+                    CommunicationUtils.sendMessage(message);
+                }
+                ChatLogs.chatMessage(player.getId(), player.getName(), player.getRank(), e.getMessage(), false, ChatChannel.ALL, -1, null, null);
                 break;
         }
 
+    }
+
+    public static BaseComponent chatMessage(@NotNull AuroraMCServerPlayer player, AuroraMCPlayer recipient, @NotNull BaseComponent message) {
+        Rank rank = player.getRank();
+        if (player.getActiveDisguise() != null && !(player.equals(recipient) && player.getPreferences().isHideDisguiseNameEnabled())) {
+            rank = player.getActiveDisguise().getRank();
+        }
+        TextComponent chatMessage = new TextComponent("");
+
+        if (player.getSmpTeam() != null) {
+            int r = 170;
+            int g = 0;
+            int b = 170;
+            int r2 = 255;
+            int g2 = 85;
+            int b2 = 255;
+
+            int deltaR = r2 - r;
+            int deltaG = g2 - g;
+            int deltaB = b2 - b;
+            char[] chars = player.getSmpTeam().getName().toCharArray();
+
+            int i = 1;
+
+            for (char c : chars) {
+                int r3 = (int)Math.floor(r + ((i/(double)chars.length)*deltaR));
+                int g3 = (int)Math.floor(g + ((i/(double)chars.length)*deltaG));
+                int b3 = (int)Math.floor(b + ((i/(double)chars.length)*deltaB));
+
+                TextComponent component = new TextComponent(c + "");
+                component.setColor(ChatColor.of(new Color(r3, g3, b3)));
+
+                chatMessage.addExtra(component);
+                i++;
+            }
+
+            chatMessage.addExtra(" ");
+        }
+
+        //Adding rank prefix if it exists.
+        if (rank.getPrefixAppearance() != null) {
+            //String.format(chatPrefixFormat, rank.getPrefixColor(), rank.getPrefixAppearance().toUpperCase(), ((player.getActiveSubscription() != null && !rank.hasPermission("moderation") && !rank.hasPermission("build") && !rank.hasPermission("debug.info"))?String.format("&%s+&%s", player.getActiveSubscription().getColor(), rank.getPrefixColor()):""))
+            TextComponent prefix = new TextComponent("");
+
+
+            TextComponent cmp = new TextComponent("«");
+            cmp.setColor(rank.getPrefixColor());
+            cmp.setBold(true);
+            prefix.addExtra(cmp);
+
+            cmp = new TextComponent(rank.getPrefixAppearance().toUpperCase());
+            cmp.setColor(rank.getPrefixColor());
+            cmp.setBold(true);
+            prefix.addExtra(cmp);
+
+            if (player.getActiveSubscription() != null && !rank.hasPermission("moderation") && !rank.hasPermission("build") && !rank.hasPermission("debug.info")) {
+                cmp = new TextComponent("+");
+                cmp.setColor(player.getActiveSubscription().getColor());
+                cmp.setBold(true);
+                prefix.addExtra(cmp);
+            }
+
+            cmp = new TextComponent("»");
+            cmp.setColor(rank.getPrefixColor());
+            cmp.setBold(true);
+            prefix.addExtra(cmp);
+
+            prefix.addExtra(" ");
+
+
+
+            if (rank.getPrefixHoverText() != null) {
+                TextComponent hoverText = new TextComponent("");
+                hoverText.addExtra(rank.getPrefixHoverText());
+                if (player.getActiveSubscription() != null) {
+                    if (rank != Rank.ELITE && rank != Rank.MASTER && rank.getPrefixHoverURL() == null) {
+                        hoverText.addExtra("\n\n");
+                        hoverText.addExtra(player.getActiveSubscription().getHoverText());
+                        prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://store.auroramc.net/"));
+                    } else {
+                        hoverText.addExtra(player.getActiveSubscription().getHoverText());
+                    }
+                } else if (rank == Rank.ELITE || rank == Rank.MASTER) {
+                    TextComponent cmp2 = new TextComponent("Click to visit the store!");
+                    cmp2.setBold(false);
+                    cmp2.setColor(ChatColor.GREEN);
+                    hoverText.addExtra(cmp2);
+                }
+                prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{hoverText}));
+            }
+            if (rank.getPrefixHoverURL() != null) {
+                prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, rank.getPrefixHoverURL()));
+            }
+
+            chatMessage.addExtra(prefix);
+        } else if (player.getActiveSubscription() != null) {
+            TextComponent prefix = new TextComponent("+");
+            prefix.setColor(player.getActiveSubscription().getColor());
+            prefix.setBold(false);
+
+            TextComponent hoverText = new TextComponent(player.getActiveSubscription().getHoverText());
+            prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{hoverText}));
+
+            prefix.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, player.getActiveSubscription().getClickURL()));
+
+            chatMessage.addExtra(prefix);
+            chatMessage.addExtra(" ");
+        }
+
+
+        String name;
+        //Adding in name.
+        if (player.getActiveDisguise() != null && !(player.equals(recipient) && player.getPreferences().isHideDisguiseNameEnabled())) {
+            name = player.getActiveDisguise().getName();
+        } else {
+            name = player.getName();
+        }
+
+        TextComponent nameComponent = new TextComponent(name);
+
+        //Adding in name color.
+        if (player.getTeam() != null) {
+            nameComponent.setColor(player.getTeam().getTeamColor());
+        } else {
+            nameComponent.setColor(rank.getNameColor());
+        }
+
+        TextComponent componentBuilder = new TextComponent("");
+        TextComponent cmp = new TextComponent(name);
+        cmp.setColor(nameComponent.getColor());
+        componentBuilder.addExtra(cmp);
+        componentBuilder.addExtra("\n");
+
+
+        if (player.getPreferences().getPreferredPronouns() != Pronoun.NONE) {
+            cmp = new TextComponent(player.getPreferences().getPreferredPronouns().getFull());
+            cmp.setColor(ChatColor.GRAY);
+            cmp.setBold(false);
+            componentBuilder.addExtra(cmp);
+            componentBuilder.addExtra("\n");
+        }
+
+        componentBuilder.addExtra("\n");
+
+        cmp = new TextComponent("Games Played: ");
+        cmp.setColor(ChatColor.WHITE);
+        cmp.setBold(false);
+        componentBuilder.addExtra(cmp);
+
+        cmp = new TextComponent(String.valueOf(player.getStats().getGamesPlayed()));
+        cmp.setColor(ChatColor.AQUA);
+        cmp.setBold(false);
+        componentBuilder.addExtra(cmp);
+        componentBuilder.addExtra("\n");
+
+        cmp = new TextComponent("In-Game Time: ");
+        cmp.setColor(ChatColor.WHITE);
+        cmp.setBold(false);
+        componentBuilder.addExtra(cmp);
+
+        cmp = new TextComponent(new TimeLength(player.getStats().getGameTimeMs()/3600000d, false).getFormatted());
+        cmp.setColor(ChatColor.AQUA);
+        cmp.setBold(false);
+        componentBuilder.addExtra(cmp);
+
+
+
+        nameComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{componentBuilder}));
+
+        chatMessage.addExtra(nameComponent);
+
+        TextComponent connector = new TextComponent(" » ");
+        connector.setColor(rank.getConnectorColor());
+        connector.setBold(false);
+
+        //Adding in spacer.
+        chatMessage.addExtra(connector);
+
+        //Adding in actual chat message. If disguised then they should still have access to colour chat, so override the disguise rank.
+        chatMessage.addExtra(message);
+
+        //Returns the final result.
+        return chatMessage;
     }
 }

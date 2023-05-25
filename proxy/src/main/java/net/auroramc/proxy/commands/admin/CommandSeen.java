@@ -18,7 +18,7 @@ import java.util.*;
 public class CommandSeen extends ProxyCommand {
 
     public CommandSeen() {
-        super("seen", Collections.singletonList("lastseen"), Arrays.asList(Permission.ADMIN, Permission.STAFF_MANAGEMENT), false, null);
+        super("seen", Collections.singletonList("lastseen"), Arrays.asList(Permission.ADMIN, Permission.STAFF_MANAGEMENT, Permission.SOCIAL_MEDIA, Permission.BUILD_TEAM_MANAGEMENT), false, null);
     }
 
 
@@ -32,7 +32,7 @@ public class CommandSeen extends ProxyCommand {
                     if (id > 0) {
                         long seen = AuroraMCAPI.getDbManager().getLastSeen(id);
                         if (seen != -1) {
-                            player.sendMessage(TextFormatter.pluginMessage("Seen", "User **" + args.get(0) + "** was last seen at: **" + new Date(seen) + "**"));
+                            player.sendMessage(TextFormatter.pluginMessage("Seen", "User **" + args.get(0) + "** last logged in at: **" + new Date(seen) + "**"));
                         } else {
                             player.sendMessage(TextFormatter.pluginMessage("Seen", "That user has never joined the network."));
                         }
