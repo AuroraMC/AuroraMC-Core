@@ -447,7 +447,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     @Override
     public void sendMessage(BaseComponent message) {
-        player.spigot().sendMessage(message);
+        player.spigot().sendMessage(ChatMessageType.SYSTEM, null, message);
     }
 
     @Override
