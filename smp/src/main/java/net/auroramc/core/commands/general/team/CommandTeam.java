@@ -27,7 +27,6 @@ public class CommandTeam extends ServerCommand {
         this.registerSubcommand("invite", Collections.emptyList(), new CommandTeamInvite());
         this.registerSubcommand("remove", Collections.emptyList(), new CommandTeamRemove());
         this.registerSubcommand("rename", Collections.emptyList(), new CommandTeamRename());
-        this.registerSubcommand("prefix", Collections.emptyList(), new CommandTeamPrefix());
         this.registerSubcommand("info", Collections.emptyList(), new CommandTeamInfo());
         this.registerSubcommand("accept", Collections.emptyList(), new CommandTeamAccept());
         this.registerSubcommand("disband", Collections.emptyList(), new CommandTeamDisband());
@@ -44,7 +43,6 @@ public class CommandTeam extends ServerCommand {
                     **/team invite [username]** - Invite a user to be part of your team.
                     **/team remove [username]** - Remove a user from your team.
                     **/team rename [name]** - Rename your team.
-                    **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
                     **/team home** - Go to your team home.
@@ -60,7 +58,6 @@ public class CommandTeam extends ServerCommand {
             case "info":
             case "accept":
             case "home":
-            case "prefix":
                 aliasUsed = args.remove(0).toLowerCase();
                 subcommands.get(aliasUsed).execute(player, aliasUsed, args);
                 break;
@@ -71,7 +68,6 @@ public class CommandTeam extends ServerCommand {
                     **/team invite [username]** - Invite a user to be part of your team.
                     **/team remove [username]** - Remove a user from your team.
                     **/team rename [name]** - Rename your team.
-                    **/team prefix [prefix]** - Set your team prefix. This is compatible with spaces and colour codes.
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
                     **/team home** - Go to your team home.
@@ -91,7 +87,6 @@ public class CommandTeam extends ServerCommand {
                 case "disband":
                 case "info":
                 case "accept":
-                case "prefix":
                 case "home":
                     aliasUsed = args.remove(0);
                     return ((ServerCommand)subcommands.get(aliasUsed)).onTabComplete(player, aliasUsed, args, ((args.size() >= 1)?args.get(0):""), numberArguments - 1);

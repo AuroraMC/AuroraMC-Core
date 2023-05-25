@@ -29,7 +29,7 @@ public class CommandTeamCreate extends ServerCommand {
     @Override
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
         if (player.getSmpTeam() == null) {
-            if (args.size() == 1) {
+            if (args.size() >= 1) {
                 String name = args.get(0);
                 String filtered = AuroraMCAPI.getFilter().filter(name);
                 if (!filtered.equals(name)) {
