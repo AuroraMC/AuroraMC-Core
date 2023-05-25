@@ -1060,6 +1060,13 @@ public class RecievePluginMessage implements Listener {
                         AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
                         assert player != null;
                         player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Connecting you to §5§lNuttersSMP§r, please wait..."));
+
+                        boolean isBlacklisted = AuroraMCAPI.getDbManager().isSMPBlacklist(player.getName());
+                        if (isBlacklisted) {
+                            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You are blacklisted from the NuttersSMP.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                            return;
+                        }
+
                         SMPLocation location = AuroraMCAPI.getDbManager().getSMPLogoutLocation(player.getUniqueId());
                         if (location != null) {
                             switch (location.getDimension()) {
