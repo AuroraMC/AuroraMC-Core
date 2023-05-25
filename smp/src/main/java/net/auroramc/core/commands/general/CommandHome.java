@@ -34,6 +34,7 @@ public class CommandHome extends ServerCommand {
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
         if (player.getHome() != null) {
             if (player.getSmpTeam() == null) {
+                player.setBackLocation(new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), player.getLocation().getPitch(), player.getLocation().getYaw(), SMPLocation.Reason.HOME));
                 switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
                     case "OVERWORLD": {
                         if (player.getHome().getDimension() == SMPLocation.Dimension.OVERWORLD) {

@@ -3919,6 +3919,39 @@ public class DatabaseManager {
         }
     }
 
+    public SMPLocation getSMPBackLocation(UUID id) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("smp." + id + ".home")) {
+                return null;
+            }
+            double x = Double.parseDouble(connection.hget("smp." + id + ".back", "x"));
+            double y = Double.parseDouble(connection.hget("smp." + id + ".back", "y"));
+            double z = Double.parseDouble(connection.hget("smp." + id + ".back", "z"));
+            float pitch = Float.parseFloat(connection.hget("smp." + id + ".back", "pitch"));
+            float yaw = Float.parseFloat(connection.hget("smp." + id + ".back", "yaw"));
+            SMPLocation.Dimension dimension = SMPLocation.Dimension.valueOf(connection.hget("smp." + id + ".back", "dimension"));
+            SMPLocation.Reason reason = SMPLocation.Reason.valueOf(connection.hget("smp." + id + ".back", "reason"));
+
+            return new SMPLocation(dimension, x, y, z, pitch, yaw, reason);
+        }
+    }
+
+    public void setSMPBackLocation(UUID id, SMPLocation location) {
+        try (Jedis connection = jedis.getResource()) {
+            if (location == null) {
+                connection.del("smp." + id + ".back");
+                return;
+            }
+            connection.hset("smp." + id + ".back", "x", String.valueOf(location.getX()));
+            connection.hset("smp." + id + ".back", "y", String.valueOf(location.getY()));
+            connection.hset("smp." + id + ".back", "z", String.valueOf(location.getZ()));
+            connection.hset("smp." + id + ".back", "pitch", String.valueOf(location.getPitch()));
+            connection.hset("smp." + id + ".back", "yaw", String.valueOf(location.getYaw()));
+            connection.hset("smp." + id + ".back", "dimension", location.getDimension().name());
+            connection.hset("smp." + id + ".back", "reason", location.getReason().name());
+        }
+    }
+
     public SMPLocation getSMPTeamHomeLocation(UUID id) {
         try (Jedis connection = jedis.getResource()) {
             if (!connection.exists("smp." + id + ".home")) {
