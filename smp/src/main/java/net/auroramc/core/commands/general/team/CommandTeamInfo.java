@@ -33,9 +33,8 @@ public class CommandTeamInfo extends ServerCommand {
             player.sendMessage(TextFormatter.pluginMessage("Teams", String.format("""
                     Information for team **%s**:
                     Name: **%s**
-                    Prefix: **%s**
                     Leader: **%s**
-                    Members: **%s**""", player.getSmpTeam().getUuid(), player.getSmpTeam().getName(), TextFormatter.convert(player.getSmpTeam().getPrefix()), player.getSmpTeam().getLeader().getName(), String.join("**, **", names))));
+                    Members: **%s**""", player.getSmpTeam().getUuid(), player.getSmpTeam().getName(), player.getSmpTeam().getLeader().getName(), String.join("**, **", names))));
         } else {
             player.sendMessage(TextFormatter.pluginMessage("Teams", "You must be in a team to use this command."));
         }

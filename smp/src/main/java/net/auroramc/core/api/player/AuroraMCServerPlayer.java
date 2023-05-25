@@ -613,11 +613,15 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         }
 
         //Prefix.
+
         s = new StringBuilder(TextFormatter.rankFormat(rank, player.getActiveSubscription()));
         if (scoreboard.getScoreboard().getTeam(name) == null) {
             scoreboard.getScoreboard().registerNewTeam(name);
         }
         team = scoreboard.getScoreboard().getTeam(name);
+        if (((AuroraMCServerPlayer)player).getSmpTeam() != null) {
+            s.insert(0, "§d" + ((AuroraMCServerPlayer) player).getSmpTeam().getName() + " ");
+        }
         if (rank != Rank.PLAYER || player.getActiveSubscription() != null) {
             s.append(" ");
         }
@@ -632,9 +636,6 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
         s = new StringBuilder();
 
-        if (getPreferences().getPreferredPronouns() != Pronoun.NONE) {
-            s.append(" §7" + getPreferences().getPreferredPronouns().getDisplay());
-        }
         if (player.getActiveSubscription() != null && player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL) != null) {
             PlusSymbol symbol = (PlusSymbol) player.getActiveCosmetics().get(Cosmetic.CosmeticType.PLUS_SYMBOL);
             s.append(String.format(" %s%s", player.getActiveSubscription().getSuffixColor(), symbol.getSymbol()));
