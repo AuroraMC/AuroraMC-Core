@@ -68,6 +68,7 @@ public class WorldListener implements Listener {
         smp.setGameRule(GameRule.DO_FIRE_TICK, false);
         smp.setGameRule(GameRule.KEEP_INVENTORY, true);
         smp.setGameRule(GameRule.DO_INSOMNIA, false);
+        smp.setDifficulty(Difficulty.HARD);
 
         AuroraMCAPI.getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");
         ProtocolMessage message = new ProtocolMessage(Protocol.SERVER_ONLINE, "Mission Control", "", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name());
