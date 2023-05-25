@@ -2676,6 +2676,31 @@ public class DatabaseManager {
         }
     }
 
+    public void addSMPBlacklist(String name) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.sadd("smp.blacklist", name.toLowerCase());
+        }
+    }
+
+    public void removeSMPBlacklist(String name) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.srem("smp.blacklist", name.toLowerCase());
+        }
+    }
+
+    public boolean isSMPBlacklist(String s) {
+        try (Jedis connection = jedis.getResource()) {
+            return connection.sismember("smp.blacklist", s.toLowerCase());
+        }
+    }
+
+    public List<String> getSMPBlacklist() {
+        try (Jedis connection = jedis.getResource()) {
+            Set<String> usernames = connection.smembers("smp.blacklist");
+            return new ArrayList<>(usernames);
+        }
+    }
+
     public List<Integer> getGlobalAccountIDs(String code) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT banned_profiles FROM global_account_suspensions WHERE punishment_id = ?");
