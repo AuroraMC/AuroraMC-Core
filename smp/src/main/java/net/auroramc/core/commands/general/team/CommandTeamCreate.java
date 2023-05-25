@@ -30,7 +30,7 @@ public class CommandTeamCreate extends ServerCommand {
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
         if (player.getSmpTeam() == null) {
             if (args.size() >= 1) {
-                String name = args.get(0);
+                String name = String.join(" ", args);
                 String filtered = AuroraMCAPI.getFilter().filter(name);
                 if (!filtered.equals(name)) {
                     player.sendMessage(TextFormatter.pluginMessage("Teams", "The name you chose would be filtered, so the creation of the team has been blocked."));
@@ -40,6 +40,9 @@ public class CommandTeamCreate extends ServerCommand {
                 SMPTeam team = new SMPTeam(UUID.randomUUID(), name, name, new SMPPlayer(player.getId(), player.getName(), player.getUuid(), player, player.getRank()));
                 ServerAPI.getLoadedTeams().put(team.getUuid(), team);
                 player.setSmpTeam(team);
+                for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
+                    player1.updateNametag(player);
+                }
                 player.sendMessage(TextFormatter.pluginMessage("Teams", "Team successfully created! Use /team invite to invite players to your team!"));
             } else {
                 player.sendMessage(TextFormatter.pluginMessage("Teams", "Invalid syntax. Correct syntax: **/team create [name]**"));
