@@ -73,6 +73,10 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
     private SMPTeam smpTeam;
     private SMPLocation home;
     private UUID pendingInvite;
+    private List<UUID> pendingTPARequests;
+    private List<UUID> pendingTPAHereRequests;
+    private long lastTeleport;
+    private SMPLocation backLocation;
 
     private Map<String, Hologram> holograms;
 
@@ -80,12 +84,16 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         super(player.getUniqueId(), player.getName(), player);
         this.player = player;
         hidden = false;
+        lastTeleport = 0;
         moved = false;
         dead = false;
+        pendingTPARequests = new ArrayList<>();
+        pendingTPAHereRequests = new ArrayList<>();
         holograms = new HashMap<>();
         scoreboard = new PlayerScoreboard(this, Bukkit.getScoreboardManager().getNewScoreboard());
         this.player = player;
         this.startLocation = AuroraMCAPI.getDbManager().getSMPLogoutLocation(this.getUniqueId());
+        this.backLocation = AuroraMCAPI.getDbManager().getSMPBackLocation(this.getUniqueId());
         SMPLocation location = AuroraMCAPI.getDbManager().getSMPBedLocation(this.getUniqueId());
         if (location != null) {
             this.setBedSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ()));
@@ -1277,5 +1285,35 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
     public void setPendingInvite(UUID pendingInvite) {
         this.pendingInvite = pendingInvite;
+    }
+
+    public List<UUID> getPendingTPARequests() {
+        return pendingTPARequests;
+    }
+
+    public List<UUID> getPendingTPAHereRequests() {
+        return pendingTPAHereRequests;
+    }
+
+    public long getLastTeleport() {
+        return lastTeleport;
+    }
+
+    public void setLastTeleport(long lastTeleport) {
+        this.lastTeleport = lastTeleport;
+    }
+
+    public SMPLocation getBackLocation() {
+        return backLocation;
+    }
+
+    public void setBackLocation(SMPLocation backLocation) {
+        this.backLocation = backLocation;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                AuroraMCAPI.getDbManager().setSMPBackLocation(getUniqueId(), home);
+            }
+        }.runTaskAsynchronously(ServerAPI.getCore());
     }
 }

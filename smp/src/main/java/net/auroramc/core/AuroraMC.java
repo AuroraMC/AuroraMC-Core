@@ -17,6 +17,10 @@ import net.auroramc.core.commands.general.*;
 import net.auroramc.core.commands.general.chest.CommandChest;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
 import net.auroramc.core.commands.general.team.CommandTeam;
+import net.auroramc.core.commands.general.teleport.CommandTeleportHereRequest;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequest;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequestAccept;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequestDeny;
 import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
@@ -123,6 +127,12 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandChest());
         AuroraMCAPI.registerCommand(new CommandSetHome());
         AuroraMCAPI.registerCommand(new CommandHome());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequest());
+        AuroraMCAPI.registerCommand(new CommandTeleportHereRequest());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequestAccept());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequestDeny());
+        AuroraMCAPI.registerCommand(new CommandBack());
+
 
 
 
@@ -166,6 +176,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
         Bukkit.getPluginManager().registerEvents(new NightSkipListener(), this);
         Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
 
 
         //Register the BungeeCord plugin message channel
