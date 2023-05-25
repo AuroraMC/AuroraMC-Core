@@ -35,6 +35,8 @@ public class NightSkipListener implements Listener {
             if (amount / total > 0.35) {
                 e.setUseBed(Event.Result.DENY);
                 e.getBed().getWorld().setFullTime(e.getBed().getWorld().getFullTime() + (24000-(e.getBed().getWorld().getFullTime() % 24000)));
+                e.getBed().getWorld().setClearWeatherDuration(10000);
+
             }
         }
     }

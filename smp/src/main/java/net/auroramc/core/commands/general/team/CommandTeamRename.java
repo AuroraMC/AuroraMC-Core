@@ -6,6 +6,7 @@ package net.auroramc.core.commands.general.team;
 
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.utils.TextFormatter;
+import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.ServerCommand;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.md_5.bungee.api.ChatColor;
