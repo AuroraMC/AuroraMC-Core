@@ -1,0 +1,233 @@
+/*
+ * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ */
+
+package net.auroramc.core.listeners;
+
+import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.utils.TextFormatter;
+import net.auroramc.core.AuroraMC;
+import net.auroramc.core.api.ServerAPI;
+import net.auroramc.core.api.events.block.BlockBreakEvent;
+import net.auroramc.core.api.events.block.BlockDamageEvent;
+import net.auroramc.core.api.events.block.BlockIgniteEvent;
+import net.auroramc.core.api.events.player.PlayerInteractEvent;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.IOException;
+import java.util.*;
+
+public class LockChestListener implements Listener {
+
+    private static Map<UUID, String> waitingForInput = new HashMap<>();
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getClickedBlock() != null) {
+                if (e.getClickedBlock().getType() == Material.CHEST) {
+                    if (e.getPlayer().isSneaking()) {
+                        //Protect chest if not already protected.
+                        if (waitingForInput.containsKey(e.getPlayer().getUniqueId())) {
+                            String command = waitingForInput.remove(e.getPlayer().getUniqueId());
+                            if (command.startsWith("add")) {
+                                String uuid = command.split(";")[1];
+                                if (AuroraMC.getInternal().contains("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ())) {
+                                    UUID owner = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
+                                    if (e.getPlayer().getUniqueId().equals(owner)) {
+                                        List<String> strings = new ArrayList<>(AuroraMC.getInternal().getStringList("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members"));
+                                        strings.add(uuid);
+                                        AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members", strings);
+                                        try {
+                                            AuroraMC.getInternal().save(AuroraMC.getInternalFile());
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Adding members completed successfully!"));
+                                    } else {
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot modify this chest as this chest does not belong to you."));
+                                    }
+                                }
+                            } else if (command.startsWith("remove")) {
+                                String uuid = command.split(";")[1];
+                                if (AuroraMC.getInternal().contains("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ())) {
+                                    UUID owner = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
+                                    if (e.getPlayer().getUniqueId().equals(owner)) {
+                                        List<String> strings = new ArrayList<>(AuroraMC.getInternal().getStringList("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members"));
+                                        if (uuid.startsWith("team")) {
+                                            for (String s : new ArrayList<>(strings)) {
+                                                if (s.startsWith("team")) {
+                                                    strings.remove(s);
+                                                }
+                                            }
+                                        } else {
+                                            strings.remove(uuid);
+                                        }
+                                        AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members", strings);
+                                        try {
+                                            AuroraMC.getInternal().save(AuroraMC.getInternalFile());
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Removing members completed successfully!"));
+                                    } else {
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot modify this chest as this chest does not belong to you."));
+                                    }
+                                }
+                            } else {
+                                UUID owner = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
+                                List<String> strings = new ArrayList<>(AuroraMC.getInternal().getStringList("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members"));
+                                new BukkitRunnable(){
+                                    @Override
+                                    public void run() {
+                                        String ownerName = AuroraMCAPI.getDbManager().getNameFromUUID(owner.toString());
+                                        List<String> members = new ArrayList<>();
+                                        for (String s : strings) {
+                                            if (s.startsWith("team")) {
+                                                String name = AuroraMCAPI.getDbManager().getSMPTeamName(UUID.fromString(s.split("~")[1]));
+                                                members.add("Team: " + name);
+                                            } else if (s.startsWith("player")) {
+                                                String name = AuroraMCAPI.getDbManager().getNameFromUUID(s.split("~")[1]);
+                                                members.add("Player: " + name);
+                                            }
+                                        }
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest Information:\n" +
+                                                "**Owner:** " + ownerName + "\n" +
+                                                "**Members:** " + String.join(", ", members)));
+                                    }
+                                }.runTaskAsynchronously(ServerAPI.getCore());
+                            }
+                        } else {
+                            if (AuroraMC.getInternal().contains("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ())) {
+                                UUID uuid = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
+                                if (e.getPlayer().getUniqueId().equals(uuid)) {
+                                    Chest chest = (Chest) e.getClickedBlock().getState();
+                                    if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
+                                        Chest left = (Chest) doubleChest.getLeftSide();
+                                        Chest right = (Chest) doubleChest.getRightSide();
+
+                                        assert left != null;
+                                        AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ(), null);
+                                        assert right != null;
+                                        AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ(), null);
+                                    } else {
+                                        AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ(), null);
+                                    }
+                                    try {
+                                        AuroraMC.getInternal().save(AuroraMC.getInternalFile());
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest unlocked!"));
+                                } else {
+                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot unlock this chest as this chest does not belong to you."));
+                                }
+                            } else {
+                                Chest chest = (Chest) e.getClickedBlock().getState();
+                                if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
+                                    Chest left = (Chest) doubleChest.getLeftSide();
+                                    Chest right = (Chest) doubleChest.getRightSide();
+                                    assert left != null;
+                                    AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                    AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".members", new ArrayList<>());
+
+                                    assert right != null;
+                                    AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                    AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                } else {
+                                    AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                    AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                }
+                                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest locked!"));
+                            }
+                        }
+                        e.setCancelled(true);
+                    } else {
+                        //Check if chest is protected.
+                        if (AuroraMC.getInternal().contains("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ())) {
+                            //It is, does the player have access.
+                            UUID uuid = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
+                            if (!e.getPlayer().getUniqueId().equals(uuid)) {
+                                List<String> members = AuroraMC.getInternal().getStringList("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members");
+                                for (String s : members) {
+                                    String[] ss = s.split("~");
+                                    if (ss[0].equals("team")) {
+                                        UUID team = UUID.fromString(ss[1]);
+                                        if (e.getPlayer().getSmpTeam() != null) {
+                                            if (e.getPlayer().getSmpTeam().getUuid().equals(team)) {
+                                                return;
+                                            }
+                                        }
+                                    } else if (ss[0].equals("player")) {
+                                        UUID target = UUID.fromString(ss[1]);
+                                        if (e.getPlayer().getUniqueId().equals(target)) {
+                                            return;
+                                        }
+                                    }
+                                }
+
+                                e.setCancelled(true);
+                                TextComponent component = new TextComponent("This chest is locked.");
+                                component.setColor(ChatColor.DARK_AQUA);
+                                component.setBold(true);
+                                e.getPlayer().sendHotBar(component);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getBlock().getType() == Material.CHEST) {
+            if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockDamageEvent e) {
+        if (e.getBlock().getType() == Material.CHEST) {
+            if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockIgniteEvent e) {
+        if (e.getBlock().getType() == Material.CHEST) {
+            if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockExplodeEvent e) {
+        if (e.getBlock().getType() == Material.CHEST) {
+            if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    public static Map<UUID, String> getWaitingForInput() {
+        return waitingForInput;
+    }
+}

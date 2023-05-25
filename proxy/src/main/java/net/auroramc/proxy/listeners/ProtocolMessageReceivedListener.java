@@ -565,6 +565,24 @@ public class ProtocolMessageReceivedListener implements Listener {
                                 "In order to join, simply change your name!"));
                         break;
                     }
+                    case "smpblacklist": {
+                        ProxiedPlayer player = ProxyServer.getInstance().getPlayer(UUID.fromString(e.getMessage().getExtraInfo()));
+                        AuroraMCProxyPlayer proxyPlayer = ProxyAPI.getPlayer(player);
+                        if (proxyPlayer.getServer().getName().startsWith("SMP")) {
+                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You have been blacklisted from the NuttersSMP. You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                            List<ServerInfo> lobbies = ProxyAPI.getLobbyServers();
+                            ServerInfo leastPopulated = null;
+                            for (ServerInfo lobby : lobbies) {
+                                if ((leastPopulated == null || leastPopulated.getCurrentPlayers() > lobby.getCurrentPlayers()) && !proxyPlayer.getServer().getName().equals(lobby.getName())) {
+                                    leastPopulated = lobby;
+                                }
+                            }
+                            assert leastPopulated != null;
+                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", proxyPlayer.getServer().getName(), leastPopulated.getName())));
+                            proxyPlayer.connect(leastPopulated);
+                        }
+                        break;
+                    }
                     case "ban": {
                         Punishment punishment = AuroraMCAPI.getDbManager().getPunishment(e.getMessage().getExtraInfo());
                         PunishmentLength length = new PunishmentLength((punishment.getExpire() - System.currentTimeMillis())/3600000d);

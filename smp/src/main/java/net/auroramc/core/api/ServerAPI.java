@@ -11,6 +11,7 @@ import net.auroramc.core.AuroraMC;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.events.player.PlayerLeaveEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.api.player.team.SMPTeam;
 import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.auroramc.core.api.utils.holograms.HologramLine;
@@ -35,12 +36,15 @@ public class ServerAPI {
     private static Map<Integer, Hologram> holograms;
     private static final HashMap<AuroraMCServerPlayer, GUI> openGUIs;
 
+    private static final Map<UUID, SMPTeam> loadedTeams;
+
     private static boolean shuttingDown;
 
     static {
         openGUIs = new HashMap<>();
         holograms = new HashMap<>();
         fakePlayers = new HashMap<>();
+        loadedTeams = new HashMap<>();
         shuttingDown = false;
     }
 
@@ -197,5 +201,7 @@ public class ServerAPI {
         ServerAPI.shuttingDown = shuttingDown;
     }
 
-
+    public static Map<UUID, SMPTeam> getLoadedTeams() {
+        return loadedTeams;
+    }
 }

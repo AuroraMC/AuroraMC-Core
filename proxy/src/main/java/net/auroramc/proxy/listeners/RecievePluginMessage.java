@@ -22,6 +22,7 @@ import net.auroramc.api.punishments.Punishment;
 import net.auroramc.api.punishments.PunishmentLength;
 import net.auroramc.api.punishments.Rule;
 import net.auroramc.api.stats.Achievement;
+import net.auroramc.api.utils.SMPLocation;
 import net.auroramc.api.utils.Pronoun;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.proxy.api.ProxyAPI;
@@ -45,7 +46,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -270,6 +270,7 @@ public class RecievePluginMessage implements Listener {
                         String server = in.readUTF();
                         ServerInfo info = ProxyAPI.getAmcServers().get(server);
                         player.connect(info);
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getServer().getName(), info.getName())));
                         if (player.getParty() != null) {
                             player.getParty().warp(info);
                         }
@@ -1036,6 +1037,7 @@ public class RecievePluginMessage implements Listener {
                             ProtocolMessage message1 = new ProtocolMessage(Protocol.PUNISH, uuid.toString(), "global_account_suspension", AuroraMCAPI.getInfo().getName(), code + "\n" + extraDetails);
                             CommunicationUtils.sendMessage(message1);
                         }
+                        break;
                     }
                     case "Lobby": {
                         UUID uuid = UUID.fromString(in.readUTF());
@@ -1051,7 +1053,72 @@ public class RecievePluginMessage implements Listener {
                         assert leastPopulated != null;
                         player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getServer().getName(), leastPopulated.getName())));
                         player.connect(leastPopulated);
+                        break;
+                    }
+                    case "SMP": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Connecting you to §5§lNuttersSMP§r, please wait..."));
 
+                        boolean isBlacklisted = AuroraMCAPI.getDbManager().isSMPBlacklist(player.getName());
+                        if (isBlacklisted) {
+                            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You are blacklisted from the NuttersSMP.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                            return;
+                        }
+
+                        SMPLocation location = AuroraMCAPI.getDbManager().getSMPLogoutLocation(player.getUniqueId());
+                        if (location != null) {
+                            switch (location.getDimension()) {
+                                case END: {
+                                    player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-End**.", player.getServer().getName())));
+                                    player.connect(ProxyAPI.getAmcServers().get("SMP-End"));
+                                    break;
+                                }
+                                case NETHER: {
+                                    player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Nether**.", player.getServer().getName())));
+                                    player.connect(ProxyAPI.getAmcServers().get("SMP-Nether"));
+                                    break;
+                                }
+                                case OVERWORLD: {
+                                    player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
+                                    player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
+                                    break;
+                                }
+                            }
+                        } else {
+                            player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
+                            player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
+                        }
+                        break;
+                    }
+
+                    case "SMPOverworld": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Overworld**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-Overworld"));
+
+                        break;
+                    }
+                    case "SMPNether": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-Nether**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-Nether"));
+
+                        break;
+                    }
+                    case "SMPEnd": {
+                        UUID uuid = UUID.fromString(in.readUTF());
+                        AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
+                        assert player != null;
+                        player.sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **SMP-End**.", player.getServer().getName())));
+                        player.connect(ProxyAPI.getAmcServers().get("SMP-End"));
+
+                        break;
                     }
                 }
             } catch (IOException ioException) {

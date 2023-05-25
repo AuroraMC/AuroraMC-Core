@@ -14,7 +14,13 @@ import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
 import net.auroramc.core.commands.admin.iplookup.CommandIPLookup;
 import net.auroramc.core.commands.general.*;
+import net.auroramc.core.commands.general.chest.CommandChest;
 import net.auroramc.core.commands.general.ignore.CommandIgnore;
+import net.auroramc.core.commands.general.team.CommandTeam;
+import net.auroramc.core.commands.general.teleport.CommandTeleportHereRequest;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequest;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequestAccept;
+import net.auroramc.core.commands.general.teleport.CommandTeleportRequestDeny;
 import net.auroramc.core.commands.moderation.*;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
@@ -41,10 +47,21 @@ import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.EventManager;
 import net.auroramc.core.managers.GUIManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 public class AuroraMC extends JavaPlugin {
+
+
+    private static FileConfiguration internal;
+    private static File internalFile;
 
 
     @Override
@@ -53,6 +70,7 @@ public class AuroraMC extends JavaPlugin {
         getLogger().info("Loading AuroraMC-SMP...");
 
         ServerAPI.init(this);
+        AuroraMCAPI.setCosmeticsEnabled(false);
 
         //Register Commands with the API.
         AuroraMCAPI.registerCommand(new CommandSetRank());
@@ -104,6 +122,18 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandEmotes());
         AuroraMCAPI.registerCommand(new CommandViewGames());
         AuroraMCAPI.registerCommand(new CommandReportInfo());
+        AuroraMCAPI.registerCommand(new CommandHub());
+        AuroraMCAPI.registerCommand(new CommandTeam());
+        AuroraMCAPI.registerCommand(new CommandChest());
+        AuroraMCAPI.registerCommand(new CommandSetHome());
+        AuroraMCAPI.registerCommand(new CommandHome());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequest());
+        AuroraMCAPI.registerCommand(new CommandTeleportHereRequest());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequestAccept());
+        AuroraMCAPI.registerCommand(new CommandTeleportRequestDeny());
+        AuroraMCAPI.registerCommand(new CommandBack());
+        AuroraMCAPI.registerCommand(new CommandSpawn());
+
 
 
 
@@ -142,15 +172,33 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ProtocolMessageReceivedListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
+        Bukkit.getPluginManager().registerEvents(new NightSkipListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
 
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
 
-        getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");
-        ProtocolMessage message = new ProtocolMessage(Protocol.SERVER_ONLINE, "Mission Control", "", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name());
-        CommunicationUtils.sendMessage(message);
+        internalFile = new File(getDataFolder(), "internal.yml");
+        if (!internalFile.exists()) {
+            internalFile.getParentFile().mkdirs();
+            copy(getResource("internal.yml"), internalFile);
+        }
+
+        internal = new YamlConfiguration();
+        try {
+            internal.load(internalFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        internal.options().copyHeader(true);
+
+
     }
 
     @Override
@@ -163,5 +211,30 @@ public class AuroraMC extends JavaPlugin {
             CommunicationUtils.shutdown();
         }
     }
+
+    private void copy(InputStream in, File file) {
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while((len=in.read(buf))>0){
+                out.write(buf,0,len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static FileConfiguration getInternal() {
+        return internal;
+    }
+
+    public static File getInternalFile() {
+        return internalFile;
+    }
 }
+
+
 

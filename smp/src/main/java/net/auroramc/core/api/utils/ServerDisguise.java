@@ -8,7 +8,7 @@ import com.mojang.authlib.properties.Property;
 import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.Disguise;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import net.auroramc.core.utils.disguise.DisguiseUtil;
+import net.auroramc.core.utils.DisguiseUtil;
 
 public class ServerDisguise extends Disguise {
 

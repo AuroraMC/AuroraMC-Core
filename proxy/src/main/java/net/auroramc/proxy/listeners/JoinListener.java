@@ -300,15 +300,6 @@ public class JoinListener implements Listener {
                                 e.getPlayer().sendMessage(TextFormatter.pluginMessage("Server Manager", "You do not have permission to go to that server!"));
                             }
                             break;
-                        case "staff":
-                            if (!player.hasPermission("moderation")) {
-                                if (!player.getStats().getAchievementsGained().containsKey(AuroraMCAPI.getAchievement(7))) {
-                                    player.getStats().achievementGained(AuroraMCAPI.getAchievement(7), 1, true);
-                                }
-                                e.setCancelled(true);
-                                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Server Manager", "You do not have permission to go to that server!"));
-                            }
-                            break;
                     }
                 }
 

@@ -121,7 +121,7 @@ public class CommonUtils {
         AuroraMCAPI.registerCosmetic(new net.auroramc.common.cosmetics.plussymbols.Plus());
         AuroraMCAPI.registerCosmetic(new Heart());
         AuroraMCAPI.registerCosmetic(new Radioactive());
-        AuroraMCAPI.registerCosmetic(new Peace());
+        AuroraMCAPI.registerCosmetic(new net.auroramc.common.cosmetics.plussymbols.Peace());
         AuroraMCAPI.registerCosmetic(new ShootingStar());
         AuroraMCAPI.registerCosmetic(new Mathematician());
         AuroraMCAPI.registerCosmetic(new Flower());

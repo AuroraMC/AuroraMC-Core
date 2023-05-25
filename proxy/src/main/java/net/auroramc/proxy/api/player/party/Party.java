@@ -751,6 +751,10 @@ public class Party {
                             player.getPlayer().connect(target);
                             player.getPlayer().sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getPlayer().getServer().getName(), target.getName())));
                             break;
+                        case "smp": {
+                            player.getPlayer().sendMessage(TextFormatter.pluginMessage("Server Manager", "You cannot manually go to an SMP server. You must use the Lobby to connect to SMP."));
+                            return;
+                        }
                         default:
                             player.getPlayer().connect(target);
                             player.getPlayer().sendMessage(TextFormatter.pluginMessage("Server Manager", String.format("You are being sent from **%s** to **%s**.", player.getPlayer().getServer().getName(), target.getName())));

@@ -20,15 +20,17 @@ public class Rainbow extends KillMessage {
     @Override
     public String onKill(AuroraMCPlayer receiver, AuroraMCPlayer killer, AuroraMCPlayer victim, String entity, KillReason reason, int gameId) {
         String victimName = victim.getName();
-        if (receiver.equals(victim)) {
-            if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
-                victimName = receiver.getName();
-            }
-        }
         String killerName = ((killer == null)?null:killer.getName());
-        if (receiver.equals(killer)) {
-            if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
-                killerName = receiver.getName();
+        if (receiver != null) {
+            if (receiver.equals(victim)) {
+                if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
+                    victimName = receiver.getName();
+                }
+            }
+            if (receiver.equals(killer)) {
+                if (receiver.isDisguised() && receiver.getPreferences().isHideDisguiseNameEnabled()) {
+                    killerName = receiver.getName();
+                }
             }
         }
         switch (reason) {

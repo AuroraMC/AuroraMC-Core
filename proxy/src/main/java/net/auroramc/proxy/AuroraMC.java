@@ -20,6 +20,7 @@ import net.auroramc.proxy.commands.admin.economy.CommandBankBungee;
 import net.auroramc.proxy.commands.admin.economy.CommandCrown;
 import net.auroramc.proxy.commands.admin.economy.CommandTicket;
 import net.auroramc.proxy.commands.admin.maintenance.CommandMaintenance;
+import net.auroramc.proxy.commands.admin.smpblacklist.CommandSMPBlacklist;
 import net.auroramc.proxy.commands.admin.stats.CommandStatsAdmin;
 import net.auroramc.proxy.commands.general.CommandChat;
 import net.auroramc.proxy.commands.general.CommandMessage;
@@ -91,6 +92,7 @@ public class AuroraMC extends Plugin {
         AuroraMCAPI.registerCommand(new CommandJoinMessage());
         AuroraMCAPI.registerCommand(new CommandReloadServers());
         AuroraMCAPI.registerCommand(new CommandSeen());
+        AuroraMCAPI.registerCommand(new CommandSMPBlacklist());
 
 
 
