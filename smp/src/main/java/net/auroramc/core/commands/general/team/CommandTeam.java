@@ -31,6 +31,8 @@ public class CommandTeam extends ServerCommand {
         this.registerSubcommand("accept", Collections.emptyList(), new CommandTeamAccept());
         this.registerSubcommand("disband", Collections.emptyList(), new CommandTeamDisband());
         this.registerSubcommand("home", Collections.emptyList(), new CommandTeamHome());
+        this.registerSubcommand("leave", Collections.emptyList(), new CommandTeamLeave());
+        this.registerSubcommand("transfer", Collections.emptyList(), new CommandTeamTransfer());
 
     }
 
@@ -46,6 +48,8 @@ public class CommandTeam extends ServerCommand {
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
                     **/team home** - Go to your team home.
+                    **/team leave** - Leave your current team.
+                    **/team transfer [name]** - Transfer your team to another user.
                     **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
             return;
         }
@@ -58,6 +62,8 @@ public class CommandTeam extends ServerCommand {
             case "info":
             case "accept":
             case "home":
+            case "transfer":
+            case "leave":
                 aliasUsed = args.remove(0).toLowerCase();
                 subcommands.get(aliasUsed).execute(player, aliasUsed, args);
                 break;
@@ -71,6 +77,8 @@ public class CommandTeam extends ServerCommand {
                     **/team info** - Displays information about your team.
                     **/team accept** - Accept a team invite.
                     **/team home** - Go to your team home.
+                    **/team leave** - Leave your current team.
+                    **/team transfer [name]** - Transfer your team to another user.
                     **/team disband** - Disband your team. §c§lWARNING:§r This will lock all of your team chests to their original owner and any other members added to the chest."""));
                 break;
         }
@@ -88,6 +96,8 @@ public class CommandTeam extends ServerCommand {
                 case "info":
                 case "accept":
                 case "home":
+                case "transfer":
+                case "leave":
                     aliasUsed = args.remove(0);
                     return ((ServerCommand)subcommands.get(aliasUsed)).onTabComplete(player, aliasUsed, args, ((args.size() >= 1)?args.get(0):""), numberArguments - 1);
                 default:
