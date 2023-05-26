@@ -178,6 +178,7 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new NightSkipListener(), this);
         Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
         Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockLoggerListener(), this);
 
 
         //Register the BungeeCord plugin message channel

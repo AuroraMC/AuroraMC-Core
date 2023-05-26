@@ -10,14 +10,13 @@ import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.permissions.Permission;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.ServerCommand;
+import net.auroramc.core.api.events.player.AsyncPlayerChatEvent;
 import net.auroramc.core.api.events.player.PlayerFakePlayerAttackEvent;
 import net.auroramc.core.api.events.player.PlayerFakePlayerInteractEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.protocol.game.PacketPlayInTabComplete;
-import net.minecraft.network.protocol.game.PacketPlayInUseEntity;
-import net.minecraft.network.protocol.game.PacketPlayOutTabComplete;
+import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
@@ -133,6 +132,25 @@ public class TabCompleteInjector {
                         }
                         ServerAPI.getHolograms().get(entityId).onClick();
                     }
+                } else if (packet instanceof PacketPlayInChat) {
+                    AuroraMCServerPlayer player = ServerAPI.getPlayer(pl);
+                    if (player == null) {
+                        //Player has not yet loaded fully.
+                        return;
+                    }
+                    if (!player.isLoaded()) {
+                        //Player has not yet loaded fully.
+                        return;
+                    }
+                    String string = ((PacketPlayInChat) packet).a();
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            AsyncPlayerChatEvent chatEvent = new AsyncPlayerChatEvent(true, player, string);
+                            Bukkit.getPluginManager().callEvent(chatEvent);
+                        }
+                    }.runTaskAsynchronously(ServerAPI.getCore());
+                    return;
                 }
 
                 super.channelRead(channelHandlerContext, packet);

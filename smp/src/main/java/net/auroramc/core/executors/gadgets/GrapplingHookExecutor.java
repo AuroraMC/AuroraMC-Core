@@ -19,13 +19,12 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public class GrapplingHookExecutor extends CosmeticExecutor implements Listener {
+public class GrapplingHookExecutor extends CosmeticExecutor {
 
     private final Random random = new Random();
 
     public GrapplingHookExecutor() {
         super(AuroraMCAPI.getCosmetics().get(801));
-        Bukkit.getPluginManager().registerEvents(this, ServerAPI.getCore());
     }
 
     @Override
@@ -44,19 +43,5 @@ public class GrapplingHookExecutor extends CosmeticExecutor implements Listener 
     @Override
     public void cancel(AuroraMCPlayer player) {
 
-    }
-
-    @EventHandler
-    public void onFish(PlayerFishEvent e) {
-        AuroraMCServerPlayer player = e.getPlayer();
-        PlayerUseCosmeticEvent event = new PlayerUseCosmeticEvent(player, this.getCosmetic());
-        Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled()) {
-            return;
-        }
-        if (this.getCosmetic().equals(player.getActiveCosmetics().get(Cosmetic.CosmeticType.GADGET)) && e.getState() != PlayerFishEvent.State.FISHING) {
-            Vector vector = e.getHook().getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(3);
-            player.setVelocity(vector);
-        }
     }
 }
