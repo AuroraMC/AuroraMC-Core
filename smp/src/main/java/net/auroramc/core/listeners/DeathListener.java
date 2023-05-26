@@ -16,10 +16,7 @@ import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
-import net.auroramc.core.api.events.entity.PlayerDamageByEntityEvent;
-import net.auroramc.core.api.events.entity.PlayerDamageByPlayerEvent;
-import net.auroramc.core.api.events.entity.PlayerDamageByPlayerRangedEvent;
-import net.auroramc.core.api.events.entity.PlayerDamageEvent;
+import net.auroramc.core.api.events.entity.*;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
 import org.apache.commons.text.WordUtils;
 import org.bukkit.Bukkit;
@@ -68,6 +65,8 @@ public class DeathListener implements Listener {
                     e.setCancelled(true);
                     return;
                 }
+            } else if (e instanceof EntityDamageByPlayerEvent) {
+                return;
             }
         }
         if (e.getDamage() >= player.getHealth() && !player.isVanished()) {
