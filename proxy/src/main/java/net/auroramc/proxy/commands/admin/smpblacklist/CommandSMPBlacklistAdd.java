@@ -34,13 +34,22 @@ public class CommandSMPBlacklistAdd extends ProxyCommand {
     public void execute(AuroraMCProxyPlayer player, String aliasUsed, List<String> args) {
         if (args.size() == 1) {
             ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
-                AuroraMCAPI.getDbManager().addSMPBlacklist(args.get(0));
+                UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
+                if (uuid == null) {
+                    try {
+                        uuid = UUID.fromString(args.get(0));
+                    } catch (IllegalArgumentException e) {
+                        player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", "Please provide a valid username or UUID."));
+                        return;
+                    }
+                }
+                AuroraMCAPI.getDbManager().addSMPBlacklist(uuid.toString());
                 player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", "User blacklisted."));
-                ProxiedPlayer pl = ProxyAPI.getCore().getProxy().getPlayer(args.get(0));
+                ProxiedPlayer pl = ProxyAPI.getCore().getProxy().getPlayer(uuid);
                 if (pl != null) {
                     AuroraMCProxyPlayer proxyPlayer = ProxyAPI.getPlayer(pl);
                     if (proxyPlayer.getServer().getName().startsWith("SMP")) {
-                        proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You have been blacklisted from the NuttersSMP. You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                        proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "§cYou have been blacklisted from the NuttersSMP. §rYou are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
                         List<ServerInfo> lobbies = ProxyAPI.getLobbyServers();
                         ServerInfo leastPopulated = null;
                         assert player != null;
@@ -54,7 +63,6 @@ public class CommandSMPBlacklistAdd extends ProxyCommand {
                         player.connect(leastPopulated);
                     }
                 } else {
-                    UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
                     if (AuroraMCAPI.getDbManager().hasActiveSession(uuid)) {
                         ProtocolMessage message = new ProtocolMessage(Protocol.PUNISH, AuroraMCAPI.getDbManager().getProxy(uuid).toString(), "smpblacklist", AuroraMCAPI.getInfo().getName(), uuid.toString());
                         CommunicationUtils.sendMessage(message);
@@ -62,7 +70,7 @@ public class CommandSMPBlacklistAdd extends ProxyCommand {
                 }
             });
         } else {
-            player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", "Invalid syntax. Correct syntax: **/blacklist add [name]**"));
+            player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", "Invalid syntax. Correct syntax: **/blacklist add [name | uuid]**"));
         }
     }
 
