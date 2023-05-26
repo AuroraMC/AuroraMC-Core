@@ -1316,5 +1316,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
                 AuroraMCAPI.getDbManager().setSMPBackLocation(getUniqueId(), home);
             }
         }.runTaskAsynchronously(ServerAPI.getCore());
+
     }
+
 }

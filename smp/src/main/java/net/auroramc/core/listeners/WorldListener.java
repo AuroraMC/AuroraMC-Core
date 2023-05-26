@@ -67,7 +67,8 @@ public class WorldListener implements Listener {
         smp.setPVP(false);
         smp.setGameRule(GameRule.DO_FIRE_TICK, false);
         smp.setGameRule(GameRule.KEEP_INVENTORY, true);
-        smp.setGameRule(GameRule.DO_INSOMNIA, false);
+        smp.setGameRule(GameRule.DO_INSOMNIA, true);
+        smp.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 35);
         smp.setDifficulty(Difficulty.HARD);
 
         AuroraMCAPI.getLogger().info("AuroraMC-SMP loaded and ready to accept connections. Letting mission control know...");
