@@ -15,8 +15,10 @@ import net.auroramc.core.api.events.player.PlayerInteractEvent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -34,7 +36,7 @@ public class LockChestListener implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (e.getClickedBlock() != null) {
-                if (e.getClickedBlock().getType() == Material.CHEST) {
+                if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.FURNACE || e.getClickedBlock().getType() == Material.BLAST_FURNACE || e.getClickedBlock().getType() == Material.SMOKER || e.getClickedBlock().getType().name().contains("ANVIL") || e.getClickedBlock().getType().name().endsWith("DOOR")) {
                     if (e.getPlayer().isSneaking()) {
                         //Protect chest if not already protected.
                         if (waitingForInput.containsKey(e.getPlayer().getUniqueId())) {
@@ -52,9 +54,9 @@ public class LockChestListener implements Listener {
                                         } catch (IOException ex) {
                                             ex.printStackTrace();
                                         }
-                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Adding members completed successfully!"));
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Adding members completed successfully!"));
                                     } else {
-                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot modify this chest as this chest does not belong to you."));
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "You cannot modify this container as this chest does not belong to you."));
                                     }
                                 }
                             } else if (command.startsWith("remove")) {
@@ -78,9 +80,9 @@ public class LockChestListener implements Listener {
                                         } catch (IOException ex) {
                                             ex.printStackTrace();
                                         }
-                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Removing members completed successfully!"));
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Removing members completed successfully!"));
                                     } else {
-                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot modify this chest as this chest does not belong to you."));
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "You cannot modify this container as this chest does not belong to you."));
                                     }
                                 }
                             } else {
@@ -100,7 +102,7 @@ public class LockChestListener implements Listener {
                                                 members.add("Player: " + name);
                                             }
                                         }
-                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest Information:\n" +
+                                        e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Container Information:\n" +
                                                 "**Owner:** " + ownerName + "\n" +
                                                 "**Members:** " + String.join(", ", members)));
                                     }
@@ -110,15 +112,33 @@ public class LockChestListener implements Listener {
                             if (AuroraMC.getInternal().contains("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ())) {
                                 UUID uuid = UUID.fromString(AuroraMC.getInternal().getString("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner"));
                                 if (e.getPlayer().getUniqueId().equals(uuid)) {
-                                    Chest chest = (Chest) e.getClickedBlock().getState();
-                                    if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
-                                        Chest left = (Chest) doubleChest.getLeftSide();
-                                        Chest right = (Chest) doubleChest.getRightSide();
+                                    if (e.getClickedBlock().getState() instanceof Chest chest) {
+                                        if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
+                                            Chest left = (Chest) doubleChest.getLeftSide();
+                                            Chest right = (Chest) doubleChest.getRightSide();
 
-                                        assert left != null;
-                                        AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ(), null);
-                                        assert right != null;
-                                        AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ(), null);
+                                            assert left != null;
+                                            AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ(), null);
+                                            assert right != null;
+                                            AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ(), null);
+                                        } else {
+                                            AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ(), null);
+                                        }
+                                    } else if (e.getClickedBlock().getType().name().endsWith("_DOOR")) {
+                                        Block block = e.getClickedBlock();
+                                        Block above = e.getClickedBlock().getRelative(0, 1, 0);
+                                        Block below = e.getClickedBlock().getRelative(0, -1, 0);
+
+                                        if (above.getType() == block.getType()) {
+                                            AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ(), null);
+                                            AuroraMC.getInternal().set("chests." + above.getLocation().getBlockX() + "." + above.getLocation().getBlockY() + "." + above.getLocation().getBlockZ(), null);
+                                        } else if (below.getType() == block.getType()) {
+                                            AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ(), null);
+                                            AuroraMC.getInternal().set("chests." + below.getLocation().getBlockX() + "." + below.getLocation().getBlockY() + "." + below.getLocation().getBlockZ(), null);
+                                        } else {
+                                            //something has gone drastically wrong if this is true.
+                                            return;
+                                        }
                                     } else {
                                         AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ(), null);
                                     }
@@ -127,27 +147,52 @@ public class LockChestListener implements Listener {
                                     } catch (IOException ex) {
                                         ex.printStackTrace();
                                     }
-                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest unlocked!"));
+                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Container unlocked!"));
                                 } else {
-                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "You cannot unlock this chest as this chest does not belong to you."));
+                                    e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "You cannot unlock this container as this container does not belong to you."));
                                 }
                             } else {
-                                Chest chest = (Chest) e.getClickedBlock().getState();
-                                if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
-                                    Chest left = (Chest) doubleChest.getLeftSide();
-                                    Chest right = (Chest) doubleChest.getRightSide();
-                                    assert left != null;
-                                    AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
-                                    AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                if (e.getClickedBlock().getState() instanceof Chest chest) {
+                                    if (chest.getInventory().getHolder() instanceof DoubleChest doubleChest) {
+                                        Chest left = (Chest) doubleChest.getLeftSide();
+                                        Chest right = (Chest) doubleChest.getRightSide();
+                                        assert left != null;
+                                        AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + left.getLocation().getBlockX() + "." + left.getLocation().getBlockY() + "." + left.getLocation().getBlockZ() + ".members", new ArrayList<>());
 
-                                    assert right != null;
-                                    AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
-                                    AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                        assert right != null;
+                                        AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + right.getLocation().getBlockX() + "." + right.getLocation().getBlockY() + "." + right.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                    } else {
+                                        AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                    }
+                                } else if (e.getClickedBlock().getType().name().endsWith("_DOOR")) {
+                                    Block block = e.getClickedBlock();
+                                    Block above = e.getClickedBlock().getRelative(0, 1, 0);
+                                    Block below = e.getClickedBlock().getRelative(0, -1, 0);
+
+                                    if (above.getType() == block.getType()) {
+                                        AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ() + ".members", new ArrayList<>());
+
+                                        AuroraMC.getInternal().set("chests." + above.getLocation().getBlockX() + "." + above.getLocation().getBlockY() + "." + above.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + above.getLocation().getBlockX() + "." + above.getLocation().getBlockY() + "." + above.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                    } else if (below.getType() == block.getType()) {
+                                        AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + block.getLocation().getBlockX() + "." + block.getLocation().getBlockY() + "." + block.getLocation().getBlockZ() + ".members", new ArrayList<>());
+
+                                        AuroraMC.getInternal().set("chests." + below.getLocation().getBlockX() + "." + below.getLocation().getBlockY() + "." + below.getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
+                                        AuroraMC.getInternal().set("chests." + below.getLocation().getBlockX() + "." + below.getLocation().getBlockY() + "." + below.getLocation().getBlockZ() + ".members", new ArrayList<>());
+                                    } else {
+                                        //something has gone drastically wrong if this is true.
+                                        return;
+                                    }
                                 } else {
                                     AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".owner", e.getPlayer().getUniqueId().toString());
                                     AuroraMC.getInternal().set("chests." + e.getClickedBlock().getLocation().getBlockX() + "." + e.getClickedBlock().getLocation().getBlockY() + "." + e.getClickedBlock().getLocation().getBlockZ() + ".members", new ArrayList<>());
                                 }
-                                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chest locked!"));
+                                e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Container locked!"));
                             }
                         }
                         e.setCancelled(true);
@@ -176,7 +221,7 @@ public class LockChestListener implements Listener {
                                 }
 
                                 e.setCancelled(true);
-                                TextComponent component = new TextComponent("This chest is locked.");
+                                TextComponent component = new TextComponent("This container is locked.");
                                 component.setColor(ChatColor.DARK_AQUA);
                                 component.setBold(true);
                                 e.getPlayer().sendHotBar(component);

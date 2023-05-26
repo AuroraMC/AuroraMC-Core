@@ -1059,9 +1059,9 @@ public class ProtocolMessageReceivedListener implements Listener {
             }
             case ALPHA_UPDATE: {
                 for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-                    player.disconnect(TextFormatter.pluginMessage("Server Manager", "&cThe alpha network has been closed.\n" +
+                    player.disconnect(TextFormatter.pluginMessage("Server Manager", "§cThe alpha network has been closed.\n" +
                             "\n" +
-                            "&rThanks for helping us test out our upcoming updates!\n" +
+                            "§rThanks for helping us test out our upcoming updates!\n" +
                             "\n" +
                             "Keep an eye on auroramc.net and our Discord server for information on when the network will be open again!"));
                 }
