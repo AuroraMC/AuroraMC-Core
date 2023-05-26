@@ -34,9 +34,11 @@ public class CommandVanish extends ServerCommand {
         if (!event.isVanish()) {
             player.unvanish();
             player.sendMessage(TextFormatter.pluginMessage("Vanish", "You are no longer vanished."));
+            player.setSleepingIgnored(false);
         } else {
             player.vanish();
             player.sendMessage(TextFormatter.pluginMessage("Vanish", "You are now vanished."));
+            player.setSleepingIgnored(true);
         }
     }
 

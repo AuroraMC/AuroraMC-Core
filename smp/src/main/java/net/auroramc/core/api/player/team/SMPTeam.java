@@ -78,59 +78,23 @@ public class SMPTeam {
         this.home = AuroraMCAPI.getDbManager().getSMPTeamHomeLocation(uuid);
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix, boolean send) {
-        this.prefix = prefix;
-
-        if (send) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    List<String> destinations = new ArrayList<>();
-                    String sender = "SMP-Overworld";
-                    switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
-                        case "OVERWORLD": {
-                            destinations.add("SMP-Nether");
-                            destinations.add("SMP-End");
-                            break;
-                        }
-                        case "END": {
-                            destinations.add("SMP-Nether");
-                            destinations.add("SMP-Overworld");
-                            sender = "SMP-End";
-                            break;
-                        }
-                        case "NETHER": {
-                            destinations.add("SMP-Overworld");
-                            destinations.add("SMP-End");
-                            sender = "SMP-Nether";
-                            break;
-                        }
-                    }
-                    for (String destination : destinations) {
-                        ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_MAPS, destination, "setprefix", sender, uuid + ";" + prefix);
-                        CommunicationUtils.sendMessage(message);
-                    }
-                    AuroraMCAPI.getDbManager().setSMPTeamPrefix(uuid, prefix);
-                }
-            }.runTaskAsynchronously(ServerAPI.getCore());
-        }
-    }
-
     public SMPPlayer getLeader() {
         return leader;
     }
 
     public void setLeader(SMPPlayer leader, boolean send) {
+        members.add(this.leader);
+        members.remove(leader);
         this.leader = leader;
         for (SMPPlayer player : members) {
             if (player.getPlayer() != null && player.getPlayer().isOnline()) {
                 AuroraMCServerPlayer p = player.getPlayer();
-                p.sendMessage(TextFormatter.pluginMessage("Teams","Team Leadership has been transfered to **" + leader.getName() + "**."));
+                p.sendMessage(TextFormatter.pluginMessage("Teams","Team Leadership has been transferred to **" + leader.getName() + "**."));
             }
+        }
+        if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+            AuroraMCServerPlayer p = leader.getPlayer();
+            p.sendMessage(TextFormatter.pluginMessage("Teams","Team Leadership has been transferred to **" + leader.getName() + "**."));
         }
         if (send) {
             new BukkitRunnable() {
@@ -197,12 +161,17 @@ public class SMPTeam {
                 pl.sendMessage(TextFormatter.pluginMessage("Teams","**" + p.getName() + "** has joined the team."));
             }
         }
-        if (p.getPlayer() != null && p.getPlayer().isOnline()) {
-            for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
-                player.updateNametag(p.getPlayer());
-            }
-            p.getPlayer().setHome(null);
+        if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+            AuroraMCServerPlayer pl = leader.getPlayer();
+            assert pl != null;
+            pl.sendMessage(TextFormatter.pluginMessage("Teams","**" + p.getName() + "** has joined the team."));
         }
+            if (p.getPlayer() != null && p.getPlayer().isOnline()) {
+                for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+                    player.updateNametag(p.getPlayer());
+                }
+                p.getPlayer().setHome(null);
+            }
         if (send) {
             new BukkitRunnable() {
                 @Override
@@ -259,6 +228,12 @@ public class SMPTeam {
                 }
             }
         }
+
+        if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+            AuroraMCServerPlayer pl = leader.getPlayer();
+            assert pl != null;
+            pl.sendMessage(TextFormatter.pluginMessage("Teams","**" + getMember(p).getName() + "** has left the team."));
+        }
         members.remove(getMember(p));
         if (send) {
             new BukkitRunnable() {
@@ -313,6 +288,9 @@ public class SMPTeam {
                     player.updateNametag(pl.getPlayer());
                 }
             }
+            if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+                player.updateNametag(leader.getPlayer());
+            }
         }
         if (send) {
             new BukkitRunnable() {
@@ -359,9 +337,6 @@ public class SMPTeam {
 
     public void setHome(Location home, boolean send) {
         this.home = new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), home.getX(), home.getY(), home.getZ(), home.getPitch(), home.getYaw(), SMPLocation.Reason.HOME);
-
-
-
         if (send) {
             new BukkitRunnable() {
                 @Override
@@ -443,12 +418,18 @@ public class SMPTeam {
                 player.getPlayer().setSmpTeam(null);
             }
         }
+        if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+            leader.getPlayer().setSmpTeam(null);
+        }
 
         for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
             for (SMPPlayer pl : members) {
                 if (pl.getPlayer() != null && pl.getPlayer().isOnline()) {
                     player.updateNametag(pl.getPlayer());
                 }
+            }
+            if (leader.getPlayer() != null && leader.getPlayer().isOnline()) {
+                player.updateNametag(leader.getPlayer());
             }
         }
     }

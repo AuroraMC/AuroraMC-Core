@@ -91,6 +91,10 @@ public class JoinListener implements Listener {
             return;
         }
 
+        if (ServerAPI.getPlayers().size() >= 40) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_FULL, "This server is currently full. In order to prevent lag, this server is limited to 40 players. Please try again later.");
+        }
+
         e.allow();
     }
 
@@ -107,6 +111,9 @@ public class JoinListener implements Listener {
         e.setJoinMessage(null);
         AuroraMCServerPlayer serverPlayer = ServerAPI.getPlayer(e.getPlayer());
         serverPlayer.loadPlayerState();
+        if (serverPlayer.isVanished()) {
+            serverPlayer.setSleepingIgnored(true);
+        }
     }
 
     @EventHandler

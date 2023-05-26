@@ -4278,6 +4278,27 @@ public class DatabaseManager {
         }
     }
 
+    public void logBlockEvent(BlockLogEvent e) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO smp_blocklogs VALUES (?, ?, ?, ?, ?, ?, ?)");
+            statement.setTimestamp(1, new Timestamp(e.getTimestamp()));
+            statement.setString(2, e.getType().name());
+            statement.setInt(3, (int) e.getLocation().getX());
+            statement.setInt(4, (int) e.getLocation().getY());
+            statement.setInt(5, (int) e.getLocation().getZ());
+            if (e.getPlayer() == null) {
+                statement.setNull(6, Types.VARCHAR);
+            } else {
+                statement.setString(6, e.getPlayer().toString());
+            }
+            statement.setString(7, e.getMaterial());
+
+            statement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public Jedis getRedisConnection() {
         return jedis.getResource();
     }
