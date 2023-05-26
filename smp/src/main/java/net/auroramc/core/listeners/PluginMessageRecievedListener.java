@@ -33,12 +33,12 @@ public class PluginMessageRecievedListener implements PluginMessageListener {
             String subchannel = in.readUTF();
             switch (subchannel) {
                 case "PlaySound": {
-                    AuroraMCServerPlayer player = ServerAPI.getPlayer(in.readUTF());
+                    /*AuroraMCServerPlayer player = ServerAPI.getPlayer(in.readUTF());
                     String sound = in.readUTF();
                     int volume = in.readInt();
                     int pitch = in.readInt();
                     assert player != null;
-                    player.playSound(player.getLocation(), Sound.valueOf(sound), volume, pitch);
+                    player.playSound(player.getLocation(), Sound.valueOf(sound), volume, pitch);*/
                     break;
                 }
                 case "XPAdd": {

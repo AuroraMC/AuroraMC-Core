@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class CommandSMPBlacklistCheck extends ProxyCommand {
 
@@ -28,14 +29,23 @@ public class CommandSMPBlacklistCheck extends ProxyCommand {
     public void execute(AuroraMCProxyPlayer player, String aliasUsed, List<String> args) {
         if (args.size() == 1) {
             ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
-                if (AuroraMCAPI.getDbManager().isUsernameBanned(args.get(0).toLowerCase())) {
-                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: §atrue", args.get(0))));
+                UUID uuid = AuroraMCAPI.getDbManager().getUUID(args.get(0));
+                if (uuid == null) {
+                    try {
+                        uuid = UUID.fromString(args.get(0));
+                    } catch (IllegalArgumentException e) {
+                        player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", "Please provide a valid username or UUID."));
+                        return;
+                    }
+                }
+                if (AuroraMCAPI.getDbManager().isSMPBlacklist(uuid.toString())) {
+                    player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", String.format("User [**%s**] SMP blacklisted: §atrue", args.get(0))));
                 } else {
-                    player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", String.format("Username [**%s**] blacklisted: §cfalse", args.get(0))));
+                    player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", String.format("User [**%s**] SMP blacklisted: §cfalse", args.get(0))));
                 }
             });
         } else {
-            player.sendMessage(TextFormatter.pluginMessage("Username Blacklist", "Invalid syntax. Correct syntax: **/blacklist check [name]**"));
+            player.sendMessage(TextFormatter.pluginMessage("SMP Blacklist", "Invalid syntax. Correct syntax: **/smpblacklist check [name | uuid]**"));
         }
     }
 

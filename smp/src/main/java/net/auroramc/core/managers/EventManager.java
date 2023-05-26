@@ -25,6 +25,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.DragType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+
 public class EventManager implements Listener {
 
     @EventHandler
@@ -82,11 +84,11 @@ public class EventManager implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void enchantItemEvent(org.bukkit.event.enchantment.EnchantItemEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getEnchanter());
         if (player!=null && player.isLoaded()) {
-            EnchantItemEvent event = new EnchantItemEvent(player, e.getView(), e.getEnchantBlock(), e.getItem(), e.getExpLevelCost(), e.getEnchantsToAdd(), e.whichButton());
+            EnchantItemEvent event = new EnchantItemEvent(player, e.getView(), e.getEnchantBlock(), e.getItem(), e.getExpLevelCost(), new HashMap<>(e.getEnchantsToAdd()), e.whichButton());
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
             e.setExpLevelCost(event.getLevel());
@@ -103,7 +105,7 @@ public class EventManager implements Listener {
             Bukkit.getPluginManager().callEvent(event);
             e.setCancelled(event.isCancelled());
         }
-    }
+    }*/
 
     @EventHandler
     public void entityDamageEvent(EntityDamageEvent e) {
@@ -471,7 +473,7 @@ public class EventManager implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void playerFishEvent(org.bukkit.event.player.PlayerFishEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
         if (player != null && player.isLoaded()) {
@@ -480,7 +482,7 @@ public class EventManager implements Listener {
             e.setCancelled(event.isCancelled());
             e.setExpToDrop(event.getExpToDrop());
         }
-    }
+    }*/
 
     @EventHandler
     public void playerGameModeChangeEvent(org.bukkit.event.player.PlayerGameModeChangeEvent e) {

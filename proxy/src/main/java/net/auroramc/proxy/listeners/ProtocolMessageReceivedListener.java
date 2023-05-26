@@ -569,7 +569,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(UUID.fromString(e.getMessage().getExtraInfo()));
                         AuroraMCProxyPlayer proxyPlayer = ProxyAPI.getPlayer(player);
                         if (proxyPlayer.getServer().getName().startsWith("SMP")) {
-                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You have been blacklisted from the NuttersSMP. You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "§cYou have been blacklisted from the NuttersSMP.§r You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
                             List<ServerInfo> lobbies = ProxyAPI.getLobbyServers();
                             ServerInfo leastPopulated = null;
                             for (ServerInfo lobby : lobbies) {
@@ -1059,9 +1059,9 @@ public class ProtocolMessageReceivedListener implements Listener {
             }
             case ALPHA_UPDATE: {
                 for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
-                    player.disconnect(TextFormatter.pluginMessage("Server Manager", "&cThe alpha network has been closed.\n" +
+                    player.disconnect(TextFormatter.pluginMessage("Server Manager", "§cThe alpha network has been closed.\n" +
                             "\n" +
-                            "&rThanks for helping us test out our upcoming updates!\n" +
+                            "§rThanks for helping us test out our upcoming updates!\n" +
                             "\n" +
                             "Keep an eye on auroramc.net and our Discord server for information on when the network will be open again!"));
                 }
