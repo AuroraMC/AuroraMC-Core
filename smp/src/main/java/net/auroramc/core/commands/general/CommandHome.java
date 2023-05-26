@@ -32,8 +32,9 @@ public class CommandHome extends ServerCommand {
 
     @Override
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
-        if (player.getHome() != null) {
-            if (player.getSmpTeam() == null) {
+        if (player.getSmpTeam() == null) {
+            if (player.getHome() != null) {
+
                 player.setBackLocation(new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), player.getLocation().getPitch(), player.getLocation().getYaw(), SMPLocation.Reason.HOME));
                 switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
                     case "OVERWORLD": {
@@ -113,10 +114,10 @@ public class CommandHome extends ServerCommand {
                     }
                 }
             } else {
-                player.sendMessage(TextFormatter.pluginMessage("Home", "You are currently in a team, so do not have a home. Use **/team home** to go to your team home."));
+                player.sendMessage(TextFormatter.pluginMessage("Home", "You don't have a home set. Set a home using **/sethome**."));
             }
         } else {
-            player.sendMessage(TextFormatter.pluginMessage("Home", "You don't have a home set. Set a home using **/sethome**."));
+            player.sendMessage(TextFormatter.pluginMessage("Home", "You are currently in a team, so do not have a home. Use **/team home** to go to your team home."));
         }
     }
     

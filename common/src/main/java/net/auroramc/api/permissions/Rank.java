@@ -76,7 +76,7 @@ public enum Rank {
             "Program! They have special creator codes\n" +
             "that you can use for a small discount on\n" +
             "our store!\n \n" +
-            "§fThis rank is invite only!"), null, ChatColor.DARK_RED, ChatColor.WHITE, ChatColor.RED, ChatColor.WHITE, false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, 255, 170, 170),
+            "§fThis rank is invite only!"), null, ChatColor.RED, ChatColor.WHITE, ChatColor.RED, ChatColor.WHITE, false, Collections.singletonList(MASTER), Arrays.asList(Permission.DISGUISE, Permission.SOCIAL, Permission.CUSTOM_DISGUISE), RankCategory.SOCIAL_MEDIA, 255, 170, 170),
     OWNER(9001, "Owner", "Owner", new TextComponent("§4§l«OWNER»\n \n" +
             "§fOwners manage all aspects of\n" +
             "§fthe network, keeping an eye on\n" +

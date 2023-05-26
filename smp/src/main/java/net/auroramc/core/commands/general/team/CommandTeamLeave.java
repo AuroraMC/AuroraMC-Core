@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ */
+
+package net.auroramc.core.commands.general.team;
+
+import net.auroramc.api.utils.TextFormatter;
+import net.auroramc.core.api.ServerCommand;
+import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.api.player.SMPPlayer;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class CommandTeamLeave extends ServerCommand {
+
+
+    public CommandTeamLeave() {
+        super("leave", Collections.emptyList(), Collections.emptyList(), true, null);
+    }
+
+    @Override
+    public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
+        if (player.getSmpTeam() != null) {
+            if (player.getSmpTeam().getLeader().getUuid().equals(player.getUniqueId())) {
+                player.sendMessage(TextFormatter.pluginMessage("Teams", "You cannot leave a team you are the leader of. Transfer or disband the team in order to leave it."));
+                return;
+            }
+
+            player.getSmpTeam().removeMember(player.getUniqueId(), true);
+            player.sendMessage(TextFormatter.pluginMessage("Teams", "You left your team."));
+        } else {
+            player.sendMessage(TextFormatter.pluginMessage("Teams", "You must be in a team to use this command."));
+        }
+    }
+
+    @Override
+    public @NotNull List<String> onTabComplete(AuroraMCServerPlayer player, String aliasUsed, List<String> args, String lastToken, int numberArguments) {
+        return new ArrayList<>();
+    }
+}
