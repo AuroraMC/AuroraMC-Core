@@ -58,6 +58,7 @@ public class PlayerDamageEvent extends PlayerEvent implements Cancellable {
     public static enum DamageCause {
         CONTACT,
         ENTITY_ATTACK,
+        ENTITY_SWEEP_ATTACK,
         PROJECTILE,
         SUFFOCATION,
         FALL,
@@ -77,6 +78,13 @@ public class PlayerDamageEvent extends PlayerEvent implements Cancellable {
         WITHER,
         FALLING_BLOCK,
         THORNS,
-        CUSTOM
+        DRAGON_BREATH,
+        CUSTOM,
+        FLY_INTO_WALL,
+        HOT_FLOOR,
+        CRAMMING,
+        DRYOUT,
+        FREEZE,
+        SONIC_BOOM
     }
 }
