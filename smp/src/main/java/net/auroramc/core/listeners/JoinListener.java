@@ -111,6 +111,9 @@ public class JoinListener implements Listener {
         e.setJoinMessage(null);
         AuroraMCServerPlayer serverPlayer = ServerAPI.getPlayer(e.getPlayer());
         serverPlayer.loadPlayerState();
+        if (serverPlayer.isVanished()) {
+            serverPlayer.setSleepingIgnored(true);
+        }
     }
 
     @EventHandler

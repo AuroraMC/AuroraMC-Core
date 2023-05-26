@@ -569,7 +569,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(UUID.fromString(e.getMessage().getExtraInfo()));
                         AuroraMCProxyPlayer proxyPlayer = ProxyAPI.getPlayer(player);
                         if (proxyPlayer.getServer().getName().startsWith("SMP")) {
-                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You have been blacklisted from the NuttersSMP. You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
+                            proxyPlayer.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "§cYou have been blacklisted from the NuttersSMP.§r You are being sent to a Lobby.\n\nIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
                             List<ServerInfo> lobbies = ProxyAPI.getLobbyServers();
                             ServerInfo leastPopulated = null;
                             for (ServerInfo lobby : lobbies) {

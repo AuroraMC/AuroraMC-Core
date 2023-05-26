@@ -12,11 +12,18 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.world.TimeSkipEvent;
 
 public class NightSkipListener implements Listener {
 
     @EventHandler
     public void onSleep(PlayerBedEnterEvent e) {
+        AuroraMCServerPlayer pl = ServerAPI.getPlayer(e.getPlayer());
+        if (pl == null || pl.isVanished()) {
+            e.setUseBed(Event.Result.DENY);
+            return;
+        }
         int amount = 0;
         double total = 0;
         if (e.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
@@ -32,12 +39,26 @@ public class NightSkipListener implements Listener {
             for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
                 player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "**" + ServerAPI.getPlayer(e.getPlayer()).getByDisguiseName() + "** is now sleeping! (**" + String.format("%.2f", ((amount / total)*100)) + "%**)"));
             }
-            if (amount / total > 0.35) {
-                e.setUseBed(Event.Result.DENY);
-                e.getBed().getWorld().setFullTime(e.getBed().getWorld().getFullTime() + (24000-(e.getBed().getWorld().getFullTime() % 24000)));
-                e.getBed().getWorld().setClearWeatherDuration(10000);
+        }
+    }
 
+    @EventHandler
+    public void onSkip(TimeSkipEvent e) {
+        if (e.getSkipReason() == TimeSkipEvent.SkipReason.NIGHT_SKIP) {
+            for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+                player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "The night has been skipped!"));
             }
+        }
+    }
+
+    @EventHandler
+    public void onSleep(PlayerBedLeaveEvent e) {
+        AuroraMCServerPlayer pl = ServerAPI.getPlayer(e.getPlayer());
+        if (pl == null || pl.isVanished()) {
+            return;
+        }
+        for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "**" + ServerAPI.getPlayer(e.getPlayer()).getByDisguiseName() + "** is no longer sleeping!"));
         }
     }
 
