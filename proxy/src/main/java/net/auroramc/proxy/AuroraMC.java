@@ -93,6 +93,7 @@ public class AuroraMC extends Plugin {
         AuroraMCAPI.registerCommand(new CommandReloadServers());
         AuroraMCAPI.registerCommand(new CommandSeen());
         AuroraMCAPI.registerCommand(new CommandSMPBlacklist());
+        AuroraMCAPI.registerCommand(new CommandPreload());
 
 
 
