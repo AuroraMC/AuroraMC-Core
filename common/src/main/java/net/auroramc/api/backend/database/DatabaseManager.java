@@ -3979,7 +3979,7 @@ public class DatabaseManager {
 
     public SMPLocation getSMPTeamHomeLocation(UUID id) {
         try (Jedis connection = jedis.getResource()) {
-            if (!connection.exists("smp." + id + ".home")) {
+            if (!connection.exists("smp." + id + ".teamhome")) {
                 return null;
             }
             double x = Double.parseDouble(connection.hget("smp." + id + ".teamhome", "x"));
@@ -3997,7 +3997,7 @@ public class DatabaseManager {
     public void setSMPTeamHomeLocation(UUID id, SMPLocation location) {
         try (Jedis connection = jedis.getResource()) {
             if (location == null) {
-                connection.del("smp." + id + ".home");
+                connection.del("smp." + id + ".teamhome");
                 return;
             }
             connection.hset("smp." + id + ".teamhome", "x", String.valueOf(location.getX()));
@@ -4280,22 +4280,127 @@ public class DatabaseManager {
 
     public void logBlockEvent(BlockLogEvent e) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO smp_blocklogs VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO smp_blocklogs VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setTimestamp(1, new Timestamp(e.getTimestamp()));
             statement.setString(2, e.getType().name());
-            statement.setInt(3, (int) e.getLocation().getX());
-            statement.setInt(4, (int) e.getLocation().getY());
-            statement.setInt(5, (int) e.getLocation().getZ());
+            statement.setString(3, e.getLocation().getDimension().name());
+            statement.setInt(4, (int) e.getLocation().getX());
+            statement.setInt(5, (int) e.getLocation().getY());
+            statement.setInt(6, (int) e.getLocation().getZ());
             if (e.getPlayer() == null) {
-                statement.setNull(6, Types.VARCHAR);
+                statement.setNull(7, Types.VARCHAR);
             } else {
-                statement.setString(6, e.getPlayer().toString());
+                statement.setString(7, e.getPlayer().toString());
             }
-            statement.setString(7, e.getMaterial());
+            statement.setString(8, e.getMaterial());
 
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public List<BlockLogEvent> getBlockLog(int x, int y, int z, SMPLocation.Dimension dimension, int limit, BlockLogEvent.LogType logType) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement;
+            if (logType == BlockLogEvent.LogType.ALL) {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(5, limit);
+            } else {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(6, limit);
+                statement.setString(5, logType.name());
+            }
+            statement.setInt(1, x);
+            statement.setInt(2, y);
+            statement.setInt(3, z);
+            statement.setString(4, dimension.name());
+
+
+            ResultSet set = statement.executeQuery();
+            List<BlockLogEvent> events = new ArrayList<>();
+            while (set.next()) {
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
+            }
+            return events;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<BlockLogEvent> getBlockLog(UUID uuid, SMPLocation.Dimension dimension, int limit, BlockLogEvent.LogType logType) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement;
+            if (logType == BlockLogEvent.LogType.ALL) {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(3, limit);
+            } else {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(4, limit);
+                statement.setString(3, logType.name());
+            }
+            statement.setString(1, uuid.toString());
+            statement.setString(2, dimension.name());
+
+
+            ResultSet set = statement.executeQuery();
+            List<BlockLogEvent> events = new ArrayList<>();
+            while (set.next()) {
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), uuid, BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), set.getString(8)));
+            }
+            return events;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<BlockLogEvent> getBlockLog(String material, SMPLocation.Dimension dimension, int limit, BlockLogEvent.LogType logType) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement;
+            if (logType == BlockLogEvent.LogType.ALL) {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(3, limit);
+            } else {
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
+                statement.setInt(4, limit);
+                statement.setString(3, logType.name());
+            }
+            statement.setString(1, material);
+            statement.setString(2, dimension.name());
+
+
+            ResultSet set = statement.executeQuery();
+            List<BlockLogEvent> events = new ArrayList<>();
+            while (set.next()) {
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), material));
+            }
+            return events;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void addPreloadMessage(UUID uuid, Rank rank) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("preload." + uuid, rank.name());
+        }
+    }
+
+    public Rank getPreloadMessage(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("preload." + uuid)) {
+                return null;
+            }
+            return Rank.valueOf(connection.get("preload." + uuid));
+        }
+    }
+
+    public void removePreloadMessage(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.del("preload." + uuid);
         }
     }
 
