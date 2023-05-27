@@ -65,7 +65,7 @@ public class TabCompleteInjector {
                                                 args.remove(0);
                                                 List<String> finalCompletions = command.onTabComplete(player, commandLabel, args, ((message.endsWith(" ")) ? "" : args.get(args.size() - 1)), ((message.endsWith(" ")) ? args.size() + 1 : args.size()));
                                                 Collections.sort(finalCompletions);
-                                                SuggestionsBuilder sb = new SuggestionsBuilder(message, 0);
+                                                SuggestionsBuilder sb = new SuggestionsBuilder(message, message.length());
                                                 finalCompletions.forEach(sb::suggest);
                                                 PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(i, sb.build());
                                                 player.getCraft().getHandle().b.a(packetPlayOutTabComplete);
@@ -78,7 +78,7 @@ public class TabCompleteInjector {
                                     }
                                 } else {
                                     List<String> completions = AuroraMCAPI.getCommands().stream().filter((command) -> command.startsWith(message.split(" ")[0].replace("/","").toLowerCase())).collect(Collectors.toList());
-                                    SuggestionsBuilder builder = new SuggestionsBuilder(message, 0);
+                                    SuggestionsBuilder builder = new SuggestionsBuilder(message, message.length());
                                     completionLoop:
                                     for (String commandLabel : completions) {
                                         ServerCommand command = (ServerCommand) AuroraMCAPI.getCommand(commandLabel);
@@ -94,8 +94,8 @@ public class TabCompleteInjector {
                                 }
                             }
                         }.runTaskAsynchronously(ServerAPI.getCore());
+                        return;
                     }
-                    return;
                 } else if (packet instanceof PacketPlayInUseEntity) {
                     PacketPlayInUseEntity useEntity = (PacketPlayInUseEntity) packet;
 

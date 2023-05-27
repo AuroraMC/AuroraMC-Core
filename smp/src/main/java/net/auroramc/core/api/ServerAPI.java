@@ -40,12 +40,15 @@ public class ServerAPI {
 
     private static boolean shuttingDown;
 
+    private static int limit;
+
     static {
         openGUIs = new HashMap<>();
         holograms = new HashMap<>();
         fakePlayers = new HashMap<>();
         loadedTeams = new HashMap<>();
         shuttingDown = false;
+        limit = 5;
     }
 
     public static void init(AuroraMC core) {
@@ -203,5 +206,13 @@ public class ServerAPI {
 
     public static Map<UUID, SMPTeam> getLoadedTeams() {
         return loadedTeams;
+    }
+
+    public static int getLimit() {
+        return limit;
+    }
+
+    public static void setLimit(int limit) {
+        ServerAPI.limit = limit;
     }
 }
