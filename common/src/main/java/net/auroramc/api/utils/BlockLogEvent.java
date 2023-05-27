@@ -52,6 +52,9 @@ public class BlockLogEvent {
         FERTILIZE,
         SPREAD,
         DECAY,
-        PRIME
+        PRIME,
+        ALL /* util for block log searches, do not ever use this to log. */
+
+
     }
 }

@@ -22,6 +22,7 @@ import net.auroramc.core.commands.general.teleport.CommandTeleportRequest;
 import net.auroramc.core.commands.general.teleport.CommandTeleportRequestAccept;
 import net.auroramc.core.commands.general.teleport.CommandTeleportRequestDeny;
 import net.auroramc.core.commands.moderation.*;
+import net.auroramc.core.commands.moderation.blocklog.CommandBlockLog;
 import net.auroramc.core.commands.moderation.qualityassurance.CommandAppeal;
 import net.auroramc.core.commands.moderation.report.CommandReportClose;
 import net.auroramc.core.commands.moderation.report.CommandReportHandle;
@@ -133,6 +134,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandTeleportRequestDeny());
         AuroraMCAPI.registerCommand(new CommandBack());
         AuroraMCAPI.registerCommand(new CommandSpawn());
+        AuroraMCAPI.registerCommand(new CommandBlockLog());
 
 
 
