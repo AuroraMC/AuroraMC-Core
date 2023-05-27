@@ -8,6 +8,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.cosmetics.FriendStatus;
+import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.player.friends.Friend;
 import net.auroramc.api.player.friends.FriendsList;
@@ -227,7 +228,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
             component.addExtra(privacy);
 
             component.addExtra(". For more information on our policies, please click on the applicable text above.\n\n" +
-                    "To get started, either click on the compass and choose a game, or click on the Tutorial NPC!\n\n" +
+                    "To get started, click on the compass and choose a game!\n\n" +
                     "Happy Gaming!\n");
 
             TextComponent leadership = new TextComponent("~The AuroraMC Leadership Team");
@@ -245,6 +246,37 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
             title.title(new ComponentBuilder("WELCOME TO AURORAMC!").bold(true).color(ChatColor.AQUA).create());
             title.subTitle(new TextComponent("We're glad you've decided to join us!"));
             player.sendTitle(title);
+        } else {
+            Rank rank = AuroraMCAPI.getDbManager().getPreloadMessage(getUniqueId());
+            if (rank != null) {
+                AuroraMCAPI.getDbManager().removePreloadMessage(getUniqueId());
+                TextComponent component = new TextComponent("");
+                TextComponent welcome = new TextComponent("Hello " + player.getName() + ", Welcome to the AuroraMC Network!");
+                welcome.setBold(true);
+                welcome.setColor(ChatColor.AQUA);
+                welcome.setUnderlined(true);
+
+                component.addExtra(welcome);
+                TextComponent joinUs = new TextComponent(" We're glad you've decided to join us!\n\nThe AuroraMC Leadership Team have decided to pre-load your account with the ");
+                joinUs.setUnderlined(false);
+                joinUs.setBold(false);
+                joinUs.setColor(ChatColor.RESET);
+                component.addExtra(joinUs);
+
+                TextComponent rankName = new TextComponent(rank.getName());
+                rankName.setColor(rank.getPrefixColor());
+                rankName.setBold(true);
+                component.addExtra(rankName);
+
+                TextComponent extraStuff = new TextComponent(" Rank so your permissions are ready to go, and you can get on with playing games!\n" +
+                        "If you need any help, please don't hesitate to contact one of us on Discord. If you link your Minecraft to Discord, you will automatically get invited to the Social Media discord where you can contact the Leadership Team directly." +
+                        "\n\nTo get started, click on the compass and choose a game!\n\nHappy Gaming!");
+                extraStuff.setUnderlined(false);
+                extraStuff.setBold(false);
+                extraStuff.setColor(ChatColor.RESET);
+                component.addExtra(extraStuff);
+
+            }
         }
 
         //Update the user's Name and IP profiles.

@@ -4304,10 +4304,10 @@ public class DatabaseManager {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement;
             if (logType == BlockLogEvent.LogType.ALL) {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(5, limit);
             } else {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? AND type = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(6, limit);
                 statement.setString(5, logType.name());
             }
@@ -4320,7 +4320,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             List<BlockLogEvent> events = new ArrayList<>();
             while (set.next()) {
-                events.add(new BlockLogEvent(set.getTime(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
             }
             return events;
         } catch (SQLException ex) {
@@ -4333,10 +4333,10 @@ public class DatabaseManager {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement;
             if (logType == BlockLogEvent.LogType.ALL) {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(3, limit);
             } else {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? AND type = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE uuid = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(4, limit);
                 statement.setString(3, logType.name());
             }
@@ -4347,7 +4347,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             List<BlockLogEvent> events = new ArrayList<>();
             while (set.next()) {
-                events.add(new BlockLogEvent(set.getTime(1).getTime(), uuid, BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), set.getString(8)));
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), uuid, BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), set.getString(8)));
             }
             return events;
         } catch (SQLException ex) {
@@ -4360,10 +4360,10 @@ public class DatabaseManager {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement;
             if (logType == BlockLogEvent.LogType.ALL) {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(3, limit);
             } else {
-                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? AND type = ? ORDER BY timestamp LIMIT ?");
+                statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE material = ? AND dimension = ? AND type = ? ORDER BY timestamp DESC LIMIT ?");
                 statement.setInt(4, limit);
                 statement.setString(3, logType.name());
             }
@@ -4374,12 +4374,33 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             List<BlockLogEvent> events = new ArrayList<>();
             while (set.next()) {
-                events.add(new BlockLogEvent(set.getTime(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), material));
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), material));
             }
             return events;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public void addPreloadMessage(UUID uuid, Rank rank) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.set("preload." + uuid, rank.name());
+        }
+    }
+
+    public Rank getPreloadMessage(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            if (!connection.exists("preload." + uuid)) {
+                return null;
+            }
+            return Rank.valueOf(connection.get("preload." + uuid));
+        }
+    }
+
+    public void removePreloadMessage(UUID uuid) {
+        try (Jedis connection = jedis.getResource()) {
+            connection.del("preload." + uuid);
         }
     }
 
