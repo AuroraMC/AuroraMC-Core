@@ -645,6 +645,49 @@ public class TextFormatter {
         return textComponent;
     }
 
+    public static BaseComponent formatBroadcast(AuroraMCPlayer sender, String message) {
+        TextComponent textComponent = new TextComponent("");
+        TextComponent prefix = new TextComponent("«BROADCAST»");
+        prefix.setBold(true);
+        prefix.setColor(ChatColor.AQUA);
+
+        TextComponent prefixHover = new TextComponent("");
+
+        TextComponent cmp = new TextComponent("«STAFF BROADCAST»");
+        cmp.setColor(ChatColor.AQUA);
+        cmp.setBold(true);
+        prefixHover.addExtra(cmp);
+        prefixHover.addExtra("\n \n");
+
+        cmp = new TextComponent("This is an important message from\na staff member!");
+        cmp.setColor(ChatColor.WHITE);
+        cmp.setBold(false);
+        prefixHover.addExtra(cmp);
+
+        prefix.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{prefixHover}));
+
+        textComponent.addExtra(prefix);
+        textComponent.addExtra(" ");
+
+        Rank rank = ((sender.isDisguised() && !sender.getPreferences().isHideDisguiseNameEnabled())?sender.getActiveDisguise().getRank():sender.getRank());
+        String name = ((sender.isDisguised() && !sender.getPreferences().isHideDisguiseNameEnabled())?sender.getActiveDisguise().getName():sender.getName());
+
+        cmp = new TextComponent(((rank == Rank.PLAYER)?"Player":rank.getPrefixAppearance()) + " " + name);
+        cmp.setColor((rank == Rank.PLAYER)?ChatColor.GRAY:rank.getPrefixColor());
+        cmp.setBold(false);
+        textComponent.addExtra(cmp);
+        textComponent.addExtra(" ");
+
+        cmp = new TextComponent("»");
+        cmp.setColor(ChatColor.AQUA);
+        cmp.setBold(true);
+        textComponent.addExtra(cmp);
+        textComponent.addExtra(" ");
+
+        textComponent.addExtra(message);
+        return textComponent;
+    }
+
     public static BaseComponent formatStaffMessage(AuroraMCPlayer sender, AuroraMCPlayer receiver, String message) {
         TextComponent textComponent = new TextComponent("");
         TextComponent prefix = new TextComponent("«SC»");

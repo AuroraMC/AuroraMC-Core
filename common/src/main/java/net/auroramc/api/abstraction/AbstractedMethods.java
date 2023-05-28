@@ -22,6 +22,8 @@ public abstract class AbstractedMethods {
 
     public abstract void scheduleAsyncTask(Runnable runnable);
 
+    public abstract Object scheduleAsyncTaskLater(Runnable runnable, long delay);
+
     public abstract void scheduleSyncTask(Runnable runnable);
 
     public abstract Crate generateIronCrate(UUID uuid, int owner, Crate.CrateReward loot, long generated, long opened);
@@ -45,6 +47,8 @@ public abstract class AbstractedMethods {
     public abstract void onUnequipGadget(AuroraMCPlayer player, Gadget gadget);
 
     public abstract void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer);
+
+    public abstract void broadcastNovaMessage(BaseComponent message);
 
     public abstract void firePreferenceEvent(AuroraMCPlayer player);
     
