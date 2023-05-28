@@ -60,6 +60,16 @@ public class ServerAbstractedMethods extends AbstractedMethods {
     }
 
     @Override
+    public Object scheduleAsyncTaskLater(Runnable runnable, long delay) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTaskLaterAsynchronously(ServerAPI.getCore(), delay);
+    }
+
+    @Override
     public void scheduleSyncTask(Runnable runnable) {
         new BukkitRunnable(){
             @Override
@@ -148,6 +158,15 @@ public class ServerAbstractedMethods extends AbstractedMethods {
                 if (player1.getRank().hasPermission("moderation")) {
                     player1.sendMessage(message);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void broadcastNovaMessage(BaseComponent message) {
+        for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
+            if (player1.getRank().hasPermission("moderation")) {
+                player1.sendMessage(message);
             }
         }
     }

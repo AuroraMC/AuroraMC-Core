@@ -3946,7 +3946,7 @@ public class DatabaseManager {
 
     public SMPLocation getSMPBackLocation(UUID id) {
         try (Jedis connection = jedis.getResource()) {
-            if (!connection.exists("smp." + id + ".home")) {
+            if (!connection.exists("smp." + id + ".back")) {
                 return null;
             }
             double x = Double.parseDouble(connection.hget("smp." + id + ".back", "x"));
