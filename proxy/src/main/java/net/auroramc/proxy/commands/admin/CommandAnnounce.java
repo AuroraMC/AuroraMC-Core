@@ -28,7 +28,7 @@ public class CommandAnnounce extends ProxyCommand {
 
 
     public CommandAnnounce() {
-        super("announce", Arrays.asList("alert", "broadcast", "bc"), Collections.singletonList(Permission.ADMIN), false, null);
+        super("announce", Collections.singletonList("alert"), Collections.singletonList(Permission.ADMIN), false, null);
     }
 
     @Override

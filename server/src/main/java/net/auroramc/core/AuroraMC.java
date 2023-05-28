@@ -106,6 +106,7 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandEmotes());
         AuroraMCAPI.registerCommand(new CommandViewGames());
         AuroraMCAPI.registerCommand(new CommandReportInfo());
+        AuroraMCAPI.registerCommand(new CommandBroadcast());
 
 
         //Register Executors

@@ -18,6 +18,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ProxyAbstractedMethods extends AbstractedMethods {
 
@@ -40,6 +41,11 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
     @Override
     public void scheduleAsyncTask(Runnable runnable) {
         ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), runnable);
+    }
+
+    @Override
+    public Object scheduleAsyncTaskLater(Runnable runnable, long delay) {
+        return ProxyServer.getInstance().getScheduler().schedule(ProxyAPI.getCore(), runnable, delay*50, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -101,7 +107,10 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
 
     @Override
     public void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer) {
+    }
 
+    @Override
+    public void broadcastNovaMessage(BaseComponent message) {
     }
 
     @Override

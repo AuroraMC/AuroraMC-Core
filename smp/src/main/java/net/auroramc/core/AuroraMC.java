@@ -9,6 +9,7 @@ import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
+import net.auroramc.core.commands.CommandEnderChestSee;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
@@ -47,10 +48,13 @@ import net.auroramc.core.listeners.*;
 import net.auroramc.core.managers.CommandManager;
 import net.auroramc.core.managers.EventManager;
 import net.auroramc.core.managers.GUIManager;
+import net.auroramc.core.nova.XRayCheckListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -135,10 +139,10 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandBack());
         AuroraMCAPI.registerCommand(new CommandSpawn());
         AuroraMCAPI.registerCommand(new CommandBlockLog());
-
-
-
-
+        AuroraMCAPI.registerCommand(new CommandBroadcast());
+        AuroraMCAPI.registerCommand(new CommandSpectator());
+        AuroraMCAPI.registerCommand(new CommandInventorySee());
+        AuroraMCAPI.registerCommand(new CommandEnderChestSee());
 
         //Register Executors
         AuroraMCAPI.registerCosmeticExecutor(new ConfettiCannonExecutor());
@@ -181,6 +185,8 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
         Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
         Bukkit.getPluginManager().registerEvents(new BlockLoggerListener(), this);
+
+        Bukkit.getPluginManager().registerEvents(new XRayCheckListener(), this);
 
 
         //Register the BungeeCord plugin message channel
@@ -238,6 +244,8 @@ public class AuroraMC extends JavaPlugin {
         return internalFile;
     }
 }
+
+
 
 
 
