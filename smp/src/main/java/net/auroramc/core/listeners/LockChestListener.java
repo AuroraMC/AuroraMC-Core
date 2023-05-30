@@ -19,12 +19,15 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
@@ -237,7 +240,7 @@ public class LockChestListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-        if (e.getBlock().getType() == Material.CHEST) {
+        if (e.getBlock().getType() == Material.CHEST || e.getBlock().getType() == Material.FURNACE || e.getBlock().getType() == Material.BLAST_FURNACE || e.getBlock().getType() == Material.SMOKER || e.getBlock().getType().name().contains("ANVIL") || e.getBlock().getType().name().endsWith("DOOR")) {
             if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
@@ -247,7 +250,7 @@ public class LockChestListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockDamageEvent e) {
-        if (e.getBlock().getType() == Material.CHEST) {
+        if (e.getBlock().getType() == Material.CHEST || e.getBlock().getType() == Material.FURNACE || e.getBlock().getType() == Material.BLAST_FURNACE || e.getBlock().getType() == Material.SMOKER || e.getBlock().getType().name().contains("ANVIL") || e.getBlock().getType().name().endsWith("DOOR")) {
             if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
@@ -257,7 +260,7 @@ public class LockChestListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockIgniteEvent e) {
-        if (e.getBlock().getType() == Material.CHEST) {
+        if (e.getBlock().getType() == Material.CHEST || e.getBlock().getType() == Material.FURNACE || e.getBlock().getType() == Material.BLAST_FURNACE || e.getBlock().getType() == Material.SMOKER || e.getBlock().getType().name().contains("ANVIL") || e.getBlock().getType().name().endsWith("DOOR")) {
             if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(TextFormatter.pluginMessage("Chests", "Chests must be unlocked in order to break them."));
@@ -266,12 +269,26 @@ public class LockChestListener implements Listener {
     }
 
     @EventHandler
+    public void onBlockBreak(InventoryMoveItemEvent e) {
+        if (e.getSource().getHolder() instanceof Container container) {
+            if (AuroraMC.getInternal().contains("chests." + container.getBlock().getLocation().getBlockX() + "." + container.getBlock().getLocation().getBlockY() + "." + container.getBlock().getLocation().getBlockZ())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onBlockBreak(BlockExplodeEvent e) {
-        if (e.getBlock().getType() == Material.CHEST) {
+        if (e.getBlock().getType() == Material.CHEST || e.getBlock().getType() == Material.FURNACE || e.getBlock().getType() == Material.BLAST_FURNACE || e.getBlock().getType() == Material.SMOKER || e.getBlock().getType().name().contains("ANVIL") || e.getBlock().getType().name().endsWith("DOOR")) {
             if (AuroraMC.getInternal().contains("chests." + e.getBlock().getLocation().getBlockX() + "." + e.getBlock().getLocation().getBlockY() + "." + e.getBlock().getLocation().getBlockZ())) {
                 e.setCancelled(true);
             }
         }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockFromToEvent e) {
+
     }
 
     public static Map<UUID, String> getWaitingForInput() {

@@ -11,7 +11,8 @@ import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
 import net.auroramc.core.api.backend.communication.ProtocolMessage;
-import net.auroramc.core.commands.CommandEnderChestSee;
+import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.commands.moderation.CommandEnderChestSee;
 import net.auroramc.core.commands.admin.*;
 import net.auroramc.core.commands.admin.cosmetic.CommandCosmetic;
 import net.auroramc.core.commands.admin.debug.CommandKillMessageTest;
@@ -55,8 +56,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -220,6 +219,9 @@ public class AuroraMC extends JavaPlugin {
                 CommunicationUtils.sendMessage(message);
             }
             CommunicationUtils.shutdown();
+        }
+        for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+            player.saveData();
         }
     }
 
