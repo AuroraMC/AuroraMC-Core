@@ -1,26 +1,29 @@
 /*
- * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2023-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
 package net.auroramc.api.nova;
 
 public enum NovaCheck {
 
-    XRAY_GOLD(35, 45, 64, "XRay (Gold)", 1800),
-    XRAY_DIAMOND(35, 45, 64, "XRay (Diamond)", 1800),
-    XRAY_EMERALD(35, 45, 64, "XRay (Emerald)", 1800),
-    XRAY_NETHERITE(35, 45, 64, "XRay (Netherite)", 1800);
+    XRAY_GOLD(25, 35, 55, 10, "XRay (Gold)", 36000),
+    XRAY_DIAMOND(25, 35, 55, 10, "XRay (Diamond)", 36000),
+    XRAY_EMERALD(25, 35, 55, 10, "XRay (Emerald)", 36000),
+    XRAY_NETHERITE(25, 35, 55, 10, "XRay (Netherite)", 36000);
 
-    private final int light, medium, severe;
+    private final int light, medium, severe, notificationFrequency;
     private final String name;
-    private final long expirySeconds;
+    private final long expiryTicks;
 
-    NovaCheck(int light, int medium, int severe, String name, long expirySeconds) {
+    NovaCheck(int light, int medium, int severe, int notificationFrequency, String name, long expiryTicks) {
         this.light = light;
         this.medium = medium;
         this.severe = severe;
         this.name = name;
-        this.expirySeconds = expirySeconds;
+        this.expiryTicks = expiryTicks;
+        this.notificationFrequency = notificationFrequency;
     }
 
     public String getName() {
@@ -39,7 +42,11 @@ public enum NovaCheck {
         return severe;
     }
 
-    public long getExpirySeconds() {
-        return expirySeconds;
+    public long getExpiryTicks() {
+        return expiryTicks;
+    }
+
+    public int getNotificationFrequency() {
+        return notificationFrequency;
     }
 }

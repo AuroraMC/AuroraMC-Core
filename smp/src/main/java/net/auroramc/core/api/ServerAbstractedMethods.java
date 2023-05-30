@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2023-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
 package net.auroramc.core.api;
@@ -57,6 +59,16 @@ public class ServerAbstractedMethods extends AbstractedMethods {
                 runnable.run();
             }
         }.runTaskAsynchronously(ServerAPI.getCore());
+    }
+
+    @Override
+    public Object scheduleAsyncTaskLater(Runnable runnable, long delay) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }.runTaskLaterAsynchronously(ServerAPI.getCore(), delay);
     }
 
     @Override
@@ -148,6 +160,15 @@ public class ServerAbstractedMethods extends AbstractedMethods {
                 if (player1.getRank().hasPermission("moderation")) {
                     player1.sendMessage(message);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void broadcastNovaMessage(BaseComponent message) {
+        for (AuroraMCServerPlayer player1 : ServerAPI.getPlayers()) {
+            if (player1.getRank().hasPermission("moderation")) {
+                player1.sendMessage(message);
             }
         }
     }

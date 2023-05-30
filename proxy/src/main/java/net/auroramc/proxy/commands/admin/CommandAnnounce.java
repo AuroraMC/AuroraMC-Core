@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2021 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2021-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
 package net.auroramc.proxy.commands.admin;
@@ -28,7 +30,7 @@ public class CommandAnnounce extends ProxyCommand {
 
 
     public CommandAnnounce() {
-        super("announce", Arrays.asList("alert", "broadcast", "bc"), Collections.singletonList(Permission.ADMIN), false, null);
+        super("announce", Collections.singletonList("alert"), Collections.singletonList(Permission.ADMIN), false, null);
     }
 
     @Override

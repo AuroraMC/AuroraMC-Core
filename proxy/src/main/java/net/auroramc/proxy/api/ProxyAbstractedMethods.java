@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2023-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
 package net.auroramc.proxy.api;
@@ -18,6 +20,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ProxyAbstractedMethods extends AbstractedMethods {
 
@@ -40,6 +43,11 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
     @Override
     public void scheduleAsyncTask(Runnable runnable) {
         ProxyServer.getInstance().getScheduler().runAsync(ProxyAPI.getCore(), runnable);
+    }
+
+    @Override
+    public Object scheduleAsyncTaskLater(Runnable runnable, long delay) {
+        return ProxyServer.getInstance().getScheduler().schedule(ProxyAPI.getCore(), runnable, delay*50, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -101,7 +109,10 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
 
     @Override
     public void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer) {
+    }
 
+    @Override
+    public void broadcastNovaMessage(BaseComponent message) {
     }
 
     @Override

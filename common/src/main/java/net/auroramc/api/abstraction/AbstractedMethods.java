@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2023 AuroraMC Ltd. All Rights Reserved.
+ * Copyright (c) 2023-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
 package net.auroramc.api.abstraction;
@@ -21,6 +23,8 @@ public abstract class AbstractedMethods {
     public abstract Disguise newDisguise(String name, String skin, String signature, Rank rank);
 
     public abstract void scheduleAsyncTask(Runnable runnable);
+
+    public abstract Object scheduleAsyncTaskLater(Runnable runnable, long delay);
 
     public abstract void scheduleSyncTask(Runnable runnable);
 
@@ -45,6 +49,8 @@ public abstract class AbstractedMethods {
     public abstract void onUnequipGadget(AuroraMCPlayer player, Gadget gadget);
 
     public abstract void broadcastModerationMessage(BaseComponent message, AuroraMCPlayer issuer);
+
+    public abstract void broadcastNovaMessage(BaseComponent message);
 
     public abstract void firePreferenceEvent(AuroraMCPlayer player);
     
