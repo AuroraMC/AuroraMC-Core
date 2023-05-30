@@ -57,6 +57,5 @@ public class BlockLogEvent {
         PRIME,
         ALL /* util for block log searches, do not ever use this to log. */
 
-
     }
 }

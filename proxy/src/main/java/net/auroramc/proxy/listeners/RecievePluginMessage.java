@@ -1066,7 +1066,7 @@ public class RecievePluginMessage implements Listener {
                             return;
                         }
                         player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Connecting you to §5§lNuttersSMP§r, please wait..."));
-                        boolean isBlacklisted = AuroraMCAPI.getDbManager().isSMPBlacklist(player.getName());
+                        boolean isBlacklisted = AuroraMCAPI.getDbManager().isSMPBlacklist(player.getUniqueId().toString());
                         if (isBlacklisted) {
                             player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "§cYou are blacklisted from the NuttersSMP.\n\n§rIf you believe this to be a mistake, please contact @Heliology#3092 on Discord."));
                             return;
