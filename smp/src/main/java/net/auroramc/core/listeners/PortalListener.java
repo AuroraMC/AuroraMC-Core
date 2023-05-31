@@ -54,15 +54,4 @@ public class PortalListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPortalCreate(PortalCreateEvent e) {
-        if (e.getReason() == PortalCreateEvent.CreateReason.FIRE) {
-            //e.setCancelled(true);
-            if (e.getEntity()!=null && e.getEntity() instanceof Player) {
-                AuroraMCServerPlayer player = ServerAPI.getPlayer((Player) e.getEntity());
-                player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "The nether is currently disabled!"));
-            }
-        }
-    }
-
 }

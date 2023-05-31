@@ -4331,6 +4331,29 @@ public class DatabaseManager {
         }
     }
 
+    public List<BlockLogEvent> getBlockLog(int x, int y, int z, SMPLocation.Dimension dimension, int limit, int hours) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM smp_blocklogs WHERE x = ? AND y = ? AND z = ? AND dimension = ? AND timestamp >= DATE_SUB(NOW(),INTERVAL ? HOUR) ORDER BY timestamp DESC LIMIT ?");
+            statement.setInt(5, hours);
+            statement.setInt(6, limit);
+            statement.setInt(1, x);
+            statement.setInt(2, y);
+            statement.setInt(3, z);
+            statement.setString(4, dimension.name());
+
+
+            ResultSet set = statement.executeQuery();
+            List<BlockLogEvent> events = new ArrayList<>();
+            while (set.next()) {
+                events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null) ? null : UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
+            }
+            return events;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     public List<BlockLogEvent> getBlockLog(UUID uuid, SMPLocation.Dimension dimension, int limit, BlockLogEvent.LogType logType) {
         try (Connection connection = mysql.getConnection()) {
             PreparedStatement statement;

@@ -31,55 +31,24 @@ public class CommandBlockLogRollback extends ServerCommand {
 
     @Override
     public void execute(AuroraMCServerPlayer player, String aliasUsed, List<String> args) {
-        if (args.size() == 4) {
-            String searchType = args.get(0).toUpperCase();
-            BlockLogEvent.LogType type;
-            try {
-                type = BlockLogEvent.LogType.valueOf(searchType);
-            } catch (IllegalArgumentException e) {
-                player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Invalid syntax. Correct syntax: **/blocklog block [type | ALL] [x] [y] [z]**"));
-                return;
-            }
+        if (args.size() == 2) {
+            int radius, hours;
 
-            int x, y, z;
             try {
-                x = Integer.parseInt(args.get(1));
-                y = Integer.parseInt(args.get(2));
-                z = Integer.parseInt(args.get(3));
+                radius = Integer.parseInt(args.get(0));
+                hours = Integer.parseInt(args.get(1));
             } catch (NumberFormatException e) {
-                player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Invalid syntax. Correct syntax: **/blocklog block [type | ALL] [x] [y] [z]**"));
+                player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Invalid syntax. Correct syntax: **/blocklog rollback [radius] [hours]**"));
                 return;
             }
 
-            player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Searching logs for changes at **" + x + " " + y + " " + z + "**, please wait..."));;
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    List<BlockLogEvent> events = AuroraMCAPI.getDbManager().getBlockLog(x, y, z, SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), ServerAPI.getLimit(), type);
-                    if (events.size() > 0) {
-                        StringBuilder builder = new StringBuilder();
-                        for (BlockLogEvent e : events) {
-                            builder.append("\n");
-                            builder.append("**[").append(new Date(e.getTimestamp())).append("]** ");
-                            if (e.getPlayer() != null) {
-                                String name = AuroraMCAPI.getDbManager().getNameFromUUID(e.getPlayer().toString());
-                                builder.append(name);
-                            } else {
-                                builder.append("World");
-                            }
-                            builder.append(" ");
-                            builder.append(e.getType().name());
-                            builder.append(" ");
-                            builder.append(e.getMaterial());
-                        }
-                        player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Block logs for co-ordinates **" + x + " " + y + " " + z + "**:" + builder));
-                    } else {
-                        player.sendMessage(TextFormatter.pluginMessage("Block Logs", "No block logs found for block **" + x + " " + y + " " + z + "**."));
-                    }
-                }
-            }.runTaskAsynchronously(ServerAPI.getCore());
+            player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Rolling back changes, please wait..."));;
+            int initX = player.getLocation().getBlockX();
+            int initZ = player.getLocation().getBlockZ();
+
+
         } else {
-            player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Invalid syntax. Correct syntax: **/blocklog block [type | ALL] [x] [y] [z]**"));
+            player.sendMessage(TextFormatter.pluginMessage("Block Logs", "Invalid syntax. Correct syntax: **/blocklog rollback [radius] [hours]**"));
         }
     }
 
@@ -89,3 +58,5 @@ public class CommandBlockLogRollback extends ServerCommand {
     }
 
 }
+
+
