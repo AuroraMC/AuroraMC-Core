@@ -200,7 +200,7 @@ public class SMPTeam {
                         }
                     }
                     for (String destination : destinations) {
-                        ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_MAPS, destination, "addmember", sender, uuid + ";" + p.getUuid());
+                        ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_MAPS, destination, "addmember", sender, uuid + ";" + p.getUuid() + ";" + p.getId() + ";" + p.getName() + ";" + p.getRank());
                         CommunicationUtils.sendMessage(message);
                     }
                     List<String> uuids = new ArrayList<>();
@@ -339,6 +339,43 @@ public class SMPTeam {
 
     public void setHome(Location home, boolean send) {
         this.home = new SMPLocation(SMPLocation.Dimension.valueOf(ServerAPI.getCore().getConfig().getString("type")), home.getX(), home.getY(), home.getZ(), home.getPitch(), home.getYaw(), SMPLocation.Reason.HOME);
+        if (send) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    List<String> destinations = new ArrayList<>();
+                    String sender = "SMP-Overworld";
+                    switch (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type")) {
+                        case "OVERWORLD": {
+                            destinations.add("SMP-Nether");
+                            destinations.add("SMP-End");
+                            break;
+                        }
+                        case "END": {
+                            destinations.add("SMP-Nether");
+                            destinations.add("SMP-Overworld");
+                            sender = "SMP-End";
+                            break;
+                        }
+                        case "NETHER": {
+                            destinations.add("SMP-Overworld");
+                            destinations.add("SMP-End");
+                            sender = "SMP-Nether";
+                            break;
+                        }
+                    }
+                    for (String destination : destinations) {
+                        ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_MAPS, destination, "sethome", sender, uuid + ";" + SMPTeam.this.home.toJSON());
+                        CommunicationUtils.sendMessage(message);
+                    }
+                    AuroraMCAPI.getDbManager().setSMPTeamHomeLocation(uuid, SMPTeam.this.home);
+                }
+            }.runTaskAsynchronously(ServerAPI.getCore());
+        }
+    }
+
+    public void setHome(SMPLocation home, boolean send) {
+        this.home = home;
         if (send) {
             new BukkitRunnable() {
                 @Override

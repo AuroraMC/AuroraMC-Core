@@ -25,6 +25,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBuild(BlockPlaceEvent e) {
+        if (e.isCancelled() || !e.canBuild()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -39,6 +42,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -53,6 +59,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDestroy(BlockExplodeEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -67,6 +76,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onIgnite(BlockBurnEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -81,6 +93,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFade(BlockFadeEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -95,6 +110,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFertilise(BlockFertilizeEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -109,6 +127,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onForm(BlockFormEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -123,6 +144,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSpread(BlockSpreadEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -137,6 +161,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDecay(LeavesDecayEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){
@@ -151,6 +178,9 @@ public class BlockLoggerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTnt(TNTPrimeEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         long timestamp = System.currentTimeMillis();
         Material type = e.getBlock().getType();
         new BukkitRunnable(){

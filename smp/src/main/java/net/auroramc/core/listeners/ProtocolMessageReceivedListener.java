@@ -12,6 +12,7 @@ import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.ChatChannel;
 import net.auroramc.api.player.PlayerPreferences;
+import net.auroramc.api.utils.SMPLocation;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
@@ -20,15 +21,19 @@ import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import net.auroramc.core.api.events.server.ProtocolMessageEvent;
 import net.auroramc.core.api.events.server.ServerCloseRequestEvent;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
+import net.auroramc.core.api.player.SMPPlayer;
+import net.auroramc.core.api.player.team.SMPTeam;
 import net.auroramc.core.api.utils.ServerChatUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -37,25 +42,22 @@ public class ProtocolMessageReceivedListener implements Listener {
     @EventHandler
     public void onMessageReceived(ProtocolMessageEvent e) {
         switch (e.getMessage().getProtocol()) {
-            case UPDATE_RULES: {
+            case UPDATE_RULES -> {
                 //Reload the rules.
                 AuroraMCAPI.loadRules();
-                break;
             }
-            case UPDATE_PLAYER_COUNT: {
+            case UPDATE_PLAYER_COUNT -> {
                 //Respond with the current player count.
                 int amount = Bukkit.getOnlinePlayers().size();
-                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_PLAYER_COUNT, "Mission Control", "reply", AuroraMCAPI.getInfo().getName(), amount + "\n" + AuroraMCAPI.getInfo().getNetwork().name() + "\n" + ((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("game"));
+                ProtocolMessage message = new ProtocolMessage(Protocol.UPDATE_PLAYER_COUNT, "Mission Control", "reply", AuroraMCAPI.getInfo().getName(), amount + "\n" + AuroraMCAPI.getInfo().getNetwork().name() + "\n" + ((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("game"));
                 CommunicationUtils.sendMessage(message);
-                break;
             }
-            case SHUTDOWN: {
+            case SHUTDOWN -> {
                 //Queue server for shutdown. Because this differs from server-to-server, implementation is set by the game engine/lobby/build core.
                 ServerCloseRequestEvent event = new ServerCloseRequestEvent(false, e.getMessage().getCommand());
                 Bukkit.getPluginManager().callEvent(event);
-                break;
             }
-            case MESSAGE: {
+            case MESSAGE -> {
                 String raw = e.getMessage().getExtraInfo();
                 String to = e.getMessage().getCommand();
                 String sender = e.getMessage().getSender();
@@ -92,9 +94,8 @@ public class ProtocolMessageReceivedListener implements Listener {
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 100);
                     }
                 }
-                break;
             }
-            case STAFF_MESSAGE: {
+            case STAFF_MESSAGE -> {
                 String message = e.getMessage().getExtraInfo();
                 String to = e.getMessage().getCommand();
                 String sender = e.getMessage().getSender();
@@ -114,15 +115,13 @@ public class ProtocolMessageReceivedListener implements Listener {
                         }
                     }
                 }
-                break;
             }
-            case EMERGENCY_SHUTDOWN: {
+            case EMERGENCY_SHUTDOWN -> {
                 //Shutdown the server immediately. Because this differs from server-to-server, implementation is set by the game engine/lobby/build core.
                 ServerCloseRequestEvent event = new ServerCloseRequestEvent(true, e.getMessage().getCommand());
                 Bukkit.getPluginManager().callEvent(event);
-                break;
             }
-            case ALPHA_CHANGE: {
+            case ALPHA_CHANGE -> {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.kickPlayer(TextFormatter.pluginMessageRaw("Server Manager", "&cThe alpha network has been closed.\n" +
                             "\n" +
@@ -132,7 +131,61 @@ public class ProtocolMessageReceivedListener implements Listener {
                 }
                 CommunicationUtils.sendMessage(new ProtocolMessage(Protocol.CONFIRM_SHUTDOWN, "Mission Control", "shutdown", AuroraMCAPI.getInfo().getName(), ""));
                 CommunicationUtils.shutdown();
-                break;
+            }
+            case UPDATE_MAPS -> {
+                String [] args = e.getMessage().getExtraInfo().split(";");
+                switch (e.getMessage().getCommand()) {
+                    case "setleader" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            UUID uuid2 = UUID.fromString(args[1]);
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+                            team.setLeader(team.getMember(uuid2), false);
+                        }
+                    }
+                    case "addmember" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            UUID uuid2 = UUID.fromString(args[1]);
+                            int id = Integer.parseInt(args[2]);
+                            String name = args[3];
+                            Rank rank = Rank.valueOf(args[4]);
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+
+                            team.addMember(new SMPPlayer(id, name, uuid2, null, rank), false);
+                        }
+                    }
+                    case "removemember" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            UUID uuid2 = UUID.fromString(args[1]);
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+                            team.removeMember(uuid2, false);
+                        }
+                    }
+                    case "setname" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            String name = args[1];
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+                            team.setName(name, false);
+                        }
+                    }
+                    case "sethome" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+                            team.setHome(SMPLocation.fromJSON(new JSONObject(args[1])), false);
+                        }
+                    }
+                    case "disband" -> {
+                        UUID uuid = UUID.fromString(args[0]);
+                        if (ServerAPI.getLoadedTeams().containsKey(uuid)) {
+                            SMPTeam team = ServerAPI.getLoadedTeams().get(uuid);
+                            team.disband(false);
+                        }
+                    }
+                }
             }
         }
     }
