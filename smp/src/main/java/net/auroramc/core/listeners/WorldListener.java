@@ -80,7 +80,7 @@ public class WorldListener implements Listener {
         CommunicationUtils.sendMessage(message);
 
         World world = Bukkit.getWorld("world");
-        world.setKeepSpawnInMemory(false);f
+        world.setKeepSpawnInMemory(false);
         for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
             world.unloadChunk(chunk);
         }
