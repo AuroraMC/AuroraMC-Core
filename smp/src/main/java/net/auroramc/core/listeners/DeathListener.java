@@ -51,6 +51,7 @@ public class DeathListener implements Listener {
         } else {
             AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getEntity());
             player.setDead(true);
+            e.setKeepInventory(false);
         }
     }
 

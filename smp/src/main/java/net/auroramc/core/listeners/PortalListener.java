@@ -8,15 +8,13 @@ package net.auroramc.core.listeners;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.player.AuroraMCServerPlayer;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.world.PortalCreateEvent;
 
 import java.util.Objects;
 
@@ -26,6 +24,7 @@ public class PortalListener implements Listener {
     public void onPortal(PlayerPortalEvent e) {
         AuroraMCServerPlayer player = ServerAPI.getPlayer(e.getPlayer());
         e.setCancelled(true);
+        Bukkit.getLogger().info("test");
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             if (Objects.requireNonNull(ServerAPI.getCore().getConfig().getString("type")).equals("OVERWORLD")) {

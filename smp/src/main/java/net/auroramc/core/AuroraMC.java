@@ -56,6 +56,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -186,13 +187,22 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LockChestListener(), this);
         Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
         Bukkit.getPluginManager().registerEvents(new BlockLoggerListener(), this);
-
         Bukkit.getPluginManager().registerEvents(new XRayCheckListener(), this);
 
 
         //Register the BungeeCord plugin message channel
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "auroramc:server", new PluginMessageRecievedListener());
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
+                    player.saveData();
+                }
+                Bukkit.getWorld("smp").save();
+            }
+        }.runTaskTimer(ServerAPI.getCore(), 6000, 6000);
 
         internalFile = new File(getDataFolder(), "internal.yml");
         if (!internalFile.exists()) {

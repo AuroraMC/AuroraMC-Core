@@ -68,7 +68,9 @@ public class WorldListener implements Listener {
 
         smp.setPVP(false);
         smp.setGameRule(GameRule.DO_FIRE_TICK, false);
-        smp.setGameRule(GameRule.KEEP_INVENTORY, true);
+        if (Objects.requireNonNull(ServerAPI.getCore().getConfig().getString("type")).equalsIgnoreCase("OVERWORLD")) {
+            smp.setGameRule(GameRule.KEEP_INVENTORY, true);
+        }
         smp.setGameRule(GameRule.DO_INSOMNIA, true);
         smp.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, 35);
         smp.setDifficulty(Difficulty.HARD);
@@ -78,18 +80,20 @@ public class WorldListener implements Listener {
         CommunicationUtils.sendMessage(message);
 
         World world = Bukkit.getWorld("world");
+        world.setKeepSpawnInMemory(false);f
         for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
             world.unloadChunk(chunk);
         }
         Bukkit.unloadWorld(world, false);
 
         world = Bukkit.getWorld("world_nether");
+        world.setKeepSpawnInMemory(false);
         for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
             world.unloadChunk(chunk);
         }
-        //Bukkit.unloadWorld(world, false);
 
         world = Bukkit.getWorld("world_the_end");
+        world.setKeepSpawnInMemory(false);
         for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
             world.unloadChunk(chunk);
         }
