@@ -1315,7 +1315,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         new BukkitRunnable(){
             @Override
             public void run() {
-                AuroraMCAPI.getDbManager().setSMPBackLocation(getUniqueId(), home);
+                AuroraMCAPI.getDbManager().setSMPBackLocation(getUniqueId(), backLocation);
             }
         }.runTaskAsynchronously(ServerAPI.getCore());
 

@@ -53,7 +53,7 @@ public class CommandSpawn extends ServerCommand {
                         out.writeUTF("SMPOverworld");
                         out.writeUTF(player.getUniqueId().toString());
                         player.saveData();
-                        AuroraMCAPI.getDbManager().setSMPLogoutLocation(player.getUniqueId(), new SMPLocation(player.getHome().getDimension(), 0, 63, 0, 0, 0, SMPLocation.Reason.HOME));
+                        AuroraMCAPI.getDbManager().setSMPLogoutLocation(player.getUniqueId(), new SMPLocation(SMPLocation.Dimension.OVERWORLD, 0, 63, 0, 0, 0, SMPLocation.Reason.HOME));
                         player.sendPluginMessage(out.toByteArray());
                     }
                 }.runTaskAsynchronously(ServerAPI.getCore());
