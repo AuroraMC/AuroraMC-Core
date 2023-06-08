@@ -3190,7 +3190,7 @@ public class DatabaseManager {
 
     public List<Crate> getCrates(int amcId) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM crates WHERE amc_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM crates WHERE amc_id = ? ORDER BY time_generated DESC");
             statement.setInt(1, amcId);
 
             ResultSet set = statement.executeQuery();
