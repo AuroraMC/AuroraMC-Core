@@ -22,7 +22,7 @@ public class PeterPan extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** is ready to &e&lTAKE FLIGHT!", name);
@@ -33,7 +33,7 @@ public class PeterPan extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** has their feet back on the floor.", name);

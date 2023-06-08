@@ -23,7 +23,7 @@ public class DeveloperPlayGames extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s**.playGames(&atrue&r);", name);
@@ -34,7 +34,7 @@ public class DeveloperPlayGames extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s**.playGames(&cfalse&r);", name);
