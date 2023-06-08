@@ -7,6 +7,7 @@
 package net.auroramc.core;
 
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.core.api.ServerAPI;
 import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.core.api.backend.communication.Protocol;
@@ -188,6 +189,10 @@ public class AuroraMC extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SpawnProtectionListener(), this);
         Bukkit.getPluginManager().registerEvents(new BlockLoggerListener(), this);
         Bukkit.getPluginManager().registerEvents(new XRayCheckListener(), this);
+
+        if (((ServerInfo) AuroraMCAPI.getInfo()).getServerType().getString("smp_type").equalsIgnoreCase("END")) {
+            Bukkit.getPluginManager().registerEvents(new EnderDragonListener(), this);
+        }
 
 
         //Register the BungeeCord plugin message channel
