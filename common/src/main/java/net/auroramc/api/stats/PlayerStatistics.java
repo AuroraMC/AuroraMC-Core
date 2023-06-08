@@ -219,7 +219,7 @@ public class PlayerStatistics {
                         component.addExtra("\n \n");
 
                         component.addExtra(lines);
-                        player.sendMessage(lines);
+                        player.sendMessage(component);
                     }
                     Reward reward = AuroraMCAPI.getLevelRewards().get(level);
                     if (reward != null) {
@@ -516,7 +516,7 @@ public class PlayerStatistics {
 
 
                         component.addExtra("\n \n");
-                        cmp = new TextComponent(achievement.getDescription());
+                        cmp = new TextComponent(((achievement instanceof TieredAcheivement)?String.format(achievement.getDescription(), ((TieredAcheivement) achievement).getTier(tierAchieved).getRequirement()):achievement.getDescription()));
                         cmp.setColor(ChatColor.WHITE);
                         cmp.setBold(false);
                         component.addExtra(cmp);
@@ -598,7 +598,7 @@ public class PlayerStatistics {
 
 
                         component.addExtra("\n \n");
-                        cmp = new TextComponent(achievement.getDescription());
+                        cmp = new TextComponent(((achievement instanceof TieredAcheivement)?String.format(achievement.getDescription(), ((TieredAcheivement) achievement).getTier(tierAchieved).getRequirement()):achievement.getDescription()));
                         cmp.setColor(ChatColor.WHITE);
                         cmp.setBold(false);
                         component.addExtra(cmp);
