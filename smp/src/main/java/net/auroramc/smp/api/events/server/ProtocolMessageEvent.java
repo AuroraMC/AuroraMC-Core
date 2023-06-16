@@ -6,7 +6,7 @@
 
 package net.auroramc.smp.api.events.server;
 
-import net.auroramc.smp.api.backend.communication.ProtocolMessage;
+import net.auroramc.core.api.backend.communication.ProtocolMessage;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
