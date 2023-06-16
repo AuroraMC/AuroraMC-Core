@@ -17,11 +17,16 @@ import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.auroramc.core.api.utils.holograms.HologramLine;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +43,14 @@ public class ServerAPI {
     private static final HashMap<AuroraMCServerPlayer, GUI> openGUIs;
 
     private static boolean shuttingDown;
+    private static boolean eventMode;
 
     static {
         openGUIs = new HashMap<>();
         holograms = new HashMap<>();
         fakePlayers = new HashMap<>();
         shuttingDown = false;
+        eventMode = false;
     }
 
     public static void init(AuroraMC core) {
@@ -189,7 +196,12 @@ public class ServerAPI {
         }
     }
 
-
+    public static void loadEvent() throws IOException, InvalidPluginException, InvalidDescriptionException {
+        if (eventMode) return;
+        FileUtils.moveFileToDirectory(new File(Bukkit.getServer().getWorldContainer(), "AuroraMC-Events-1.0-SNAPSHOT.jar"), new File(Bukkit.getServer().getWorldContainer(), "plugins"), true);
+        Bukkit.getPluginManager().loadPlugin(new File(Bukkit.getServer().getWorldContainer(), "plugins/AuroraMC-Events-1.0-SNAPSHOT.jar"));
+        eventMode = true;
+    }
 
     public static boolean isShuttingDown() {
         return shuttingDown;

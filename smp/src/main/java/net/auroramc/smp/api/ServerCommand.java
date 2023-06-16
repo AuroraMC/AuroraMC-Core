@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2023-2023 AuroraMC Ltd. All Rights Reserved.
+ *
+ * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
+ */
+
+package net.auroramc.smp.api;
+
+import net.auroramc.api.command.Command;
+import net.auroramc.api.permissions.Permission;
+import net.auroramc.smp.api.player.AuroraMCServerPlayer;
+
+import java.util.List;
+
+public abstract class ServerCommand extends Command<AuroraMCServerPlayer> {
+
+
+    public ServerCommand(String mainCommand, List<String> alises, List<Permission> permission, boolean showPermissionMessage, String customPermissionMessage) {
+        super(mainCommand, alises, permission, showPermissionMessage, customPermissionMessage);
+    }
+
+}
