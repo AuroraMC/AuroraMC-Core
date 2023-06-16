@@ -177,7 +177,11 @@ public class ChatListener implements Listener {
                             if (!recipient.equals(player)) {
                                 ServerChatUtils.MentionMessage mentionedMessage = ServerChatUtils.processMentions(recipient, (TextComponent) component);
 
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage.getFormattedText()));
+                                if (ServerAPI.isEventMode()) {
+                                    recipient.sendMessage(TextFormatter.eventMessage(player, recipient, mentionedMessage.getFormattedText()));
+                                } else {
+                                    recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage.getFormattedText()));
+                                }
                                 if (mentionedMessage.isMentionFound()) {
                                     if (recipient.getActiveMutes().size() > 0 && recipient.getPreferences().getMuteInformMode() == PlayerPreferences.MuteInformMode.MESSAGE_AND_MENTIONS) {
                                         BaseComponent msg = TextFormatter.privateMessage(recipient, player, true, new TextComponent("Hey! I'm currently muted and cannot message you right now."));
@@ -191,7 +195,11 @@ public class ChatListener implements Listener {
                                 }
                             } else {
                                 BaseComponent mentionedMessage = ServerChatUtils.processMentions((TextComponent) component);
-                                recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage));
+                                if (ServerAPI.isEventMode()) {
+                                    recipient.sendMessage(TextFormatter.eventMessage(player, recipient, mentionedMessage));
+                                } else {
+                                    recipient.sendMessage(TextFormatter.chatMessage(player, recipient, mentionedMessage));
+                                }
                             }
 
                         }
