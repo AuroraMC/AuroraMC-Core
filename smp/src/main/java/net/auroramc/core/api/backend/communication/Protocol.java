@@ -4,7 +4,7 @@
  * PRIVATE AND CONFIDENTIAL - Distribution and usage outside the scope of your job description is explicitly forbidden except in circumstances where a company director has expressly given written permission to do so.
  */
 
-package net.auroramc.smp.api.backend.communication;
+package net.auroramc.core.api.backend.communication;
 
 public enum Protocol {
 
@@ -59,5 +59,9 @@ public enum Protocol {
     /**
      * Update to lobby versions.
      */
-    VERSION_UPDATE
+    VERSION_UPDATE,
+    /**
+     * Prompt mission control to create a server
+     */
+    CREATE_SERVER
 }

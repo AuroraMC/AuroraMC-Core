@@ -10,7 +10,7 @@ import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.smp.AuroraMC;
-import net.auroramc.smp.api.backend.communication.CommunicationUtils;
+import net.auroramc.core.api.backend.communication.CommunicationUtils;
 import net.auroramc.smp.api.events.player.PlayerLeaveEvent;
 import net.auroramc.smp.api.player.AuroraMCServerPlayer;
 import net.auroramc.smp.api.player.team.SMPTeam;
