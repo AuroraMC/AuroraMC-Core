@@ -30,7 +30,8 @@ public enum Permission {
     SOCIAL_MEDIA(16, "socialmedia"),
     EVENT_MANAGEMENT(17, "events"),
     PANEL(18, "panel"),
-    CUSTOM_DISGUISE(19, "disguise.custom");
+    CUSTOM_DISGUISE(19, "disguise.custom"),
+    EVENT_HOST(20, "event.host");
 
     private final int id;
     private final String node;
