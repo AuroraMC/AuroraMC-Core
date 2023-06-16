@@ -203,6 +203,10 @@ public class ServerAPI {
         eventMode = true;
     }
 
+    public static boolean isEventMode() {
+        return eventMode;
+    }
+
     public static boolean isShuttingDown() {
         return shuttingDown;
     }
