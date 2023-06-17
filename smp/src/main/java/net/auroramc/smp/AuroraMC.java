@@ -33,6 +33,8 @@ import net.auroramc.smp.commands.moderation.report.CommandReportClose;
 import net.auroramc.smp.commands.moderation.report.CommandReportHandle;
 import net.auroramc.smp.commands.moderation.report.CommandReportInfo;
 import net.auroramc.smp.commands.moderation.staffmanagement.CommandRecruitmentLookup;
+import net.auroramc.smp.commands.social.CommandGameMode;
+import net.auroramc.smp.commands.social.CommandTeleport;
 import net.auroramc.smp.executors.deatheffects.ConfettiExecutor;
 import net.auroramc.smp.executors.deatheffects.FireworkExecutor;
 import net.auroramc.smp.executors.deatheffects.LayAnEggExecutor;
@@ -146,6 +148,8 @@ public class AuroraMC extends JavaPlugin {
         AuroraMCAPI.registerCommand(new CommandSpectator());
         AuroraMCAPI.registerCommand(new CommandInventorySee());
         AuroraMCAPI.registerCommand(new CommandEnderChestSee());
+        AuroraMCAPI.registerCommand(new CommandTeleport());
+        AuroraMCAPI.registerCommand(new CommandGameMode());
 
         //Register Executors
         AuroraMCAPI.registerCosmeticExecutor(new ConfettiCannonExecutor());
