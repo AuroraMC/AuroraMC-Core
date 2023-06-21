@@ -1,5 +1,5 @@
 name: AuroraMC-Core
-main: net.auroramc.core.AuroraMC
+main: net.auroramc.smp.AuroraMC
 version: 1.0-SNAPSHOT
 author: "The AuroraMC Development Team"
 website: auroramc.net

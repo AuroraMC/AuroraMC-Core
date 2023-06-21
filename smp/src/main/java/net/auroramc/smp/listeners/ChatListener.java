@@ -47,7 +47,7 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         switch (e.getPlayer().getChannel()) {
-            case ChatChannel.STAFF: {
+            case STAFF: {
                 AuroraMCServerPlayer player = e.getPlayer();
                 player.sendMessage(TextFormatter.formatStaffMessage(player, e.getMessage()));
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 100, 2);
@@ -65,7 +65,7 @@ public class ChatListener implements Listener {
                 }
                 break;
             }
-            case ChatChannel.TEAM: {
+            case TEAM: {
                 if (e.getPlayer().isVanished()) {
                     e.getPlayer().sendMessage(TextFormatter.pluginMessage("Vanish", "You cannot talk while vanished!"));
                     return;
@@ -138,8 +138,8 @@ public class ChatListener implements Listener {
                     break;
                 }
             }
-            case ChatChannel.ALL:
-            case ChatChannel.PARTY:
+            case ALL:
+            case PARTY:
                 if (e.getPlayer().isVanished()) {
                     e.getPlayer().sendMessage(TextFormatter.pluginMessage("Vanish", "You cannot talk while vanished!"));
                     return;

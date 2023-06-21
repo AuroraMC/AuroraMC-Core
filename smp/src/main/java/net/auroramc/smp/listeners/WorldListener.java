@@ -97,7 +97,6 @@ public class WorldListener implements Listener {
         for (Chunk chunk : Arrays.asList(world.getLoadedChunks())) {
             world.unloadChunk(chunk);
         }
-        Bukkit.unloadWorld(world, false);
     }
 
     @EventHandler
