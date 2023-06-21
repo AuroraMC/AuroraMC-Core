@@ -7,10 +7,6 @@
 package net.auroramc.smp.managers;
 
 import net.auroramc.smp.api.ServerAPI;
-import net.auroramc.core.api.events.block.*;
-import net.auroramc.core.api.events.player.*;
-import net.auroramc.core.api.events.entity.*;
-import net.auroramc.core.api.events.inventory.*;
 import net.auroramc.smp.api.events.block.*;
 import net.auroramc.smp.api.events.entity.*;
 import net.auroramc.smp.api.events.inventory.*;
