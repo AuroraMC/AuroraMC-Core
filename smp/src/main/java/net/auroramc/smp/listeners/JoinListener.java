@@ -27,6 +27,7 @@ import net.minecraft.core.BlockPosition;
 import net.minecraft.core.EnumDirection;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
 import org.bukkit.event.EventHandler;
@@ -219,7 +220,7 @@ public class JoinListener implements Listener {
                 if (location.getDimension() == SMPLocation.Dimension.END || location.getReason() == SMPLocation.Reason.HOME) {
                     e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()));
                 } else {
-                    e.setSpawnLocation(Bukkit.getWorld("smp").getSpawnLocation());
+                    e.setSpawnLocation(new Location(Bukkit.getWorld("smp"), -2.5, 66, 20.5));
                 }
             }
         }
