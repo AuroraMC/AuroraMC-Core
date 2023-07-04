@@ -198,8 +198,7 @@ public class ServerAPI {
 
     public static void loadEvent() throws IOException, InvalidPluginException, InvalidDescriptionException {
         if (eventMode) return;
-        FileUtils.moveFileToDirectory(new File(Bukkit.getServer().getWorldContainer(), "AuroraMC-Events-1.0-SNAPSHOT.jar"), new File(Bukkit.getServer().getWorldContainer(), "plugins"), true);
-        Bukkit.getPluginManager().loadPlugin(new File(Bukkit.getServer().getWorldContainer(), "plugins/AuroraMC-Events-1.0-SNAPSHOT.jar"));
+        Bukkit.getPluginManager().loadPlugin(new File(Bukkit.getServer().getWorldContainer(), "AuroraMC-Events-1.0-SNAPSHOT.jar"));
         eventMode = true;
     }
 
