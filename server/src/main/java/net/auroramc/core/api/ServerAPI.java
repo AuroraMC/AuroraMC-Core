@@ -22,6 +22,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -198,7 +199,8 @@ public class ServerAPI {
 
     public static void loadEvent() throws IOException, InvalidPluginException, InvalidDescriptionException {
         if (eventMode) return;
-        Bukkit.getPluginManager().loadPlugin(new File(Bukkit.getServer().getWorldContainer(), "AuroraMC-Events-1.0-SNAPSHOT.jar"));
+        Plugin plugin = Bukkit.getPluginManager().loadPlugin(new File(Bukkit.getServer().getWorldContainer(), "AuroraMC-Events-1.0-SNAPSHOT.jar"));
+        Bukkit.getPluginManager().enablePlugin(plugin);
         eventMode = true;
     }
 
