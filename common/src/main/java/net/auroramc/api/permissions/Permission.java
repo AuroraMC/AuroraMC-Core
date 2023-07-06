@@ -31,7 +31,8 @@ public enum Permission {
     EVENT_MANAGEMENT(17, "events"),
     PANEL(18, "panel"),
     CUSTOM_DISGUISE(19, "disguise.custom"),
-    EVENT_HOST(20, "event.host");
+    EVENT_HOST(20, "event.host"),
+    TESTER(21, "tester");
 
     private final int id;
     private final String node;

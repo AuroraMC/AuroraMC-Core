@@ -15,10 +15,10 @@ import java.util.List;
 
 public enum MaintenanceMode {
 
+    TEST("Test Mode", Arrays.asList(Permission.TESTER, Permission.ADMIN, Permission.BUILD)),
     STAFF_ONLY("Staff Only", Arrays.asList(Permission.MODERATION, Permission.DEBUG_INFO, Permission.ADMIN, Permission.BUILD)),
     LEADERSHIP_ONLY("Leadership Only", Arrays.asList(Permission.DEBUG_ACTION, Permission.ADMIN)),
-    LOCKDOWN("Essential Staff Only", Collections.singletonList(Permission.ALL)),
-    NOT_OPEN("Not Open", Arrays.asList(Permission.MODERATION, Permission.BUILD));
+    LOCKDOWN("Essential Staff Only", Collections.singletonList(Permission.ALL));
 
     private final String title;
     private final List<Permission> allowance;
