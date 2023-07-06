@@ -286,6 +286,7 @@ public abstract class AuroraMCPlayer {
         loaded = oldPlayer.loaded;
         team = oldPlayer.team;
         newPlayer = oldPlayer.newPlayer;
+        tempPermissions = oldPlayer.tempPermissions;
     }
 
     public UUID getUuid() {
