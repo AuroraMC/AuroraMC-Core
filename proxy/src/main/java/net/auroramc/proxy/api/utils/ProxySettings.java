@@ -6,6 +6,8 @@
 
 package net.auroramc.proxy.api.utils;
 
+import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.info.Info;
 import net.auroramc.api.permissions.Permission;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.proxy.api.ProxyAPI;
@@ -30,6 +32,9 @@ public class ProxySettings {
         this.maintenanceMotd = maintenanceMotd;
         this.motd = motd;
         this.mode = mode;
+        if (AuroraMCAPI.getInfo().getNetwork() == Info.Network.TEST) {
+            this.mode = MaintenanceMode.TEST;
+        }
     }
 
     public boolean isMaintenance() {
@@ -38,6 +43,9 @@ public class ProxySettings {
 
     public String getMaintenanceMotd() {
         if (maintenanceMotd == null) {
+            if (mode == MaintenanceMode.TEST) {
+                return "§cAuroraMC Test Network";
+            }
             return "§cAuroraMC is currently in Maintenance. Try again later.";
         }
         return ChatColor.translateAlternateColorCodes('&', maintenanceMotd);

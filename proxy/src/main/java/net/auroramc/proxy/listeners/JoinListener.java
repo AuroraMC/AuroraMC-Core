@@ -176,17 +176,9 @@ public class JoinListener implements Listener {
 
                 if (!allowed) {
                     e.setCancelled(true);
-                    if (ProxyAPI.getProxySettings().getMode() == MaintenanceMode.NOT_OPEN) {
-                        e.setCancelReason(TextFormatter.pluginMessage("Maintenance", "AuroraMC is almost ready but not yet open.\n\n" +
-                                "We are deep into preparations for our network opening and are almost\n" +
-                                "ready for our public launch!\n" +
-                                "\n" +
-                                "Our launch date has been set: &b&l31st July 2022!&r You can join\n" +
-                                "our discord right now via https://discord.auroramc.net!" +
-                                "\n" +
-                                "We do hope you will join us when we do open, and thanks for showing us\n" +
-                                "how eager people are to join the network!\n" +
-                                "**~The AuroraMC Network Leadership Team**"));
+                    if (ProxyAPI.getProxySettings().getMode() == MaintenanceMode.TEST) {
+                        e.setCancelReason(TextFormatter.pluginMessage("Network Manager", "You do not have access to this network.\n\n" +
+                                "If you believe this is a mistake, please contact @Block2Block on Discord."));
                     } else {
                         e.setCancelReason(TextFormatter.pluginMessage("Maintenance", "Uh oh! The network is in maintenance!\n\n" +
                                 "In order to prevent issues, you will be unable to connect to\n" +
@@ -199,17 +191,9 @@ public class JoinListener implements Listener {
                 }
             } else {
                 e.setCancelled(true);
-                if (ProxyAPI.getProxySettings().getMode() == MaintenanceMode.NOT_OPEN) {
-                    e.setCancelReason(TextFormatter.pluginMessage("Maintenance", "AuroraMC is almost ready but not yet open.\n\n" +
-                            "We are deep into preparations for our network opening and are almost\n" +
-                            "ready for our public launch!\n" +
-                            "\n" +
-                            "Our launch date has been set: &b&l31st July 2022!&r You can join\n" +
-                            "our discord right now via https://discord.auroramc.net!" +
-                            "\n" +
-                            "We do hope you will join us when we do open, and thanks for showing us\n" +
-                            "how eager people are to join the network!\n" +
-                            "**~The AuroraMC Network Leadership Team**"));
+                if (ProxyAPI.getProxySettings().getMode() == MaintenanceMode.TEST) {
+                    e.setCancelReason(TextFormatter.pluginMessage("Network Manager", "You do not have access to this network.\n\n" +
+                            "If you believe this is a mistake, please contact @Block2Block on Discord."));
                 } else {
                     e.setCancelReason(TextFormatter.pluginMessage("Maintenance", "Uh oh! The network is in maintenance!\n\n" +
                             "In order to prevent issues, you will be unable to connect to\n" +
