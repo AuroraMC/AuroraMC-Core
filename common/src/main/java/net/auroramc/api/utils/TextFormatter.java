@@ -545,7 +545,7 @@ public class TextFormatter {
             cmp.setBold(true);
 
             TextComponent hover = new TextComponent("");
-            hover.addExtra(cmp);
+            hover.addExtra(new TextComponent(cmp));
             hover.addExtra("\n \n");
             hover.addExtra(new TextComponent("Event Hosts are Staff members with\nspecial permissions in Event servers."));
 

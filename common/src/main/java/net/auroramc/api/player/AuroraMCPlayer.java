@@ -68,7 +68,7 @@ public abstract class AuroraMCPlayer {
 
     private UUID uuid;
 
-    private List<Permission> tempPermissions;
+    private final List<Permission> tempPermissions;
 
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
