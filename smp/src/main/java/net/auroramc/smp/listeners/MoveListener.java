@@ -31,7 +31,7 @@ public class MoveListener implements Listener {
                 player.moved();
                 for (EntityPlayer player2 : ServerAPI.getFakePlayers().values()) {
                     player2.aj().a(DataWatcherRegistry.a.a(10), (byte)127);
-                    PlayerConnection con = e.getPlayer().getCraft().getHandle().b;
+                    PlayerConnection con = e.getPlayer().getCraft().getHandle().c;
                     con.a(ClientboundPlayerInfoUpdatePacket.a(List.of(player2)));
                     con.a(new PacketPlayOutNamedEntitySpawn(player2));
                     con.a(new PacketPlayOutEntityHeadRotation(player2, (byte) ((player2.getBukkitYaw() * 256.0F) / 360.0F)));
@@ -39,7 +39,7 @@ public class MoveListener implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            con.a(new ClientboundPlayerInfoRemovePacket(List.of(player2.cs())));
+                            con.a(new ClientboundPlayerInfoRemovePacket(List.of(player2.ct())));
                         }
                     }.runTaskLater(ServerAPI.getCore(), 40);
                 }
