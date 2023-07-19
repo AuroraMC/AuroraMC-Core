@@ -199,7 +199,7 @@ public class Hologram {
         if (shouldTrack(player)) {
             if (!trackedPlayers.contains(player)) {
                 trackedPlayers.add(player);
-                PlayerConnection con = player.getCraft().getHandle().b;
+                PlayerConnection con = player.getCraft().getHandle().c;
                 for (HologramLine line : lines.values()) {
                     new BukkitRunnable(){
                         @Override
@@ -213,7 +213,7 @@ public class Hologram {
             }
         } else {
             if (trackedPlayers.contains(player)) {
-                PlayerConnection con = player.getCraft().getHandle().b;
+                PlayerConnection con = player.getCraft().getHandle().c;
                 for (HologramLine line : lines.values()) {
                     new BukkitRunnable() {
                         @Override

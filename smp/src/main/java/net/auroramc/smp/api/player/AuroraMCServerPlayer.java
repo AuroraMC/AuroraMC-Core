@@ -30,10 +30,10 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -1213,12 +1213,12 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         return Objects.hash(player);
     }
 
-    public boolean getCollidesWithEntities() {
-        return player.spigot().getCollidesWithEntities();
+    public boolean isCollidable() {
+        return player.isCollidable();
     }
 
-    public void setCollidesWithEntities(boolean collides) {
-        player.spigot().setCollidesWithEntities(collides);
+    public void setCollidable(boolean collides) {
+        player.setCollidable(collides);
     }
 
     public BukkitTask getActiveReportTask() {
