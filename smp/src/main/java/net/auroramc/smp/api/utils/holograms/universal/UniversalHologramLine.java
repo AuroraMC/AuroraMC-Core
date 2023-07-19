@@ -20,8 +20,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftArmorStand;
 
 public class UniversalHologramLine extends HologramLine {
 
@@ -44,7 +44,7 @@ public class UniversalHologramLine extends HologramLine {
             PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(armorStand.getEntityId(), armorStand.getHandle().aj().b());
             for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
                 if (hologram.shouldTrack(player)) {
-                    PlayerConnection con = player.getCraft().getHandle().b;
+                    PlayerConnection con = player.getCraft().getHandle().c;
                     con.a(packet);
                 }
             }
@@ -82,7 +82,7 @@ public class UniversalHologramLine extends HologramLine {
             if (!hologram.shouldTrack(player)) {
                 continue;
             }
-            PlayerConnection con = player.getCraft().getHandle().b;
+            PlayerConnection con = player.getCraft().getHandle().c;
             con.a(packet);
             con.a(packet2);
         }
@@ -96,7 +96,7 @@ public class UniversalHologramLine extends HologramLine {
         PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(armorStand.getHandle());
         for (AuroraMCServerPlayer player : ServerAPI.getPlayers()) {
             if (hologram.shouldTrack(player)) {
-                PlayerConnection con = player.getCraft().getHandle().b;
+                PlayerConnection con = player.getCraft().getHandle().c;
                 con.a(packet);
             }
         }
@@ -109,7 +109,7 @@ public class UniversalHologramLine extends HologramLine {
             if (!hologram.shouldTrack(player)) {
                 continue;
             }
-            PlayerConnection con = player.getCraft().getHandle().b;
+            PlayerConnection con = player.getCraft().getHandle().c;
             con.a(packet);
         }
         armorStand.getHandle().b(Entity.RemovalReason.a);
@@ -117,7 +117,7 @@ public class UniversalHologramLine extends HologramLine {
 
 
     public void onJoin(AuroraMCServerPlayer player) {
-        PlayerConnection con = player.getCraft().getHandle().b;
+        PlayerConnection con = player.getCraft().getHandle().c;
         PacketPlayOutSpawnEntity packet1 = new PacketPlayOutSpawnEntity(armorStand.getHandle());
         PacketPlayOutEntityMetadata packet2 = new PacketPlayOutEntityMetadata(armorStand.getEntityId(), armorStand.getHandle().aj().b());
         con.a(packet1);

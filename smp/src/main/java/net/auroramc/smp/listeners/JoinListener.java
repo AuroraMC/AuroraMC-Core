@@ -29,7 +29,7 @@ import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -161,7 +161,7 @@ public class JoinListener implements Listener {
                         WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
                         Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
                         AuroraMCAPI.getLogger().info("Finding portal at: " + (location1.getBlockX()*8) + " " + location1.getBlockY() + " " + (location1.getBlockZ()*8));
-                        Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY(), location1.getBlockZ()*8), world.p_(), 128);
+                        Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()*8, location1.getBlockY(), location1.getBlockZ()*8), world.w_(), 128);
                         if (opt.isEmpty()) {
                             AuroraMCAPI.getLogger().info("No portal found, creating portal...");
                             EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
@@ -197,7 +197,7 @@ public class JoinListener implements Listener {
                 } else {
                     WorldServer world = ((CraftWorld)Bukkit.getWorld("smp")).getHandle();
                     Location location1 = new Location(Bukkit.getWorld("smp"), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY(), location1.getBlockZ()/8), world.p_(), 16);
+                    Optional<BlockUtil.Rectangle> opt = world.o().findPortalAround(new BlockPosition(location1.getBlockX()/8, location1.getBlockY(), location1.getBlockZ()/8), world.w_(), 16);
                     EnumDirection.EnumAxis axis = EnumDirection.EnumAxis.a;
                     if (Math.abs(location.getYaw()) >= 80) {
                         axis = EnumDirection.EnumAxis.c;

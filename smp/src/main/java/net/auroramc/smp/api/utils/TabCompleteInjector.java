@@ -20,7 +20,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.network.PlayerConnection;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -69,13 +69,13 @@ public class TabCompleteInjector {
                                                 SuggestionsBuilder sb = new SuggestionsBuilder(message, message.length());
                                                 finalCompletions.forEach(sb::suggest);
                                                 PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(i, sb.build());
-                                                player.getCraft().getHandle().b.a(packetPlayOutTabComplete);
+                                                player.getCraft().getHandle().c.a(packetPlayOutTabComplete);
                                                 break;
                                             }
                                         }
                                     } else {
                                         PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(i, new SuggestionsBuilder(message, 0).build());
-                                        player.getCraft().getHandle().b.a(packetPlayOutTabComplete);
+                                        player.getCraft().getHandle().c.a(packetPlayOutTabComplete);
                                     }
                                 } else {
                                     List<String> completions = AuroraMCAPI.getCommands().stream().filter((command) -> command.startsWith(message.split(" ")[0].replace("/","").toLowerCase())).collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class TabCompleteInjector {
                                         }
                                     }
                                     PacketPlayOutTabComplete packetPlayOutTabComplete = new PacketPlayOutTabComplete(i, builder.build());
-                                    player.getCraft().getHandle().b.a(packetPlayOutTabComplete);
+                                    player.getCraft().getHandle().c.a(packetPlayOutTabComplete);
                                 }
                             }
                         }.runTaskAsynchronously(ServerAPI.getCore());
@@ -253,7 +253,7 @@ public class TabCompleteInjector {
 
             field.setAccessible(true);
 
-            NetworkManager manager = (NetworkManager) field.get(((CraftPlayer) pl).getHandle().b);
+            NetworkManager manager = (NetworkManager) field.get(((CraftPlayer) pl).getHandle().c);
             manager.m.pipeline().addBefore("packet_handler", pl.getName(), channelDuplexHandler);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
@@ -267,7 +267,7 @@ public class TabCompleteInjector {
 
             field.setAccessible(true);
 
-            NetworkManager manager = (NetworkManager) field.get(((CraftPlayer) player).getHandle().b);
+            NetworkManager manager = (NetworkManager) field.get(((CraftPlayer) player).getHandle().c);
             Channel channel = manager.m;
             channel.eventLoop().submit(() -> {
                 channel.pipeline().remove(player.getName());

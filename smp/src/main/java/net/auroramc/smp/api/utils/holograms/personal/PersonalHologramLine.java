@@ -16,8 +16,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.EntityArmorStand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftArmorStand;
 
 public class PersonalHologramLine extends HologramLine {
     
@@ -29,7 +29,7 @@ public class PersonalHologramLine extends HologramLine {
         this.text = text;
         if (armorStand != null && !armorStand.isDead()) {
             armorStand.setCustomName(TextFormatter.convert(text));
-            PlayerConnection con = hologram.getPlayer().getCraft().getHandle().b;
+            PlayerConnection con = hologram.getPlayer().getCraft().getHandle().c;
             con.a(new PacketPlayOutEntityMetadata(armorStand.getEntityId(), armorStand.getHandle().aj().b()));
         }
     }
@@ -64,7 +64,7 @@ public class PersonalHologramLine extends HologramLine {
         if (!hologram.shouldTrack(hologram.getPlayer())) {
             return;
         }
-        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().b;
+        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().c;
         con.a(packet);
         con.a(packet2);
     }
@@ -75,14 +75,14 @@ public class PersonalHologramLine extends HologramLine {
         location.setY(hologram.getLocation().getY() + ((hologram.getLines().size() - (line + 1)) * 0.25));
         armorStand.teleport(location);
         PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(armorStand.getHandle());
-        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().b;
+        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().c;
         con.a(packet);
     }
 
     public void despawn() {
         if (armorStand == null || armorStand.isDead()) return;
         PacketPlayOutEntityDestroy packet = new PacketPlayOutEntityDestroy(armorStand.getEntityId());
-        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().b;
+        PlayerConnection con = hologram.getPlayer().getCraft().getHandle().c;
         con.a(packet);
         armorStand.getHandle().b(Entity.RemovalReason.a);
     }

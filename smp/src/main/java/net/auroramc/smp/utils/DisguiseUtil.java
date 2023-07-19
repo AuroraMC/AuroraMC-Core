@@ -17,7 +17,7 @@ import net.auroramc.api.utils.disguise.Skin;
 import net.auroramc.smp.api.ServerAPI;
 import net.auroramc.smp.api.player.AuroraMCServerPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -33,7 +33,7 @@ public class DisguiseUtil {
     private static final String defaultSkinValue = "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzZiZTM3NzljOWY5ZGViODkzMmMzYjdiZDI1Nzg4OGQxNTg5NjlhYzkxYWEyNjM1MTU3MmYxYWQ4N2M1MTk0OCJ9fX0===";
 
     public static boolean changeSkin(AuroraMCServerPlayer player, String skin, String signature, boolean update, boolean undisguise) {
-        GameProfile playerProfile = player.getCraft().getHandle().fI();
+        GameProfile playerProfile = player.getCraft().getHandle().fM();
         playerProfile.getProperties().removeAll("textures");
         playerProfile.getProperties().put("textures", new Property("textures", skin, signature));
         if (player.getActiveDisguise() != null) {
@@ -99,7 +99,7 @@ public class DisguiseUtil {
     public static boolean changeName(AuroraMCServerPlayer player, String username, boolean update) {
         try {
             CraftPlayer craftPlayer = player.getCraft();
-            GameProfile playerProfile = craftPlayer.getHandle().fI();
+            GameProfile playerProfile = craftPlayer.getHandle().fM();
             Field ff = playerProfile.getClass().getDeclaredField("name");
             ff.setAccessible(true);
             ff.set(playerProfile, username);

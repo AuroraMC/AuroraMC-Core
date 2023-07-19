@@ -7,7 +7,7 @@
 package net.auroramc.smp.api.utils.holograms;
 
 import net.auroramc.smp.api.player.AuroraMCServerPlayer;
-import org.bukkit.craftbukkit.v1_19_R3.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftArmorStand;
 
 public abstract class HologramLine {
 
