@@ -1061,8 +1061,8 @@ public class RecievePluginMessage implements Listener {
                         UUID uuid = UUID.fromString(in.readUTF());
                         AuroraMCProxyPlayer player = ProxyAPI.getPlayer(uuid);
                         assert player != null;
-                        if (ProxyServer.getInstance().getPlayer(uuid).getPendingConnection().getVersion() != 762) {
-                            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You must be in version **1.19.4** in order to connect to the §5§lNuttersSMP§r."));
+                        if (ProxyServer.getInstance().getPlayer(uuid).getPendingConnection().getVersion() != 763) {
+                            player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "You must be in version **1.20.1** in order to connect to the §5§lNuttersSMP§r."));
                             return;
                         }
                         player.sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Connecting you to §5§lNuttersSMP§r, please wait..."));
