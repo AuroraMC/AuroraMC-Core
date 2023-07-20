@@ -54,7 +54,8 @@ public class GameLog {
         PAINTBALL("&a&lPaintball", "SNOW_BALL", "SNOWBALL", (short)0),
         RUN("&e&lRun", "STAINED_CLAY", "RED_CONCRETE", (short)14),
         TAG("&c&lTag", "LEASH", "LEAD", (short)0),
-        SPLEEF("&b&lSpleef", "IRON_SPADE", "IRON_SHOVEL", (short)0);
+        SPLEEF("&b&lSpleef", "IRON_SPADE", "IRON_SHOVEL", (short)0),
+        EVENT("&d&lEvent", "CAKE", "CAKE", (short)0);
 
         private final String name;
         private final String item;
