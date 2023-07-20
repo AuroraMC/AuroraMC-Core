@@ -7,8 +7,8 @@
 package net.auroramc.core.api.backend.communication;
 
 import net.auroramc.api.AuroraMCAPI;
-import net.auroramc.core.api.ServerAPI;
-import net.auroramc.core.api.events.server.ProtocolMessageEvent;
+import net.auroramc.smp.api.ServerAPI;
+import net.auroramc.smp.api.events.server.ProtocolMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 

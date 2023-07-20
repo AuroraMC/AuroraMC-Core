@@ -15,6 +15,7 @@ import net.auroramc.api.backend.info.Info;
 import net.auroramc.api.cosmetics.Cosmetic;
 import net.auroramc.api.cosmetics.FriendStatus;
 import net.auroramc.api.cosmetics.PlusSymbol;
+import net.auroramc.api.permissions.Permission;
 import net.auroramc.api.permissions.PlusSubscription;
 import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.permissions.SubRank;
@@ -67,6 +68,8 @@ public abstract class AuroraMCPlayer {
 
     private UUID uuid;
 
+    private final List<Permission> tempPermissions;
+
     //Just a variable so other systems knows when a player has been fully loaded.
     private boolean loaded;
 
@@ -76,6 +79,7 @@ public abstract class AuroraMCPlayer {
         lastMessageSent = -1;
         team = null;
         this.name = name;
+        this.tempPermissions = new ArrayList<>();
 
         loadBefore(playerObject);
 
@@ -282,6 +286,7 @@ public abstract class AuroraMCPlayer {
         loaded = oldPlayer.loaded;
         team = oldPlayer.team;
         newPlayer = oldPlayer.newPlayer;
+        tempPermissions = oldPlayer.tempPermissions;
     }
 
     public UUID getUuid() {
@@ -384,6 +389,12 @@ public abstract class AuroraMCPlayer {
             }
         }
 
+        for (Permission permission : tempPermissions) {
+            if (permission.getNode().equalsIgnoreCase(string)) {
+                return true;
+            }
+        }
+
         if (activeSubscription != null) {
             return activeSubscription.getPermission().getNode().equalsIgnoreCase(string);
         }
@@ -402,6 +413,12 @@ public abstract class AuroraMCPlayer {
                         return true;
                     }
                 }
+            }
+        }
+
+        for (Permission permission : tempPermissions) {
+            if (permission.getId() == id) {
+                return true;
             }
         }
 
@@ -656,5 +673,15 @@ public abstract class AuroraMCPlayer {
 
     public PunishmentHistory getHistory() {
         return history;
+    }
+
+    public void grantTempPermission(Permission permission) {
+        if (!tempPermissions.contains(permission)) {
+            tempPermissions.add(permission);
+        }
+    }
+
+    public void revokeTempPermission(Permission permission) {
+        tempPermissions.remove(permission);
     }
 }

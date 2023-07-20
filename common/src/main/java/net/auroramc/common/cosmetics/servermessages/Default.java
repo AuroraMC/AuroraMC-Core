@@ -23,7 +23,7 @@ public class Default extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** has joined the game.", name);
@@ -34,7 +34,7 @@ public class Default extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** has left the game.", name);

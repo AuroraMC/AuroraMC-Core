@@ -1007,11 +1007,11 @@ public class ProtocolMessageReceivedListener implements Listener {
                 String name = e.getMessage().getSender();
                 if (e.getMessage().getCommand().equalsIgnoreCase("join")) {
                     for (AuroraMCProxyPlayer p : players) {
-                        p.sendMessage(TextFormatter.pluginMessage("Media Join", String.format("%s has logged into the network (&%s%s&r)", name, rank.getPrefixColor(), rank.getName())));
+                        p.sendMessage(TextFormatter.pluginMessage("Media Join", String.format("%s has logged into the network (%s%s§r)", name, rank.getPrefixColor(), rank.getName())));
                     }
                 } else {
                     for (AuroraMCProxyPlayer p : players) {
-                        p.sendMessage(TextFormatter.pluginMessage("Media Leave", String.format("%s has logged off the network (&%s%s&r)", name, rank.getPrefixColor(), rank.getName())));
+                        p.sendMessage(TextFormatter.pluginMessage("Media Leave", String.format("%s has logged off the network (%s%s§r)", name, rank.getPrefixColor(), rank.getName())));
                     }
                 }
                 break;
@@ -1022,11 +1022,11 @@ public class ProtocolMessageReceivedListener implements Listener {
                 String name = e.getMessage().getSender();
                 if (e.getMessage().getCommand().equalsIgnoreCase("join")) {
                     for (AuroraMCProxyPlayer p : players) {
-                        p.sendMessage(TextFormatter.pluginMessage("Staff Join", String.format("%s has logged into the network (&%s%s&r)", name, rank.getPrefixColor(), rank.getName())));
+                        p.sendMessage(TextFormatter.pluginMessage("Staff Join", String.format("%s has logged into the network (%s%s§r)", name, rank.getPrefixColor(), rank.getName())));
                     }
                 } else {
                     for (AuroraMCProxyPlayer p : players) {
-                        p.sendMessage(TextFormatter.pluginMessage("Staff Leave", String.format("%s has logged off the network (&%s%s&r)", name, rank.getPrefixColor(), rank.getName())));
+                        p.sendMessage(TextFormatter.pluginMessage("Staff Leave", String.format("%s has logged off the network (%s%s§r)", name, rank.getPrefixColor(), rank.getName())));
                     }
                 }
                 break;

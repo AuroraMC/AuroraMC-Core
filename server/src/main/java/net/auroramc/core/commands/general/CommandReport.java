@@ -46,7 +46,7 @@ public class CommandReport extends ServerCommand {
             }
             if (args.size() == 0) {
                 if (target != null) {
-                    Report report = new Report(player, target.getId(), target.getName());
+                    Report report = new Report(player, target.getId(), target.getByDisguiseName());
                     report.open(player);
                 } else {
                     new BukkitRunnable() {

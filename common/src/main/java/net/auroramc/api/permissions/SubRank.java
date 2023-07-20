@@ -25,7 +25,7 @@ public enum SubRank {
     COMMUNITY_MANAGEMENT(9, "Community Management", Collections.emptyList(), 0, 170, 0, '2'),
     RULES_COMMITTEE(10, "Rules Committee", Collections.singletonList(Permission.PANEL), 255, 170, 0, '6'),
     APPEALS(11, "Appeals Team", Collections.singletonList(Permission.PANEL), 0, 170, 0, '2'),
-    TESTER(12, "Alpha Tester", Collections.emptyList(), 0, 170, 0, '2');
+    TESTER(12, "Alpha Tester", Collections.singletonList(Permission.TESTER), 0, 170, 0, '2');
 
 
     private final int id;

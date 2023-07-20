@@ -25,7 +25,7 @@ public class Teleported extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** &dTeleported In!", name);
@@ -36,7 +36,7 @@ public class Teleported extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** &cTeleported away...", name);

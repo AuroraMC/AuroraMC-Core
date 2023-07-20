@@ -23,7 +23,7 @@ public class Hungry extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** is hungry for &d&lVICTORY!", name);
@@ -34,7 +34,7 @@ public class Hungry extends ServerMessage {
         String name = player.getName();
         if (recipient.equals(player)) {
             if (recipient.isDisguised() && recipient.getPreferences().isHideDisguiseNameEnabled()) {
-                name = player.getName();
+                name = player.getByDisguiseName();
             }
         }
         return String.format("**%s** is looking for &d&lVICTORY&r elsewhere.", name);
