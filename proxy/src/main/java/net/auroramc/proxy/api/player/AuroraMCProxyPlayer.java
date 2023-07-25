@@ -47,7 +47,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
 
     private ProxiedPlayer player;
     private Map<String, ScheduledTask> expiryTasks;
-    private final Session session;
+    private Session session;
     private UUID lastMessaged;
 
     private Party party;
@@ -59,7 +59,6 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     public AuroraMCProxyPlayer(ProxiedPlayer player) {
         super(player.getUniqueId(), player.getName(), player);
         this.player = player;
-        this.session = new Session(this);
         this.partyInvites = new ArrayList<>();
         this.expiryTasks = new HashMap<>();
     }
@@ -71,6 +70,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
 
     @Override
     public void loadExtra() {
+        this.session = new Session(this);
         ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
             switch (getRank().getId()) {
                 case 6:
