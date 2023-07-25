@@ -78,7 +78,7 @@ public class Reward {
                     }
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("CosmeticAdd");
-                    out.writeUTF(player.getName());
+                    out.writeUTF(player.getUniqueId().toString());
                     out.writeInt(cosmeticId);
                     player.sendPluginMessage(out.toByteArray());
                 }
