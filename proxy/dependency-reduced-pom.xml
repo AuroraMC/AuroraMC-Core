@@ -48,7 +48,7 @@
                     <Jenkins-Build-Url>${BUILD_URL}</Jenkins-Build-Url>
                     <Git-Commit>${GIT_COMMIT}</Git-Commit>
                     <Implementation-Version>${project.version}.${GIT_COMMIT}.${BUILD_NUMBER}</Implementation-Version>
-                    <Module-Name>AuroraMC-Proxy</Module-Name>
+                    <Module-Name>AuroraMC-Core-Proxy</Module-Name>
                   </manifestEntries>
                 </transformer>
               </transformers>
