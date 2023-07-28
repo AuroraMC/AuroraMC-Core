@@ -50,6 +50,7 @@ import org.bukkit.util.Vector;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.*;
+import java.util.logging.Level;
 
 public class AuroraMCServerPlayer extends AuroraMCPlayer {
 
@@ -315,7 +316,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
             try {
                 InventoryUtil.playerInventoryFromBase64(this, inventory);
             } catch (IOException e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 sendMessage(TextFormatter.pluginMessage("NuttersSMP", "Sorry, an error occurred while trying to join this dimension, connecting you a lobby..."));
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("Lobby");
@@ -704,7 +705,7 @@ public class AuroraMCServerPlayer extends AuroraMCPlayer {
         try {
             AuroraMCAPI.getDbManager().setInventory(this.getUniqueId(), InventoryUtil.playerInventoryToBase64(this));
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
 
         AuroraMCAPI.getDbManager().setHealth(this.getUniqueId(), ((isDead())?20:getHealth()));

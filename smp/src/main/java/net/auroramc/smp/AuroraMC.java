@@ -65,6 +65,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
 
 
 public class AuroraMC extends JavaPlugin {
@@ -223,7 +224,7 @@ public class AuroraMC extends JavaPlugin {
         try {
             internal.load(internalFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
         internal.options().copyHeader(true);
 
@@ -255,7 +256,7 @@ public class AuroraMC extends JavaPlugin {
             out.close();
             in.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 

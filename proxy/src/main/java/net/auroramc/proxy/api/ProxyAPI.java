@@ -35,6 +35,7 @@ import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class ProxyAPI {
 
@@ -103,7 +104,7 @@ public class ProxyAPI {
                 try {
                     webhook.execute();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
                 ProtocolMessage message = new ProtocolMessage(Protocol.MEDIA_RANK_JOIN_LEAVE, "Mission Control", "leave", player.getName(), rank.name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                 CommunicationUtils.sendMessage(message);
@@ -125,7 +126,7 @@ public class ProxyAPI {
                 try {
                     webhook.execute();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
                 ProtocolMessage message = new ProtocolMessage(Protocol.STAFF_RANK_JOIN_LEAVE, "Mission Control", "leave", player.getName(), rank.name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                 CommunicationUtils.sendMessage(message);

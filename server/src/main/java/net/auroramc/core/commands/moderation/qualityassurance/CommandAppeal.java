@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Level;
 
 public class CommandAppeal extends ServerCommand {
 
@@ -52,7 +53,7 @@ public class CommandAppeal extends ServerCommand {
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                     }
                                     player.sendMessage(TextFormatter.pluginMessage("Appeal", String.format("Reprieved Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
@@ -70,7 +71,7 @@ public class CommandAppeal extends ServerCommand {
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                     }
                                     player.sendMessage(TextFormatter.pluginMessage("Appeal", String.format("False Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {
@@ -88,7 +89,7 @@ public class CommandAppeal extends ServerCommand {
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                     }
                                     player.sendMessage(TextFormatter.pluginMessage("Appeal", String.format("Compromised Account Punishment with ID [**%s**] has been removed successfully.", code)));
                                     if (AuroraMCAPI.getRules().getRule(punishment.getRuleID()).getType() == 1) {

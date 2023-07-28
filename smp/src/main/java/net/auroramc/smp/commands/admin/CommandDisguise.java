@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CommandDisguise extends ServerCommand {
 
@@ -50,7 +51,7 @@ public class CommandDisguise extends ServerCommand {
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                     }
                                     break;
                                 }
@@ -61,7 +62,7 @@ public class CommandDisguise extends ServerCommand {
                                     try {
                                         discordWebhook.execute();
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                     }
                                     break;
                                 }
@@ -119,7 +120,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
@@ -130,7 +131,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
@@ -208,7 +209,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
@@ -219,7 +220,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
@@ -313,7 +314,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
@@ -324,7 +325,7 @@ public class CommandDisguise extends ServerCommand {
                                         try {
                                             discordWebhook.execute();
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                                         }
                                         break;
                                     }
