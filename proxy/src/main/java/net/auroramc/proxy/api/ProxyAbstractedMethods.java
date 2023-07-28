@@ -148,7 +148,7 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
                 object.put("name", attributes.getValue("Module-Name"));
                 object.put("build", buildNumber);
                 object.put("commit", gitCommit);
-                object.put("branch", (branch.equals("null")?"master":branch));
+                object.put("branch", (branch == null || branch.equals("null")?"master":branch));
                 array.put(object);
             }
         } catch (IOException e) {
