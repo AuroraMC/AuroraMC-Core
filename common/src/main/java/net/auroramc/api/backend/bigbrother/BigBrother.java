@@ -47,12 +47,16 @@ public final class BigBrother {
         serverState.put("network", AuroraMCAPI.getInfo().getNetwork().name());
         serverState.put("test_mode", AuroraMCAPI.isTestServer());
         ScheduleFactory.scheduleAsync(() -> {
-            AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, trace, commandSyntax, executor.getUuid(), proxy, server, serverState);
-            DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1133782966213017660/PD0XP6UXxWnOTwpVE3WIteLqJFOGkFDHBBtQMxDSqyJZe748ViZiMybFzO2gF2nb4aA5");
-            webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Big Brother").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/bigbrother/exception?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
             try {
-                webhook.execute();
-            } catch (IOException e) {
+                AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, trace, commandSyntax, executor.getUuid(), proxy, server, serverState);
+                DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1133782966213017660/PD0XP6UXxWnOTwpVE3WIteLqJFOGkFDHBBtQMxDSqyJZe748ViZiMybFzO2gF2nb4aA5");
+                webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Big Brother").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/bigbrother/exception?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
+                try {
+                    webhook.execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
