@@ -4445,7 +4445,7 @@ public class DatabaseManager {
             statement.setString(4, server);
             statement.setBoolean(5, proxy);
 
-            if (commandSyntax != null) {
+            if (commandSyntax == null) {
                 statement.setNull(6, Types.VARCHAR);
                 statement.setNull(7, Types.VARCHAR);
                 statement.setNull(8, Types.VARCHAR);
