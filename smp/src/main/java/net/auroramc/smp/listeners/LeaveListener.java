@@ -22,6 +22,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.logging.Level;
+
 public class LeaveListener implements Listener {
 
     @EventHandler
@@ -59,7 +61,7 @@ public class LeaveListener implements Listener {
             }
             TabCompleteInjector.removePlayer(e.getPlayer());
         } catch (NullPointerException ex) {
-            ex.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ex);
         }
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name() + "\n" + ((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("game"));
         CommunicationUtils.sendMessage(message);
@@ -89,7 +91,7 @@ public class LeaveListener implements Listener {
             }
             TabCompleteInjector.removePlayer(e.getPlayer());
         } catch (NullPointerException ex) {
-            ex.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ex);
         }
 
         ProtocolMessage message = new ProtocolMessage(Protocol.PLAYER_COUNT_CHANGE, "Mission Control", "leave", AuroraMCAPI.getInfo().getName(), AuroraMCAPI.getInfo().getNetwork().name() + "\n" + ((ServerInfo)AuroraMCAPI.getInfo()).getServerType().getString("game"));

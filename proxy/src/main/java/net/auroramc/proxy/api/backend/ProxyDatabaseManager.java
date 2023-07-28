@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class ProxyDatabaseManager {
 
@@ -146,7 +147,7 @@ public class ProxyDatabaseManager {
 
             return new ProxySettings(set.getBoolean(2), set.getString(3),set.getString(4), ((set.getString(5) == null)?null: MaintenanceMode.valueOf(set.getString(5))));
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             return null;
         }
     }
@@ -161,7 +162,7 @@ public class ProxyDatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
@@ -173,7 +174,7 @@ public class ProxyDatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
@@ -185,7 +186,7 @@ public class ProxyDatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
@@ -242,7 +243,7 @@ public class ProxyDatabaseManager {
                 statement.execute();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 

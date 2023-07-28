@@ -6,6 +6,7 @@
 
 package net.auroramc.proxy.listeners;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.proxy.api.ProxyAPI;
 import net.auroramc.proxy.api.utils.MaintenanceMode;
 import net.md_5.bungee.api.ChatColor;
@@ -20,6 +21,7 @@ import net.md_5.bungee.event.EventHandler;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.util.logging.Level;
 
 public class ProxyPingListener implements Listener {
 
@@ -56,7 +58,7 @@ public class ProxyPingListener implements Listener {
             try {
                 response.setFavicon(Favicon.create(ImageIO.read(file)));
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             }
         } else {
             ServerPing.Players p = response.getPlayers();
@@ -81,7 +83,7 @@ public class ProxyPingListener implements Listener {
             try {
                 response.setFavicon(Favicon.create(ImageIO.read(file)));
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             }
         }
 

@@ -6,6 +6,7 @@
 
 package net.auroramc.core.commands.admin;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.permissions.Permission;
 
 import net.auroramc.api.utils.TextFormatter;
@@ -23,6 +24,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.logging.Level;
 
 public class CommandBuildVersions extends ServerCommand {
 
@@ -68,7 +70,7 @@ public class CommandBuildVersions extends ServerCommand {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
 
 

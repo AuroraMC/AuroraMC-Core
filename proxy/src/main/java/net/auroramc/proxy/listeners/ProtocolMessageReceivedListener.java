@@ -52,6 +52,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class ProtocolMessageReceivedListener implements Listener {
@@ -159,7 +160,7 @@ public class ProtocolMessageReceivedListener implements Listener {
                 try {
                     selection = TargetSelectorParser.parse(selectors);
                 } catch (SelectorParseFailException exception) {
-                    exception.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     return;
                 }
                 TextComponent message = (TextComponent) TextComponent.fromLegacyText(e.getMessage().getExtraInfo())[0];
