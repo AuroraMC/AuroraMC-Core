@@ -7,6 +7,7 @@
 package net.auroramc.core.api;
 
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
 import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.AuroraMC;
@@ -17,12 +18,15 @@ import net.auroramc.core.api.utils.gui.GUI;
 import net.auroramc.core.api.utils.holograms.Hologram;
 import net.auroramc.core.api.utils.holograms.HologramLine;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -56,6 +60,7 @@ public class ServerAPI {
 
     public static void init(AuroraMC core) {
         AuroraMCAPI.init(core.getLogger(), new ServerAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("name"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),false);
+        Bukkit.getLogger().addHandler(new BBLoggerHandler());
         ServerAPI.core = core;
         players = new HashMap<>();
 
