@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 
 public class IncomingProtocolMessageThread extends Thread {
 
@@ -52,11 +53,11 @@ public class IncomingProtocolMessageThread extends Thread {
                             }
                         }.runTaskAsynchronously(ServerAPI.getCore());
                     } catch (StreamCorruptedException e) {
-                        e.printStackTrace();
+                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             }
         }
     }
@@ -66,7 +67,7 @@ public class IncomingProtocolMessageThread extends Thread {
         try {
             socket.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 

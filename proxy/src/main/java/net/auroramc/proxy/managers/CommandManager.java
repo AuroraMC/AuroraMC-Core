@@ -7,6 +7,7 @@
 package net.auroramc.proxy.managers;
 
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.bigbrother.BigBrother;
 import net.auroramc.api.permissions.Permission;
 import net.auroramc.api.player.ChatChannel;
 import net.auroramc.api.player.ChatSlowLength;
@@ -29,6 +30,7 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CommandManager implements Listener {
 
@@ -143,7 +145,7 @@ public class CommandManager implements Listener {
                     try {
                         command.execute(player, commandLabel, args);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        BigBrother.logException(e, player, "/" + commandLabel + " " + String.join(" ", args));
                         player.sendMessage(TextFormatter.pluginMessage("Command Manager", "An error occurred when executing this command. Please report this to the admins!"));
                     }
                     return true;

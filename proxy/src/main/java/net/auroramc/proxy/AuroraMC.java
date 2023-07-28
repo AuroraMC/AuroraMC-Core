@@ -15,6 +15,7 @@ import net.auroramc.proxy.api.backend.communication.ProtocolMessage;
 import net.auroramc.proxy.api.player.AuroraMCProxyPlayer;
 import net.auroramc.proxy.commands.admin.*;
 import net.auroramc.proxy.commands.admin.blacklist.CommandBlacklist;
+import net.auroramc.proxy.commands.admin.debug.CommandBBTest;
 import net.auroramc.proxy.commands.admin.debug.CommandJoinMessage;
 import net.auroramc.proxy.commands.admin.debug.CommandLag;
 import net.auroramc.proxy.commands.admin.debug.CommandReloadServers;
@@ -96,6 +97,7 @@ public class AuroraMC extends Plugin {
         AuroraMCAPI.registerCommand(new CommandSeen());
         AuroraMCAPI.registerCommand(new CommandSMPBlacklist());
         AuroraMCAPI.registerCommand(new CommandPreload());
+        AuroraMCAPI.registerCommand(new CommandBBTest());
 
 
 

@@ -6,6 +6,7 @@
 
 package net.auroramc.api.utils;
 
+import net.auroramc.api.AuroraMCAPI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class UUIDUtil {
 
@@ -115,7 +117,7 @@ public class UUIDUtil {
 
             in.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
 
         return sb.toString();

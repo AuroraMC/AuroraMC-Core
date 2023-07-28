@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class DisguiseUtil {
 
@@ -106,7 +107,7 @@ public class DisguiseUtil {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             return false;
         }
         return true;
@@ -148,7 +149,7 @@ public class DisguiseUtil {
                 return null;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             return null;
         }
     }

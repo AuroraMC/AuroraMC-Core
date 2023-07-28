@@ -6,6 +6,7 @@
 
 package net.auroramc.smp.gui.smp;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.smp.api.player.AuroraMCServerPlayer;
 import net.auroramc.smp.api.utils.gui.GUI;
 import net.auroramc.smp.api.utils.gui.GUIItem;
@@ -14,6 +15,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 public class InventorySee extends GUI {
 
@@ -52,7 +54,7 @@ public class InventorySee extends GUI {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 

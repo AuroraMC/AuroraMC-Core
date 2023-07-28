@@ -6,6 +6,7 @@
 
 package net.auroramc.core.api;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.abstraction.AbstractedMethods;
 import net.auroramc.api.cosmetics.*;
 import net.auroramc.api.permissions.Rank;
@@ -29,9 +30,18 @@ import org.bukkit.block.banner.PatternType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.UUID;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.logging.Level;
 
 public class ServerAbstractedMethods extends AbstractedMethods {
 
@@ -177,5 +187,39 @@ public class ServerAbstractedMethods extends AbstractedMethods {
     public void firePreferenceEvent(AuroraMCPlayer player) {
         PlayerPreferenceChangeEvent e = new PlayerPreferenceChangeEvent((AuroraMCServerPlayer) player);
         Bukkit.getPluginManager().callEvent(e);
+    }
+
+    @Override
+    public JSONArray getPluginData() {
+        JSONArray data = new JSONArray();
+
+        try {
+
+            for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                Enumeration<URL> resources = plugin.getClass().getClassLoader()
+                        .getResources("META-INF/MANIFEST.MF");
+                while (resources.hasMoreElements()) {
+                    Manifest manifest = new Manifest(resources.nextElement().openStream());
+                    // check that this is your manifest and do what you need or get the next one
+                    Attributes attributes = manifest.getMainAttributes();
+
+                    String buildNumber = attributes.getValue("Jenkins-Build-Number");
+                    String gitCommit = attributes.getValue("Git-Commit");
+                    String branch = attributes.getValue("Branch");
+                    if (buildNumber != null && gitCommit != null && branch != null) {
+                        JSONObject object = new JSONObject();
+                        object.put("name", attributes.getValue("Module-Name"));
+                        object.put("build", buildNumber);
+                        object.put("commit", gitCommit);
+                        object.put("branch", (branch.equals("null")?"master":branch));
+                        data.put(object);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
+        }
+
+        return data;
     }
 }

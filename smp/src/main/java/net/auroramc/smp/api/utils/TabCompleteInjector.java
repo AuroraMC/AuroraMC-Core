@@ -26,6 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class TabCompleteInjector {
@@ -256,7 +257,7 @@ public class TabCompleteInjector {
             NetworkManager manager = (NetworkManager) field.get(((CraftPlayer) pl).getHandle().c);
             manager.m.pipeline().addBefore("packet_handler", pl.getName(), channelDuplexHandler);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
@@ -274,7 +275,7 @@ public class TabCompleteInjector {
                 return null;
             });
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 

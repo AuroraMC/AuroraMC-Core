@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class RecievePluginMessage implements Listener {
@@ -1127,7 +1128,7 @@ public class RecievePluginMessage implements Listener {
                     }
                 }
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ioException);
             }
         }
     }

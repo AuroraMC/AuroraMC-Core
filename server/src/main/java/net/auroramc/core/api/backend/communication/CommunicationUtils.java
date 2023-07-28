@@ -12,6 +12,7 @@ import net.auroramc.api.backend.info.ServerInfo;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CommunicationUtils {
 
@@ -36,7 +37,7 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 return sendMessage(message, 1);
             }
         }
@@ -51,7 +52,7 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 return sendMessage(message, 1);
             }
         }
@@ -69,7 +70,7 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 if (level > 4) {
                     return null;
                 }
@@ -87,7 +88,7 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 if (level > 4) {
                     return null;
                 }

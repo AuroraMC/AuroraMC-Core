@@ -6,10 +6,13 @@
 
 package net.auroramc.smp.api.player.scoreboard;
 
+import net.auroramc.api.AuroraMCAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+
+import java.util.logging.Level;
 
 public class ScoreboardLine {
 
@@ -45,7 +48,7 @@ public class ScoreboardLine {
                 team1.setPrefix(this.text);
             }
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             team1 = scoreboard.registerNewTeam("line" + line);
         }
         this.team = team1;

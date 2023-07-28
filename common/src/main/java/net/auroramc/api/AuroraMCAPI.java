@@ -8,19 +8,20 @@ package net.auroramc.api;
 
 import net.auroramc.api.abstraction.AbstractedMethods;
 import net.auroramc.api.abstraction.ScheduleFactory;
+import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
+import net.auroramc.api.backend.bigbrother.BigBrother;
+import net.auroramc.api.backend.bigbrother.BBUncaughtExceptionHandler;
 import net.auroramc.api.backend.info.*;
 import net.auroramc.api.backend.database.DatabaseManager;
 import net.auroramc.api.command.Command;
 import net.auroramc.api.cosmetics.Cosmetic;
 import net.auroramc.api.cosmetics.CosmeticExecutor;
 import net.auroramc.api.player.AuroraMCPlayer;
-import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.punishments.Rule;
 import net.auroramc.api.punishments.RuleBook;
 import net.auroramc.api.stats.Achievement;
 import net.auroramc.api.utils.ChatFilter;
 import net.auroramc.api.utils.Reward;
-import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.common.CommonUtils;
 
 import java.util.*;
@@ -56,6 +57,8 @@ public class AuroraMCAPI {
 
     private static boolean rulesLoading;
 
+    private static BigBrother bigBrother;
+
     static {
         commands = new HashMap<>();
         rules = new RuleBook();
@@ -77,8 +80,11 @@ public class AuroraMCAPI {
 
     public static void init(Logger logger, AbstractedMethods methods, String host, String port, String db, String username, String password, String name, String network, String redisHost, String redisAuth, boolean proxy) {
         AuroraMCAPI.logger = logger;
+        Thread.setDefaultUncaughtExceptionHandler(new BBUncaughtExceptionHandler());
+        logger.addHandler(new BBLoggerHandler());
         abstractedMethods = methods;
         dbManager = new DatabaseManager(host, port, db, username, password, redisHost, redisAuth);
+
 
         //Identify what server it is on the bungeecord. Grab the details from mysql.
         if (proxy) {

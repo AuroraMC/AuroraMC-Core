@@ -50,14 +50,14 @@ public class IncomingProtocolMessageThread extends Thread {
                         ProxyAPI.getCore().getLogger().log(Level.WARNING, "An error occurred when attempting to call the protocol message event.", e);
                     }
                 } catch (StreamCorruptedException e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
             }
         } catch (SocketException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             listening = false;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
@@ -66,7 +66,7 @@ public class IncomingProtocolMessageThread extends Thread {
         try {
             socket.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
     }
 
