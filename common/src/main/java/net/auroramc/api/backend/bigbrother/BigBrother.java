@@ -48,7 +48,7 @@ public final class BigBrother {
         serverState.put("test_mode", AuroraMCAPI.isTestServer());
         ScheduleFactory.scheduleAsync(() -> {
             try {
-                AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, trace, commandSyntax, ((executor == null)?null:executor.getUuid()), proxy, server, serverState);
+                AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, t.getClass().getSimpleName(), trace, commandSyntax, ((executor == null)?null:executor.getUuid()), proxy, server, serverState);
                 DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1133782966213017660/PD0XP6UXxWnOTwpVE3WIteLqJFOGkFDHBBtQMxDSqyJZe748ViZiMybFzO2gF2nb4aA5");
                 webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Big Brother").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/big-brother/exceptions?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
                 try {

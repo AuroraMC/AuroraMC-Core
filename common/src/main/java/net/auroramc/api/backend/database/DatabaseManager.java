@@ -4436,25 +4436,26 @@ public class DatabaseManager {
         return jedis.getResource();
     }
 
-    public void uploadException(long timestamp, UUID uuid, String trace, String commandSyntax, UUID player, boolean proxy, String server, JSONObject serverState) {
+    public void uploadException(long timestamp, UUID uuid, String name, String trace, String commandSyntax, UUID player, boolean proxy, String server, JSONObject serverState) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO exceptions(uuid, timestamp, stack_trace, server_name, proxy, player, player_name, command, server_data) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO exceptions(uuid, timestamp, exception_name, stack_trace, server_name, proxy, player, player_name, command, server_data) VALUES (?,?,?,?,?,?,?,?,?,?)");
             statement.setString(1, uuid.toString());
             statement.setLong(2, timestamp);
-            statement.setString(3, trace);
-            statement.setString(4, server);
-            statement.setBoolean(5, proxy);
+            statement.setString(3, name);
+            statement.setString(4, trace);
+            statement.setString(5, server);
+            statement.setBoolean(6, proxy);
 
             if (commandSyntax == null) {
-                statement.setNull(6, Types.VARCHAR);
                 statement.setNull(7, Types.VARCHAR);
                 statement.setNull(8, Types.VARCHAR);
+                statement.setNull(9, Types.VARCHAR);
             } else {
-                statement.setString(6, player.toString());
-                statement.setString(7, getNameFromUUID(player.toString()));
-                statement.setString(8, commandSyntax);
+                statement.setString(7, player.toString());
+                statement.setString(8, getNameFromUUID(player.toString()));
+                statement.setString(9, commandSyntax);
             }
-            statement.setString(9, serverState.toString());
+            statement.setString(1-, serverState.toString());
 
 
             statement.execute();
