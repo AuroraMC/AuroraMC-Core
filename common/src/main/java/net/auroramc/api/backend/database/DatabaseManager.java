@@ -4455,7 +4455,7 @@ public class DatabaseManager {
                 statement.setString(8, getNameFromUUID(player.toString()));
                 statement.setString(9, commandSyntax);
             }
-            statement.setString(1-, serverState.toString());
+            statement.setString(10, serverState.toString());
 
 
             statement.execute();
