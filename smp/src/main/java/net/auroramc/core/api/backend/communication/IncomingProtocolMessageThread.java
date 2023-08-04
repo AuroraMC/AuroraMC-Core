@@ -52,8 +52,8 @@ public class IncomingProtocolMessageThread extends Thread {
                                 Bukkit.getPluginManager().callEvent(event);
                             }
                         }.runTaskAsynchronously(ServerAPI.getCore());
-                    } catch (StreamCorruptedException e) {
-                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
+                    } catch (StreamCorruptedException ignored) {
+                        //Ignore any stream corrupted exception.
                     }
                 }
             } catch (Exception e) {
