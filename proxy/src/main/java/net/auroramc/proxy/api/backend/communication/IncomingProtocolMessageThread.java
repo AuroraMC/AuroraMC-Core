@@ -49,8 +49,8 @@ public class IncomingProtocolMessageThread extends Thread {
                     } catch (Exception e) {
                         ProxyAPI.getCore().getLogger().log(Level.WARNING, "An error occurred when attempting to call the protocol message event.", e);
                     }
-                } catch (StreamCorruptedException e) {
-                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
+                }  catch (StreamCorruptedException ignored) {
+                    //Ignore any stream corrupted exception.
                 }
             }
         } catch (SocketException e) {
