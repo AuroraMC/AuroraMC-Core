@@ -42,12 +42,13 @@ import java.net.SocketAddress;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class AuroraMCProxyPlayer extends AuroraMCPlayer {
 
     private ProxiedPlayer player;
     private Map<String, ScheduledTask> expiryTasks;
-    private final Session session;
+    private Session session;
     private UUID lastMessaged;
 
     private Party party;
@@ -59,7 +60,6 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     public AuroraMCProxyPlayer(ProxiedPlayer player) {
         super(player.getUniqueId(), player.getName(), player);
         this.player = player;
-        this.session = new Session(this);
         this.partyInvites = new ArrayList<>();
         this.expiryTasks = new HashMap<>();
     }
@@ -71,6 +71,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
 
     @Override
     public void loadExtra() {
+        this.session = new Session(this);
         ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
             switch (getRank().getId()) {
                 case 6:
@@ -80,7 +81,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
                     try {
                         webhook.execute();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     }
                     ProtocolMessage message = new ProtocolMessage(Protocol.MEDIA_RANK_JOIN_LEAVE, "Mission Control", "join", getName(), getRank().name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                     CommunicationUtils.sendMessage(message);
@@ -102,7 +103,7 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
                     try {
                         webhook.execute();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     }
                     ProtocolMessage message = new ProtocolMessage(Protocol.STAFF_RANK_JOIN_LEAVE, "Mission Control", "join", getName(), getRank().name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                     CommunicationUtils.sendMessage(message);

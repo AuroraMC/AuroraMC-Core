@@ -31,6 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 
 public class LockChestListener implements Listener {
 
@@ -56,7 +57,7 @@ public class LockChestListener implements Listener {
                                         try {
                                             AuroraMC.getInternal().save(AuroraMC.getInternalFile());
                                         } catch (IOException ex) {
-                                            ex.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ex);;
                                         }
                                         e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Adding members completed successfully!"));
                                     } else {
@@ -82,7 +83,7 @@ public class LockChestListener implements Listener {
                                         try {
                                             AuroraMC.getInternal().save(AuroraMC.getInternalFile());
                                         } catch (IOException ex) {
-                                            ex.printStackTrace();
+                                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ex);
                                         }
                                         e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Removing members completed successfully!"));
                                     } else {
@@ -149,7 +150,7 @@ public class LockChestListener implements Listener {
                                     try {
                                         AuroraMC.getInternal().save(AuroraMC.getInternalFile());
                                     } catch (IOException ex) {
-                                        ex.printStackTrace();
+                                        AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", ex);
                                     }
                                     e.getPlayer().sendMessage(TextFormatter.pluginMessage("Containers", "Container unlocked!"));
                                 } else {

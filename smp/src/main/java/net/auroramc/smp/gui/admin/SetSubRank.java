@@ -28,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class SetSubRank extends GUI {
 
@@ -93,7 +94,7 @@ public class SetSubRank extends GUI {
                         try {
                             discordWebhook.execute();
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                         }
                     }
                 }.runTaskAsynchronously(ServerAPI.getCore());
@@ -124,7 +125,7 @@ public class SetSubRank extends GUI {
                         try {
                             discordWebhook.execute();
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                         }
                     }
                 }.runTaskAsynchronously(ServerAPI.getCore());

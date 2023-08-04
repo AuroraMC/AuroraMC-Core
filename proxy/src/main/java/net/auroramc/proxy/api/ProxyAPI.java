@@ -7,6 +7,7 @@
 package net.auroramc.proxy.api;
 
 import net.auroramc.api.AuroraMCAPI;
+import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
 import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.ChatSlowLength;
@@ -35,6 +36,7 @@ import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class ProxyAPI {
 
@@ -65,6 +67,7 @@ public class ProxyAPI {
 
     public static void init(AuroraMC core) {
         AuroraMCAPI.init(core.getLogger(), new ProxyAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("uuid"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),true);
+        ProxyServer.getInstance().getLogger().addHandler(new BBLoggerHandler());
         ProxyAPI.core = core;
         players = new HashMap<>();
 
@@ -103,7 +106,7 @@ public class ProxyAPI {
                 try {
                     webhook.execute();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
                 ProtocolMessage message = new ProtocolMessage(Protocol.MEDIA_RANK_JOIN_LEAVE, "Mission Control", "leave", player.getName(), rank.name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                 CommunicationUtils.sendMessage(message);
@@ -125,7 +128,7 @@ public class ProxyAPI {
                 try {
                     webhook.execute();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
                 ProtocolMessage message = new ProtocolMessage(Protocol.STAFF_RANK_JOIN_LEAVE, "Mission Control", "leave", player.getName(), rank.name() + "\n" + AuroraMCAPI.getInfo().getNetwork().name());
                 CommunicationUtils.sendMessage(message);

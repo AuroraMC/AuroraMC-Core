@@ -11,6 +11,8 @@ import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.player.Disguise;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -53,6 +55,8 @@ public abstract class AbstractedMethods {
     public abstract void broadcastNovaMessage(BaseComponent message);
 
     public abstract void firePreferenceEvent(AuroraMCPlayer player);
+
+    public abstract JSONArray getPluginData();
     
 }
 

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class GUIItem {
 
@@ -125,7 +126,7 @@ public class GUIItem {
         try {
             field = meta.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             this.item = new ItemStack(Material.AIR);
             return;
         }
@@ -133,7 +134,7 @@ public class GUIItem {
         try {
             field.set(meta, profile);
         } catch (IllegalAccessException | IllegalArgumentException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
 
 

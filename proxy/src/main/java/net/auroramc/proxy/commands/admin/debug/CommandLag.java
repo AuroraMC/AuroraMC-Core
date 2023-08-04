@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.logging.Level;
 
 public class CommandLag extends ProxyCommand {
 
@@ -57,7 +58,7 @@ public class CommandLag extends ProxyCommand {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
         }
         MemoryMXBean bean = ManagementFactory.getMemoryMXBean();
         player.sendMessage(TextFormatter.pluginMessage("Resource Monitor", String.format("Proxy lag statistics for proxy **%s**:\n" +

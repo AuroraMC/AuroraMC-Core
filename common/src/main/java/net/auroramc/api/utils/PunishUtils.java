@@ -18,6 +18,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.awt.*;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class PunishUtils {
 
@@ -65,7 +66,7 @@ public class PunishUtils {
                 try {
                     discordWebhook.execute();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
                 return;
             }
@@ -116,7 +117,7 @@ public class PunishUtils {
                 try {
                     discordWebhook.execute();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
 
             } else {
@@ -146,7 +147,7 @@ public class PunishUtils {
                 try {
                     discordWebhook.execute();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 }
             }
         }
@@ -183,7 +184,7 @@ public class PunishUtils {
             try {
                 discordWebhook.execute();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             }
         } else {
             //Ban
@@ -207,7 +208,7 @@ public class PunishUtils {
             try {
                 discordWebhook.execute();
             } catch (Exception e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
             }
         }
     }

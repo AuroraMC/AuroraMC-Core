@@ -6,6 +6,7 @@
 
 package net.auroramc.proxy.api;
 
+import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.abstraction.AbstractedMethods;
 import net.auroramc.api.cosmetics.*;
 import net.auroramc.api.permissions.Rank;
@@ -18,9 +19,17 @@ import net.auroramc.common.cosmetics.crates.IronCrate;
 import net.auroramc.proxy.api.player.ProxyDisguise;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.logging.Level;
 
 public class ProxyAbstractedMethods extends AbstractedMethods {
 
@@ -117,4 +126,35 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
 
     @Override
     public void firePreferenceEvent(AuroraMCPlayer player) {}
+
+    @Override
+    public JSONArray getPluginData() {
+        JSONArray array = new JSONArray();
+        String buildNumber;
+        String gitCommit;
+        String branch;
+        try {
+            Enumeration<URL> resources = ProxyAPI.getCore().getClass().getClassLoader()
+                    .getResources("META-INF/MANIFEST.MF");
+            while (resources.hasMoreElements()) {
+                Manifest manifest = new Manifest(resources.nextElement().openStream());
+                // check that this is your manifest and do what you need or get the next one
+                Attributes attributes = manifest.getMainAttributes();
+
+                buildNumber = attributes.getValue("Jenkins-Build-Number");
+                gitCommit = attributes.getValue("Git-Commit");
+                branch = attributes.getValue("Branch");
+                JSONObject object = new JSONObject();
+                object.put("name", attributes.getValue("Module-Name"));
+                object.put("build", buildNumber);
+                object.put("commit", gitCommit);
+                object.put("branch", (branch == null || branch.equals("null")?"master":branch));
+                array.put(object);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return array;
+    }
 }

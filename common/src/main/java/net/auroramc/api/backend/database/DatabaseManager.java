@@ -43,6 +43,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.Duration;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class DatabaseManager {
@@ -57,7 +58,7 @@ public class DatabaseManager {
             mysql1 = new MySQLConnectionPool(host, port, db, username, password);
         } catch (ClassNotFoundException e) {
             mysql1 = null;
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
         mysql = mysql1;
 
@@ -90,7 +91,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -279,7 +280,7 @@ public class DatabaseManager {
             return id;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return -2;
         }
     }
@@ -353,7 +354,7 @@ public class DatabaseManager {
             return id;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return -2;
         }
     }
@@ -372,7 +373,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return -2;
         }
     }
@@ -409,7 +410,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -428,7 +429,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -447,7 +448,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -466,7 +467,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -489,7 +490,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -509,7 +510,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -528,7 +529,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -556,7 +557,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -584,7 +585,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -612,7 +613,7 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -632,7 +633,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             return set.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -645,7 +646,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -656,7 +657,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -669,7 +670,7 @@ public class DatabaseManager {
             return statement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -693,7 +694,7 @@ public class DatabaseManager {
                 results = statement.executeQuery();
 
                 if (results.next()) {
-                    //There are already registered rank/subrank changes in the database. Check to see if a rank update has already occured.
+                    //There are already registered rank/subrank changes in the database. Check to see if a rank update has already occurred.
                     if (results.getString(2) != null) {
                         if (results.getString(2).equals(rank.getId() + "")) {
                             statement = connection.prepareStatement("DELETE FROM rank_changes WHERE discord_id = ? AND old_rank = ?");
@@ -748,7 +749,7 @@ public class DatabaseManager {
             return success;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -878,7 +879,7 @@ public class DatabaseManager {
             }
             return success;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -1012,7 +1013,7 @@ public class DatabaseManager {
 
             return success;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -1060,7 +1061,7 @@ public class DatabaseManager {
 
             return rules;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1078,7 +1079,7 @@ public class DatabaseManager {
             return punishments;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1091,7 +1092,7 @@ public class DatabaseManager {
             ResultSet results = statement.executeQuery();
             return results.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return true;
         }
     }
@@ -1140,7 +1141,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1179,7 +1180,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1195,7 +1196,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
         return null;
     }
@@ -1212,7 +1213,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
         return null;
     }
@@ -1276,7 +1277,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1329,7 +1330,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1345,7 +1346,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1358,7 +1359,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1389,7 +1390,7 @@ public class DatabaseManager {
             }
             return mentors;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1415,7 +1416,7 @@ public class DatabaseManager {
                 statement.execute();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1434,7 +1435,7 @@ public class DatabaseManager {
             }
             return punishments;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
         return null;
     }
@@ -1455,7 +1456,7 @@ public class DatabaseManager {
             }
             return punishments;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
         return null;
     }
@@ -1494,7 +1495,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1530,7 +1531,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1586,7 +1587,7 @@ public class DatabaseManager {
                 statement.execute();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1601,7 +1602,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1639,7 +1640,7 @@ public class DatabaseManager {
             }
             return notes;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1653,7 +1654,7 @@ public class DatabaseManager {
             statement.setString(4, note);
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1677,7 +1678,7 @@ public class DatabaseManager {
             statement.setString(6, note);
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -1764,7 +1765,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1830,7 +1831,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -1927,7 +1928,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2293,7 +2294,7 @@ public class DatabaseManager {
 
             return new FriendsList(player, friends, pendingFriendRequests, visibilityMode, status);
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2334,7 +2335,7 @@ public class DatabaseManager {
 
             return new FriendsList(null, friends, pendingFriendRequests, visibilityMode, status);
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2392,7 +2393,7 @@ public class DatabaseManager {
             statement.execute();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -2409,7 +2410,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2423,7 +2424,7 @@ public class DatabaseManager {
             statement.execute();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -2436,7 +2437,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2463,7 +2464,7 @@ public class DatabaseManager {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2487,7 +2488,7 @@ public class DatabaseManager {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2505,7 +2506,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2516,7 +2517,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2527,7 +2528,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2550,7 +2551,7 @@ public class DatabaseManager {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2576,7 +2577,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2600,7 +2601,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2613,7 +2614,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2648,7 +2649,7 @@ public class DatabaseManager {
             set.next();
             return set.getInt(1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return -1;
         }
     }
@@ -2721,7 +2722,7 @@ public class DatabaseManager {
             }
             return parsedIds;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2745,7 +2746,7 @@ public class DatabaseManager {
                 return null;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2840,7 +2841,7 @@ public class DatabaseManager {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -2852,7 +2853,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             return set.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -2883,7 +2884,7 @@ public class DatabaseManager {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2930,7 +2931,7 @@ public class DatabaseManager {
             }
             return reports;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2961,7 +2962,7 @@ public class DatabaseManager {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -2974,7 +2975,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
             return set.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return false;
         }
     }
@@ -3010,7 +3011,7 @@ public class DatabaseManager {
                 return new ArrayList<>();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -3024,7 +3025,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3099,7 +3100,7 @@ public class DatabaseManager {
             }
             return payments;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -3236,7 +3237,7 @@ public class DatabaseManager {
             }
             return crates;
         } catch (SQLException e){
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -3284,7 +3285,7 @@ public class DatabaseManager {
             }
             return null;
         } catch (SQLException e){
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -3298,7 +3299,7 @@ public class DatabaseManager {
             statement.setInt(4, crate.getOwner());
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3317,7 +3318,7 @@ public class DatabaseManager {
             }
             return gameLogs;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -3384,7 +3385,7 @@ public class DatabaseManager {
             connection.hset(String.format("stats.%s.core", uuid), "xpIntoLevel", xpIntoLevel + "");
             connection.hset(String.format("stats.%s.core", uuid), "xpEarned", totalXpEarned + "");
         } catch (Exception e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3409,7 +3410,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3440,7 +3441,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3452,7 +3453,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3464,7 +3465,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3482,7 +3483,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3724,7 +3725,7 @@ public class DatabaseManager {
 
                 statement.execute();
             } catch (SQLException e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             }
         }
     }
@@ -3744,7 +3745,7 @@ public class DatabaseManager {
 
                 statement.execute();
             } catch (SQLException e) {
-                e.printStackTrace();
+                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             }
         }
     }
@@ -3766,7 +3767,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
         }
     }
 
@@ -3783,7 +3784,7 @@ public class DatabaseManager {
 
             return servers;
         } catch (SQLException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -3879,7 +3880,7 @@ public class DatabaseManager {
             // return the HashText
             return hashtext.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return null;
         }
     }
@@ -4298,7 +4299,7 @@ public class DatabaseManager {
 
             statement.execute();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", ex);
         }
     }
 
@@ -4325,8 +4326,8 @@ public class DatabaseManager {
                 events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
             }
             return events;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -4348,8 +4349,8 @@ public class DatabaseManager {
                 events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null) ? null : UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, x, y, z, 0, 0, null), set.getString(8)));
             }
             return events;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -4375,8 +4376,8 @@ public class DatabaseManager {
                 events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), uuid, BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), set.getString(8)));
             }
             return events;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -4402,8 +4403,8 @@ public class DatabaseManager {
                 events.add(new BlockLogEvent(set.getTimestamp(1).getTime(), ((set.getString(7) == null)?null:UUID.fromString(set.getString(7))), BlockLogEvent.LogType.valueOf(set.getString(2)), new SMPLocation(dimension, set.getInt(4), set.getInt(5), set.getInt(6), 0, 0, null), material));
             }
             return events;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred when attempting to connect to the Database. Stack trace: ", e);
             return new ArrayList<>();
         }
     }
@@ -4429,8 +4430,38 @@ public class DatabaseManager {
         }
     }
 
+
+
     public Jedis getRedisConnection() {
         return jedis.getResource();
+    }
+
+    public void uploadException(long timestamp, UUID uuid, String name, String trace, String commandSyntax, UUID player, boolean proxy, String server, JSONObject serverState) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO exceptions(uuid, timestamp, exception_name, stack_trace, server_name, proxy, player, player_name, command, server_data) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            statement.setString(1, uuid.toString());
+            statement.setLong(2, timestamp);
+            statement.setString(3, name);
+            statement.setString(4, trace);
+            statement.setString(5, server);
+            statement.setBoolean(6, proxy);
+
+            if (commandSyntax == null) {
+                statement.setNull(7, Types.VARCHAR);
+                statement.setNull(8, Types.VARCHAR);
+                statement.setNull(9, Types.VARCHAR);
+            } else {
+                statement.setString(7, player.toString());
+                statement.setString(8, getNameFromUUID(player.toString()));
+                statement.setString(9, commandSyntax);
+            }
+            statement.setString(10, serverState.toString());
+
+
+            statement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
 
