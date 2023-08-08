@@ -11,6 +11,7 @@ import net.auroramc.proxy.api.ProxyAPI;
 import net.auroramc.proxy.api.events.ProtocolMessageEvent;
 import net.md_5.bungee.api.ProxyServer;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
@@ -49,7 +50,7 @@ public class IncomingProtocolMessageThread extends Thread {
                     } catch (Exception e) {
                         ProxyAPI.getCore().getLogger().log(Level.WARNING, "An error occurred when attempting to call the protocol message event.", e);
                     }
-                }  catch (StreamCorruptedException ignored) {
+                }  catch (StreamCorruptedException | EOFException ignored) {
                     //Ignore any stream corrupted exception.
                 }
             }
