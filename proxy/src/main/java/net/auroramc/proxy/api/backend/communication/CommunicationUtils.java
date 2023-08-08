@@ -37,7 +37,6 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 return sendMessage(message, 1);
             }
         }
@@ -52,7 +51,6 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 return sendMessage(message, 1);
             }
         }
@@ -70,8 +68,8 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 if (level > 4) {
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     return null;
                 }
                 return sendMessage(message, level + 1);
@@ -88,8 +86,8 @@ public class CommunicationUtils {
                 outputStream.flush();
                 return message.getUuid();
             } catch (Exception e) {
-                AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                 if (level > 4) {
+                    AuroraMCAPI.getLogger().log(Level.WARNING, "An exception has occurred. Stack trace: ", e);
                     return null;
                 }
                 return sendMessage(message, level + 1);
