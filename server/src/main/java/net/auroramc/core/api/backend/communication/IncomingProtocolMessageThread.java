@@ -12,6 +12,7 @@ import net.auroramc.core.api.events.server.ProtocolMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
@@ -52,7 +53,7 @@ public class IncomingProtocolMessageThread extends Thread {
                                 Bukkit.getPluginManager().callEvent(event);
                             }
                         }.runTaskAsynchronously(ServerAPI.getCore());
-                    } catch (StreamCorruptedException ignored) {
+                    } catch (StreamCorruptedException | EOFException ignored) {
                         //Ignore any stream corrupted exception.
                     }
                 }
