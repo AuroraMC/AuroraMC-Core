@@ -428,7 +428,9 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     }
 
     public void updateServer(ServerInfo server) {
-        session.currentServer(server.getName());
+        if (session != null) {
+            session.currentServer(server.getName());
+        }
     }
 
     public void stopTimers() {

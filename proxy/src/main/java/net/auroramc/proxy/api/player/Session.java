@@ -25,7 +25,11 @@ public class Session {
         ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
            AuroraMCAPI.getDbManager().newSession(sessionUUID, player.getUniqueId(), player.getId(), startTimestamp);
            AuroraMCAPI.getDbManager().setProxyUUID(player.getUniqueId(), UUID.fromString(AuroraMCAPI.getInfo().getName()));
+            if (player.getServer() != null) {
+                    AuroraMCAPI.getDbManager().updateServer(player.getUniqueId(), player.getServer().toString());
+            }
         });
+
     }
 
     public UUID getSessionUUID() {
@@ -41,7 +45,6 @@ public class Session {
     }
 
     public synchronized void currentServer(String server) {
-        Session session = this;
         ProxyAPI.getCore().getProxy().getScheduler().runAsync(ProxyAPI.getCore(), () -> {
             AuroraMCAPI.getDbManager().updateServer(player.getUniqueId(), server);
         });
