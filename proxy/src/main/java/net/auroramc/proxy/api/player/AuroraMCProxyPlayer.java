@@ -355,7 +355,10 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     }
 
     public ServerInfo getServer() {
-        return ProxyAPI.getAmcServers().get(player.getServer().getInfo().getName());
+        if (player.getServer() != null) {
+            return ProxyAPI.getAmcServers().get(player.getServer().getInfo().getName());
+        }
+        return null;
     }
 
     public int getPing() {
