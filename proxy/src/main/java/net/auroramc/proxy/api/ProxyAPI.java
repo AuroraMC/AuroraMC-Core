@@ -7,7 +7,7 @@
 package net.auroramc.proxy.api;
 
 import net.auroramc.api.AuroraMCAPI;
-import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
+import net.auroramc.api.backend.bigbrother.WDLoggerHandler;
 import net.auroramc.api.backend.info.ServerInfo;
 import net.auroramc.api.permissions.Rank;
 import net.auroramc.api.player.ChatSlowLength;
@@ -67,7 +67,7 @@ public class ProxyAPI {
 
     public static void init(AuroraMC core) {
         AuroraMCAPI.init(core.getLogger(), new ProxyAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("uuid"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),true);
-        ProxyServer.getInstance().getLogger().addHandler(new BBLoggerHandler());
+        ProxyServer.getInstance().getLogger().addHandler(new WDLoggerHandler());
         ProxyAPI.core = core;
         players = new HashMap<>();
 

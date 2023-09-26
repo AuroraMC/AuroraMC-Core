@@ -10,22 +10,19 @@ import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.abstraction.ScheduleFactory;
 import net.auroramc.api.abstraction.ServerFactory;
 import net.auroramc.api.backend.info.ProxyInfo;
-import net.auroramc.api.command.Command;
 import net.auroramc.api.player.AuroraMCPlayer;
 import net.auroramc.api.utils.DiscordWebhook;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Enumeration;
+import java.util.List;
 import java.util.UUID;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
-public final class BigBrother {
+public final class Watchdog {
 
     public static void logException(Throwable t) {
         logException(t, null);
@@ -46,11 +43,22 @@ public final class BigBrother {
         serverState.put("plugins", plugins);
         serverState.put("network", AuroraMCAPI.getInfo().getNetwork().name());
         serverState.put("test_mode", AuroraMCAPI.isTestServer());
+
         ScheduleFactory.scheduleAsync(() -> {
             try {
+                List<WatchdogException> exceptions = AuroraMCAPI.getDbManager().getExceptions(t.getClass().getSimpleName(), proxy);
+
+                for (WatchdogException e : exceptions) {
+                    if (similarity(e.getTrace(), trace) > 0.85d) {
+                        e.getOtherOccurrences().put(new JSONObject().put("trace", trace).put("server", server).put("timestamp", timestamp));
+                        AuroraMCAPI.getDbManager().updateException(uuid, e.getOtherOccurrences());
+                        return;
+                    }
+                }
+
                 AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, t.getClass().getSimpleName(), trace, commandSyntax, ((executor == null)?null:executor.getUuid()), proxy, server, serverState);
                 DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1133782966213017660/PD0XP6UXxWnOTwpVE3WIteLqJFOGkFDHBBtQMxDSqyJZe748ViZiMybFzO2gF2nb4aA5");
-                webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Big Brother").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/big-brother/exceptions?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
+                webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Watchdog").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/watchdog/exceptions?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
                 try {
                     webhook.execute();
                 } catch (IOException e) {
@@ -62,4 +70,14 @@ public final class BigBrother {
         });
     }
 
+    public static double similarity(String s1, String s2) {
+        String longer = s1, shorter = s2;
+        if (s1.length() < s2.length()) { // longer should always have greater length
+            longer = s2; shorter = s1;
+        }
+        int longerLength = longer.length();
+        if (longerLength == 0) { return 1.0; /* both strings are zero length */ }
+        return (longerLength - new LevenshteinDistance().apply(longer, shorter)) / (double) longerLength;
+    }
 }
+
