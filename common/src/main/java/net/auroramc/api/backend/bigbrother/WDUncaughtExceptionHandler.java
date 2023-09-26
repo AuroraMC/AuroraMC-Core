@@ -6,9 +6,15 @@
 
 package net.auroramc.api.backend.bigbrother;
 
-public class BBUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler{
+import java.io.StreamCorruptedException;
+import java.net.SocketException;
+
+public class WDUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler{
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        BigBrother.logException(e);
+        if (e instanceof StreamCorruptedException || e instanceof SocketException) {
+            return;
+        }
+        Watchdog.logException(e);
     }
 }

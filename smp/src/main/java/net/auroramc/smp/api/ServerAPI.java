@@ -7,7 +7,7 @@
 package net.auroramc.smp.api;
 
 import net.auroramc.api.AuroraMCAPI;
-import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
+import net.auroramc.api.backend.bigbrother.WDLoggerHandler;
 import net.auroramc.api.player.ChatSlowLength;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.smp.AuroraMC;
@@ -56,7 +56,7 @@ public class ServerAPI {
 
     public static void init(AuroraMC core) {
         AuroraMCAPI.init(core.getLogger(), new ServerAbstractedMethods(), core.getConfig().getString("mysqlhost"), core.getConfig().getString("mysqlport"), core.getConfig().getString("mysqldb"), core.getConfig().getString("mysqlusername"), core.getConfig().getString("mysqlpassword"), core.getConfig().getString("name"), core.getConfig().getString("network"), core.getConfig().getString("redishost"), core.getConfig().getString("redisauth"),false);
-        Bukkit.getLogger().addHandler(new BBLoggerHandler());
+        Bukkit.getLogger().addHandler(new WDLoggerHandler());
         ServerAPI.core = core;
         players = new HashMap<>();
 

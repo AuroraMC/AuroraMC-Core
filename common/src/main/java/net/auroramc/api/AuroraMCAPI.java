@@ -8,9 +8,9 @@ package net.auroramc.api;
 
 import net.auroramc.api.abstraction.AbstractedMethods;
 import net.auroramc.api.abstraction.ScheduleFactory;
-import net.auroramc.api.backend.bigbrother.BBLoggerHandler;
-import net.auroramc.api.backend.bigbrother.BigBrother;
-import net.auroramc.api.backend.bigbrother.BBUncaughtExceptionHandler;
+import net.auroramc.api.backend.bigbrother.WDLoggerHandler;
+import net.auroramc.api.backend.bigbrother.Watchdog;
+import net.auroramc.api.backend.bigbrother.WDUncaughtExceptionHandler;
 import net.auroramc.api.backend.info.*;
 import net.auroramc.api.backend.database.DatabaseManager;
 import net.auroramc.api.command.Command;
@@ -57,7 +57,7 @@ public class AuroraMCAPI {
 
     private static boolean rulesLoading;
 
-    private static BigBrother bigBrother;
+    private static Watchdog watchdog;
 
     static {
         commands = new HashMap<>();
@@ -80,8 +80,8 @@ public class AuroraMCAPI {
 
     public static void init(Logger logger, AbstractedMethods methods, String host, String port, String db, String username, String password, String name, String network, String redisHost, String redisAuth, boolean proxy) {
         AuroraMCAPI.logger = logger;
-        Thread.setDefaultUncaughtExceptionHandler(new BBUncaughtExceptionHandler());
-        logger.addHandler(new BBLoggerHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new WDUncaughtExceptionHandler());
+        logger.addHandler(new WDLoggerHandler());
         abstractedMethods = methods;
         dbManager = new DatabaseManager(host, port, db, username, password, redisHost, redisAuth);
 
