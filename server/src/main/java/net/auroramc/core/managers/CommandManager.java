@@ -7,7 +7,7 @@
 package net.auroramc.core.managers;
 
 import net.auroramc.api.AuroraMCAPI;
-import net.auroramc.api.backend.bigbrother.BigBrother;
+import net.auroramc.api.backend.bigbrother.Watchdog;
 import net.auroramc.api.permissions.Permission;
 import net.auroramc.api.utils.TextFormatter;
 import net.auroramc.core.api.ServerAPI;
@@ -55,7 +55,7 @@ public class CommandManager implements Listener {
                     try {
                         command.execute(player, commandLabel, args);
                     } catch (Exception e) {
-                        BigBrother.logException(e, player, "/" + commandLabel + " " + String.join(" ", args));
+                        Watchdog.logException(e, player, "/" + commandLabel + " " + String.join(" ", args));
                         player.sendMessage(TextFormatter.pluginMessage("Command Manager", "An error occurred when executing this command. Please report this to the admins!"));
                     }
                     return;

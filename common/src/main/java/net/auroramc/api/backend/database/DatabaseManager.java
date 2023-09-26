@@ -9,6 +9,7 @@ package net.auroramc.api.backend.database;
 import net.auroramc.api.AuroraMCAPI;
 import net.auroramc.api.abstraction.CrateFactory;
 import net.auroramc.api.abstraction.DisguiseFactory;
+import net.auroramc.api.backend.bigbrother.WatchdogException;
 import net.auroramc.api.backend.info.*;
 import net.auroramc.api.backend.store.Payment;
 import net.auroramc.api.cosmetics.Cosmetic;
@@ -31,6 +32,7 @@ import net.auroramc.api.utils.*;
 import net.auroramc.api.utils.disguise.CachedSkin;
 import net.auroramc.api.utils.disguise.Skin;
 import net.md_5.bungee.api.ChatColor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -4438,7 +4440,7 @@ public class DatabaseManager {
 
     public void uploadException(long timestamp, UUID uuid, String name, String trace, String commandSyntax, UUID player, boolean proxy, String server, JSONObject serverState) {
         try (Connection connection = mysql.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO exceptions(uuid, timestamp, exception_name, stack_trace, server_name, proxy, player, player_name, command, server_data) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO exceptions(uuid, timestamp, exception_name, stack_trace, server_name, proxy, player, player_name, command, server_data, other_occurrences) VALUES (?,?,?,?,?,?,?,?,?,?, '[]')");
             statement.setString(1, uuid.toString());
             statement.setLong(2, timestamp);
             statement.setString(3, name);
@@ -4461,6 +4463,36 @@ public class DatabaseManager {
             statement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void updateException(UUID uuid, JSONArray array) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE exceptions SET other_occurrences = ? WHERE uuid = ?");
+            statement.setString(1, array.toString());
+            statement.setString(2, uuid.toString());
+
+            statement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<WatchdogException> getExceptions(String name, boolean proxy) {
+        try (Connection connection = mysql.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM exceptions WHERE exception_name = ? AND proxy = ? AND resolved = FALSE");
+            statement.setString(1, name);
+            statement.setBoolean(2, proxy);
+
+            ResultSet set = statement.executeQuery();
+            List<WatchdogException> exceptions = new ArrayList<>();
+            while (set.next()) {
+                exceptions.add(new WatchdogException(set.getLong(2), UUID.fromString(set.getString(1)), set.getString(3), set.getString(4), set.getString(9), UUID.fromString(set.getString(7)), set.getBoolean(6), set.getString(5), new JSONObject(set.getString(10)), ((set.getString(13) == null)?new JSONArray():new JSONArray(set.getString(13)))));
+            }
+            return exceptions;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }
