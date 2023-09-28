@@ -445,7 +445,9 @@ public class AuroraMCProxyPlayer extends AuroraMCPlayer {
     }
 
     public void endSession() {
-        session.endSession();
+        if (session != null) {
+            session.endSession();
+        }
     }
 
     public UUID getLastMessaged() {
