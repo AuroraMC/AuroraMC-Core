@@ -22,6 +22,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class CommandManager implements Listener {
 
@@ -55,8 +56,8 @@ public class CommandManager implements Listener {
                     try {
                         command.execute(player, commandLabel, args);
                     } catch (Exception e) {
-                        Watchdog.logException(e, player, "/" + commandLabel + " " + String.join(" ", args));
-                        player.sendMessage(TextFormatter.pluginMessage("Command Manager", "An error occurred when executing this command. Please report this to the admins!"));
+                        UUID uuid = Watchdog.logException(e, player, "/" + commandLabel + " " + String.join(" ", args));
+                        player.sendMessage(TextFormatter.pluginMessage("Command Manager", "An error occurred when executing this command. This exception has been logged. Please forward this ID to an admin: **" + uuid + "**!"));
                     }
                     return;
                 }
