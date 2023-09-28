@@ -144,6 +144,9 @@ public class ProxyAbstractedMethods extends AbstractedMethods {
                 buildNumber = attributes.getValue("Jenkins-Build-Number");
                 gitCommit = attributes.getValue("Git-Commit");
                 branch = attributes.getValue("Branch");
+                if (buildNumber == null || gitCommit == null) {
+                    continue;
+                }
                 JSONObject object = new JSONObject();
                 object.put("name", attributes.getValue("Module-Name"));
                 object.put("build", buildNumber);
