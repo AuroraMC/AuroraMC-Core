@@ -24,15 +24,15 @@ import java.util.UUID;
 
 public final class Watchdog {
 
-    public static void logException(Throwable t) {
-        logException(t, null);
+    public static UUID logException(Throwable t) {
+        return logException(t, null);
     }
 
-    private static void logException(Throwable t, AuroraMCPlayer executor) {
-        logException(t, executor, null);
+    private static UUID logException(Throwable t, AuroraMCPlayer executor) {
+        return logException(t, executor, null);
     }
 
-    public static void logException(Throwable t, AuroraMCPlayer executor, String commandSyntax) {
+    public static UUID logException(Throwable t, AuroraMCPlayer executor, String commandSyntax) {
         long timestamp = System.currentTimeMillis();
         UUID uuid = UUID.randomUUID();
         String trace = ExceptionUtils.getStackTrace(t);
@@ -44,18 +44,18 @@ public final class Watchdog {
         serverState.put("network", AuroraMCAPI.getInfo().getNetwork().name());
         serverState.put("test_mode", AuroraMCAPI.isTestServer());
 
+        List<WatchdogException> exceptions = AuroraMCAPI.getDbManager().getExceptions(t.getClass().getSimpleName(), proxy);
+
+        for (WatchdogException e : exceptions) {
+            if (similarity(e.getTrace(), trace) > 0.85d) {
+                e.getOtherOccurrences().put(new JSONObject().put("trace", trace).put("server", server).put("timestamp", timestamp));
+                AuroraMCAPI.getDbManager().updateException(e.getUuid(), e.getOtherOccurrences());
+                return e.getUuid();
+            }
+        }
+
         ScheduleFactory.scheduleAsync(() -> {
             try {
-                List<WatchdogException> exceptions = AuroraMCAPI.getDbManager().getExceptions(t.getClass().getSimpleName(), proxy);
-
-                for (WatchdogException e : exceptions) {
-                    if (similarity(e.getTrace(), trace) > 0.85d) {
-                        e.getOtherOccurrences().put(new JSONObject().put("trace", trace).put("server", server).put("timestamp", timestamp));
-                        AuroraMCAPI.getDbManager().updateException(e.getUuid(), e.getOtherOccurrences());
-                        return;
-                    }
-                }
-
                 AuroraMCAPI.getDbManager().uploadException(timestamp, uuid, t.getClass().getSimpleName(), trace, commandSyntax, ((executor == null)?null:executor.getUuid()), proxy, server, serverState);
                 DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1133782966213017660/PD0XP6UXxWnOTwpVE3WIteLqJFOGkFDHBBtQMxDSqyJZe748ViZiMybFzO2gF2nb4aA5");
                 webhook.addEmbed(new DiscordWebhook.EmbedObject().setTitle("AuroraMC Watchdog").setDescription(String.format("A new %s has been logged. View at https://supersecretsettings.dev/watchdog/exceptions?uuid=%s", t.getClass().getSimpleName(), uuid)).setColor(new Color(170, 0, 0)));
@@ -68,6 +68,8 @@ public final class Watchdog {
                 e.printStackTrace();
             }
         });
+
+        return uuid;
     }
 
     public static double similarity(String s1, String s2) {
