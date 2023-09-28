@@ -51,7 +51,7 @@ public final class Watchdog {
                 for (WatchdogException e : exceptions) {
                     if (similarity(e.getTrace(), trace) > 0.85d) {
                         e.getOtherOccurrences().put(new JSONObject().put("trace", trace).put("server", server).put("timestamp", timestamp));
-                        AuroraMCAPI.getDbManager().updateException(uuid, e.getOtherOccurrences());
+                        AuroraMCAPI.getDbManager().updateException(e.getUuid(), e.getOtherOccurrences());
                         return;
                     }
                 }
